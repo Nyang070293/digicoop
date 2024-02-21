@@ -100,7 +100,8 @@ class _logincreenState extends State<logincreen> {
                       // Password Field
                       CommonTextField(
                         controller: _numberController,
-                        labelText: 'Mobile No.',
+                        labelText: 'Enter Mobile No.',
+                        keyboardType: TextInputType.number,
                         prefixIconData: Icons.phone,
                         textInputAction: TextInputAction.next,
                         accentColor: Color(0xff259ded),
@@ -119,7 +120,7 @@ class _logincreenState extends State<logincreen> {
                       // Password Field
                       CommonTextField(
                         controller: _passwordController,
-                        labelText: 'Password',
+                        labelText: 'Enter Password',
                         prefixIconData: Icons.lock,
                         obscureText: true,
                         textInputAction: TextInputAction.next,

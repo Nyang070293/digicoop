@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
-class CommonTextField extends StatefulWidget {
+class textfieldNumberFormat extends StatefulWidget {
   final TextEditingController controller;
   final String? hintText;
   final TextInputType? keyboardType;
@@ -16,8 +17,9 @@ class CommonTextField extends StatefulWidget {
   final TextInputAction? textInputAction;
   final Color? textColor;
   final Color? accentColor;
+  final int? maxLength;
 
-  const CommonTextField({
+  const textfieldNumberFormat({
     Key? key,
     required this.controller,
     this.hintText,
@@ -34,13 +36,14 @@ class CommonTextField extends StatefulWidget {
     this.textColor,
     this.maxLines = 1,
     this.accentColor,
+    this.maxLength,
   }) : super(key: key);
 
   @override
   _CommonTextFieldState createState() => _CommonTextFieldState();
 }
 
-class _CommonTextFieldState extends State<CommonTextField> {
+class _CommonTextFieldState extends State<textfieldNumberFormat> {
   bool _isObscure = true;
 
   @override
@@ -54,7 +57,10 @@ class _CommonTextFieldState extends State<CommonTextField> {
       onChanged: widget.onChanged,
       textInputAction: widget.textInputAction,
       maxLines: !_isObscure ? widget.maxLines : 1,
-
+      inputFormatters: [
+        LengthLimitingTextInputFormatter(widget.maxLength),
+        FilteringTextInputFormatter.digitsOnly,
+      ],
       style:
           TextStyle(color: widget.textColor ?? Colors.black), // Set text color
       decoration: InputDecoration(

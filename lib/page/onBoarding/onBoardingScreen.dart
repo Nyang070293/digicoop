@@ -150,13 +150,11 @@ class _onBoardingScreenState extends State<onBoardingScreen> {
               },
             ),
           ),
-          Container(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: List.generate(
-                contents.length,
-                (index) => buildDot(index, context),
-              ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: List.generate(
+              contents.length,
+              (index) => buildDot(index, context),
             ),
           ),
           Container(
@@ -201,8 +199,10 @@ class _onBoardingScreenState extends State<onBoardingScreen> {
                   children: [
                     Container(
                       // nextKZq (4:15)
-                      margin: EdgeInsets.fromLTRB(
-                          0 * fem, 0 * fem, 84.67 * fem, 0 * fem),
+                      margin: EdgeInsets.only(
+                        left: 20 * fem,
+                        right: 85 * fem,
+                      ),
                       child: Text(
                         "Next",
                         style: SafeGoogleFont(
@@ -241,7 +241,7 @@ class _onBoardingScreenState extends State<onBoardingScreen> {
       margin: const EdgeInsets.only(right: 5),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),
-        color: Theme.of(context).primaryColor,
+        color: currentIndex == index ? Color(0xff259ded) : Colors.grey.shade300,
       ),
     );
   }

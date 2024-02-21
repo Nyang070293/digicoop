@@ -8,11 +8,10 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter',
+      title: 'Digi Coop',
       debugShowCheckedModeBanner: false,
-      scrollBehavior: MyCustomScrollBehavior(),
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primaryColor: Color(0xff259ded),
       ),
       home: const Scaffold(
         body: SplashScreen(),
