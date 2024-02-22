@@ -41,8 +41,7 @@ class CommonTextField extends StatefulWidget {
 }
 
 class _CommonTextFieldState extends State<CommonTextField> {
-  bool _isObscure = true;
-
+  bool _isObscure = false;
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -50,7 +49,7 @@ class _CommonTextFieldState extends State<CommonTextField> {
     return TextField(
       controller: widget.controller,
       keyboardType: widget.keyboardType,
-      obscureText: _isObscure,
+      obscureText: widget.obscureText ? !_isObscure : widget.obscureText,
       onChanged: widget.onChanged,
       textInputAction: widget.textInputAction,
       maxLines: !_isObscure ? widget.maxLines : 1,
@@ -79,7 +78,7 @@ class _CommonTextFieldState extends State<CommonTextField> {
                     _isObscure = !_isObscure;
                   });
                 },
-                icon: Icon(_isObscure
+                icon: Icon(!_isObscure
                     ? widget.passwordShowIcon ?? Icons.visibility
                     : widget.passwordHideIcon ?? Icons.visibility_off),
                 color: widget.accentColor ?? theme.colorScheme.primary,

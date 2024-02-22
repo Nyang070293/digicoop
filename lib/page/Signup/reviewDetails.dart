@@ -1,40 +1,17 @@
-import 'package:digicoop/page/Signup/email.dart';
-import 'package:digicoop/page/Signup/setupMobilepin.dart';
-import 'package:digicoop/util/textfield.dart';
+import 'package:digicoop/page/Signup/homeAddress.dart';
 import 'package:digicoop/util/utils.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 
-class aboutScreen extends StatefulWidget {
-  final Function(String)? onChanged;
-
-  const aboutScreen({super.key, this.onChanged});
+class reviewDetailScreen extends StatefulWidget {
+  const reviewDetailScreen({super.key});
 
   @override
-  State<aboutScreen> createState() => _aboutScreenState();
+  State<reviewDetailScreen> createState() => _reviewDetailScreenState();
 }
 
-class _aboutScreenState extends State<aboutScreen> {
-  final TextEditingController _firstName = TextEditingController();
-  final TextEditingController _middleName = TextEditingController();
-  final TextEditingController _lastName = TextEditingController();
-  final TextEditingController _suffix = TextEditingController();
-  final TextEditingController _birthday = TextEditingController();
-  final TextEditingController _nationality = TextEditingController();
-
-  String? _selectedGender;
-  String? _selectedCS;
-
-  @override
-  void initState() {
-    _birthday.text = ""; //set the initial value of text field
-    super.initState();
-  }
-
+class _reviewDetailScreenState extends State<reviewDetailScreen> {
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-
     double baseWidth = 414;
     double fem = MediaQuery.of(context).size.width / baseWidth;
     double ffem = fem * 0.97;
@@ -77,7 +54,7 @@ class _aboutScreenState extends State<aboutScreen> {
                           Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
-                              builder: (_) => const setupMobilepinScreen(),
+                              builder: (_) => const homeAddressScreen(),
                             ),
                           );
                         },
@@ -114,7 +91,7 @@ class _aboutScreenState extends State<aboutScreen> {
                         margin: EdgeInsets.fromLTRB(
                             0 * fem, 0 * fem, 0 * fem, 4 * fem),
                         child: Text(
-                          '2 / 6',
+                          '4 / 6',
                           style: SafeGoogleFont(
                             'Montserrat',
                             fontSize: 14 * ffem,
@@ -139,7 +116,7 @@ class _aboutScreenState extends State<aboutScreen> {
                           margin: EdgeInsets.fromLTRB(
                               31 * fem, 0 * fem, 0 * fem, 18 * fem),
                           child: Text(
-                            'Personal Information',
+                            'Confirm Account Information',
                             style: SafeGoogleFont(
                               'Montserrat',
                               fontSize: 24 * ffem,
@@ -158,7 +135,7 @@ class _aboutScreenState extends State<aboutScreen> {
                             maxWidth: 289 * fem,
                           ),
                           child: Text(
-                            'Only provide information that is True and Correct.',
+                            'Ensure that all details are correct prior to submission.',
                             style: SafeGoogleFont(
                               'Montserrat',
                               fontSize: 14 * ffem,
@@ -194,8 +171,8 @@ class _aboutScreenState extends State<aboutScreen> {
                                       width: double.infinity,
                                       height: 65 * fem,
                                       child: CommonTextField(
-                                        controller: _firstName,
-                                        labelText: 'First Name',
+                                        controller: _unitHouseno,
+                                        labelText: 'Unit/House No.',
                                         textInputAction: TextInputAction.next,
                                         accentColor: const Color(0xff259ded),
                                       ),
@@ -207,8 +184,9 @@ class _aboutScreenState extends State<aboutScreen> {
                                       width: double.infinity,
                                       height: 65 * fem,
                                       child: CommonTextField(
-                                        controller: _middleName,
-                                        labelText: 'Middle Name (optional)',
+                                        controller: _building,
+                                        labelText:
+                                            'Building/Subdivision Name (optional)',
                                         textInputAction: TextInputAction.next,
                                         accentColor: const Color(0xff259ded),
                                       ),
@@ -220,8 +198,8 @@ class _aboutScreenState extends State<aboutScreen> {
                                       width: double.infinity,
                                       height: 65 * fem,
                                       child: CommonTextField(
-                                        controller: _lastName,
-                                        labelText: 'Last Name',
+                                        controller: _streetName,
+                                        labelText: 'Street Name',
                                         textInputAction: TextInputAction.next,
                                         accentColor: const Color(0xff259ded),
                                       ),
@@ -233,96 +211,18 @@ class _aboutScreenState extends State<aboutScreen> {
                                       width: double.infinity,
                                       height: 65 * fem,
                                       child: CommonTextField(
-                                        controller: _suffix,
-                                        labelText: 'Suffix',
+                                        controller: _additionalAddress,
+                                        labelText:
+                                            'Additional Address (optional)',
                                         textInputAction: TextInputAction.next,
                                         accentColor: const Color(0xff259ded),
                                       ),
                                     ),
 
                                     Container(
-                                      // group942Gqd (75:409)
-                                      margin: EdgeInsets.fromLTRB(
-                                          2 * fem, 0 * fem, 5 * fem, 19 * fem),
-                                      width: double.infinity,
-                                      height: 65 * fem,
-                                      child: TextField(
-                                        controller:
-                                            _birthday, //editing controller of this TextField
-                                        decoration: InputDecoration(
-                                          suffixIcon:
-                                              const Icon(Icons.calendar_month),
-                                          labelText: "Birthdate",
-                                          labelStyle: const TextStyle(
-                                              color: Color(0xff259ded)),
-                                          border: const UnderlineInputBorder(
-                                            borderSide: BorderSide(
-                                                color: Color(0xffd1d3d4),
-                                                width: 1),
-                                          ),
-                                          focusedBorder:
-                                              const UnderlineInputBorder(
-                                            borderSide: BorderSide(
-                                                color: Color(0xff259ded),
-                                                width: 2),
-                                          ),
-                                          enabledBorder: UnderlineInputBorder(
-                                            borderSide: BorderSide(
-                                                color: theme.disabledColor,
-                                                width: 1),
-                                          ),
-                                          errorBorder:
-                                              const UnderlineInputBorder(
-                                            borderSide: BorderSide(
-                                                color: Colors.red, width: 1),
-                                          ),
-                                          focusedErrorBorder:
-                                              const UnderlineInputBorder(
-                                            borderSide: BorderSide(
-                                                color: Colors.red, width: 2),
-                                          ), //label text of field
-                                        ),
-
-                                        readOnly:
-                                            true, //set it true, so that user will not able to edit text
-                                        onTap: () async {
-                                          DateTime? pickedDate =
-                                              await showDatePicker(
-                                            context: context,
-                                            initialDate: DateTime.now(),
-                                            firstDate: DateTime(
-                                                1900), //DateTime.now() - not to allow to choose before today.
-                                            lastDate: DateTime(2101),
-                                            initialEntryMode:
-                                                DatePickerEntryMode
-                                                    .calendarOnly,
-                                          );
-
-                                          if (pickedDate != null) {
-                                            print(
-                                                pickedDate); //pickedDate output format => 2021-03-10 00:00:00.000
-                                            String formattedDate =
-                                                DateFormat('yyyy-MM-dd')
-                                                    .format(pickedDate);
-                                            print(
-                                                formattedDate); //formatted date output using intl package =>  2021-03-16
-                                            //you can implement different kind of Date Format here according to your requirement
-
-                                            setState(() {
-                                              _birthday.text =
-                                                  formattedDate; //set output date to TextField value.
-                                            });
-                                          } else {
-                                            print("Date is not selected");
-                                          }
-                                        },
-                                      ),
-                                    ),
-
-                                    Container(
                                       // group944qfm (75:434)
                                       margin: EdgeInsets.fromLTRB(
-                                          2 * fem, 20 * fem, 5 * fem, 19 * fem),
+                                          2 * fem, 0 * fem, 5 * fem, 20 * fem),
                                       width: double.infinity,
                                       height: 65 * fem,
                                       child: Stack(
@@ -333,15 +233,14 @@ class _aboutScreenState extends State<aboutScreen> {
                                             top: 0 * fem,
                                             child: Align(
                                               child: SizedBox(
-                                                width: 60 * fem,
+                                                width: 70 * fem,
                                                 height: 18 * fem,
                                                 child: Text(
-                                                  'Gender',
+                                                  'Province',
                                                   style: SafeGoogleFont(
                                                     'Montserrat',
                                                     fontSize: 16 * ffem,
                                                     fontWeight: FontWeight.w500,
-                                                    height: 1.2175 * ffem / fem,
                                                     color:
                                                         const Color(0xff259ded),
                                                   ),
@@ -366,23 +265,23 @@ class _aboutScreenState extends State<aboutScreen> {
                                                     child:
                                                         DropdownButtonFormField<
                                                             String>(
-                                                      value: _selectedGender,
+                                                      value: _selectedProvince,
                                                       onChanged:
                                                           (String? newValue) {
                                                         setState(() {
-                                                          _selectedGender =
+                                                          _selectedProvince =
                                                               newValue;
                                                           if (widget
                                                                   .onChanged !=
                                                               null) {
                                                             widget.onChanged!(
-                                                                _selectedGender!);
+                                                                _selectedProvince!);
                                                           }
                                                         });
                                                       },
                                                       items: <String>[
-                                                        'Male',
-                                                        'Female'
+                                                        'Sample 1',
+                                                        'Sample 2'
                                                       ].map((String value) {
                                                         return DropdownMenuItem<
                                                             String>(
@@ -405,7 +304,6 @@ class _aboutScreenState extends State<aboutScreen> {
                                                                   0xff259ded),
                                                               width: 2),
                                                         ),
-
                                                         // Icon for the dropdown
                                                       ),
                                                     ),
@@ -420,9 +318,9 @@ class _aboutScreenState extends State<aboutScreen> {
                                     Container(
                                       // group944qfm (75:434)
                                       margin: EdgeInsets.fromLTRB(
-                                          2 * fem, 0 * fem, 5 * fem, 0 * fem),
+                                          2 * fem, 0 * fem, 5 * fem, 20 * fem),
                                       width: double.infinity,
-                                      height: 65 * fem,
+                                      height: 70 * fem,
                                       child: Stack(
                                         children: [
                                           Positioned(
@@ -431,15 +329,14 @@ class _aboutScreenState extends State<aboutScreen> {
                                             top: 0 * fem,
                                             child: Align(
                                               child: SizedBox(
-                                                width: 90 * fem,
+                                                width: 80 * fem,
                                                 height: 18 * fem,
                                                 child: Text(
-                                                  'Civil Status',
+                                                  'City',
                                                   style: SafeGoogleFont(
                                                     'Montserrat',
                                                     fontSize: 16 * ffem,
                                                     fontWeight: FontWeight.w500,
-                                                    height: 1.2175 * ffem / fem,
                                                     color:
                                                         const Color(0xff259ded),
                                                   ),
@@ -465,26 +362,23 @@ class _aboutScreenState extends State<aboutScreen> {
                                                     child:
                                                         DropdownButtonFormField<
                                                             String>(
-                                                      value: _selectedCS,
+                                                      value: _selectedCity,
                                                       onChanged:
                                                           (String? newValue) {
                                                         setState(() {
-                                                          _selectedCS =
+                                                          _selectedCity =
                                                               newValue;
                                                           if (widget
                                                                   .onChanged !=
                                                               null) {
                                                             widget.onChanged!(
-                                                                _selectedCS!);
+                                                                _selectedCity!);
                                                           }
                                                         });
                                                       },
                                                       items: <String>[
-                                                        'Single',
-                                                        'Married',
-                                                        'Divorced',
-                                                        'Widowed',
-                                                        'Separated',
+                                                        'City 1',
+                                                        'City 2',
                                                       ].map((String value) {
                                                         return DropdownMenuItem<
                                                             String>(
@@ -507,6 +401,100 @@ class _aboutScreenState extends State<aboutScreen> {
                                                                   0xff259ded),
                                                               width: 2),
                                                         ),
+                                                        contentPadding:
+                                                            EdgeInsets.zero,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+
+                                    Container(
+                                      // group944qfm (75:434)
+                                      margin: EdgeInsets.fromLTRB(
+                                          2 * fem, 0 * fem, 5 * fem, 20 * fem),
+                                      width: double.infinity,
+                                      height: 70 * fem,
+                                      child: Stack(
+                                        children: [
+                                          Positioned(
+                                            // genderyQb (75:499)
+                                            left: 0 * fem,
+                                            top: 0 * fem,
+                                            child: Align(
+                                              child: SizedBox(
+                                                width: 80 * fem,
+                                                height: 18 * fem,
+                                                child: Text(
+                                                  'Barangay',
+                                                  style: SafeGoogleFont(
+                                                    'Montserrat',
+                                                    fontSize: 16 * ffem,
+                                                    fontWeight: FontWeight.w500,
+                                                    color:
+                                                        const Color(0xff259ded),
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                          Positioned(
+                                            // group944Nhd (75:503)
+                                            left: 0 * fem,
+                                            top: 15 * fem,
+                                            child: SizedBox(
+                                              width: 348 * fem,
+                                              height: 65 * fem,
+                                              child: Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  SizedBox(
+                                                    width: double
+                                                        .infinity, // Set width as per your requirement
+
+                                                    child:
+                                                        DropdownButtonFormField<
+                                                            String>(
+                                                      value: _selectedBrgy,
+                                                      onChanged:
+                                                          (String? newValue) {
+                                                        setState(() {
+                                                          _selectedBrgy =
+                                                              newValue;
+                                                          if (widget
+                                                                  .onChanged !=
+                                                              null) {
+                                                            widget.onChanged!(
+                                                                _selectedBrgy!);
+                                                          }
+                                                        });
+                                                      },
+                                                      items: <String>[
+                                                        'Brgy 1',
+                                                        'Brgy 2',
+                                                      ].map((String value) {
+                                                        return DropdownMenuItem<
+                                                            String>(
+                                                          value: value,
+                                                          child: Text(value),
+                                                        );
+                                                      }).toList(),
+                                                      decoration:
+                                                          const InputDecoration(
+                                                        border:
+                                                            UnderlineInputBorder(
+                                                          borderSide: BorderSide(
+                                                              color: Colors
+                                                                  .grey), // Add border color
+                                                        ),
+                                                        contentPadding:
+                                                            EdgeInsets.zero,
                                                       ),
                                                     ),
                                                   ),
@@ -525,11 +513,55 @@ class _aboutScreenState extends State<aboutScreen> {
                                       width: double.infinity,
                                       height: 65 * fem,
                                       child: CommonTextField(
-                                        controller: _nationality,
-                                        labelText: 'Nationality',
-                                        obscureText: false,
+                                        controller: _postalCode,
+                                        labelText: 'Postal Code',
                                         textInputAction: TextInputAction.next,
                                         accentColor: const Color(0xff259ded),
+                                      ),
+                                    ),
+
+                                    Container(
+                                      // addofficeaddressYoy (2025:3567)
+                                      margin: EdgeInsets.only(bottom: 95 * fem),
+                                      child: Row(
+                                        children: [
+                                          CustomCheckBox(
+                                            value: _isOfficeAddress,
+                                            splashColor:
+                                                const Color(0xff259ded),
+                                            shouldShowBorder: true,
+                                            borderColor:
+                                                const Color(0xff259ded),
+                                            checkedFillColor:
+                                                const Color(0xff259ded),
+                                            borderRadius: 8,
+                                            borderWidth: 1,
+                                            checkBoxSize: 22,
+                                            onChanged: (val) {
+                                              //do your stuff here
+                                              setState(() {
+                                                _isOfficeAddress = val;
+                                              });
+                                            },
+                                          ),
+                                          GestureDetector(
+                                            onTap: () {
+                                              setState(() {
+                                                _isOfficeAddress =
+                                                    !_isOfficeAddress;
+                                              });
+                                            },
+                                            child: Text(
+                                              'This is my Office Address',
+                                              style: SafeGoogleFont(
+                                                'Montserrat',
+                                                fontSize: 16 * ffem,
+                                                fontWeight: FontWeight.w500,
+                                                color: const Color(0xff259ded),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
                                       ),
                                     ),
 
@@ -546,7 +578,8 @@ class _aboutScreenState extends State<aboutScreen> {
                                     Navigator.pushReplacement(
                                       context,
                                       MaterialPageRoute(
-                                        builder: (_) => const emailScreen(),
+                                        builder: (_) =>
+                                            const reviewDetailScreen(),
                                       ),
                                     );
                                   },

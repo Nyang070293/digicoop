@@ -106,6 +106,7 @@ class _signupScreenState extends State<signupScreen> {
                         CommonTextField(
                           controller: _numberController,
                           labelText: 'Enter Mobile No.',
+                          keyboardType: TextInputType.number,
                           prefixIconData: Icons.phone,
                           textInputAction: TextInputAction.next,
                           accentColor: Color(0xff259ded),

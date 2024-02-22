@@ -1,4 +1,6 @@
 import 'package:digicoop/page/Signup/email.dart';
+import 'package:digicoop/page/Signup/reviewDetails.dart';
+import 'package:digicoop/util/customCheckbox.dart';
 import 'package:digicoop/util/textfield.dart';
 import 'package:digicoop/util/utils.dart';
 import 'package:flutter/material.dart';
@@ -18,15 +20,13 @@ class _homeAddressScreenState extends State<homeAddressScreen> {
   final TextEditingController _streetName = TextEditingController();
   final TextEditingController _additionalAddress = TextEditingController();
   final TextEditingController _postalCode = TextEditingController();
-
+  bool _isOfficeAddress = false;
   String? _selectedProvince;
   String? _selectedCity;
   String? _selectedBrgy;
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-
     double baseWidth = 414;
     double fem = MediaQuery.of(context).size.width / baseWidth;
     double ffem = fem * 0.97;
@@ -131,7 +131,7 @@ class _homeAddressScreenState extends State<homeAddressScreen> {
                           margin: EdgeInsets.fromLTRB(
                               31 * fem, 0 * fem, 0 * fem, 18 * fem),
                           child: Text(
-                            'Add your Home Address',
+                            'Add your Address',
                             style: SafeGoogleFont(
                               'Montserrat',
                               fontSize: 24 * ffem,
@@ -237,7 +237,7 @@ class _homeAddressScreenState extends State<homeAddressScreen> {
                                     Container(
                                       // group944qfm (75:434)
                                       margin: EdgeInsets.fromLTRB(
-                                          2 * fem, 20 * fem, 5 * fem, 19 * fem),
+                                          2 * fem, 0 * fem, 5 * fem, 20 * fem),
                                       width: double.infinity,
                                       height: 65 * fem,
                                       child: Stack(
@@ -246,7 +246,6 @@ class _homeAddressScreenState extends State<homeAddressScreen> {
                                             // genderyQb (75:499)
                                             left: 0 * fem,
                                             top: 0 * fem,
-                                            bottom: 50 * fem,
                                             child: Align(
                                               child: SizedBox(
                                                 width: 70 * fem,
@@ -334,7 +333,7 @@ class _homeAddressScreenState extends State<homeAddressScreen> {
                                     Container(
                                       // group944qfm (75:434)
                                       margin: EdgeInsets.fromLTRB(
-                                          2 * fem, 0 * fem, 5 * fem, 0 * fem),
+                                          2 * fem, 0 * fem, 5 * fem, 20 * fem),
                                       width: double.infinity,
                                       height: 70 * fem,
                                       child: Stack(
@@ -343,7 +342,6 @@ class _homeAddressScreenState extends State<homeAddressScreen> {
                                             // genderyQb (75:499)
                                             left: 0 * fem,
                                             top: 0 * fem,
-                                            bottom: 50 * fem,
                                             child: Align(
                                               child: SizedBox(
                                                 width: 80 * fem,
@@ -354,7 +352,8 @@ class _homeAddressScreenState extends State<homeAddressScreen> {
                                                     'Montserrat',
                                                     fontSize: 16 * ffem,
                                                     fontWeight: FontWeight.w500,
-                                                    color: Color(0xff259ded),
+                                                    color:
+                                                        const Color(0xff259ded),
                                                   ),
                                                 ),
                                               ),
@@ -433,9 +432,9 @@ class _homeAddressScreenState extends State<homeAddressScreen> {
                                     Container(
                                       // group944qfm (75:434)
                                       margin: EdgeInsets.fromLTRB(
-                                          2 * fem, 0 * fem, 5 * fem, 0 * fem),
+                                          2 * fem, 0 * fem, 5 * fem, 20 * fem),
                                       width: double.infinity,
-                                      height: 65 * fem,
+                                      height: 70 * fem,
                                       child: Stack(
                                         children: [
                                           Positioned(
@@ -452,7 +451,8 @@ class _homeAddressScreenState extends State<homeAddressScreen> {
                                                     'Montserrat',
                                                     fontSize: 16 * ffem,
                                                     fontWeight: FontWeight.w500,
-                                                    color: Color(0xff259ded),
+                                                    color:
+                                                        const Color(0xff259ded),
                                                   ),
                                                 ),
                                               ),
@@ -461,7 +461,7 @@ class _homeAddressScreenState extends State<homeAddressScreen> {
                                           Positioned(
                                             // group944Nhd (75:503)
                                             left: 0 * fem,
-                                            top: 0 * fem,
+                                            top: 15 * fem,
                                             child: SizedBox(
                                               width: 348 * fem,
                                               height: 65 * fem,
@@ -535,6 +535,51 @@ class _homeAddressScreenState extends State<homeAddressScreen> {
                                       ),
                                     ),
 
+                                    Container(
+                                      // addofficeaddressYoy (2025:3567)
+                                      margin: EdgeInsets.only(bottom: 95 * fem),
+                                      child: Row(
+                                        children: [
+                                          CustomCheckBox(
+                                            value: _isOfficeAddress,
+                                            splashColor:
+                                                const Color(0xff259ded),
+                                            shouldShowBorder: true,
+                                            borderColor:
+                                                const Color(0xff259ded),
+                                            checkedFillColor:
+                                                const Color(0xff259ded),
+                                            borderRadius: 8,
+                                            borderWidth: 1,
+                                            checkBoxSize: 22,
+                                            onChanged: (val) {
+                                              //do your stuff here
+                                              setState(() {
+                                                _isOfficeAddress = val;
+                                              });
+                                            },
+                                          ),
+                                          GestureDetector(
+                                            onTap: () {
+                                              setState(() {
+                                                _isOfficeAddress =
+                                                    !_isOfficeAddress;
+                                              });
+                                            },
+                                            child: Text(
+                                              'This is my Office Address',
+                                              style: SafeGoogleFont(
+                                                'Montserrat',
+                                                fontSize: 16 * ffem,
+                                                fontWeight: FontWeight.w500,
+                                                color: const Color(0xff259ded),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+
                                     /////////////////
                                   ],
                                 ),
@@ -548,7 +593,8 @@ class _homeAddressScreenState extends State<homeAddressScreen> {
                                     Navigator.pushReplacement(
                                       context,
                                       MaterialPageRoute(
-                                        builder: (_) => emailScreen(),
+                                        builder: (_) =>
+                                            const reviewDetailScreen(),
                                       ),
                                     );
                                   },

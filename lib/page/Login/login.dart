@@ -19,7 +19,7 @@ class _logincreenState extends State<logincreen> {
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(
-        builder: (_) => signupScreen(),
+        builder: (_) => const signupScreen(),
       ),
     );
   }
@@ -103,8 +103,9 @@ class _logincreenState extends State<logincreen> {
                         labelText: 'Enter Mobile No.',
                         keyboardType: TextInputType.number,
                         prefixIconData: Icons.phone,
+                        obscureText: false,
                         textInputAction: TextInputAction.next,
-                        accentColor: Color(0xff259ded),
+                        accentColor: const Color(0xff259ded),
                       ),
                       const SizedBox(height: 16),
                     ],
@@ -124,7 +125,7 @@ class _logincreenState extends State<logincreen> {
                         prefixIconData: Icons.lock,
                         obscureText: true,
                         textInputAction: TextInputAction.next,
-                        accentColor: Color(0xff259ded),
+                        accentColor: const Color(0xff259ded),
                       ),
                       const SizedBox(height: 16),
                     ],
