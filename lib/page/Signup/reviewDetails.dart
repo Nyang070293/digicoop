@@ -1,4 +1,5 @@
 import 'package:digicoop/page/Signup/homeAddress.dart';
+import 'package:digicoop/util/textfield.dart';
 import 'package:digicoop/util/utils.dart';
 import 'package:flutter/material.dart';
 
@@ -170,11 +171,11 @@ class _reviewDetailScreenState extends State<reviewDetailScreen> {
                                           0 * fem, 0 * fem, 0 * fem, 19 * fem),
                                       width: double.infinity,
                                       height: 65 * fem,
-                                      child: CommonTextField(
+                                      child: const CommonTextField(
                                         controller: _unitHouseno,
                                         labelText: 'Unit/House No.',
                                         textInputAction: TextInputAction.next,
-                                        accentColor: const Color(0xff259ded),
+                                        accentColor: Color(0xff259ded),
                                       ),
                                     ),
                                     Container(
