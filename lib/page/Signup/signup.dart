@@ -18,7 +18,7 @@ class _signupScreenState extends State<signupScreen> {
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(
-        builder: (_) => logincreen(),
+        builder: (_) => loginScreen(),
       ),
     );
   }
@@ -49,7 +49,7 @@ class _signupScreenState extends State<signupScreen> {
                       Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
-                          builder: (_) => logincreen(),
+                          builder: (_) => loginScreen(),
                         ),
                       );
                     },

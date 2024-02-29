@@ -94,7 +94,7 @@ class _setupMobilepinScreenState extends State<setupMobilepinScreen> {
                           // authenticationGUw (75:89)
                           margin: EdgeInsets.only(bottom: 4 * fem),
                           child: Text(
-                            ' 1 / 6',
+                            ' 1 / 5',
                             style: SafeGoogleFont(
                               'Montserrat',
                               fontSize: 14 * ffem,

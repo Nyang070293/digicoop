@@ -114,7 +114,7 @@ class _aboutScreenState extends State<aboutScreen> {
                         margin: EdgeInsets.fromLTRB(
                             0 * fem, 0 * fem, 0 * fem, 4 * fem),
                         child: Text(
-                          '2 / 6',
+                          '2 / 5',
                           style: SafeGoogleFont(
                             'Montserrat',
                             fontSize: 14 * ffem,

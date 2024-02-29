@@ -49,14 +49,24 @@ class _onBoardingScreenState extends State<onBoardingScreen> {
                       Container(
                         margin: EdgeInsets.fromLTRB(
                             298 * fem, 30 * fem, 0 * fem, 28 * fem),
-                        child: Text(
-                          'Skip',
-                          style: SafeGoogleFont(
-                            'Montserrat',
-                            fontSize: 18 * ffem,
-                            fontWeight: FontWeight.w500,
-                            height: 1.2175 * ffem / fem,
-                            color: const Color(0xffbdbdbd),
+                        child: InkWell(
+                          onTap: () {
+                            Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                builder: (_) => loginScreen(),
+                              ),
+                            );
+                          },
+                          child: Text(
+                            'Skip',
+                            style: SafeGoogleFont(
+                              'Montserrat',
+                              fontSize: 18 * ffem,
+                              fontWeight: FontWeight.w500,
+                              height: 1.2175 * ffem / fem,
+                              color: const Color(0xffbdbdbd),
+                            ),
                           ),
                         ),
                       ),
@@ -167,7 +177,7 @@ class _onBoardingScreenState extends State<onBoardingScreen> {
                   Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(
-                      builder: (_) => const logincreen(),
+                      builder: (_) => loginScreen(),
                     ),
                   );
                 }

@@ -94,7 +94,7 @@ class _emailScreenState extends State<emailScreen> {
                         margin: EdgeInsets.fromLTRB(
                             0 * fem, 0 * fem, 0 * fem, 4 * fem),
                         child: Text(
-                          '3 / 6',
+                          '3 / 5',
                           style: SafeGoogleFont(
                             'Montserrat',
                             fontSize: 14 * ffem,

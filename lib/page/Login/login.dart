@@ -1,17 +1,20 @@
 import 'package:digicoop/page/Signup/signup.dart';
+import 'package:digicoop/page/dashboard/dashboard.dart';
+import 'package:digicoop/page/mpin/mpin_page.dart';
+import 'package:digicoop/page/onBoardingCode/onBoardingCode.dart';
 import 'package:digicoop/util/textfield.dart';
 import 'package:digicoop/util/utils.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
-class logincreen extends StatefulWidget {
-  const logincreen({super.key});
+class loginScreen extends StatefulWidget {
+  const loginScreen({super.key});
 
   @override
-  State<logincreen> createState() => _logincreenState();
+  State<loginScreen> createState() => _loginScreenState();
 }
 
-class _logincreenState extends State<logincreen> {
+class _loginScreenState extends State<loginScreen> {
   final TextEditingController _numberController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
@@ -145,14 +148,23 @@ class _logincreenState extends State<logincreen> {
                           // loginviampinnAj (97:6896)
                           margin: EdgeInsets.fromLTRB(
                               0 * fem, 0 * fem, 77 * fem, 0 * fem),
-                          child: Text(
-                            'Login via MPIN',
-                            style: SafeGoogleFont(
-                              'Montserrat',
-                              fontSize: 16 * ffem,
-                              fontWeight: FontWeight.w500,
-                              height: 1.2175 * ffem / fem,
-                              color: const Color(0xff8fd4ff),
+                          child: InkWell(
+                            onTap: () {
+                              Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => MPinPage()),
+                              );
+                            },
+                            child: Text(
+                              'Login via MPIN',
+                              style: SafeGoogleFont(
+                                'Montserrat',
+                                fontSize: 16 * ffem,
+                                fontWeight: FontWeight.w500,
+                                height: 1.2175 * ffem / fem,
+                                color: const Color(0xff8fd4ff),
+                              ),
                             ),
                           ),
                         ),
@@ -231,14 +243,24 @@ class _logincreenState extends State<logincreen> {
                     child: SizedBox(
                       width: 180 * fem,
                       height: 20 * fem,
-                      child: Text(
-                        'Use Onboarding Code',
-                        style: SafeGoogleFont(
-                          'Montserrat',
-                          fontSize: 16 * ffem,
-                          fontWeight: FontWeight.w500,
-                          height: 1.2175 * ffem / fem,
-                          color: const Color(0xff8fd4ff),
+                      child: InkWell(
+                        onTap: () {
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    const onBoardingCodeScreen()),
+                          );
+                        },
+                        child: Text(
+                          'Use Onboarding Code',
+                          style: SafeGoogleFont(
+                            'Montserrat',
+                            fontSize: 16 * ffem,
+                            fontWeight: FontWeight.w500,
+                            height: 1.2175 * ffem / fem,
+                            color: const Color(0xff8fd4ff),
+                          ),
                         ),
                       ),
                     ),
@@ -249,7 +271,14 @@ class _logincreenState extends State<logincreen> {
                   left: 31 * fem,
                   top: 629 * fem,
                   child: TextButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => const dashboardScreen(),
+                        ),
+                      );
+                    },
                     style: TextButton.styleFrom(
                       padding: EdgeInsets.zero,
                     ),
