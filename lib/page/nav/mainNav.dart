@@ -2,7 +2,8 @@ import 'package:digicoop/util/utils.dart';
 import 'package:flutter/material.dart';
 
 class navBottom extends StatelessWidget {
-  const navBottom({super.key});
+  final String pageActive;
+  const navBottom({super.key, required this.pageActive});
 
   @override
   Widget build(BuildContext context) {
@@ -35,9 +36,10 @@ class navBottom extends StatelessWidget {
                 ),
               ),
             ),
+            //Home
             Positioned(
               // frame15d83 (2011:357)
-              left: 25.5 * fem,
+              left: 40 * fem,
               top: 39 * fem,
               child: Container(
                 padding:
@@ -53,7 +55,12 @@ class navBottom extends StatelessWidget {
                           0 * fem, 0 * fem, 0 * fem, 7 * fem),
                       width: 22 * fem,
                       height: 19 * fem,
-                      child: const Icon(Icons.home),
+                      child: Icon(
+                        Icons.home,
+                        color: pageActive == "home"
+                            ? const Color(0xff259ded)
+                            : const Color(0xff8fd4ff),
+                      ),
                     ),
                     Text(
                       // homednF (2011:361)
@@ -63,16 +70,21 @@ class navBottom extends StatelessWidget {
                         fontSize: 10 * ffem,
                         fontWeight: FontWeight.w600,
                         height: 1.2175 * ffem / fem,
-                        color: const Color(0xff259ded),
+                        color: pageActive == "home"
+                            ? const Color(0xff259ded)
+                            : const Color(0xff8fd4ff),
                       ),
                     ),
                   ],
                 ),
               ),
             ),
+            //End Home
+
+            //History
             Positioned(
               // frame14ahV (2011:362)
-              left: 106.125 * fem,
+              left: 110 * fem,
               top: 39 * fem,
               child: Container(
                 width: 36 * fem,
@@ -86,7 +98,12 @@ class navBottom extends StatelessWidget {
                           0 * fem, 0 * fem, 0 * fem, 4 * fem),
                       width: 24 * fem,
                       height: 24 * fem,
-                      child: const Icon(Icons.history_rounded),
+                      child: Icon(
+                        Icons.history_rounded,
+                        color: pageActive == "history"
+                            ? const Color(0xff259ded)
+                            : const Color(0xff8fd4ff),
+                      ),
                     ),
                     Text(
                       // history2Jb (2011:366)
@@ -96,13 +113,18 @@ class navBottom extends StatelessWidget {
                         fontSize: 10 * ffem,
                         fontWeight: FontWeight.w400,
                         height: 1.2175 * ffem / fem,
-                        color: const Color(0xff8fd4ff),
+                        color: pageActive == "history"
+                            ? const Color(0xff259ded)
+                            : const Color(0xff8fd4ff),
                       ),
                     ),
                   ],
                 ),
               ),
             ),
+            //End History
+
+            //Otp
             Positioned(
               // frame13ZJX (2011:367)
               left: 277.875 * fem,
@@ -119,7 +141,12 @@ class navBottom extends StatelessWidget {
                           0 * fem, 0 * fem, 0 * fem, 4 * fem),
                       width: 24 * fem,
                       height: 24 * fem,
-                      child: const Icon(Icons.lock_outline_sharp),
+                      child: Icon(
+                        Icons.lock_outline_sharp,
+                        color: pageActive == "otp"
+                            ? const Color(0xff259ded)
+                            : const Color(0xff8fd4ff),
+                      ),
                     ),
                     Text(
                       // otpzPq (2011:373)
@@ -129,30 +156,40 @@ class navBottom extends StatelessWidget {
                         fontSize: 10 * ffem,
                         fontWeight: FontWeight.w400,
                         height: 1.2175 * ffem / fem,
-                        color: const Color(0xff8fd4ff),
+                        color: pageActive == "otp"
+                            ? const Color(0xff259ded)
+                            : const Color(0xff8fd4ff),
                       ),
                     ),
                   ],
                 ),
               ),
             ),
+            //end otp
+
+            //More
             Positioned(
               // frame12jMR (2011:374)
-              left: 331.25 * fem,
-              top: 48.5 * fem,
+              left: 340 * fem,
+              top: 39 * fem,
               child: Container(
-                width: 26 * fem,
-                height: 23 * fem,
+                width: 24 * fem,
+                height: 41 * fem,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Container(
                       // moreexclamationqvF (2011:377)
                       margin: EdgeInsets.fromLTRB(
-                          0 * fem, 0 * fem, 0 * fem, 6 * fem),
-                      width: 16 * fem,
-                      height: 4 * fem,
-                      child: const Icon(Icons.more_horiz_rounded),
+                          0 * fem, 0 * fem, 0 * fem, 4 * fem),
+                      width: 24 * fem,
+                      height: 24 * fem,
+                      child: Icon(
+                        Icons.more_horiz_rounded,
+                        color: pageActive == "more"
+                            ? const Color(0xff259ded)
+                            : const Color(0xff8fd4ff),
+                      ),
                     ),
                     Text(
                       // moreknK (2011:383)
@@ -162,24 +199,45 @@ class navBottom extends StatelessWidget {
                         fontSize: 10 * ffem,
                         fontWeight: FontWeight.w400,
                         height: 1.2175 * ffem / fem,
-                        color: const Color(0xff8fd4ff),
+                        color: pageActive == "more"
+                            ? const Color(0xff259ded)
+                            : const Color(0xff8fd4ff),
                       ),
                     ),
                   ],
                 ),
               ),
             ),
+            //end more
+
             Positioned(
               // scanWFh (2011:392)
+              left: 171 * fem,
+              top: 0 * fem,
               child: InkWell(
                 onTap: () {},
                 child: Container(
-                  alignment: Alignment.center,
-                  decoration: BoxDecoration(
-                    color: Colors.red,
+                  width: 71 * fem,
+                  height: 71 * fem,
+                  decoration: const BoxDecoration(
+                    color: Color(0xff8fd4ff), // border color
                     shape: BoxShape.circle,
                   ),
-                  child: const Icon(Icons.qr_code_scanner),
+                  child: Padding(
+                    padding: const EdgeInsets.all(2), // border width
+                    child: Container(
+                      // or ClipRRect if you need to clip the content
+                      decoration: const BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Color(0xff259ded), // inner circle color
+                      ),
+                      child: const Icon(
+                        Icons.qr_code_scanner,
+                        size: 30,
+                        color: Colors.white,
+                      ), // inner content
+                    ),
+                  ),
                 ),
               ),
             ),
@@ -189,16 +247,3 @@ class navBottom extends StatelessWidget {
     );
   }
 }
-// CircleAvatar(
-//   backgroundImage: AssetImage(
-//       "assets/someimage.png"),
-//   child: Container(
-//     decoration: BoxDecoration(
-//       shape: BoxShape.circle,
-//       border: Border.all(
-//         color: Colors.white,
-//         width: 5.0,
-//       ),
-//     ),
-//   ),
-// )
