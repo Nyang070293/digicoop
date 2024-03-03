@@ -1,3 +1,4 @@
+import 'package:digicoop/page/cashin/cashin_main.dart';
 import 'package:digicoop/page/nav/mainNav.dart';
 import 'package:digicoop/page/verified/getVerified.dart';
 import 'package:digicoop/util/utils.dart';
@@ -467,98 +468,114 @@ class _dashboardScreenState extends State<dashboardScreen> {
                                                         CrossAxisAlignment
                                                             .start,
                                                     children: [
-                                                      SizedBox(
-                                                        // frame162983xPR (2008:182)
-                                                        width: 57 * fem,
-                                                        height: double.infinity,
-                                                        child: Column(
-                                                          crossAxisAlignment:
-                                                              CrossAxisAlignment
-                                                                  .center,
-                                                          children: [
-                                                            Container(
-                                                              // topupdisabled6Vd (2008:184)
-                                                              margin: EdgeInsets
-                                                                  .fromLTRB(
-                                                                      0 * fem,
-                                                                      0 * fem,
-                                                                      0 * fem,
-                                                                      2 * fem),
-                                                              padding: EdgeInsets
-                                                                  .fromLTRB(
-                                                                      17.13 *
-                                                                          fem,
-                                                                      17.5 *
-                                                                          fem,
-                                                                      20.5 *
-                                                                          fem,
-                                                                      14.5 *
-                                                                          fem),
-                                                              width: double
-                                                                  .infinity,
-                                                              decoration:
-                                                                  BoxDecoration(
-                                                                color: const Color(
-                                                                    0xfff0f7ff),
-                                                                borderRadius:
-                                                                    BorderRadius
-                                                                        .circular(5 *
-                                                                            fem),
-                                                                boxShadow: [
-                                                                  BoxShadow(
-                                                                    color: const Color(
-                                                                        0xffe7eaf0),
-                                                                    offset: Offset(
+                                                      GestureDetector(
+                                                        onTap: () {
+                                                          // Handle click action here
+                                                          Navigator
+                                                              .pushReplacement(
+                                                            context,
+                                                            MaterialPageRoute(
+                                                              builder: (_) =>
+                                                                  cashinMainScreen(),
+                                                            ),
+                                                          );
+                                                        },
+                                                        child: SizedBox(
+                                                          // frame162983xPR (2008:182)
+                                                          width: 57 * fem,
+                                                          height:
+                                                              double.infinity,
+                                                          child: Column(
+                                                            crossAxisAlignment:
+                                                                CrossAxisAlignment
+                                                                    .center,
+                                                            children: [
+                                                              Container(
+                                                                // topupdisabled6Vd (2008:184)
+                                                                margin: EdgeInsets
+                                                                    .fromLTRB(
                                                                         0 * fem,
-                                                                        3 * fem),
-                                                                    blurRadius:
-                                                                        2.5 *
+                                                                        0 * fem,
+                                                                        0 * fem,
+                                                                        2 * fem),
+                                                                padding: EdgeInsets
+                                                                    .fromLTRB(
+                                                                        17.13 *
                                                                             fem,
-                                                                  ),
-                                                                ],
-                                                              ),
-                                                              child: Center(
-                                                                // materialsymbolslightopeninphon (2011:250)
-                                                                child: SizedBox(
-                                                                  width: 19.38 *
-                                                                      fem,
-                                                                  height:
-                                                                      25 * fem,
-                                                                  child: Image
-                                                                      .asset(
-                                                                    'assets/images/open-in-phone.png',
+                                                                        17.5 *
+                                                                            fem,
+                                                                        20.5 *
+                                                                            fem,
+                                                                        14.5 *
+                                                                            fem),
+                                                                width: double
+                                                                    .infinity,
+                                                                decoration:
+                                                                    BoxDecoration(
+                                                                  color: const Color(
+                                                                      0xfff0f7ff),
+                                                                  borderRadius:
+                                                                      BorderRadius
+                                                                          .circular(5 *
+                                                                              fem),
+                                                                  boxShadow: [
+                                                                    BoxShadow(
+                                                                      color: const Color(
+                                                                          0xffe7eaf0),
+                                                                      offset: Offset(
+                                                                          0 * fem,
+                                                                          3 * fem),
+                                                                      blurRadius:
+                                                                          2.5 *
+                                                                              fem,
+                                                                    ),
+                                                                  ],
+                                                                ),
+                                                                child: Center(
+                                                                  // materialsymbolslightopeninphon (2011:250)
+                                                                  child:
+                                                                      SizedBox(
                                                                     width:
                                                                         19.38 *
                                                                             fem,
                                                                     height: 25 *
                                                                         fem,
+                                                                    child: Image
+                                                                        .asset(
+                                                                      'assets/images/open-in-phone.png',
+                                                                      width:
+                                                                          19.38 *
+                                                                              fem,
+                                                                      height: 25 *
+                                                                          fem,
+                                                                    ),
                                                                   ),
                                                                 ),
                                                               ),
-                                                            ),
-                                                            Text(
-                                                              // dashboardgCw (2008:183)
-                                                              'Cash In',
-                                                              textAlign:
-                                                                  TextAlign
-                                                                      .center,
-                                                              style:
-                                                                  SafeGoogleFont(
-                                                                'Montserrat',
-                                                                fontSize:
-                                                                    9 * ffem,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w600,
-                                                                height:
-                                                                    2.6666666667 *
-                                                                        ffem /
-                                                                        fem,
-                                                                color: const Color(
-                                                                    0x7f000000),
+                                                              Text(
+                                                                // dashboardgCw (2008:183)
+                                                                'Cash In',
+                                                                textAlign:
+                                                                    TextAlign
+                                                                        .center,
+                                                                style:
+                                                                    SafeGoogleFont(
+                                                                  'Montserrat',
+                                                                  fontSize:
+                                                                      9 * ffem,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w600,
+                                                                  height:
+                                                                      2.6666666667 *
+                                                                          ffem /
+                                                                          fem,
+                                                                  color: const Color(
+                                                                      0x7f000000),
+                                                                ),
                                                               ),
-                                                            ),
-                                                          ],
+                                                            ],
+                                                          ),
                                                         ),
                                                       ),
                                                       SizedBox(
