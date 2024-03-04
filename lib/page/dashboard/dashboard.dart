@@ -1,4 +1,4 @@
-import 'package:digicoop/page/cashin/cashin_main.dart';
+import 'package:digicoop/page/cashin_bank/cashin_main.dart';
 import 'package:digicoop/page/nav/mainNav.dart';
 import 'package:digicoop/page/verified/getVerified.dart';
 import 'package:digicoop/util/utils.dart';

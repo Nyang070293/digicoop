@@ -121,5 +121,28 @@ flutter:
     - assets/images/e-wallet.png
     - assets/images/ph-handshake.png
     - assets/images/bdo.png
+    - assets/images/ub.png
     - assets/images/arrow_blue_right.png
     - assets/images/bpi.png
+    - assets/images/peso.png
+    - assets/images/cashin_success.png
+    - assets/images/cashin_failed.png
+    - assets/images/cashin_pending.png
+    - assets/images/ctm.png
+    - assets/images/qr-code.png
+    - assets/images/e-wallet-1.png
+    - assets/images/withdrawal.png
+    - assets/images/freemium.png
+    - assets/images/7eleven.png
+    - assets/images/alfamart.png
+    - assets/images/ministop.png
+    - assets/images/allday.png
+    - assets/images/easyday.png
+    - assets/images/shop-counter-woman.png
+    - assets/images/mobile.png
+    - assets/images/money-investment.png
+    - assets/images/gcash.png
+    - assets/images/coinsph.png
+    - assets/images/grabpay.png
+    - assets/images/shopeepay.png
+    - assets/images/paypal.png
