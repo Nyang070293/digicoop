@@ -45,6 +45,8 @@ dependencies:
   shared_preferences:
   pinput: ^2.2.31
   intl: 
+  dio: ^5.4.0
+  localstorage: ^4.0.0+1
   
 dev_dependencies:
   flutter_test:

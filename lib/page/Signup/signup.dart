@@ -1,9 +1,13 @@
+import 'dart:convert';
+
 import 'package:digicoop/page/Signup/verificationCode.dart';
 import 'package:digicoop/util/textfield.dart';
 import 'package:digicoop/page/Login/login.dart';
 import 'package:digicoop/util/utils.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:dio/dio.dart';
+import 'package:localstorage/localstorage.dart';
 
 class signupScreen extends StatefulWidget {
   const signupScreen({super.key});
@@ -14,6 +18,7 @@ class signupScreen extends StatefulWidget {
 
 class _signupScreenState extends State<signupScreen> {
   final TextEditingController _numberController = TextEditingController();
+  final LocalStorage storage = LocalStorage('localstorage_app');
   void _onTap() {
     Navigator.pushReplacement(
       context,
@@ -190,12 +195,7 @@ class _signupScreenState extends State<signupScreen> {
                         10 * fem, 0 * fem, 0 * fem, 80 * fem),
                     child: TextButton(
                       onPressed: () {
-                        Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                            builder: (_) => verificationCodeScreen(),
-                          ),
-                        );
+                        postSignUpLocalStorage();
                       },
                       style: TextButton.styleFrom(
                         padding: EdgeInsets.zero,
@@ -289,7 +289,7 @@ class _signupScreenState extends State<signupScreen> {
                       ),
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 50,
                   ),
                 ],
@@ -297,6 +297,20 @@ class _signupScreenState extends State<signupScreen> {
             ),
           ),
         ),
+      ),
+    );
+  }
+
+  void postSignUpLocalStorage() {
+    storage.setItem('mobileNumber', _numberController);
+
+    final signUpInfo = json.encode({'mobileNumber': _numberController});
+    storage.setItem('signUpInfo', signUpInfo);
+
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+        builder: (_) => verificationCodeScreen(),
       ),
     );
   }
