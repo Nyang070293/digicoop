@@ -37,6 +37,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   google_fonts: ^6.1.0
   flutter_riverpod:
+  flutter_flavor: ^3.1.1 
   connectivity_plus:  
   http: 
   go_router: ^7.0.1
@@ -47,10 +48,11 @@ dependencies:
   intl: 
   dio: ^5.4.0
   localstorage: ^4.0.0+1
-  totp: 
   otp: ^3.1.4
   encrypt: ^5.0.1
   crypto: ^3.0.2
+  another_flushbar: ^1.12.30
+  flutter_screenutil: ^5.8.1
   
 dev_dependencies:
   flutter_test:

@@ -2,13 +2,14 @@ import 'package:digicoop/model/onBoardingModel.dart';
 import 'package:digicoop/page/Login/login.dart';
 import 'package:digicoop/util/utils.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class onBoardingScreen extends StatefulWidget {
-  @override
-  _onBoardingScreenState createState() => _onBoardingScreenState();
+class onBoardingScreen extends ConsumerStatefulWidget { 
+    @override
+  ConsumerState<onBoardingScreen> createState() => _onBoardingScreenState();
 }
 
-class _onBoardingScreenState extends State<onBoardingScreen> {
+class _onBoardingScreenState extends ConsumerState<onBoardingScreen> {
   int currentIndex = 0;
   late PageController _controller;
 

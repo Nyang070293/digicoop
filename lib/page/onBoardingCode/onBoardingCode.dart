@@ -1,5 +1,4 @@
 import 'package:digicoop/page/Login/login.dart';
-import 'package:digicoop/page/Signup/loading.dart';
 import 'package:digicoop/page/Signup/verificationCode.dart';
 import 'package:digicoop/util/textfield.dart';
 import 'package:digicoop/util/utils.dart';

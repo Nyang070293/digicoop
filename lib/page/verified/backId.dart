@@ -1,4 +1,3 @@
-import 'package:digicoop/page/verified/backId.dart';
 import 'package:digicoop/page/verified/confirm.dart';
 import 'package:digicoop/page/verified/photoid.dart';
 import 'package:digicoop/util/utils.dart';

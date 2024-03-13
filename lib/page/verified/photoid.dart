@@ -1,5 +1,4 @@
-import 'package:digicoop/page/verified/about.dart';
-import 'package:digicoop/page/verified/address.dart';
+
 import 'package:digicoop/page/verified/frontId.dart';
 import 'package:digicoop/page/verified/scanface.dart';
 import 'package:digicoop/util/textfield.dart';

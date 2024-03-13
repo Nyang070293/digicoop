@@ -1,5 +1,3 @@
-import 'package:digicoop/page/Signup/homeAddress.dart';
-import 'package:digicoop/page/Signup/loading.dart';
 import 'package:digicoop/page/verified/photoid.dart';
 import 'package:digicoop/page/verified/waitingapproval.dart';
 import 'package:digicoop/util/customCheckbox.dart';

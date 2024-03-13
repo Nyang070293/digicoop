@@ -16,7 +16,6 @@ class _cashinbankSelectScreenState extends State<cashinbankSelectScreen> {
   final TextEditingController _payment = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
 
     double baseWidth = 414;
     double fem = MediaQuery.of(context).size.width / baseWidth;

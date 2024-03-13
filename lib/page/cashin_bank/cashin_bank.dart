@@ -13,7 +13,6 @@ class cashinBankScreen extends StatefulWidget {
 class _cashinBankScreenState extends State<cashinBankScreen> {
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
 
     double baseWidth = 414;
     double fem = MediaQuery.of(context).size.width / baseWidth;

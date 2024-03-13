@@ -1,4 +1,3 @@
-import 'package:digicoop/page/cashin_bank/cashinBankSelect.dart';
 import 'package:digicoop/page/cashin_bank/cashin_main.dart';
 import 'package:digicoop/page/cashin_otc/cashinotc_select.dart';
 import 'package:digicoop/util/utils.dart';
@@ -14,7 +13,6 @@ class cashinotcScreen extends StatefulWidget {
 class _cashinotcScreenState extends State<cashinotcScreen> {
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
 
     double baseWidth = 414;
     double fem = MediaQuery.of(context).size.width / baseWidth;
