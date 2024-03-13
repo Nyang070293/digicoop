@@ -1,3 +1,4 @@
+import 'package:digicoop/Function/aes.dart';
 import 'package:digicoop/page/Signup/signup.dart';
 import 'package:digicoop/page/dashboard/dashboard.dart';
 import 'package:digicoop/page/mpin/mpin_page.dart';
@@ -6,6 +7,8 @@ import 'package:digicoop/util/textfield.dart';
 import 'package:digicoop/util/utils.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:encrypt/encrypt.dart' as encrypt;
+import 'package:totp/totp.dart';
 
 class loginScreen extends StatefulWidget {
   const loginScreen({super.key});
@@ -17,6 +20,8 @@ class loginScreen extends StatefulWidget {
 class _loginScreenState extends State<loginScreen> {
   final TextEditingController _numberController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  final _key = encrypt.Key.fromUtf8('my32lengthsupersecretnooneknows1');
+  final _iv = encrypt.IV.fromLength(16);
 
   void _onTap() {
     Navigator.pushReplacement(
@@ -25,6 +30,69 @@ class _loginScreenState extends State<loginScreen> {
         builder: (_) => const signupScreen(),
       ),
     );
+  }
+
+  // void main() {
+  //   final code6 = OTP.generateTOTPCodeString(
+  //       'PPZPJDZGNGXELNVL', DateTime.now().millisecondsSinceEpoch,
+  //       interval: 36000);
+  //   print(code6);
+  //   //  print(OTP.remainingSeconds(interval: 60));
+  // }
+
+  Future<void> sendData() async {
+    //final totp = Totp(secret: 'PPZPJDZGNGXELNVL'.codeUnits, digits: 6);
+    final totp = Totp(
+        secret: 'PPZPJDZGNGXELNVL'.codeUnits,
+        digits: 6,
+        algorithm: Algorithm.sha1,
+        period: 43200);
+
+    // final totp = Totp(
+    //     secret: 'PPZPJDZGNGXELNVL'.codeUnits,
+    //     digits: 6,
+    //     algorithm: Algorithm.sha256,
+    //     period: 36000);
+
+    // String totp = TOTP.generateTOTP('PPZPJDZGNGXELNVL',
+    //     algorithm: sha256.toString(), digits: 6, period: 36000);
+
+    // var now = DateTime.now();
+    // // //now = DateTime(2023, 04, 26, 10, 10, 10);
+
+    // final code = OTP.generateTOTPCodeString(
+    //     'PPZPJDZGNGXELNVL', DateTime.now().millisecondsSinceEpoch,
+    //     interval: 43200, algorithm: Algorithm.SHA256, isGoogle: false);
+    // print(code);
+
+    const plainText =
+        '{"applicationId": 0,  "isTest": 0,  "mobileNumber": "09269694352"}'; // Payload to encrypt
+
+    final encrypted = Aes256.encrypt(plainText, totp.now());
+    print("plainText ${plainText}");
+    print("code ${totp.now()}");
+    print("encrypt ${encrypted}");
+    // final key = encrypt.Key.fromSecureRandom(32);
+    // final iv = encrypt.IV.fromSecureRandom(16);
+    // final encrypter = encrypt.Encrypter(encrypt.AES(_key)); // AES encryption
+
+    // final encryptedPayload =
+    //     encrypter.encrypt(plainText, iv: _iv); // Encrypt the payload
+    // print("encrypt ${encryptedPayload.base16}");
+    // final response = await http.post(
+    //   Uri.parse('https://your-api-endpoint.com'),
+    //   body: {
+    //     'data': encryptedPayload.base64, // Send the encrypted data
+    //   },
+    // );
+
+    // if (response.statusCode == 200) {
+    //   // Handle success
+    //   print('Success');
+    // } else {
+    //   // Handle error
+    //   print('Error: ${response.statusCode}');
+    // }
   }
 
   @override
@@ -271,14 +339,7 @@ class _loginScreenState extends State<loginScreen> {
                   left: 31 * fem,
                   top: 629 * fem,
                   child: TextButton(
-                    onPressed: () {
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                          builder: (_) => const dashboardScreen(),
-                        ),
-                      );
-                    },
+                    onPressed: sendData,
                     style: TextButton.styleFrom(
                       padding: EdgeInsets.zero,
                     ),
