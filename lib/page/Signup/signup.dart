@@ -1,31 +1,28 @@
 import 'dart:convert';
 
 import 'package:digicoop/page/Signup/verificationCode.dart';
+import 'package:digicoop/routes/route_generator.dart';
 import 'package:digicoop/util/textfield.dart';
 import 'package:digicoop/page/Login/login.dart';
 import 'package:digicoop/util/utils.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:dio/dio.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:localstorage/localstorage.dart';
 
-class signupScreen extends StatefulWidget {
+class signupScreen extends ConsumerStatefulWidget {
   const signupScreen({super.key});
 
   @override
-  State<signupScreen> createState() => _signupScreenState();
+  ConsumerState<signupScreen> createState() => _signupScreenState();
 }
 
-class _signupScreenState extends State<signupScreen> {
+class _signupScreenState extends ConsumerState<signupScreen> {
   final TextEditingController _numberController = TextEditingController();
   final LocalStorage storage = LocalStorage('localstorage_app');
   void _onTap() {
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(
-        builder: (_) => loginScreen(),
-      ),
-    );
+    context.pushReplacementNamed(login);
   }
 
   @override

@@ -1,4 +1,4 @@
-import 'package:digicoop/function/aes.dart'; 
+import 'package:digicoop/function/aes.dart';
 import 'package:digicoop/page/mpin/mpin_page.dart';
 import 'package:digicoop/page/onBoardingCode/onBoardingCode.dart';
 import 'package:digicoop/routes/route_generator.dart';
@@ -7,10 +7,11 @@ import 'package:digicoop/util/utils.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:encrypt/encrypt.dart' as encrypt;
-import 'package:go_router/go_router.dart'; 
+import 'package:go_router/go_router.dart';
 import 'package:otp/otp.dart';
 import 'package:timezone/data/latest.dart' as timezone;
 import 'package:timezone/timezone.dart' as timezone;
+
 class loginScreen extends StatefulWidget {
   const loginScreen({super.key});
 
@@ -20,9 +21,9 @@ class loginScreen extends StatefulWidget {
 
 class _loginScreenState extends State<loginScreen> {
   final TextEditingController _numberController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController(); 
+  final TextEditingController _passwordController = TextEditingController();
 
-  void _onTap() { 
+  void _onTap() {
     context.pushReplacementNamed(signup);
   }
 
@@ -35,23 +36,27 @@ class _loginScreenState extends State<loginScreen> {
   // }
 
   Future<void> sendData() async {
+    final now = DateTime.now();
+    timezone.initializeTimeZones();
 
-  final now = DateTime.now();
-  timezone.initializeTimeZones();
+    final pacificTimeZone = timezone.getLocation('Asia/Manila');
+    final date = timezone.TZDateTime.from(now, pacificTimeZone);
 
-  final pacificTimeZone = timezone.getLocation('Asia/Manila');
-  final date = timezone.TZDateTime.from(now, pacificTimeZone);
-   final code = OTP.generateTOTPCodeString(
-      'PPZPJDZGNGXELNVL', date.millisecondsSinceEpoch,interval: 43200,
-      algorithm: Algorithm.SHA1, isGoogle: true);
- 
+    final code = OTP.generateTOTPCodeString(
+        'PPZPJDZGNGXELNVL', date.millisecondsSinceEpoch,
+        interval: 43200, algorithm: Algorithm.SHA1, isGoogle: true);
+
     const plainText =
         '{"applicationId": 0,  "isTest": 0,  "mobileNumber": "09269694352"}'; // Payload to encrypt
 
+    const encoded =
+        'U2FsdGVkX1+a7Il6lbo42KkAKe/7R6eQqRsp8X8rBb2w9WZUJn5ZhcnvlX15rxO70fPgpi4qMTY6B0EI00f68egu6NoB6YHk8Li1R6Cb3cZs8W38McJeSSxI4+Bnu7rtOU+kUYB3kGnVAk1Ps61WriLdPH/XnSyHFNHviWKR9vxTs6TU2XkDeTkUuWq9Omrh6p8ZEr4i4E7BtNhPf0x0mGm8znfHoca59yio3+DCPFkDuTt+n8eI9nK0SFTQimBibL1St5sOqh3r8bETZpfGADoi0BQb9B1dvucFv7ni7f7UJ+MWebxpiO06v2QTOsx4Ebq4GVbbvTvhzbDuC1LP/K7rJS3H2zvUOJoBHLfmkWCq9SMFs5jLCU9k1yBzZ94sj+djGeoVFrZ776ERHPOthLhBW2eE7bGxI/V7T+Es1qN8SrzbSdJU5rzwygbfym1LkCQExynw3WOX/xlPCRRAtX/EGTNEyekRsDK5dfqEQqoMptsH0/N2DEo2J7tOLPtfTCqughCf2ZyAt58jhqixZuX4EJYheL89sidkk0whi/eHQxd1nHQoeCpMsTqlCsVUMVvur+nByonkp3cvyO6x+kHFh7zZgHQEqU0zGcvfAgWSwY9KhvuWpoW8dvgbJe1md+I1V/PyvcsgU/anb5SLKuHUsYcFrtx4N6BsVqE1cNfycqlP6ZsoohwiNpBiLYnXlVxk4RoOcV3j1oWCp6aV1U/FAk19hJs4h4+sCQG41k7/UHvrUWQqQ5twdiZcwyGbh0t0BD32Q18nAkwRMgsZmWZRAAGDBAJvfj8DemSNhZ5ls6hOcM07JjokcdE/JAUk1zKRIL0hNyxlMmqsQT+R/7UrKBlsF7vomhGiMV/bKvJDXuhl2cXunQKE9VltGXEHCH9kMMiXwwNrGHBH3IUg2gQ+bAHGMBZot05hUWz+b05pS0Q/OixQyt7rT8H/3uCXW+RH8sUxg79Huqqt4K/xvfUbb5DHxaewbs+9cOpgZ4HiO4O48ypm6M0WUUwnS0F4pXD3N3ivpMWAdNjeBFwTPn1qkyutStFUWsz9cX6AK0SYYMctHdM9hl3cLHT/EnuKweNc5jiRIQD0nWL1wNSI5m06mDkbwZDzUsgEoK6aKx2w9ltG2Tsa9pMR5hCdBj/rlmBKv48dpiCIDgppseQTY5BVPbudsM1o5KMbeLrk0AM17goVMqaFLrzq9lAoaAe7v8C96LesmeNrDKlzd2XDz65riyb1vsu8DAn7qPc753lwaHWXB7FnMpe5YIebvXdM/z8mg5Fkkdj4vNTJB0xQd1jpEOCl3Ee4nrdjkJw7XOIdzP5fe6VqBjM2fI3szdaWAhqGG8zASWdzH/2z6NRUsMAyAm6j+vnMRtrk+2HPGjHFGevS8gobruqOUMhHelcrS3vmcA24vgB1Mp6DosYsYJ1QNopfqM1x4ZqMD/qXr37qJCkG2htMf1bls1F6paipD2wRMWK9nDUTFR7bREJ6H9riPFNyWQv41rV1YMrW8tSe+NFsFNlBzhebnPvlEd7qm7QGBab85BIePO8sFkE6v02B2C3JKyOwhBcd/jpQT+hK1G99RRd8CrQ1R4s81JtioRIJo9TfQle+b8iu3EabZXfT4M2e5iXfARnviRyivwJoKlQ/MtfJKgL7D3zSDeihHnzDr7nP80uPiRYC2LisI1FfyfLATR5otbH0IlMVAvBHKiyculwtspyydLz+/7JeP/m1Gt70Xcby4tc+rCNHUHsHQVrfxvsdUb9bEvnmS2qMLjbI44zTL1xwDQNjd2Ammi9wzlLbxeKAwJSflO3+gF477bmBxjMwQ+YaRoZ24SmC93AqYjXlIFhqo8gcgTNtKh0bWqUbkL2R4mDBq307QV6tFthPiqT3jM/+SZr1UzY=';
     final encrypted = Aes256.encrypt(plainText, code);
+    final decrypt = Aes256.decrypt(encoded, code);
     print("plainText ${plainText}");
     print("code ${code}");
     print("encrypt ${encrypted}");
+    print("decrypt ${decrypt}");
     // final key = encrypt.Key.fromSecureRandom(32);
     // final iv = encrypt.IV.fromSecureRandom(16);
     // final encrypter = encrypt.Encrypter(encrypt.AES(_key)); // AES encryption

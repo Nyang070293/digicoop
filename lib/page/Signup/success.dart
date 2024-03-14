@@ -1,15 +1,16 @@
 import 'package:digicoop/page/Login/login.dart';
 import 'package:digicoop/util/utils.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class successScreen extends StatefulWidget {
+class successScreen extends ConsumerStatefulWidget {
   const successScreen({super.key});
 
   @override
-  State<successScreen> createState() => _successScreenState();
+  ConsumerState<successScreen> createState() => _successScreenState();
 }
 
-class _successScreenState extends State<successScreen> {
+class _successScreenState extends ConsumerState<successScreen> {
   @override
   Widget build(BuildContext context) {
     double baseWidth = 414;

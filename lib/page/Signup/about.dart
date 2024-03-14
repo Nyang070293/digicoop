@@ -3,24 +3,24 @@ import 'package:digicoop/page/Signup/setupMobilepin.dart';
 import 'package:digicoop/util/textfield.dart';
 import 'package:digicoop/util/utils.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
-class aboutScreen extends StatefulWidget {
+class aboutScreen extends ConsumerStatefulWidget {
   final Function(String)? onChanged;
 
   const aboutScreen({super.key, this.onChanged});
 
   @override
-  State<aboutScreen> createState() => _aboutScreenState();
+  ConsumerState<aboutScreen> createState() => _aboutScreenState();
 }
 
-class _aboutScreenState extends State<aboutScreen> {
+class _aboutScreenState extends ConsumerState<aboutScreen> {
   final TextEditingController _firstName = TextEditingController();
   final TextEditingController _middleName = TextEditingController();
   final TextEditingController _lastName = TextEditingController();
   final TextEditingController _suffix = TextEditingController();
   final TextEditingController _birthday = TextEditingController();
-  final TextEditingController _nationality = TextEditingController();
 
   String? _selectedGender;
   String? _selectedCS;
@@ -515,21 +515,6 @@ class _aboutScreenState extends State<aboutScreen> {
                                             ),
                                           ),
                                         ],
-                                      ),
-                                    ),
-
-                                    Container(
-                                      // group942Gqd (75:409)
-                                      margin: EdgeInsets.fromLTRB(
-                                          2 * fem, 0 * fem, 5 * fem, 19 * fem),
-                                      width: double.infinity,
-                                      height: 65 * fem,
-                                      child: CommonTextField(
-                                        controller: _nationality,
-                                        labelText: 'Nationality',
-                                        obscureText: false,
-                                        textInputAction: TextInputAction.next,
-                                        accentColor: const Color(0xff259ded),
                                       ),
                                     ),
 

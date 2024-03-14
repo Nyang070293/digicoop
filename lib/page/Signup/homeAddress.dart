@@ -4,26 +4,25 @@ import 'package:digicoop/util/customCheckbox.dart';
 import 'package:digicoop/util/textfield.dart';
 import 'package:digicoop/util/utils.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class homeAddressScreen extends StatefulWidget {
+class homeAddressScreen extends ConsumerStatefulWidget {
   final Function(String)? onChanged;
 
   const homeAddressScreen({super.key, this.onChanged});
 
   @override
-  State<homeAddressScreen> createState() => _homeAddressScreenState();
+  ConsumerState<homeAddressScreen> createState() => _homeAddressScreenState();
 }
 
-class _homeAddressScreenState extends State<homeAddressScreen> {
-  final TextEditingController _unitHouseno = TextEditingController();
-  final TextEditingController _building = TextEditingController();
-  final TextEditingController _streetName = TextEditingController();
-  final TextEditingController _additionalAddress = TextEditingController();
+class _homeAddressScreenState extends ConsumerState<homeAddressScreen> {
+  final TextEditingController _address1 = TextEditingController();
+  final TextEditingController _address2 = TextEditingController();
   final TextEditingController _postalCode = TextEditingController();
   bool _isOfficeAddress = false;
+  String? _selectedRegion;
   String? _selectedProvince;
   String? _selectedCity;
-  String? _selectedBrgy;
 
   @override
   Widget build(BuildContext context) {
@@ -186,8 +185,8 @@ class _homeAddressScreenState extends State<homeAddressScreen> {
                                       width: double.infinity,
                                       height: 65 * fem,
                                       child: CommonTextField(
-                                        controller: _unitHouseno,
-                                        labelText: 'Unit/House No.',
+                                        controller: _address1,
+                                        labelText: 'House No/Bldg/Flr',
                                         textInputAction: TextInputAction.next,
                                         accentColor: const Color(0xff259ded),
                                       ),
@@ -199,41 +198,104 @@ class _homeAddressScreenState extends State<homeAddressScreen> {
                                       width: double.infinity,
                                       height: 65 * fem,
                                       child: CommonTextField(
-                                        controller: _building,
-                                        labelText:
-                                            'Building/Subdivision Name (optional)',
-                                        textInputAction: TextInputAction.next,
-                                        accentColor: const Color(0xff259ded),
-                                      ),
-                                    ),
-                                    Container(
-                                      // group941mdy (75:406)
-                                      margin: EdgeInsets.fromLTRB(
-                                          0 * fem, 0 * fem, 0 * fem, 19 * fem),
-                                      width: double.infinity,
-                                      height: 65 * fem,
-                                      child: CommonTextField(
-                                        controller: _streetName,
-                                        labelText: 'Street Name',
-                                        textInputAction: TextInputAction.next,
-                                        accentColor: const Color(0xff259ded),
-                                      ),
-                                    ),
-                                    Container(
-                                      // group942Gqd (75:409)
-                                      margin: EdgeInsets.fromLTRB(
-                                          2 * fem, 0 * fem, 5 * fem, 19 * fem),
-                                      width: double.infinity,
-                                      height: 65 * fem,
-                                      child: CommonTextField(
-                                        controller: _additionalAddress,
-                                        labelText:
-                                            'Additional Address (optional)',
+                                        controller: _address2,
+                                        labelText: 'Subd/Brgy/Purok',
                                         textInputAction: TextInputAction.next,
                                         accentColor: const Color(0xff259ded),
                                       ),
                                     ),
 
+                                    Container(
+                                      // group944qfm (75:434)
+                                      margin: EdgeInsets.fromLTRB(
+                                          2 * fem, 0 * fem, 5 * fem, 20 * fem),
+                                      width: double.infinity,
+                                      height: 70 * fem,
+                                      child: Stack(
+                                        children: [
+                                          Positioned(
+                                            // genderyQb (75:499)
+                                            left: 0 * fem,
+                                            top: 0 * fem,
+                                            child: Align(
+                                              child: SizedBox(
+                                                width: 80 * fem,
+                                                height: 18 * fem,
+                                                child: Text(
+                                                  'Region',
+                                                  style: SafeGoogleFont(
+                                                    'Montserrat',
+                                                    fontSize: 16 * ffem,
+                                                    fontWeight: FontWeight.w500,
+                                                    color:
+                                                        const Color(0xff259ded),
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                          Positioned(
+                                            // group944Nhd (75:503)
+                                            left: 0 * fem,
+                                            top: 15 * fem,
+                                            child: SizedBox(
+                                              width: 348 * fem,
+                                              height: 65 * fem,
+                                              child: Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  SizedBox(
+                                                    width: double
+                                                        .infinity, // Set width as per your requirement
+
+                                                    child:
+                                                        DropdownButtonFormField<
+                                                            String>(
+                                                      value: _selectedRegion,
+                                                      onChanged:
+                                                          (String? newValue) {
+                                                        setState(() {
+                                                          _selectedRegion =
+                                                              newValue;
+                                                          if (widget
+                                                                  .onChanged !=
+                                                              null) {
+                                                            widget.onChanged!(
+                                                                _selectedRegion!);
+                                                          }
+                                                        });
+                                                      },
+                                                      items: <String>[
+                                                        'Brgy 1',
+                                                        'Brgy 2',
+                                                      ].map((String value) {
+                                                        return DropdownMenuItem<
+                                                            String>(
+                                                          value: value,
+                                                          child: Text(value),
+                                                        );
+                                                      }).toList(),
+                                                      decoration:
+                                                          const InputDecoration(
+                                                        border:
+                                                            UnderlineInputBorder(
+                                                          borderSide: BorderSide(
+                                                              color: Colors
+                                                                  .grey), // Add border color
+                                                        ),
+                                                        contentPadding:
+                                                            EdgeInsets.zero,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
                                     Container(
                                       // group944qfm (75:434)
                                       margin: EdgeInsets.fromLTRB(
@@ -415,98 +477,6 @@ class _homeAddressScreenState extends State<homeAddressScreen> {
                                                               color: Color(
                                                                   0xff259ded),
                                                               width: 2),
-                                                        ),
-                                                        contentPadding:
-                                                            EdgeInsets.zero,
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-
-                                    Container(
-                                      // group944qfm (75:434)
-                                      margin: EdgeInsets.fromLTRB(
-                                          2 * fem, 0 * fem, 5 * fem, 20 * fem),
-                                      width: double.infinity,
-                                      height: 70 * fem,
-                                      child: Stack(
-                                        children: [
-                                          Positioned(
-                                            // genderyQb (75:499)
-                                            left: 0 * fem,
-                                            top: 0 * fem,
-                                            child: Align(
-                                              child: SizedBox(
-                                                width: 80 * fem,
-                                                height: 18 * fem,
-                                                child: Text(
-                                                  'Barangay',
-                                                  style: SafeGoogleFont(
-                                                    'Montserrat',
-                                                    fontSize: 16 * ffem,
-                                                    fontWeight: FontWeight.w500,
-                                                    color:
-                                                        const Color(0xff259ded),
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                          Positioned(
-                                            // group944Nhd (75:503)
-                                            left: 0 * fem,
-                                            top: 15 * fem,
-                                            child: SizedBox(
-                                              width: 348 * fem,
-                                              height: 65 * fem,
-                                              child: Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: [
-                                                  SizedBox(
-                                                    width: double
-                                                        .infinity, // Set width as per your requirement
-
-                                                    child:
-                                                        DropdownButtonFormField<
-                                                            String>(
-                                                      value: _selectedBrgy,
-                                                      onChanged:
-                                                          (String? newValue) {
-                                                        setState(() {
-                                                          _selectedBrgy =
-                                                              newValue;
-                                                          if (widget
-                                                                  .onChanged !=
-                                                              null) {
-                                                            widget.onChanged!(
-                                                                _selectedBrgy!);
-                                                          }
-                                                        });
-                                                      },
-                                                      items: <String>[
-                                                        'Brgy 1',
-                                                        'Brgy 2',
-                                                      ].map((String value) {
-                                                        return DropdownMenuItem<
-                                                            String>(
-                                                          value: value,
-                                                          child: Text(value),
-                                                        );
-                                                      }).toList(),
-                                                      decoration:
-                                                          const InputDecoration(
-                                                        border:
-                                                            UnderlineInputBorder(
-                                                          borderSide: BorderSide(
-                                                              color: Colors
-                                                                  .grey), // Add border color
                                                         ),
                                                         contentPadding:
                                                             EdgeInsets.zero,

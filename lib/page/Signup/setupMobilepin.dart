@@ -4,15 +4,17 @@ import 'package:digicoop/util/textfield.dart';
 import 'package:digicoop/util/textfieldNumberFormat.dart';
 import 'package:digicoop/util/utils.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class setupMobilepinScreen extends StatefulWidget {
+class setupMobilepinScreen extends ConsumerStatefulWidget {
   const setupMobilepinScreen({super.key});
 
   @override
-  State<setupMobilepinScreen> createState() => _setupMobilepinScreenState();
+  ConsumerState<setupMobilepinScreen> createState() =>
+      _setupMobilepinScreenState();
 }
 
-class _setupMobilepinScreenState extends State<setupMobilepinScreen> {
+class _setupMobilepinScreenState extends ConsumerState<setupMobilepinScreen> {
   final TextEditingController _mobileController = TextEditingController();
   final TextEditingController _cmobileController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();

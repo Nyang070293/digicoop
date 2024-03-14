@@ -2,16 +2,19 @@ import 'package:digicoop/page/Signup/setupMobilepin.dart';
 import 'package:digicoop/page/Signup/signup.dart';
 import 'package:digicoop/util/utils.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pinput/pinput.dart';
 
-class verificationCodeScreen extends StatefulWidget {
+class verificationCodeScreen extends ConsumerStatefulWidget {
   const verificationCodeScreen({super.key});
 
   @override
-  State<verificationCodeScreen> createState() => _verificationCodeScreenState();
+  ConsumerState<verificationCodeScreen> createState() =>
+      _verificationCodeScreenState();
 }
 
-class _verificationCodeScreenState extends State<verificationCodeScreen> {
+class _verificationCodeScreenState
+    extends ConsumerState<verificationCodeScreen> {
   @override
   Widget build(BuildContext context) {
     double baseWidth = 414;

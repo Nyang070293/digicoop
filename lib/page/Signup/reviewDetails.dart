@@ -2,15 +2,16 @@ import 'package:digicoop/page/Signup/homeAddress.dart';
 import 'package:digicoop/page/Signup/loading.dart';
 import 'package:digicoop/util/utils.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class reviewDetailScreen extends StatefulWidget {
+class reviewDetailScreen extends ConsumerStatefulWidget {
   const reviewDetailScreen({super.key});
 
   @override
-  State<reviewDetailScreen> createState() => _reviewDetailScreenState();
+  ConsumerState<reviewDetailScreen> createState() => _reviewDetailScreenState();
 }
 
-class _reviewDetailScreenState extends State<reviewDetailScreen> {
+class _reviewDetailScreenState extends ConsumerState<reviewDetailScreen> {
   @override
   Widget build(BuildContext context) {
     double baseWidth = 414;

@@ -1,15 +1,16 @@
 import 'package:digicoop/page/Signup/success.dart';
 import 'package:flutter/material.dart';
 import 'package:digicoop/util/utils.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class loadingScreen extends StatefulWidget {
+class loadingScreen extends ConsumerStatefulWidget {
   const loadingScreen({super.key});
 
   @override
-  State<loadingScreen> createState() => _loadingScreenState();
+  ConsumerState<loadingScreen> createState() => _loadingScreenState();
 }
 
-class _loadingScreenState extends State<loadingScreen> {
+class _loadingScreenState extends ConsumerState<loadingScreen> {
   @override
   void initState() {
     super.initState();

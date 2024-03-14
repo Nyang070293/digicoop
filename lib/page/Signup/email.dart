@@ -3,15 +3,16 @@ import 'package:digicoop/page/Signup/homeAddress.dart';
 import 'package:digicoop/util/textfield.dart';
 import 'package:digicoop/util/utils.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class emailScreen extends StatefulWidget {
+class emailScreen extends ConsumerStatefulWidget {
   const emailScreen({super.key});
 
   @override
-  State<emailScreen> createState() => _emailScreenState();
+  ConsumerState<emailScreen> createState() => _emailScreenState();
 }
 
-class _emailScreenState extends State<emailScreen> {
+class _emailScreenState extends ConsumerState<emailScreen> {
   final TextEditingController _email = TextEditingController();
   @override
   Widget build(BuildContext context) {
