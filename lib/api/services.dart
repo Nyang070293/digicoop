@@ -3,7 +3,7 @@ import 'dart:developer';
 
 import 'package:digicoop/api/api_strings.dart';
 import 'package:digicoop/api/handler_helper.dart';
-import 'package:dio/dio.dart'; 
+import 'package:dio/dio.dart';
 
 class ServiceHost {
   /*
@@ -17,6 +17,15 @@ class ServiceHost {
       data: data,
       type: RequestType.post,
     );
+    return response;
+  }
+
+  static Future<Response> getRegion() async {
+    final response = await MethodHandler.helperhandler(
+      url: DigiCoopAPI.regions,
+      type: RequestType.get,
+    );
+
     return response;
   }
 }

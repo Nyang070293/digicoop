@@ -1,4 +1,5 @@
 import 'package:digicoop/constant/colors.dart';
+import 'package:digicoop/page/Signup/homeAddress.dart';
 import 'package:digicoop/page/Signup/signup.dart';
 import 'package:digicoop/page/onBoarding/splashscreen.dart';
 import 'package:flutter/material.dart';
@@ -9,7 +10,8 @@ import 'package:google_fonts/google_fonts.dart';
 const String splashscreen = "SplashScreen",
     login = "login",
     signup = "signup",
-    dashboard = "dashboard";
+    dashboard = "dashboard",
+    homeAddress = "homeAddress";
 
 // Route
 
@@ -35,6 +37,13 @@ final goRouter = Provider<GoRouter>((ref) {
         path: "/$signup",
         builder: (context, state) {
           return const signupScreen();
+        },
+      ),
+      GoRoute(
+        name: homeAddress,
+        path: "/$homeAddress",
+        builder: (context, state) {
+          return const homeAddressScreen();
         },
       ),
       // ShellRoute(

@@ -9,7 +9,6 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:localstorage/localstorage.dart';
 
 class signupScreen extends ConsumerStatefulWidget {
   const signupScreen({super.key});
@@ -20,7 +19,7 @@ class signupScreen extends ConsumerStatefulWidget {
 
 class _signupScreenState extends ConsumerState<signupScreen> {
   final TextEditingController _numberController = TextEditingController();
-  final LocalStorage storage = LocalStorage('localstorage_app');
+
   void _onTap() {
     context.pushReplacementNamed(login);
   }
@@ -192,7 +191,12 @@ class _signupScreenState extends ConsumerState<signupScreen> {
                         10 * fem, 0 * fem, 0 * fem, 80 * fem),
                     child: TextButton(
                       onPressed: () {
-                        postSignUpLocalStorage();
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                            builder: (_) => verificationCodeScreen(),
+                          ),
+                        );
                       },
                       style: TextButton.styleFrom(
                         padding: EdgeInsets.zero,
@@ -294,20 +298,6 @@ class _signupScreenState extends ConsumerState<signupScreen> {
             ),
           ),
         ),
-      ),
-    );
-  }
-
-  void postSignUpLocalStorage() {
-    storage.setItem('mobileNumber', _numberController);
-
-    final signUpInfo = json.encode({'mobileNumber': _numberController});
-    storage.setItem('signUpInfo', signUpInfo);
-
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(
-        builder: (_) => verificationCodeScreen(),
       ),
     );
   }

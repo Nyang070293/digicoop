@@ -1,3 +1,7 @@
+import 'dart:convert';
+
+import 'package:digicoop/global/regionGlobal.dart';
+import 'package:digicoop/model/regionModel.dart';
 import 'package:digicoop/page/Signup/email.dart';
 import 'package:digicoop/page/Signup/reviewDetails.dart';
 import 'package:digicoop/util/customCheckbox.dart';
@@ -5,6 +9,7 @@ import 'package:digicoop/util/textfield.dart';
 import 'package:digicoop/util/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:http/http.dart' as http;
 
 class homeAddressScreen extends ConsumerStatefulWidget {
   final Function(String)? onChanged;
@@ -20,12 +25,36 @@ class _homeAddressScreenState extends ConsumerState<homeAddressScreen> {
   final TextEditingController _address2 = TextEditingController();
   final TextEditingController _postalCode = TextEditingController();
   bool _isOfficeAddress = false;
-  String? _selectedRegion;
-  String? _selectedProvince;
+
+  // List<regionModel> _selectedRegion = [];
+  Regions? _selectedItem;
+
+  String? _sRegion;
   String? _selectedCity;
 
   @override
+  void initState() {
+    ref.read(region.notifier).getRegion();
+    super.initState();
+  }
+
+  // Future<void> fetchData() async {
+  //   final response = await http.get(Uri.parse(DigiCoopAPI.regions));
+
+  //   if (response.statusCode == 200) {
+  //     List<dynamic> parsedJson = json.decode(response.body);
+  //     setState(() {
+  //       _dataList = parsedJson.map((json) => regionModel.fromJson(json)).toList();
+  //     });
+  //   } else {
+  //     throw Exception('Failed to load data');
+  //   }
+  // }
+
+  @override
   Widget build(BuildContext context) {
+    List<Regions>? _selectedRegion = ref.watch(region).data?.regions!.toList();
+
     double baseWidth = 414;
     double fem = MediaQuery.of(context).size.width / baseWidth;
     double ffem = fem * 0.97;
@@ -251,31 +280,24 @@ class _homeAddressScreenState extends ConsumerState<homeAddressScreen> {
 
                                                     child:
                                                         DropdownButtonFormField<
-                                                            String>(
-                                                      value: _selectedRegion,
-                                                      onChanged:
-                                                          (String? newValue) {
-                                                        setState(() {
-                                                          _selectedRegion =
-                                                              newValue;
-                                                          if (widget
-                                                                  .onChanged !=
-                                                              null) {
-                                                            widget.onChanged!(
-                                                                _selectedRegion!);
-                                                          }
-                                                        });
-                                                      },
-                                                      items: <String>[
-                                                        'Brgy 1',
-                                                        'Brgy 2',
-                                                      ].map((String value) {
+                                                            Regions>(
+                                                      value: _selectedItem,
+                                                      items: _selectedRegion
+                                                          ?.map((data) {
                                                         return DropdownMenuItem<
-                                                            String>(
-                                                          value: value,
-                                                          child: Text(value),
+                                                            Regions>(
+                                                          value: data,
+                                                          child: Text(data
+                                                              .regionName
+                                                              .toString()),
                                                         );
                                                       }).toList(),
+                                                      onChanged: (newValue) {
+                                                        setState(() {
+                                                          _selectedItem =
+                                                              newValue;
+                                                        });
+                                                      },
                                                       decoration:
                                                           const InputDecoration(
                                                         border:
@@ -296,200 +318,200 @@ class _homeAddressScreenState extends ConsumerState<homeAddressScreen> {
                                         ],
                                       ),
                                     ),
-                                    Container(
-                                      // group944qfm (75:434)
-                                      margin: EdgeInsets.fromLTRB(
-                                          2 * fem, 0 * fem, 5 * fem, 20 * fem),
-                                      width: double.infinity,
-                                      height: 65 * fem,
-                                      child: Stack(
-                                        children: [
-                                          Positioned(
-                                            // genderyQb (75:499)
-                                            left: 0 * fem,
-                                            top: 0 * fem,
-                                            child: Align(
-                                              child: SizedBox(
-                                                width: 70 * fem,
-                                                height: 18 * fem,
-                                                child: Text(
-                                                  'Province',
-                                                  style: SafeGoogleFont(
-                                                    'Montserrat',
-                                                    fontSize: 16 * ffem,
-                                                    fontWeight: FontWeight.w500,
-                                                    color:
-                                                        const Color(0xff259ded),
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                          Positioned(
-                                            // group944Nhd (75:503)
-                                            left: 0 * fem,
-                                            top: 15 * fem,
-                                            child: SizedBox(
-                                              width: 348 * fem,
-                                              height: 65 * fem,
-                                              child: Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: [
-                                                  SizedBox(
-                                                    width: double
-                                                        .infinity, // Set width as per your requirement
-                                                    child:
-                                                        DropdownButtonFormField<
-                                                            String>(
-                                                      value: _selectedProvince,
-                                                      onChanged:
-                                                          (String? newValue) {
-                                                        setState(() {
-                                                          _selectedProvince =
-                                                              newValue;
-                                                          if (widget
-                                                                  .onChanged !=
-                                                              null) {
-                                                            widget.onChanged!(
-                                                                _selectedProvince!);
-                                                          }
-                                                        });
-                                                      },
-                                                      items: <String>[
-                                                        'Sample 1',
-                                                        'Sample 2'
-                                                      ].map((String value) {
-                                                        return DropdownMenuItem<
-                                                            String>(
-                                                          value: value,
-                                                          child: Text(value),
-                                                        );
-                                                      }).toList(),
-                                                      decoration:
-                                                          const InputDecoration(
-                                                        border:
-                                                            UnderlineInputBorder(
-                                                          borderSide: BorderSide(
-                                                              color: Colors
-                                                                  .grey), // Add border color
-                                                        ),
-                                                        focusedBorder:
-                                                            UnderlineInputBorder(
-                                                          borderSide: BorderSide(
-                                                              color: Color(
-                                                                  0xff259ded),
-                                                              width: 2),
-                                                        ),
-                                                        // Icon for the dropdown
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                    Container(
-                                      // group944qfm (75:434)
-                                      margin: EdgeInsets.fromLTRB(
-                                          2 * fem, 0 * fem, 5 * fem, 20 * fem),
-                                      width: double.infinity,
-                                      height: 70 * fem,
-                                      child: Stack(
-                                        children: [
-                                          Positioned(
-                                            // genderyQb (75:499)
-                                            left: 0 * fem,
-                                            top: 0 * fem,
-                                            child: Align(
-                                              child: SizedBox(
-                                                width: 80 * fem,
-                                                height: 18 * fem,
-                                                child: Text(
-                                                  'City',
-                                                  style: SafeGoogleFont(
-                                                    'Montserrat',
-                                                    fontSize: 16 * ffem,
-                                                    fontWeight: FontWeight.w500,
-                                                    color:
-                                                        const Color(0xff259ded),
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                          Positioned(
-                                            // group944Nhd (75:503)
-                                            left: 0 * fem,
-                                            top: 15 * fem,
-                                            child: SizedBox(
-                                              width: 348 * fem,
-                                              height: 65 * fem,
-                                              child: Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: [
-                                                  SizedBox(
-                                                    width: double
-                                                        .infinity, // Set width as per your requirement
+                                    // Container(
+                                    //   // group944qfm (75:434)
+                                    //   margin: EdgeInsets.fromLTRB(
+                                    //       2 * fem, 0 * fem, 5 * fem, 20 * fem),
+                                    //   width: double.infinity,
+                                    //   height: 65 * fem,
+                                    //   child: Stack(
+                                    //     children: [
+                                    //       Positioned(
+                                    //         // genderyQb (75:499)
+                                    //         left: 0 * fem,
+                                    //         top: 0 * fem,
+                                    //         child: Align(
+                                    //           child: SizedBox(
+                                    //             width: 70 * fem,
+                                    //             height: 18 * fem,
+                                    //             child: Text(
+                                    //               'Province',
+                                    //               style: SafeGoogleFont(
+                                    //                 'Montserrat',
+                                    //                 fontSize: 16 * ffem,
+                                    //                 fontWeight: FontWeight.w500,
+                                    //                 color:
+                                    //                     const Color(0xff259ded),
+                                    //               ),
+                                    //             ),
+                                    //           ),
+                                    //         ),
+                                    //       ),
+                                    //       Positioned(
+                                    //         // group944Nhd (75:503)
+                                    //         left: 0 * fem,
+                                    //         top: 15 * fem,
+                                    //         child: SizedBox(
+                                    //           width: 348 * fem,
+                                    //           height: 65 * fem,
+                                    //           child: Column(
+                                    //             crossAxisAlignment:
+                                    //                 CrossAxisAlignment.start,
+                                    //             children: [
+                                    //               SizedBox(
+                                    //                 width: double
+                                    //                     .infinity, // Set width as per your requirement
+                                    //                 child:
+                                    //                     DropdownButtonFormField<
+                                    //                         String>(
+                                    //                   value: _selectedProvince,
+                                    //                   onChanged:
+                                    //                       (String? newValue) {
+                                    //                     setState(() {
+                                    //                       _selectedProvince =
+                                    //                           newValue;
+                                    //                       if (widget
+                                    //                               .onChanged !=
+                                    //                           null) {
+                                    //                         widget.onChanged!(
+                                    //                             _selectedProvince!);
+                                    //                       }
+                                    //                     });
+                                    //                   },
+                                    //                   items: <String>[
+                                    //                     'Sample 1',
+                                    //                     'Sample 2'
+                                    //                   ].map((String value) {
+                                    //                     return DropdownMenuItem<
+                                    //                         String>(
+                                    //                       value: value,
+                                    //                       child: Text(value),
+                                    //                     );
+                                    //                   }).toList(),
+                                    //                   decoration:
+                                    //                       const InputDecoration(
+                                    //                     border:
+                                    //                         UnderlineInputBorder(
+                                    //                       borderSide: BorderSide(
+                                    //                           color: Colors
+                                    //                               .grey), // Add border color
+                                    //                     ),
+                                    //                     focusedBorder:
+                                    //                         UnderlineInputBorder(
+                                    //                       borderSide: BorderSide(
+                                    //                           color: Color(
+                                    //                               0xff259ded),
+                                    //                           width: 2),
+                                    //                     ),
+                                    //                     // Icon for the dropdown
+                                    //                   ),
+                                    //                 ),
+                                    //               ),
+                                    //             ],
+                                    //           ),
+                                    //         ),
+                                    //       ),
+                                    //     ],
+                                    //   ),
+                                    // ),
+                                    // Container(
+                                    //   // group944qfm (75:434)
+                                    //   margin: EdgeInsets.fromLTRB(
+                                    //       2 * fem, 0 * fem, 5 * fem, 20 * fem),
+                                    //   width: double.infinity,
+                                    //   height: 70 * fem,
+                                    //   child: Stack(
+                                    //     children: [
+                                    //       Positioned(
+                                    //         // genderyQb (75:499)
+                                    //         left: 0 * fem,
+                                    //         top: 0 * fem,
+                                    //         child: Align(
+                                    //           child: SizedBox(
+                                    //             width: 80 * fem,
+                                    //             height: 18 * fem,
+                                    //             child: Text(
+                                    //               'City',
+                                    //               style: SafeGoogleFont(
+                                    //                 'Montserrat',
+                                    //                 fontSize: 16 * ffem,
+                                    //                 fontWeight: FontWeight.w500,
+                                    //                 color:
+                                    //                     const Color(0xff259ded),
+                                    //               ),
+                                    //             ),
+                                    //           ),
+                                    //         ),
+                                    //       ),
+                                    //       Positioned(
+                                    //         // group944Nhd (75:503)
+                                    //         left: 0 * fem,
+                                    //         top: 15 * fem,
+                                    //         child: SizedBox(
+                                    //           width: 348 * fem,
+                                    //           height: 65 * fem,
+                                    //           child: Column(
+                                    //             crossAxisAlignment:
+                                    //                 CrossAxisAlignment.start,
+                                    //             children: [
+                                    //               SizedBox(
+                                    //                 width: double
+                                    //                     .infinity, // Set width as per your requirement
 
-                                                    child:
-                                                        DropdownButtonFormField<
-                                                            String>(
-                                                      value: _selectedCity,
-                                                      onChanged:
-                                                          (String? newValue) {
-                                                        setState(() {
-                                                          _selectedCity =
-                                                              newValue;
-                                                          if (widget
-                                                                  .onChanged !=
-                                                              null) {
-                                                            widget.onChanged!(
-                                                                _selectedCity!);
-                                                          }
-                                                        });
-                                                      },
-                                                      items: <String>[
-                                                        'City 1',
-                                                        'City 2',
-                                                      ].map((String value) {
-                                                        return DropdownMenuItem<
-                                                            String>(
-                                                          value: value,
-                                                          child: Text(value),
-                                                        );
-                                                      }).toList(),
-                                                      decoration:
-                                                          const InputDecoration(
-                                                        border:
-                                                            UnderlineInputBorder(
-                                                          borderSide: BorderSide(
-                                                              color: Colors
-                                                                  .grey), // Add border color
-                                                        ),
-                                                        focusedBorder:
-                                                            UnderlineInputBorder(
-                                                          borderSide: BorderSide(
-                                                              color: Color(
-                                                                  0xff259ded),
-                                                              width: 2),
-                                                        ),
-                                                        contentPadding:
-                                                            EdgeInsets.zero,
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
+                                    //                 child:
+                                    //                     DropdownButtonFormField<
+                                    //                         String>(
+                                    //                   value: _selectedCity,
+                                    //                   onChanged:
+                                    //                       (String? newValue) {
+                                    //                     setState(() {
+                                    //                       _selectedCity =
+                                    //                           newValue;
+                                    //                       if (widget
+                                    //                               .onChanged !=
+                                    //                           null) {
+                                    //                         widget.onChanged!(
+                                    //                             _selectedCity!);
+                                    //                       }
+                                    //                     });
+                                    //                   },
+                                    //                   items: <String>[
+                                    //                     'City 1',
+                                    //                     'City 2',
+                                    //                   ].map((String value) {
+                                    //                     return DropdownMenuItem<
+                                    //                         String>(
+                                    //                       value: value,
+                                    //                       child: Text(value),
+                                    //                     );
+                                    //                   }).toList(),
+                                    //                   decoration:
+                                    //                       const InputDecoration(
+                                    //                     border:
+                                    //                         UnderlineInputBorder(
+                                    //                       borderSide: BorderSide(
+                                    //                           color: Colors
+                                    //                               .grey), // Add border color
+                                    //                     ),
+                                    //                     focusedBorder:
+                                    //                         UnderlineInputBorder(
+                                    //                       borderSide: BorderSide(
+                                    //                           color: Color(
+                                    //                               0xff259ded),
+                                    //                           width: 2),
+                                    //                     ),
+                                    //                     contentPadding:
+                                    //                         EdgeInsets.zero,
+                                    //                   ),
+                                    //                 ),
+                                    //               ),
+                                    //             ],
+                                    //           ),
+                                    //         ),
+                                    //       ),
+                                    //     ],
+                                    //   ),
+                                    // ),
 
                                     Container(
                                       // group942Gqd (75:409)
