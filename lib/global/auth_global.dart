@@ -1,7 +1,6 @@
 import 'package:digicoop/api/services.dart';
-import 'package:digicoop/constant/shared_pref.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart'; 
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 enum AuthStatus { blank, unknowSkip, authenticated, unauthenticated }
 
@@ -33,8 +32,8 @@ class AuthGlobal extends ChangeNotifier {
         data: {"username": username!, "password": password});
 
     if (response.statusCode == 200) {
-      try { 
-      //  await SharedPrefs.write(tokenuser, response.data["token"]); 
+      try {
+        //  await SharedPrefs.write(tokenuser, response.data["token"]);
 
         state = AuthStatus.authenticated;
         notifyListeners();
@@ -59,7 +58,7 @@ class AuthGlobal extends ChangeNotifier {
   }
 
   void signOut() {
-   // SharedPrefs.remove(tokenuser);
+    // SharedPrefs.remove(tokenuser);
     state = AuthStatus.unauthenticated;
     //status();
   }

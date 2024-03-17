@@ -1,9 +1,5 @@
 import 'package:digicoop/util/utils.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/gestures.dart';
-import 'dart:ui';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:digicoop/util/utils.dart';
 
 class disclaimerScreen extends StatelessWidget {
   @override
@@ -11,13 +7,13 @@ class disclaimerScreen extends StatelessWidget {
     double baseWidth = 414;
     double fem = MediaQuery.of(context).size.width / baseWidth;
     double ffem = fem * 0.97;
-    return Container(
+    return SizedBox(
       width: double.infinity,
       child: Container(
         // cooperativesdisclaimeruR1 (114:14193)
         padding: EdgeInsets.fromLTRB(0 * fem, 0 * fem, 0 * fem, 142 * fem),
         width: double.infinity,
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           color: Color(0xffffffff),
         ),
         child: Column(
@@ -39,7 +35,7 @@ class disclaimerScreen extends StatelessWidget {
                         width: 414 * fem,
                         height: 896 * fem,
                         child: Container(
-                          decoration: BoxDecoration(
+                          decoration: const BoxDecoration(
                             color: Color(0xffffffff),
                           ),
                         ),
@@ -77,7 +73,7 @@ class disclaimerScreen extends StatelessWidget {
                               fontSize: 14 * ffem,
                               fontWeight: FontWeight.w400,
                               height: 1.3318751199 * ffem / fem,
-                              color: Color(0xff231f20),
+                              color: const Color(0xff231f20),
                             ),
                             children: [
                               TextSpan(
@@ -88,7 +84,7 @@ class disclaimerScreen extends StatelessWidget {
                                   fontSize: 14 * ffem,
                                   fontWeight: FontWeight.w400,
                                   height: 1.3318751199 * ffem / fem,
-                                  color: Color(0xff231f20),
+                                  color: const Color(0xff231f20),
                                 ),
                               ),
                               TextSpan(
@@ -98,7 +94,7 @@ class disclaimerScreen extends StatelessWidget {
                                   fontSize: 14 * ffem,
                                   fontWeight: FontWeight.w700,
                                   height: 1.3318751199 * ffem / fem,
-                                  color: Color(0xff231f20),
+                                  color: const Color(0xff231f20),
                                 ),
                               ),
                               TextSpan(
@@ -109,7 +105,7 @@ class disclaimerScreen extends StatelessWidget {
                                   fontSize: 14 * ffem,
                                   fontWeight: FontWeight.w400,
                                   height: 1.3318751199 * ffem / fem,
-                                  color: Color(0xff231f20),
+                                  color: const Color(0xff231f20),
                                 ),
                               ),
                               TextSpan(
@@ -119,7 +115,7 @@ class disclaimerScreen extends StatelessWidget {
                                   fontSize: 14 * ffem,
                                   fontWeight: FontWeight.w700,
                                   height: 1.3318751199 * ffem / fem,
-                                  color: Color(0xff231f20),
+                                  color: const Color(0xff231f20),
                                 ),
                               ),
                               TextSpan(
@@ -130,7 +126,7 @@ class disclaimerScreen extends StatelessWidget {
                                   fontSize: 14 * ffem,
                                   fontWeight: FontWeight.w400,
                                   height: 1.3318751199 * ffem / fem,
-                                  color: Color(0xff231f20),
+                                  color: const Color(0xff231f20),
                                 ),
                               ),
                               TextSpan(
@@ -140,7 +136,7 @@ class disclaimerScreen extends StatelessWidget {
                                   fontSize: 14 * ffem,
                                   fontWeight: FontWeight.w700,
                                   height: 1.3318751199 * ffem / fem,
-                                  color: Color(0xff231f20),
+                                  color: const Color(0xff231f20),
                                 ),
                               ),
                               TextSpan(
@@ -151,7 +147,7 @@ class disclaimerScreen extends StatelessWidget {
                                   fontSize: 14 * ffem,
                                   fontWeight: FontWeight.w400,
                                   height: 1.3318751199 * ffem / fem,
-                                  color: Color(0xff231f20),
+                                  color: const Color(0xff231f20),
                                 ),
                               ),
                               TextSpan(
@@ -161,7 +157,7 @@ class disclaimerScreen extends StatelessWidget {
                                   fontSize: 14 * ffem,
                                   fontWeight: FontWeight.w700,
                                   height: 1.3318751199 * ffem / fem,
-                                  color: Color(0xff231f20),
+                                  color: const Color(0xff231f20),
                                 ),
                               ),
                               TextSpan(
@@ -172,7 +168,7 @@ class disclaimerScreen extends StatelessWidget {
                                   fontSize: 14 * ffem,
                                   fontWeight: FontWeight.w400,
                                   height: 1.3318751199 * ffem / fem,
-                                  color: Color(0xff231f20),
+                                  color: const Color(0xff231f20),
                                 ),
                               ),
                               TextSpan(
@@ -182,7 +178,7 @@ class disclaimerScreen extends StatelessWidget {
                                   fontSize: 14 * ffem,
                                   fontWeight: FontWeight.w700,
                                   height: 1.3318751199 * ffem / fem,
-                                  color: Color(0xff231f20),
+                                  color: const Color(0xff231f20),
                                 ),
                               ),
                               TextSpan(
@@ -193,7 +189,7 @@ class disclaimerScreen extends StatelessWidget {
                                   fontSize: 14 * ffem,
                                   fontWeight: FontWeight.w400,
                                   height: 1.3318751199 * ffem / fem,
-                                  color: Color(0xff231f20),
+                                  color: const Color(0xff231f20),
                                 ),
                               ),
                               TextSpan(
@@ -203,7 +199,7 @@ class disclaimerScreen extends StatelessWidget {
                                   fontSize: 14 * ffem,
                                   fontWeight: FontWeight.w700,
                                   height: 1.3318751199 * ffem / fem,
-                                  color: Color(0xff231f20),
+                                  color: const Color(0xff231f20),
                                 ),
                               ),
                               TextSpan(
@@ -214,10 +210,10 @@ class disclaimerScreen extends StatelessWidget {
                                   fontSize: 14 * ffem,
                                   fontWeight: FontWeight.w400,
                                   height: 1.3318751199 * ffem / fem,
-                                  color: Color(0xff231f20),
+                                  color: const Color(0xff231f20),
                                 ),
                               ),
-                              TextSpan(
+                              const TextSpan(
                                 text: ' as ',
                               ),
                               TextSpan(
@@ -228,7 +224,7 @@ class disclaimerScreen extends StatelessWidget {
                                   fontSize: 14 * ffem,
                                   fontWeight: FontWeight.w400,
                                   height: 1.3318751199 * ffem / fem,
-                                  color: Color(0xff231f20),
+                                  color: const Color(0xff231f20),
                                 ),
                               ),
                             ],
@@ -247,10 +243,10 @@ class disclaimerScreen extends StatelessWidget {
                       width: 414 * fem,
                       height: 70 * fem,
                       decoration: BoxDecoration(
-                        color: Color(0xffffffff),
+                        color: const Color(0xffffffff),
                         boxShadow: [
                           BoxShadow(
-                            color: Color(0x3fb0b0b0),
+                            color: const Color(0x3fb0b0b0),
                             offset: Offset(0 * fem, 4 * fem),
                             blurRadius: 2 * fem,
                           ),
@@ -282,11 +278,11 @@ class disclaimerScreen extends StatelessWidget {
                                 fontSize: 18 * ffem,
                                 fontWeight: FontWeight.w600,
                                 height: 1.2175 * ffem / fem,
-                                color: Color(0xff231f20),
+                                color: const Color(0xff231f20),
                               ),
                             ),
                           ),
-                          Container(
+                          SizedBox(
                             // materialsymbolssearchYKR (114:14225)
                             width: 25.5 * fem,
                             height: 25.5 * fem,
@@ -332,7 +328,7 @@ class disclaimerScreen extends StatelessWidget {
                               fontSize: 24 * ffem,
                               fontWeight: FontWeight.w500,
                               height: 1.2175 * ffem / fem,
-                              color: Color(0xff262626),
+                              color: const Color(0xff262626),
                             ),
                           ),
                         ],
@@ -354,7 +350,7 @@ class disclaimerScreen extends StatelessWidget {
                             fontSize: 14 * ffem,
                             fontWeight: FontWeight.w400,
                             height: 1.3318751199 * ffem / fem,
-                            color: Color(0xff828282),
+                            color: const Color(0xff828282),
                           ),
                         ),
                       ),
@@ -376,11 +372,11 @@ class disclaimerScreen extends StatelessWidget {
                       69 * fem, 12 * fem, 23.67 * fem, 13 * fem),
                   width: double.infinity,
                   decoration: BoxDecoration(
-                    color: Color(0xff259ded),
+                    color: const Color(0xff259ded),
                     borderRadius: BorderRadius.circular(100 * fem),
                     boxShadow: [
                       BoxShadow(
-                        color: Color(0x3f000000),
+                        color: const Color(0x3f000000),
                         offset: Offset(0 * fem, 4 * fem),
                         blurRadius: 2 * fem,
                       ),
@@ -401,7 +397,7 @@ class disclaimerScreen extends StatelessWidget {
                             fontSize: 24 * ffem,
                             fontWeight: FontWeight.w500,
                             height: 1.2175 * ffem / fem,
-                            color: Color(0xffffffff),
+                            color: const Color(0xffffffff),
                           ),
                         ),
                       ),

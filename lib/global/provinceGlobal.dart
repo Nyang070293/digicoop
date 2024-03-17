@@ -4,19 +4,21 @@ import 'package:digicoop/Function/aes.dart';
 import 'package:digicoop/api/services.dart';
 import 'package:digicoop/constant/keys.dart';
 import 'package:digicoop/constant/shared_pref.dart';
-import 'package:digicoop/model/regionModel.dart';
+import 'package:digicoop/model/provinceModel.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-final region = AutoDisposeStateNotifierProvider<regionClass, regionModel>(
-    (ref) => regionClass());
+final province = AutoDisposeStateNotifierProvider<provinceClass, provinceModel>(
+    (ref) => provinceClass());
 
-class regionClass extends StateNotifier<regionModel> {
-  regionClass() : super(regionModel());
+class provinceClass extends StateNotifier<provinceModel> {
+  provinceClass() : super(provinceModel());
 
-  regionModel get region => state;
+  provinceModel get province => state;
 
-  Future<void> getRegion() async {
-    final result = await ServiceHost.getRegion();
+  Future<void> getProvince(
+    String? regionId,
+  ) async {
+    final result = await ServiceHost.getProvince(regionId);
     if (result.statusCode == 200) {
       String sentence = result.data.toString();
       List<String> words = sentence.split(': ');
@@ -25,9 +27,9 @@ class regionClass extends StateNotifier<regionModel> {
 
       final decrypt = Aes256.decrypt(modifiedString, SharedPrefs.read(totp));
       Map<String, dynamic> json = jsonDecode(decrypt!);
-      print("yang ${json}");
+      print("province ${json}");
 
-      state = regionModel.fromJson(json);
+      state = provinceModel.fromJson(json);
     }
   }
 }

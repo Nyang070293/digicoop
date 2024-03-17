@@ -1,3 +1,5 @@
+import 'package:digicoop/constant/keys.dart';
+import 'package:digicoop/constant/shared_pref.dart';
 import 'package:digicoop/function/aes.dart';
 import 'package:digicoop/page/mpin/mpin_page.dart';
 import 'package:digicoop/page/onBoardingCode/onBoardingCode.dart';
@@ -24,21 +26,18 @@ class _loginScreenState extends State<loginScreen> {
   final TextEditingController _passwordController = TextEditingController();
 
   void _onTap() {
-    context.pushReplacementNamed(homeAddress);
+    context.pushReplacementNamed(signup);
 
     //CipherPage
   }
 
-  // void main() {
-  //   final code6 = OTP.generateTOTPCodeString(
-  //       'PPZPJDZGNGXELNVL', DateTime.now().millisecondsSinceEpoch,
-  //       interval: 36000);
-  //   print(code6);
+  @override
+  void initState() {
+    getTOTP();
+    super.initState();
+  }
 
-  //   //  print(OTP.remainingSeconds(interval: 60));
-  // }
-
-  Future<void> sendData() async {
+  Future<void> getTOTP() async {
     final now = DateTime.now();
     timezone.initializeTimeZones();
 
@@ -49,39 +48,9 @@ class _loginScreenState extends State<loginScreen> {
         'PPZPJDZGNGXELNVL', date.millisecondsSinceEpoch,
         interval: 43200, algorithm: Algorithm.SHA1, isGoogle: true);
 
-    const plainText =
-        '{"applicationId": 0,  "isTest": 0,  "mobileNumber": "09269694352"}'; // Payload to encrypt
+    await SharedPrefs.write(totp, code);
 
-    const encoded =
-        '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';
-    final encrypted = Aes256.encrypt(plainText, code);
-
-    final decrypt = Aes256.decrypt(encoded, code);
-    print("plainText ${plainText}");
-    print("code ${code}");
-    print("encrypt ${encrypted}");
-    print("decrypt ${decrypt}");
-    // final key = encrypt.Key.fromSecureRandom(32);
-    // final iv = encrypt.IV.fromSecureRandom(16);
-    // final encrypter = encrypt.Encrypter(encrypt.AES(_key)); // AES encryption
-
-    // final encryptedPayload =
-    //     encrypter.encrypt(plainText, iv: _iv); // Encrypt the payload
-    // print("encrypt ${encryptedPayload.base16}");
-    // final response = await http.post(
-    //   Uri.parse('https://your-api-endpoint.com'),
-    //   body: {
-    //     'data': encryptedPayload.base64, // Send the encrypted data
-    //   },
-    // );
-
-    // if (response.statusCode == 200) {
-    //   // Handle success
-    //   print('Success');
-    // } else {
-    //   // Handle error
-    //   print('Error: ${response.statusCode}');
-    // }
+    // final decrypt = Aes256.decrypt(encoded, code);
   }
 
   @override
@@ -328,7 +297,7 @@ class _loginScreenState extends State<loginScreen> {
                   left: 31 * fem,
                   top: 629 * fem,
                   child: TextButton(
-                    onPressed: sendData,
+                    onPressed: () {},
                     style: TextButton.styleFrom(
                       padding: EdgeInsets.zero,
                     ),

@@ -1,6 +1,7 @@
 import 'package:digicoop/constant/colors.dart';
 import 'package:digicoop/page/Signup/homeAddress.dart';
 import 'package:digicoop/page/Signup/signup.dart';
+import 'package:digicoop/page/Signup/verificationCode.dart';
 import 'package:digicoop/page/onBoarding/splashscreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -10,8 +11,12 @@ import 'package:google_fonts/google_fonts.dart';
 const String splashscreen = "SplashScreen",
     login = "login",
     signup = "signup",
-    dashboard = "dashboard",
-    homeAddress = "homeAddress";
+    vCode = "vCode",
+    about = "about",
+    email = "email",
+    mpinCreate = "mpinCreate",
+    homeAddress = "homeAddress",
+    dashboard = "dashboard";
 
 // Route
 
@@ -37,6 +42,13 @@ final goRouter = Provider<GoRouter>((ref) {
         path: "/$signup",
         builder: (context, state) {
           return const signupScreen();
+        },
+      ),
+      GoRoute(
+        name: vCode,
+        path: "/$vCode",
+        builder: (context, state) {
+          return const verificationCodeScreen();
         },
       ),
       GoRoute(

@@ -1,5 +1,11 @@
 import 'dart:convert';
 
+import 'package:digicoop/Function/aes.dart';
+import 'package:digicoop/constant/flush_bar.dart';
+import 'package:digicoop/constant/keys.dart';
+import 'package:digicoop/constant/shared_pref.dart';
+import 'package:digicoop/global/userGlobal.dart';
+import 'package:digicoop/model/userModel.dart';
 import 'package:digicoop/page/Signup/verificationCode.dart';
 import 'package:digicoop/routes/route_generator.dart';
 import 'package:digicoop/util/textfield.dart';
@@ -22,6 +28,19 @@ class _signupScreenState extends ConsumerState<signupScreen> {
 
   void _onTap() {
     context.pushReplacementNamed(login);
+  }
+
+  Future<void> sendData(String Num) async {
+    ref.read(userCreate.notifier).createUser(Num);
+    String statusCode = ref.watch(userCreate).statusCode.toString();
+    String person_Code = ref.watch(userCreate).data!.personCode.toString();
+
+    if (statusCode == "201") {
+      await SharedPrefs.write(MobileNum, Num);
+      await SharedPrefs.write(personCode, person_Code);
+
+      context.pushNamed(vCode);
+    }
   }
 
   @override
@@ -191,12 +210,15 @@ class _signupScreenState extends ConsumerState<signupScreen> {
                         10 * fem, 0 * fem, 0 * fem, 80 * fem),
                     child: TextButton(
                       onPressed: () {
-                        Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                            builder: (_) => verificationCodeScreen(),
-                          ),
-                        );
+                        if (_numberController.text.isEmpty) {
+                          Flush.flushMessage(
+                            icons: Icons.error_outline,
+                            title: "Field Required",
+                            message: "Please enter your Mobile Number.",
+                          );
+                        } else {
+                          sendData(_numberController.text);
+                        }
                       },
                       style: TextButton.styleFrom(
                         padding: EdgeInsets.zero,

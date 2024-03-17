@@ -35,12 +35,12 @@ class MethodHandler {
                 ? {
                     "Content-Type": "application/json",
                     "Accept": "application/json",
-                    "Authorization": "Bearer "//${SharedPrefs.read(tokenuser)}"
+                    "Authorization": "Bearer " //${SharedPrefs.read(tokenuser)}"
                   }
                 : {},
           ),
         );
-
+        log(response.toString(), name: "handler_helper.dart");
         return response;
       } on dio.DioException catch (e) {
         return e.response!;
@@ -54,7 +54,7 @@ class MethodHandler {
                 ? {
                     "Content-Type": "application/json",
                     "Accept": "application/json",
-                    "Authorization": "Bearer"// ${SharedPrefs.read(tokenuser)}"
+                    "Authorization": "Bearer" // ${SharedPrefs.read(tokenuser)}"
                   }
                 : {},
           ),
@@ -73,7 +73,7 @@ class MethodHandler {
                 ? {
                     "Content-Type": "application/json",
                     "Accept": "application/json",
-                    "Authorization": "Bearer "//${SharedPrefs.read(tokenuser)}"
+                    "Authorization": "Bearer " //${SharedPrefs.read(tokenuser)}"
                   }
                 : {},
           ),
