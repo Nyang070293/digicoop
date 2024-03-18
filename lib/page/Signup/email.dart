@@ -24,7 +24,7 @@ class _emailScreenState extends ConsumerState<emailScreen> {
     await SharedPrefs.write(contactOptionId, 2);
     await SharedPrefs.write(contactOptionValue, _email.text);
 
-    context.pushNamed(reviewDetails);
+    context.pushNamed(homeAddress);
   }
 
   @override

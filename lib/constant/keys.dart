@@ -1,6 +1,6 @@
 import 'package:timezone/standalone.dart' as tz;
 
-const String tokenuser = "userToken",
+const String refreshToken = "refreshToken",
     totp = "totp",
     user_name = "user_name",
     tripCode = "tripCode",

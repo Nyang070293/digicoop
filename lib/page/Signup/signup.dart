@@ -47,7 +47,7 @@ class _signupScreenState extends ConsumerState<signupScreen> {
   Future<void> sendData(String num) async {
     try {
       final data =
-          '{"applicationId": 2,  "isTest": 0,  "mobileNumber": "$num"}';
+          '{"applicationId": "2",  "isTest": "0",  "mobileNumber": "$num"}';
 
       final encryptedBody = Aes256.encrypt(data, SharedPrefs.read(totp));
       http.Response response = await http.post(

@@ -260,12 +260,12 @@ class _verificationCodeScreenState
                         10 * fem, 0 * fem, 10 * fem, 10 * fem),
                     child: TextButton(
                       onPressed: () {
-                        Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                            builder: (_) => const setupMobilepinScreen(),
-                          ),
-                        );
+                        // Navigator.pushReplacement(
+                        //   context,
+                        //   MaterialPageRoute(
+                        //     builder: (_) => const setupMobilepinScreen(),
+                        //   ),
+                        // );
                       },
                       style: TextButton.styleFrom(
                         padding: EdgeInsets.zero,

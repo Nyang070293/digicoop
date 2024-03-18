@@ -1,6 +1,9 @@
+import 'package:digicoop/constant/flush_bar.dart';
 import 'package:digicoop/constant/keys.dart';
 import 'package:digicoop/constant/shared_pref.dart';
+import 'package:digicoop/dialog/simple_dialog.dart';
 import 'package:digicoop/function/aes.dart';
+import 'package:digicoop/global/auth_global.dart';
 import 'package:digicoop/page/mpin/mpin_page.dart';
 import 'package:digicoop/page/onBoardingCode/onBoardingCode.dart';
 import 'package:digicoop/routes/route_generator.dart';
@@ -9,32 +12,98 @@ import 'package:digicoop/util/utils.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:encrypt/encrypt.dart' as encrypt;
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:otp/otp.dart';
 import 'package:timezone/data/latest.dart' as timezone;
 import 'package:timezone/timezone.dart' as timezone;
 
-class loginScreen extends StatefulWidget {
+class loginScreen extends ConsumerStatefulWidget {
   const loginScreen({super.key});
 
   @override
-  State<loginScreen> createState() => _loginScreenState();
+  ConsumerState<loginScreen> createState() => _loginScreenState();
 }
 
-class _loginScreenState extends State<loginScreen> {
+class _loginScreenState extends ConsumerState<loginScreen> {
   final TextEditingController _numberController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
   void _onTap() {
     context.pushReplacementNamed(signup);
+  }
 
-    //CipherPage
+  void login() {
+    final auth = ref.watch(authScene);
+    // Simulate login action here
+    // You can replace the sleep with actual login logic
+    //Future.delayed(Duration(seconds: 2), () {
+    // After login is complete, close the loading dialog
+    auth.signIn(
+      username: _numberController.text,
+      password: _passwordController.text,
+      onError: (data) {
+        context.pop();
+        DialogCustom.dialog(
+          context: context,
+          title: "Something went wrong!",
+          titleButton: "Okay",
+          textTitleSize: 18.sp,
+          message: data,
+          press: () {
+            context.pop();
+          },
+        );
+      },
+      onSuccess: (data) async {
+        print('Login successful!');
+        context.pushReplacementNamed(dashboard);
+      },
+    );
+
+    // Navigate to the next screen or perform any other action
+    // For demonstration purposes, we just print a message
+
+    // });
+  }
+
+  @override
+  void dispose() {
+    // _connectivitySubscription.cancel();
+    super.dispose();
+    _numberController.dispose();
+    _passwordController.dispose();
   }
 
   @override
   void initState() {
     getTOTP();
     super.initState();
+  }
+
+  void showLoadingDialog() {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return const AlertDialog(
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              CircularProgressIndicator(),
+              SizedBox(height: 16),
+              Text(
+                "Logging in...",
+                style: TextStyle(
+                  fontFamily: 'Poppins',
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
   }
 
   Future<void> getTOTP() async {
@@ -297,7 +366,25 @@ class _loginScreenState extends State<loginScreen> {
                   left: 31 * fem,
                   top: 629 * fem,
                   child: TextButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      if (_numberController.text.isEmpty) {
+                        Flush.flushMessage(
+                            title: "Required Field.",
+                            icons: Icons.warning,
+                            message: "Please Enter your Mobile No.");
+                      } else if (_passwordController.text.isEmpty) {
+                        Flush.flushMessage(
+                            title: "Required Field.",
+                            icons: Icons.warning,
+                            message: "Please Enter your Password.");
+                      } else if (_numberController.text.isNotEmpty ||
+                          _passwordController.text.isNotEmpty) {
+                        showLoadingDialog();
+
+                        // Simulate login action
+                        login();
+                      }
+                    },
                     style: TextButton.styleFrom(
                       padding: EdgeInsets.zero,
                     ),

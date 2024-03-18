@@ -9,6 +9,7 @@ import 'package:digicoop/page/Signup/setupMobilepin.dart';
 import 'package:digicoop/page/Signup/signup.dart';
 import 'package:digicoop/page/Signup/success.dart';
 import 'package:digicoop/page/Signup/verificationCode.dart';
+import 'package:digicoop/page/dashboard/dashboard.dart';
 import 'package:digicoop/page/onBoarding/splashscreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -53,6 +54,13 @@ final goRouter = Provider<GoRouter>((ref) {
         path: "/$login",
         builder: (context, state) {
           return const loginScreen();
+        },
+      ),
+      GoRoute(
+        name: dashboard,
+        path: "/$dashboard",
+        builder: (context, state) {
+          return const dashboardScreen();
         },
       ),
       GoRoute(
