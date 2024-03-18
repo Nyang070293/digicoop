@@ -1,8 +1,17 @@
-import 'package:digicoop/page/Signup/homeAddress.dart';
+import 'dart:convert';
+
+import 'package:digicoop/Function/aes.dart';
+import 'package:digicoop/api/api_strings.dart';
+import 'package:digicoop/constant/keys.dart';
+import 'package:digicoop/constant/shared_pref.dart';
 import 'package:digicoop/page/Signup/loading.dart';
+import 'package:digicoop/routes/route_generator.dart';
 import 'package:digicoop/util/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
+import 'package:http/http.dart' as http;
+import 'package:intl/intl.dart';
 
 class reviewDetailScreen extends ConsumerStatefulWidget {
   const reviewDetailScreen({super.key});
@@ -11,7 +20,60 @@ class reviewDetailScreen extends ConsumerStatefulWidget {
   ConsumerState<reviewDetailScreen> createState() => _reviewDetailScreenState();
 }
 
+String getFirstLetters(String text) {
+  List<String> words = text.split(' ');
+  String initials = '';
+
+  for (String word in words) {
+    if (word.isNotEmpty) {
+      initials += word[0].toUpperCase();
+    }
+  }
+
+  return initials;
+}
+
 class _reviewDetailScreenState extends ConsumerState<reviewDetailScreen> {
+  Future<void> sendData() async {
+    try {
+      final data =
+          '{"firstName": "${SharedPrefs.read(firstname)}","lastName": "${SharedPrefs.read(lastname)}", "middleName": "${SharedPrefs.read(middlename)}", "suffix": "${SharedPrefs.read(suffix)}", "gender": "${SharedPrefs.read(gender)}", "birthDate": "${SharedPrefs.read(birthday)}", "birthPlace": "${SharedPrefs.read(birthplace)}", "civilStatus": "${SharedPrefs.read(civilstatus)}", "address1": "${SharedPrefs.read(address1)}", "address2": "${SharedPrefs.read(address2)}", "cityId": "${SharedPrefs.read(cityId)}","zipCode": "${SharedPrefs.read(zipCode)}","contactOptionId": "2", "contactOptionValue": "${SharedPrefs.read(contactOptionValue)}","addressTypeId": "${SharedPrefs.read(addressTypeId)}"}';
+
+      final encryptedBody = Aes256.encrypt(data, SharedPrefs.read(totp));
+      http.Response response = await http.post(
+        Uri.parse(DigiCoopAPI.register),
+        body: {'data': encryptedBody},
+      );
+
+      // Handle response
+      if (response.statusCode == 201) {
+        // Parse the JSON response body
+        final responseData = json.decode(response.body);
+        // Access specific data from the parsed response
+        var encryptData = responseData['data'];
+
+        final decrypt = Aes256.decrypt(encryptData, SharedPrefs.read(totp));
+        Map<String, dynamic> jsonData = jsonDecode(decrypt!);
+        print("reg ${jsonData}");
+
+        //context.pushNamed(l);
+      }
+    } catch (e) {
+      print('Error sending encrypted payload: $e');
+    }
+  }
+
+  String fullname =
+      "${SharedPrefs.read(firstname)} ${getFirstLetters(SharedPrefs.read(middlename))}. ${SharedPrefs.read(lastname)}";
+  String birthDate = DateFormat('MMM dd yyyy')
+      .format(DateTime.parse(SharedPrefs.read(birthday)));
+  String Gender = SharedPrefs.read(gender);
+  String cs = SharedPrefs.read(civilstatus);
+  String bp = SharedPrefs.read(birthplace);
+  String emailaddress = SharedPrefs.read(contactOptionValue);
+  String home_add =
+      "${SharedPrefs.read(address1)} ${SharedPrefs.read(address2)} ${SharedPrefs.read(zipCode)}";
+
   @override
   Widget build(BuildContext context) {
     double baseWidth = 414;
@@ -53,12 +115,7 @@ class _reviewDetailScreenState extends ConsumerState<reviewDetailScreen> {
                     children: [
                       GestureDetector(
                         onTap: () {
-                          Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                              builder: (_) => const homeAddressScreen(),
-                            ),
-                          );
+                          context.pushNamed(homeAddress);
                         },
                         child: Container(
                           // arrow1y5h (75:714)
@@ -190,7 +247,7 @@ class _reviewDetailScreenState extends ConsumerState<reviewDetailScreen> {
                                     ),
                                     Text(
                                       // juanpdelacruzSxo (41:6166)
-                                      'Juan P. Dela Cruz',
+                                      fullname,
                                       style: SafeGoogleFont(
                                         'Montserrat',
                                         fontSize: 16 * ffem,
@@ -226,7 +283,43 @@ class _reviewDetailScreenState extends ConsumerState<reviewDetailScreen> {
                                     ),
                                     Text(
                                       // feb2319901Pd (41:6176)
-                                      'Feb 23 1990',
+                                      birthDate,
+                                      style: SafeGoogleFont(
+                                        'Montserrat',
+                                        fontSize: 16 * ffem,
+                                        fontWeight: FontWeight.w600,
+                                        height: 1.2175 * ffem / fem,
+                                        color: Color(0xff259ded),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Container(
+                                // group955BfV (41:6173)
+                                margin: EdgeInsets.fromLTRB(
+                                    5 * fem, 0 * fem, 0 * fem, 2 * fem),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Container(
+                                      // birthdayVw5 (41:6175)
+                                      margin: EdgeInsets.fromLTRB(
+                                          0 * fem, 0 * fem, 0 * fem, 5 * fem),
+                                      child: Text(
+                                        'Birthplace',
+                                        style: SafeGoogleFont(
+                                          'Montserrat',
+                                          fontSize: 14 * ffem,
+                                          fontWeight: FontWeight.w400,
+                                          height: 1.2175 * ffem / fem,
+                                          color: Color(0xff828282),
+                                        ),
+                                      ),
+                                    ),
+                                    Text(
+                                      // feb2319901Pd (41:6176)
+                                      bp,
                                       style: SafeGoogleFont(
                                         'Montserrat',
                                         fontSize: 16 * ffem,
@@ -271,7 +364,7 @@ class _reviewDetailScreenState extends ConsumerState<reviewDetailScreen> {
                                       ),
                                       Text(
                                         // maleu7d (41:6171)
-                                        'Male',
+                                        Gender,
                                         style: SafeGoogleFont(
                                           'Montserrat',
                                           fontSize: 16 * ffem,
@@ -308,43 +401,7 @@ class _reviewDetailScreenState extends ConsumerState<reviewDetailScreen> {
                                     ),
                                     Text(
                                       // married5wD (41:6181)
-                                      'Married',
-                                      style: SafeGoogleFont(
-                                        'Montserrat',
-                                        fontSize: 16 * ffem,
-                                        fontWeight: FontWeight.w600,
-                                        height: 1.2175 * ffem / fem,
-                                        color: Color(0xff259ded),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Container(
-                                // group955RVH (41:6183)
-                                margin: EdgeInsets.fromLTRB(
-                                    5 * fem, 0 * fem, 0 * fem, 25 * fem),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Container(
-                                      // nationality9gB (41:6185)
-                                      margin: EdgeInsets.fromLTRB(
-                                          0 * fem, 0 * fem, 0 * fem, 5 * fem),
-                                      child: Text(
-                                        'Nationality',
-                                        style: SafeGoogleFont(
-                                          'Montserrat',
-                                          fontSize: 14 * ffem,
-                                          fontWeight: FontWeight.w400,
-                                          height: 1.2175 * ffem / fem,
-                                          color: Color(0xff828282),
-                                        ),
-                                      ),
-                                    ),
-                                    Text(
-                                      // filipino4HM (41:6186)
-                                      'Filipino',
+                                      cs,
                                       style: SafeGoogleFont(
                                         'Montserrat',
                                         fontSize: 16 * ffem,
@@ -380,7 +437,7 @@ class _reviewDetailScreenState extends ConsumerState<reviewDetailScreen> {
                                     ),
                                     Text(
                                       // juandelacruzmailcom39H (41:6191)
-                                      'juandelacruz@mail.com',
+                                      emailaddress,
                                       style: SafeGoogleFont(
                                         'Montserrat',
                                         fontSize: 16 * ffem,
@@ -421,7 +478,7 @@ class _reviewDetailScreenState extends ConsumerState<reviewDetailScreen> {
                                         maxWidth: 345 * fem,
                                       ),
                                       child: Text(
-                                        'blk 109 lot 10 Sanville Subdivision, Opal St. Tandang Sora Ave. Quezon City, NCR, Philippines, 2920',
+                                        home_add,
                                         style: SafeGoogleFont(
                                           'Montserrat',
                                           fontSize: 16 * ffem,
@@ -517,14 +574,20 @@ class _reviewDetailScreenState extends ConsumerState<reviewDetailScreen> {
                                 // editdetailsQpP (41:6204)
                                 margin: EdgeInsets.fromLTRB(
                                     117 * fem, 0 * fem, 0 * fem, 0 * fem),
-                                child: Text(
-                                  'Edit Details',
-                                  style: SafeGoogleFont(
-                                    'Montserrat',
-                                    fontSize: 18 * ffem,
-                                    fontWeight: FontWeight.w600,
-                                    height: 1.2175 * ffem / fem,
-                                    color: Color(0xff259ded),
+                                child: GestureDetector(
+                                  onTap: () {
+                                    // Handle click action here
+                                    context.pushNamed(about);
+                                  },
+                                  child: Text(
+                                    'Edit Details',
+                                    style: SafeGoogleFont(
+                                      'Montserrat',
+                                      fontSize: 18 * ffem,
+                                      fontWeight: FontWeight.w600,
+                                      height: 1.2175 * ffem / fem,
+                                      color: Color(0xff259ded),
+                                    ),
                                   ),
                                 ),
                               ),

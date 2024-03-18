@@ -1,7 +1,9 @@
 import 'package:digicoop/page/Login/login.dart';
+import 'package:digicoop/routes/route_generator.dart';
 import 'package:digicoop/util/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 class successScreen extends ConsumerStatefulWidget {
   const successScreen({super.key});
@@ -127,11 +129,7 @@ class _successScreenState extends ConsumerState<successScreen> {
                   child: TextButton(
                     // group4105yZ (41:4356)
                     onPressed: () {
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const loginScreen()),
-                      );
+                      context.pushReplacementNamed(login);
                     },
                     style: TextButton.styleFrom(
                       padding: EdgeInsets.zero,

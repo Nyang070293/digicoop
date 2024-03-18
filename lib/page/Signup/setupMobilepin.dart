@@ -1,10 +1,19 @@
+import 'dart:convert';
+
+import 'package:digicoop/Function/aes.dart';
+import 'package:digicoop/api/api_strings.dart';
+import 'package:digicoop/constant/flush_bar.dart';
+import 'package:digicoop/constant/keys.dart';
+import 'package:digicoop/constant/shared_pref.dart';
 import 'package:digicoop/page/Signup/about.dart';
-import 'package:digicoop/page/Signup/signup.dart';
+import 'package:digicoop/routes/route_generator.dart';
 import 'package:digicoop/util/textfield.dart';
 import 'package:digicoop/util/textfieldNumberFormat.dart';
 import 'package:digicoop/util/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
+import 'package:http/http.dart' as http;
 
 class setupMobilepinScreen extends ConsumerStatefulWidget {
   const setupMobilepinScreen({super.key});
@@ -19,6 +28,48 @@ class _setupMobilepinScreenState extends ConsumerState<setupMobilepinScreen> {
   final TextEditingController _cmobileController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _cpasswordController = TextEditingController();
+
+  Future<void> sendData(String password, String pinCode, String CpinCode,
+      String Cpassword) async {
+    try {
+      //print("personCode1 ${SharedPrefs.read(personCode)}");
+      final data =
+          '{"password": "$password",  "personCode": "${SharedPrefs.read(personCode)}",  "pinCode": "$pinCode", "pinCodeConfirm":"$CpinCode", "passwordConfirm": "$Cpassword"}';
+
+      final encryptedBody = Aes256.encrypt(data, SharedPrefs.read(totp));
+      print("encryptedBody MPIN $encryptedBody");
+      http.Response response = await http.post(
+        Uri.parse(DigiCoopAPI.mpin),
+        body: {'data': encryptedBody},
+      );
+      // Parse the JSON response body
+      final responseData = json.decode(response.body);
+      // Access specific data from the parsed response
+      var encryptData = responseData['data'];
+
+      final decrypt = Aes256.decrypt(encryptData, SharedPrefs.read(totp));
+      Map<String, dynamic> jsonData = jsonDecode(decrypt!);
+      print("verify ${jsonData}");
+      // Handle response
+      if (response.statusCode == 201) {
+        context.pushNamed(about);
+      } else if (response.statusCode == 400) {
+        Flush.flushMessage(
+          icons: Icons.error_outline,
+          title: "Error",
+          message: "${jsonData['message'][0]} ${jsonData['message'][1]}",
+        );
+      } else {
+        Flush.flushMessage(
+          icons: Icons.error_outline,
+          title: "Error",
+          message: jsonData['message'],
+        );
+      }
+    } catch (e) {
+      print('Error sending encrypted payload: $e');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -40,12 +91,7 @@ class _setupMobilepinScreenState extends ConsumerState<setupMobilepinScreen> {
               children: [
                 GestureDetector(
                   onTap: () {
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                        builder: (_) => signupScreen(),
-                      ),
-                    );
+                    context.pushNamed(signup);
                   },
                   child: Container(
                     // autogroupvvr3D7M (Ga7iBjsAwVPgcq6FKRvvr3)
@@ -282,12 +328,66 @@ class _setupMobilepinScreenState extends ConsumerState<setupMobilepinScreen> {
                               ),
                               TextButton(
                                 onPressed: () {
-                                  Navigator.pushReplacement(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (_) => aboutScreen(),
-                                    ),
-                                  );
+                                  if (_mobileController.text.isEmpty) {
+                                    Flush.flushMessage(
+                                      icons: Icons.error_outline,
+                                      title: "Field Required",
+                                      message:
+                                          "Please Enter 6-Digit Mobile Pin",
+                                    );
+                                  }
+
+                                  if (_cmobileController.text.isEmpty) {
+                                    Flush.flushMessage(
+                                      icons: Icons.error_outline,
+                                      title: "Field Required",
+                                      message:
+                                          "Please Enter Confirmation 6-Digit Mobile Pin",
+                                    );
+                                  }
+
+                                  if (_mobileController.text !=
+                                      _cmobileController.text) {
+                                    Flush.flushMessage(
+                                      icons: Icons.error_outline,
+                                      title: "Invalid Input",
+                                      message:
+                                          "Confirmation Mobile Pin does not match ",
+                                    );
+                                  }
+
+                                  if (_passwordController.text.isEmpty) {
+                                    Flush.flushMessage(
+                                      icons: Icons.error_outline,
+                                      title: "Field Required",
+                                      message: "Please Enter Password",
+                                    );
+                                  }
+
+                                  if (_cpasswordController.text.isEmpty) {
+                                    Flush.flushMessage(
+                                      icons: Icons.error_outline,
+                                      title: "Field Required",
+                                      message:
+                                          "Please Enter Confirmation Password",
+                                    );
+                                  }
+
+                                  if (_passwordController.text !=
+                                      _cpasswordController.text) {
+                                    Flush.flushMessage(
+                                      icons: Icons.error_outline,
+                                      title: "Invalid Input",
+                                      message:
+                                          "Confirmation Password does not match ",
+                                    );
+                                  }
+
+                                  sendData(
+                                      _passwordController.text,
+                                      _mobileController.text,
+                                      _cmobileController.text,
+                                      _cpasswordController.text);
                                 },
                                 style: TextButton.styleFrom(
                                   padding: EdgeInsets.zero,

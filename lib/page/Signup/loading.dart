@@ -1,7 +1,9 @@
 import 'package:digicoop/page/Signup/success.dart';
+import 'package:digicoop/routes/route_generator.dart';
 import 'package:flutter/material.dart';
 import 'package:digicoop/util/utils.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 class loadingScreen extends ConsumerStatefulWidget {
   const loadingScreen({super.key});
@@ -17,10 +19,8 @@ class _loadingScreenState extends ConsumerState<loadingScreen> {
     // Add a delay of 2 seconds before navigating to the next screen
     Future.delayed(const Duration(seconds: 5), () {
       // Navigate to the next screen after the delay
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => const successScreen()),
-      );
+
+      context.pushNamed(success);
     });
   }
 

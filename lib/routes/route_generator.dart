@@ -1,6 +1,13 @@
 import 'package:digicoop/constant/colors.dart';
+import 'package:digicoop/page/Login/login.dart';
+import 'package:digicoop/page/Signup/about.dart';
+import 'package:digicoop/page/Signup/email.dart';
 import 'package:digicoop/page/Signup/homeAddress.dart';
+import 'package:digicoop/page/Signup/loading.dart';
+import 'package:digicoop/page/Signup/reviewDetails.dart';
+import 'package:digicoop/page/Signup/setupMobilepin.dart';
 import 'package:digicoop/page/Signup/signup.dart';
+import 'package:digicoop/page/Signup/success.dart';
 import 'package:digicoop/page/Signup/verificationCode.dart';
 import 'package:digicoop/page/onBoarding/splashscreen.dart';
 import 'package:flutter/material.dart';
@@ -16,7 +23,11 @@ const String splashscreen = "SplashScreen",
     email = "email",
     mpinCreate = "mpinCreate",
     homeAddress = "homeAddress",
-    dashboard = "dashboard";
+    dashboard = "dashboard",
+    mpin = "mpin",
+    reviewDetails = "reviewDetails",
+    success = "success",
+    loading = "loading";
 
 // Route
 
@@ -38,6 +49,13 @@ final goRouter = Provider<GoRouter>((ref) {
         },
       ),
       GoRoute(
+        name: login,
+        path: "/$login",
+        builder: (context, state) {
+          return const loginScreen();
+        },
+      ),
+      GoRoute(
         name: signup,
         path: "/$signup",
         builder: (context, state) {
@@ -52,12 +70,55 @@ final goRouter = Provider<GoRouter>((ref) {
         },
       ),
       GoRoute(
+        name: mpin,
+        path: "/$mpin",
+        builder: (context, state) {
+          return const setupMobilepinScreen();
+        },
+      ),
+      GoRoute(
+        name: about,
+        path: "/$about",
+        builder: (context, state) {
+          return const aboutScreen();
+        },
+      ),
+      GoRoute(
+        name: email,
+        path: "/$email",
+        builder: (context, state) {
+          return const emailScreen();
+        },
+      ),
+      GoRoute(
         name: homeAddress,
         path: "/$homeAddress",
         builder: (context, state) {
           return const homeAddressScreen();
         },
       ),
+      GoRoute(
+        name: reviewDetails,
+        path: "/$reviewDetails",
+        builder: (context, state) {
+          return const reviewDetailScreen();
+        },
+      ),
+      GoRoute(
+        name: loading,
+        path: "/$loading",
+        builder: (context, state) {
+          return const loadingScreen();
+        },
+      ),
+      GoRoute(
+        name: success,
+        path: "/$success",
+        builder: (context, state) {
+          return const successScreen();
+        },
+      ),
+
       // ShellRoute(
       //     navigatorKey: shellKey,
       //     builder: (context, state, child) => DashBoardDrawer(

@@ -1,9 +1,14 @@
+import 'package:digicoop/constant/flush_bar.dart';
+import 'package:digicoop/constant/keys.dart';
+import 'package:digicoop/constant/shared_pref.dart';
 import 'package:digicoop/page/Signup/about.dart';
-import 'package:digicoop/page/Signup/homeAddress.dart';
+import 'package:email_validator/email_validator.dart';
+import 'package:digicoop/routes/route_generator.dart';
 import 'package:digicoop/util/textfield.dart';
 import 'package:digicoop/util/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 class emailScreen extends ConsumerStatefulWidget {
   const emailScreen({super.key});
@@ -14,6 +19,14 @@ class emailScreen extends ConsumerStatefulWidget {
 
 class _emailScreenState extends ConsumerState<emailScreen> {
   final TextEditingController _email = TextEditingController();
+
+  Future<void> sendData() async {
+    await SharedPrefs.write(contactOptionId, 2);
+    await SharedPrefs.write(contactOptionValue, _email.text);
+
+    context.pushNamed(reviewDetails);
+  }
+
   @override
   Widget build(BuildContext context) {
     double baseWidth = 414;
@@ -55,12 +68,7 @@ class _emailScreenState extends ConsumerState<emailScreen> {
                     children: [
                       GestureDetector(
                         onTap: () {
-                          Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                              builder: (_) => const aboutScreen(),
-                            ),
-                          );
+                          context.pushNamed(about);
                         },
                         child: Container(
                           // arrow1y5h (75:714)
@@ -193,12 +201,26 @@ class _emailScreenState extends ConsumerState<emailScreen> {
                                 ),
                                 child: TextButton(
                                   onPressed: () {
-                                    Navigator.pushReplacement(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (_) => homeAddressScreen(),
-                                      ),
-                                    );
+                                    if (_email.text.isEmpty) {
+                                      Flush.flushMessage(
+                                        icons: Icons.error_outline,
+                                        title: "Field Required",
+                                        message: "Please Select a Civil Status",
+                                      );
+                                      return;
+                                    }
+
+                                    if (EmailValidator.validate(_email.text) ==
+                                        false) {
+                                      Flush.flushMessage(
+                                        icons: Icons.error_outline,
+                                        title: "Invalid Email",
+                                        message:
+                                            "Please Enter correct email address",
+                                      );
+                                      return;
+                                    }
+                                    sendData();
                                   },
                                   style: TextButton.styleFrom(
                                     padding: EdgeInsets.zero,

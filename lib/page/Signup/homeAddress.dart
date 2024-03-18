@@ -1,5 +1,5 @@
-import 'dart:convert';
-
+import 'package:digicoop/constant/keys.dart';
+import 'package:digicoop/constant/shared_pref.dart';
 import 'package:digicoop/global/cityGlobal.dart';
 import 'package:digicoop/global/provinceGlobal.dart';
 import 'package:digicoop/global/regionGlobal.dart';
@@ -8,12 +8,13 @@ import 'package:digicoop/model/provinceModel.dart';
 import 'package:digicoop/model/regionModel.dart';
 import 'package:digicoop/page/Signup/email.dart';
 import 'package:digicoop/page/Signup/reviewDetails.dart';
+import 'package:digicoop/routes/route_generator.dart';
 import 'package:digicoop/util/customCheckbox.dart';
 import 'package:digicoop/util/textfield.dart';
 import 'package:digicoop/util/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:http/http.dart' as http;
+import 'package:go_router/go_router.dart';
 
 class homeAddressScreen extends ConsumerStatefulWidget {
   final Function(String)? onChanged;
@@ -41,6 +42,20 @@ class _homeAddressScreenState extends ConsumerState<homeAddressScreen> {
   void initState() {
     ref.read(region.notifier).getRegion();
     super.initState();
+  }
+
+  Future<void> sendData() async {
+    await SharedPrefs.write(address1, _address1.text);
+    await SharedPrefs.write(address2, _address2.text);
+    await SharedPrefs.write(zipCode, _postalCode.text);
+    await SharedPrefs.write(cityId, _selectedItemCity?.cityID.toString());
+    if (_isOfficeAddress) {
+      await SharedPrefs.write(addressTypeId, 1);
+    } else {
+      await SharedPrefs.write(addressTypeId, 0);
+    }
+
+    context.pushNamed(reviewDetails);
   }
 
   void getprovince(String regionID) {
@@ -103,6 +118,7 @@ class _homeAddressScreenState extends ConsumerState<homeAddressScreen> {
                               builder: (_) => const emailScreen(),
                             ),
                           );
+                          context.pushNamed(email);
                         },
                         child: Container(
                           // arrow1y5h (75:714)

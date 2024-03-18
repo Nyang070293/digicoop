@@ -1,9 +1,19 @@
+import 'dart:async';
+import 'dart:convert';
+
+import 'package:digicoop/Function/aes.dart';
+import 'package:digicoop/api/api_strings.dart';
+import 'package:digicoop/constant/flush_bar.dart';
+import 'package:digicoop/constant/keys.dart';
+import 'package:digicoop/constant/shared_pref.dart';
 import 'package:digicoop/page/Signup/setupMobilepin.dart';
-import 'package:digicoop/page/Signup/signup.dart';
+import 'package:digicoop/routes/route_generator.dart';
 import 'package:digicoop/util/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:pinput/pinput.dart';
+import 'package:http/http.dart' as http;
 
 class verificationCodeScreen extends ConsumerStatefulWidget {
   const verificationCodeScreen({super.key});
@@ -15,6 +25,65 @@ class verificationCodeScreen extends ConsumerStatefulWidget {
 
 class _verificationCodeScreenState
     extends ConsumerState<verificationCodeScreen> {
+  int _start = 60;
+  late Timer _timer;
+
+  void initState() {
+    super.initState();
+    _timer = Timer.periodic(Duration(seconds: 1), (Timer timer) {
+      if (_start == 0) {
+        setState(() {
+          _timer.cancel();
+        });
+      } else {
+        setState(() {
+          _start--;
+        });
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _timer.cancel();
+    super.dispose();
+  }
+
+  Future<void> sendData(String otp) async {
+    try {
+      print("personCode1 ${SharedPrefs.read(personCode)}");
+      final data =
+          '{"applicationId": 2,  "personCode": "${SharedPrefs.read(personCode)}",  "otpCode": "$otp"}';
+
+      final encryptedBody = Aes256.encrypt(data, SharedPrefs.read(totp));
+      print("encryptedBody $encryptedBody");
+      http.Response response = await http.post(
+        Uri.parse(DigiCoopAPI.validate),
+        body: {'data': encryptedBody},
+      );
+      // Parse the JSON response body
+      final responseData = json.decode(response.body);
+      // Access specific data from the parsed response
+      var encryptData = responseData['data'];
+
+      final decrypt = Aes256.decrypt(encryptData, SharedPrefs.read(totp));
+      Map<String, dynamic> jsonData = jsonDecode(decrypt!);
+      print("verify ${jsonData}");
+      // Handle response
+      if (response.statusCode == 201) {
+        context.pushNamed(mpin);
+      } else {
+        Flush.flushMessage(
+          icons: Icons.error_outline,
+          title: "Error",
+          message: jsonData['message'],
+        );
+      }
+    } catch (e) {
+      print('Error sending encrypted payload: $e');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     double baseWidth = 414;
@@ -54,12 +123,7 @@ class _verificationCodeScreenState
                 children: [
                   GestureDetector(
                     onTap: () {
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                          builder: (_) => signupScreen(),
-                        ),
-                      );
+                      context.pushNamed(signup);
                     },
                     child: Container(
                       // arrow1qLs (33:2006)
@@ -111,7 +175,7 @@ class _verificationCodeScreenState
                                 'We’ve sent a 6-digit authentication code to your mobile number ',
                           ),
                           TextSpan(
-                            text: '09xxxxxxx',
+                            text: SharedPrefs.read(MobileNum),
                             style: SafeGoogleFont(
                               'Montserrat',
                               fontSize: 14 * ffem,
@@ -140,7 +204,7 @@ class _verificationCodeScreenState
                               border: Border.all(color: Colors.grey),
                             ),
                           ),
-                          onCompleted: (pin) => debugPrint(pin),
+                          onCompleted: (pin) => sendData(pin),
                         ),
                       ],
                     ),
@@ -177,7 +241,7 @@ class _verificationCodeScreenState
                           ),
                           Text(
                             // seconds4RD (35:2021)
-                            '53 seconds',
+                            '$_start seconds',
                             style: SafeGoogleFont(
                               'Montserrat',
                               fontSize: 16 * ffem,

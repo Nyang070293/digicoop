@@ -1,12 +1,11 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:digicoop/Function/aes.dart';
+import 'package:digicoop/api/api_strings.dart';
 import 'package:digicoop/constant/flush_bar.dart';
 import 'package:digicoop/constant/keys.dart';
 import 'package:digicoop/constant/shared_pref.dart';
-import 'package:digicoop/global/userGlobal.dart';
-import 'package:digicoop/model/userModel.dart';
-import 'package:digicoop/page/Signup/verificationCode.dart';
 import 'package:digicoop/routes/route_generator.dart';
 import 'package:digicoop/util/textfield.dart';
 import 'package:digicoop/page/Login/login.dart';
@@ -15,6 +14,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:http/http.dart' as http;
 
 class signupScreen extends ConsumerStatefulWidget {
   const signupScreen({super.key});
@@ -30,18 +30,73 @@ class _signupScreenState extends ConsumerState<signupScreen> {
     context.pushReplacementNamed(login);
   }
 
-  Future<void> sendData(String Num) async {
-    ref.read(userCreate.notifier).createUser(Num);
-    String statusCode = ref.watch(userCreate).statusCode.toString();
-    String person_Code = ref.watch(userCreate).data!.personCode.toString();
+  // Future<void> sendData(String Num) async {
+  //   ref.read(userCreate.notifier).createUser(Num);
 
-    if (statusCode == "201") {
-      await SharedPrefs.write(MobileNum, Num);
-      await SharedPrefs.write(personCode, person_Code);
+  //   int? user = ref.watch(userCreate).statusCode;
 
-      context.pushNamed(vCode);
+  //   if (user == 201) {
+  //     SharedPrefs.write(
+  //         MobileNum, ref.watch(userCreate).data?.mobileNumber.toString());
+  //     SharedPrefs.write(
+  //         personCode, ref.watch(userCreate).data?.personCode.toString());
+  //     context.pushNamed(vCode);
+  //   }
+  // }
+
+  Future<void> sendData(String num) async {
+    try {
+      final data =
+          '{"applicationId": 2,  "isTest": 0,  "mobileNumber": "$num"}';
+
+      final encryptedBody = Aes256.encrypt(data, SharedPrefs.read(totp));
+      http.Response response = await http.post(
+        Uri.parse(DigiCoopAPI.createUser),
+        body: {'data': encryptedBody},
+      );
+
+      // Handle response
+      // Parse the JSON response body
+      final responseData = json.decode(response.body);
+      // Access specific data from the parsed response
+      var encryptData = responseData['data'];
+
+      final decrypt = Aes256.decrypt(encryptData, SharedPrefs.read(totp));
+      Map<String, dynamic> jsonData = jsonDecode(decrypt!);
+      print("verify ${jsonData}");
+
+      if (response.statusCode == 201) {
+        SharedPrefs.write(MobileNum, jsonData['data']['mobileNumber']);
+        SharedPrefs.write(personCode, jsonData['data']['personCode']);
+
+        print("personCode ${SharedPrefs.read(personCode)}");
+        context.pushNamed(vCode);
+      } else if (response.statusCode == 400) {
+        String msg = jsonData['message'].toString().replaceAll('[', '');
+        msg = msg.replaceAll(']', '');
+        Flush.flushMessage(
+          icons: Icons.error_outline,
+          title: "Error",
+          message: msg,
+        );
+      }
+    } catch (e) {
+      print('Error sending encrypted payload: $e');
     }
   }
+
+  // void verify() async {
+  //   int? statusCode = ref.watch(userCreate).statusCode;
+  //   String? person_Code = ref.watch(userCreate).data?.personCode.toString();
+  //   String? mobileno = ref.watch(userCreate).data?.mobileNumber.toString();
+
+  //   if (statusCode == 201) {
+  //     await SharedPrefs.write(MobileNum, mobileno);
+  //     await SharedPrefs.write(personCode, person_Code);
+
+  //     context.pushNamed(vCode);
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -66,12 +121,7 @@ class _signupScreenState extends ConsumerState<signupScreen> {
                 children: [
                   GestureDetector(
                     onTap: () {
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                          builder: (_) => loginScreen(),
-                        ),
-                      );
+                      context.pushNamed(login);
                     },
                     child: Container(
                       // arrow1WdM (41:6271)
@@ -129,7 +179,7 @@ class _signupScreenState extends ConsumerState<signupScreen> {
                           keyboardType: TextInputType.number,
                           prefixIconData: Icons.phone,
                           textInputAction: TextInputAction.next,
-                          accentColor: Color(0xff259ded),
+                          accentColor: const Color(0xff259ded),
                         ),
                         const SizedBox(height: 16),
                       ],

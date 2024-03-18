@@ -1,9 +1,12 @@
-import 'package:digicoop/page/Signup/email.dart';
-import 'package:digicoop/page/Signup/setupMobilepin.dart';
+import 'package:digicoop/constant/flush_bar.dart';
+import 'package:digicoop/constant/keys.dart';
+import 'package:digicoop/constant/shared_pref.dart';
+import 'package:digicoop/routes/route_generator.dart';
 import 'package:digicoop/util/textfield.dart';
 import 'package:digicoop/util/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 
 class aboutScreen extends ConsumerStatefulWidget {
@@ -20,6 +23,7 @@ class _aboutScreenState extends ConsumerState<aboutScreen> {
   final TextEditingController _middleName = TextEditingController();
   final TextEditingController _lastName = TextEditingController();
   final TextEditingController _suffix = TextEditingController();
+  final TextEditingController _birthplace = TextEditingController();
   final TextEditingController _birthday = TextEditingController();
 
   String? _selectedGender;
@@ -29,6 +33,18 @@ class _aboutScreenState extends ConsumerState<aboutScreen> {
   void initState() {
     _birthday.text = ""; //set the initial value of text field
     super.initState();
+  }
+
+  Future<void> sendData() async {
+    await SharedPrefs.write(firstname, _firstName.text);
+    await SharedPrefs.write(lastname, _lastName.text);
+    await SharedPrefs.write(middlename, _middleName.text);
+    await SharedPrefs.write(suffix, _suffix.text);
+    await SharedPrefs.write(gender, _selectedGender);
+    await SharedPrefs.write(birthday, _birthday.text);
+    await SharedPrefs.write(birthplace, _birthplace.text);
+    await SharedPrefs.write(civilstatus, _selectedCS);
+    context.pushNamed(email);
   }
 
   @override
@@ -74,12 +90,7 @@ class _aboutScreenState extends ConsumerState<aboutScreen> {
                     children: [
                       GestureDetector(
                         onTap: () {
-                          Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                              builder: (_) => const setupMobilepinScreen(),
-                            ),
-                          );
+                          context.pushNamed(mpin);
                         },
                         child: Container(
                           // arrow1y5h (75:714)
@@ -318,7 +329,19 @@ class _aboutScreenState extends ConsumerState<aboutScreen> {
                                         },
                                       ),
                                     ),
-
+                                    Container(
+                                      // group942Gqd (75:409)
+                                      margin: EdgeInsets.fromLTRB(
+                                          2 * fem, 0 * fem, 5 * fem, 19 * fem),
+                                      width: double.infinity,
+                                      height: 65 * fem,
+                                      child: CommonTextField(
+                                        controller: _birthplace,
+                                        labelText: 'Birthplace',
+                                        textInputAction: TextInputAction.next,
+                                        accentColor: const Color(0xff259ded),
+                                      ),
+                                    ),
                                     Container(
                                       // group944qfm (75:434)
                                       margin: EdgeInsets.fromLTRB(
@@ -528,12 +551,57 @@ class _aboutScreenState extends ConsumerState<aboutScreen> {
                                     2 * fem, 0 * fem, 0 * fem, 0 * fem),
                                 child: TextButton(
                                   onPressed: () {
-                                    Navigator.pushReplacement(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (_) => const emailScreen(),
-                                      ),
-                                    );
+                                    if (_firstName.text.isEmpty) {
+                                      Flush.flushMessage(
+                                        icons: Icons.error_outline,
+                                        title: "Field Required",
+                                        message: "Please Enter your Firstname",
+                                      );
+                                      return;
+                                    }
+                                    if (_lastName.text.isEmpty) {
+                                      Flush.flushMessage(
+                                        icons: Icons.error_outline,
+                                        title: "Field Required",
+                                        message: "Please Enter your Lastname",
+                                      );
+                                      return;
+                                    }
+
+                                    if (_birthday.text.isEmpty) {
+                                      Flush.flushMessage(
+                                        icons: Icons.error_outline,
+                                        title: "Field Required",
+                                        message: "Please Enter your Birthday",
+                                      );
+                                      return;
+                                    }
+                                    if (_birthplace.text.isEmpty) {
+                                      Flush.flushMessage(
+                                        icons: Icons.error_outline,
+                                        title: "Field Required",
+                                        message: "Please Enter your Birthplace",
+                                      );
+                                      return;
+                                    }
+                                    if (_selectedGender == "") {
+                                      Flush.flushMessage(
+                                        icons: Icons.error_outline,
+                                        title: "Field Required",
+                                        message: "Please Select a Gender",
+                                      );
+                                      return;
+                                    }
+                                    if (_selectedCS == "") {
+                                      Flush.flushMessage(
+                                        icons: Icons.error_outline,
+                                        title: "Field Required",
+                                        message: "Please Select a Civil Status",
+                                      );
+                                      return;
+                                    }
+
+                                    sendData();
                                   },
                                   style: TextButton.styleFrom(
                                     padding: EdgeInsets.zero,
