@@ -1,3 +1,6 @@
+import 'dart:convert';
+
+import 'package:digicoop/api/api_strings.dart';
 import 'package:digicoop/constant/flush_bar.dart';
 import 'package:digicoop/constant/keys.dart';
 import 'package:digicoop/constant/shared_pref.dart';
@@ -18,6 +21,7 @@ import 'package:go_router/go_router.dart';
 import 'package:otp/otp.dart';
 import 'package:timezone/data/latest.dart' as timezone;
 import 'package:timezone/timezone.dart' as timezone;
+import 'package:http/http.dart' as http;
 
 class loginScreen extends ConsumerStatefulWidget {
   const loginScreen({super.key});
@@ -66,6 +70,47 @@ class _loginScreenState extends ConsumerState<loginScreen> {
     // For demonstration purposes, we just print a message
 
     // });
+  }
+
+  Future<void> sendData(String username, String password) async {
+    try {
+      //print("personCode1 ${SharedPrefs.read(personCode)}");
+      final data =
+          '{"username": "$username","password": "$password",  "applicationId": "2", "location": "", "deviceType": "mobile"}';
+
+      final encryptedBody = Aes256.encrypt(data, SharedPrefs.read(totp));
+      print("encryptedBody MPIN $encryptedBody");
+      http.Response response = await http.post(
+        Uri.parse(DigiCoopAPI.logIn),
+        body: {'data': encryptedBody},
+      );
+      // Parse the JSON response body
+      final responseData = json.decode(response.body);
+      // Access specific data from the parsed response
+      var encryptData = responseData['data'];
+
+      final decrypt = Aes256.decrypt(encryptData, SharedPrefs.read(totp));
+      Map<String, dynamic> jsonData = jsonDecode(decrypt!);
+      print("login ${jsonData}");
+      // Handle response
+      if (response.statusCode == 200) {
+        context.pushNamed(dashboard);
+      } else if (response.statusCode == 400) {
+        Flush.flushMessage(
+          icons: Icons.error_outline,
+          title: "Error",
+          message: "Invalid Authentication credentials.",
+        );
+      } else {
+        Flush.flushMessage(
+          icons: Icons.error_outline,
+          title: "Error",
+          message: jsonData['message'],
+        );
+      }
+    } catch (e) {
+      print('Error sending encrypted payload: $e');
+    }
   }
 
   @override
@@ -379,10 +424,11 @@ class _loginScreenState extends ConsumerState<loginScreen> {
                             message: "Please Enter your Password.");
                       } else if (_numberController.text.isNotEmpty ||
                           _passwordController.text.isNotEmpty) {
-                        showLoadingDialog();
+                        //showLoadingDialog();
 
                         // Simulate login action
-                        login();
+                        sendData(
+                            _numberController.text, _passwordController.text);
                       }
                     },
                     style: TextButton.styleFrom(

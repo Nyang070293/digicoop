@@ -9,6 +9,7 @@ import 'package:digicoop/page/Signup/setupMobilepin.dart';
 import 'package:digicoop/page/Signup/signup.dart';
 import 'package:digicoop/page/Signup/success.dart';
 import 'package:digicoop/page/Signup/verificationCode.dart';
+import 'package:digicoop/page/cashin_bank/cashin_main.dart';
 import 'package:digicoop/page/dashboard/dashboard.dart';
 import 'package:digicoop/page/onBoarding/splashscreen.dart';
 import 'package:flutter/material.dart';
@@ -28,7 +29,8 @@ const String splashscreen = "SplashScreen",
     mpin = "mpin",
     reviewDetails = "reviewDetails",
     success = "success",
-    loading = "loading";
+    loading = "loading",
+    cashinMain = "cashinMain";
 
 // Route
 
@@ -47,6 +49,13 @@ final goRouter = Provider<GoRouter>((ref) {
         path: "/",
         builder: (context, state) {
           return const SplashScreen();
+        },
+      ),
+      GoRoute(
+        name: cashinMain,
+        path: "/$cashinMain",
+        builder: (context, state) {
+          return const cashinMainScreen();
         },
       ),
       GoRoute(

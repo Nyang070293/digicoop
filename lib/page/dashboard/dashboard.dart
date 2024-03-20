@@ -1,8 +1,10 @@
 import 'package:digicoop/page/cashin_bank/cashin_main.dart';
 import 'package:digicoop/page/nav/mainNav.dart';
 import 'package:digicoop/page/verified/getVerified.dart';
+import 'package:digicoop/routes/route_generator.dart';
 import 'package:digicoop/util/utils.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class dashboardScreen extends StatefulWidget {
   const dashboardScreen({super.key});
@@ -471,14 +473,9 @@ class _dashboardScreenState extends State<dashboardScreen> {
                                                       GestureDetector(
                                                         onTap: () {
                                                           // Handle click action here
-                                                          Navigator
-                                                              .pushReplacement(
-                                                            context,
-                                                            MaterialPageRoute(
-                                                              builder: (_) =>
-                                                                  cashinMainScreen(),
-                                                            ),
-                                                          );
+                                                          context
+                                                              .pushReplacementNamed(
+                                                                  cashinMain);
                                                         },
                                                         child: SizedBox(
                                                           // frame162983xPR (2008:182)

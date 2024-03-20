@@ -38,17 +38,9 @@ class AuthGlobal extends ChangeNotifier {
 
     final encryptedBody =
         '{"data": "${Aes256.encrypt(data, SharedPrefs.read(totp))}"}';
-    final response = await ServiceHost.login(data: encryptedBody);
-    final body = '{"statusCode":200,${response.data}}';
-    print(body);
-    //final responseData = json.decode(response.data);
-    // Access specific data from the parsed response
-    //var encryptData = responseData;
 
-    // final decrypt = Aes256.decrypt(responseData, SharedPrefs.read(totp));
-    // Map<String, dynamic> jsonData = jsonDecode(decrypt!);
-    // print("login ${jsonData}");
-    // Handle response
+    final response = await ServiceHost.login(data: encryptedBody);
+
     if (response.statusCode == 200) {
       try {
         await SharedPrefs.write(refreshToken, response.data["refreshToken"]);
@@ -57,10 +49,10 @@ class AuthGlobal extends ChangeNotifier {
 
         notifyListeners();
       } finally {
-        // onSuccess!({
-        //   "fullname": response.data["photographer"]["name"],
-        //   "id": response.data["photographer"]["_id"]
-        // });
+        // final body = '{"statusCode":200,${response.data}}';
+        final body = response.data;
+        print(body);
+        onSuccess!({"data": response.data});
       }
     } else {
       final data = response.data["error"];

@@ -2,8 +2,10 @@ import 'package:digicoop/page/cashin_ctm/cashinctm.dart';
 import 'package:digicoop/page/cashin_otc/cashinotc.dart';
 import 'package:digicoop/page/dashboard/dashboard.dart';
 import 'package:digicoop/page/ewallet.dart/ewalletmain.dart';
+import 'package:digicoop/routes/route_generator.dart';
 import 'package:digicoop/util/utils.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class cashinMainScreen extends StatefulWidget {
   const cashinMainScreen({super.key});
@@ -15,7 +17,6 @@ class cashinMainScreen extends StatefulWidget {
 class _cashinMainScreenState extends State<cashinMainScreen> {
   @override
   Widget build(BuildContext context) {
-
     double baseWidth = 414;
     double fem = MediaQuery.of(context).size.width / baseWidth;
     double ffem = fem * 0.97;
@@ -55,12 +56,7 @@ class _cashinMainScreenState extends State<cashinMainScreen> {
                     children: [
                       GestureDetector(
                         onTap: () {
-                          Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                              builder: (_) => const dashboardScreen(),
-                            ),
-                          );
+                          context.pushReplacementNamed(dashboard);
                         },
                         child: Container(
                           // arrow1y5h (75:714)
