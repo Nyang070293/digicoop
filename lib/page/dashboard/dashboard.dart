@@ -14,6 +14,8 @@ class dashboardScreen extends StatefulWidget {
 }
 
 class _dashboardScreenState extends State<dashboardScreen> {
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
   bool visibility = false;
 
   void _changed(bool stat) {
@@ -22,12 +24,51 @@ class _dashboardScreenState extends State<dashboardScreen> {
     });
   }
 
+  void showLogoutConfirmationDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text(
+            'Logout Confirmation',
+            style: TextStyle(
+              fontFamily: 'Poppins',
+            ),
+          ),
+          content: const Text(
+            'Are you sure you want to log out?',
+            style: TextStyle(
+              fontFamily: 'Poppins',
+            ),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(); // Close the dialog
+              },
+              child: const Text('No'),
+            ),
+            TextButton(
+              onPressed: () {
+                // Perform logout action here
+                context.pushReplacementNamed(login);
+              },
+              child: const Text('Yes'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     double baseWidth = 414;
     double fem = MediaQuery.of(context).size.width / baseWidth;
     double ffem = fem * 0.97;
     return Scaffold(
+      key: _scaffoldKey,
       body: SafeArea(
         child: SizedBox(
           width: double.infinity,
@@ -62,10 +103,16 @@ class _dashboardScreenState extends State<dashboardScreen> {
                                       mainAxisAlignment:
                                           MainAxisAlignment.start,
                                       children: [
-                                        Image.asset(
-                                          'assets/images/menu.png',
-                                          width: 30 * fem,
-                                          height: 16.66 * fem,
+                                        GestureDetector(
+                                          onTap: () {
+                                            _scaffoldKey.currentState!
+                                                .openDrawer();
+                                          },
+                                          child: Image.asset(
+                                            'assets/images/menu.png',
+                                            width: 30 * fem,
+                                            height: 16.66 * fem,
+                                          ),
                                         ),
                                         Container(
                                           margin: EdgeInsets.fromLTRB(270 * fem,
@@ -2222,6 +2269,459 @@ class _dashboardScreenState extends State<dashboardScreen> {
                     : Container(),
 
                 // End view all
+              ],
+            ),
+          ),
+        ),
+      ),
+      drawer: Drawer(
+        backgroundColor: Color(0xff259ded),
+        child: Positioned(
+          // group994J2B (2037:5770)
+          left: 0 * fem,
+          top: 0 * fem,
+          child: Container(
+            width: 414 * fem,
+            height: 812 * fem,
+            decoration: BoxDecoration(
+              color: Color(0xb2000000),
+            ),
+            child: Stack(
+              children: [
+                Positioned(
+                  // rectangle200oDq (2034:5633)
+                  left: 0 * fem,
+                  top: 0 * fem,
+                  child: Align(
+                    child: SizedBox(
+                      width: 325 * fem,
+                      height: 812 * fem,
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: Color(0xff259ded),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                Positioned(
+                  // frame163412VsM (2034:5641)
+                  left: 117 * fem,
+                  top: 80 * fem,
+                  child: Container(
+                    width: 65 * fem,
+                    height: 20 * fem,
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Color(0xff93d4ff)),
+                      color: Color(0xffffffff),
+                      borderRadius: BorderRadius.circular(100 * fem),
+                    ),
+                    child: Center(
+                      child: Text(
+                        'Verify now',
+                        style: SafeGoogleFont(
+                          'Montserrat',
+                          fontSize: 9 * ffem,
+                          fontWeight: FontWeight.w600,
+                          height: 1.2175 * ffem / fem,
+                          color: Color(0xff259ded),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                Positioned(
+                  // phoebebuffayMuZ (2034:5638)
+                  left: 120 * fem,
+                  top: 32 * fem,
+                  child: Align(
+                    child: SizedBox(
+                      width: 137 * fem,
+                      height: 22 * fem,
+                      child: Text(
+                        'Phoebe Buffay',
+                        style: SafeGoogleFont(
+                          'Montserrat',
+                          fontSize: 18 * ffem,
+                          fontWeight: FontWeight.w600,
+                          height: 1.2175 * ffem / fem,
+                          color: Color(0xffffffff),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                Positioned(
+                  // group9914oy (2034:5643)
+                  left: 28 * fem,
+                  top: 25 * fem,
+                  child: Container(
+                    padding: EdgeInsets.fromLTRB(
+                        2.21 * fem, 2.21 * fem, 2.21 * fem, 2.21 * fem),
+                    width: 74 * fem,
+                    height: 74 * fem,
+                    decoration: BoxDecoration(
+                      color: Color(0xff8fd4ff),
+                      borderRadius: BorderRadius.circular(37 * fem),
+                    ),
+                    child: Center(
+                      // ellipse76N3y (2034:5636)
+                      child: SizedBox(
+                        width: double.infinity,
+                        height: 69.58 * fem,
+                        child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius:
+                                BorderRadius.circular(34.7910461426 * fem),
+                            color: Color(0xffffffff),
+                            image: DecorationImage(
+                              fit: BoxFit.cover,
+                              image: AssetImage(
+                                'assets/images/empty_profile.png',
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                Positioned(
+                  // 4Sb (2034:5640)
+                  left: 120 * fem,
+                  top: 56 * fem,
+                  child: Align(
+                    child: SizedBox(
+                      width: 73 * fem,
+                      height: 16 * fem,
+                      child: Text(
+                        '0919 234 123',
+                        style: SafeGoogleFont(
+                          'Montserrat',
+                          fontSize: 12 * ffem,
+                          fontWeight: FontWeight.w400,
+                          height: 1.3318750858 * ffem / fem,
+                          color: Color(0xffffffff),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                Positioned(
+                  // frame163415AVd (2037:5838)
+                  left: 20 * fem,
+                  top: 147 * fem,
+                  child: Container(
+                    width: 286 * fem,
+                    height: 411 * fem,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Container(
+                          // autogroupcb7dsuq (LJgMzxXWcNdLnSjvRnCB7D)
+                          padding: EdgeInsets.fromLTRB(
+                              0.5 * fem, 0 * fem, 0 * fem, 24 * fem),
+                          width: double.infinity,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Container(
+                                // myaccountChD (2037:5761)
+                                margin: EdgeInsets.fromLTRB(
+                                    0 * fem, 0 * fem, 0.5 * fem, 24 * fem),
+                                padding: EdgeInsets.fromLTRB(
+                                    1 * fem, 0 * fem, 0 * fem, 0 * fem),
+                                width: double.infinity,
+                                height: 40 * fem,
+                                child: Container(
+                                  // group995Kmq (2037:5836)
+                                  padding: EdgeInsets.fromLTRB(
+                                      0 * fem, 2.25 * fem, 4.5 * fem, 3 * fem),
+                                  width: double.infinity,
+                                  height: 24 * fem,
+                                  child: Row(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      Container(
+                                        // myaccountF9h (2037:5756)
+                                        margin: EdgeInsets.fromLTRB(0 * fem,
+                                            0.75 * fem, 178.5 * fem, 0 * fem),
+                                        child: Text(
+                                          'My Account',
+                                          style: SafeGoogleFont(
+                                            'Montserrat',
+                                            fontSize: 14 * ffem,
+                                            fontWeight: FontWeight.w600,
+                                            height: 1.2175 * ffem / fem,
+                                            color: Color(0xffffffff),
+                                          ),
+                                        ),
+                                      ),
+                                      Container(
+                                        // personmorexpo (2037:5757)
+                                        width: 15 * fem,
+                                        height: 18.75 * fem,
+                                        child: Image.asset(
+                                          'assets/images/personmore.png',
+                                          width: 15 * fem,
+                                          height: 18.75 * fem,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                              Container(
+                                // notificationsJNs (2037:5762)
+                                margin: EdgeInsets.fromLTRB(
+                                    0 * fem, 0 * fem, 0.5 * fem, 24 * fem),
+                                padding: EdgeInsets.fromLTRB(
+                                    1 * fem, 0 * fem, 0 * fem, 0 * fem),
+                                width: double.infinity,
+                                height: 46 * fem,
+                                child: Container(
+                                  // group996RCb (2037:5837)
+                                  padding: EdgeInsets.fromLTRB(0 * fem,
+                                      0.83 * fem, 0.83 * fem, 0.83 * fem),
+                                  width: double.infinity,
+                                  height: 25 * fem,
+                                  child: Row(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      Container(
+                                        // notificationsLaT (2037:5763)
+                                        margin: EdgeInsets.fromLTRB(0 * fem,
+                                            1 * fem, 170.17 * fem, 0 * fem),
+                                        child: Text(
+                                          'Notifications',
+                                          style: SafeGoogleFont(
+                                            'Montserrat',
+                                            fontSize: 14 * ffem,
+                                            fontWeight: FontWeight.w600,
+                                            height: 1.2175 * ffem / fem,
+                                            color: Color(0xffffffff),
+                                          ),
+                                        ),
+                                      ),
+                                      Container(
+                                        // notificationsmoref6w (2037:5767)
+                                        margin: EdgeInsets.fromLTRB(0 * fem,
+                                            0 * fem, 0 * fem, 2.29 * fem),
+                                        width: 20 * fem,
+                                        height: 21.04 * fem,
+                                        child: Image.asset(
+                                          'assets/images/notificationsmore.png',
+                                          width: 20 * fem,
+                                          height: 21.04 * fem,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                              Container(
+                                // savedtransactionsaDu (2037:5803)
+                                margin: EdgeInsets.fromLTRB(
+                                    0 * fem, 0 * fem, 0.5 * fem, 22 * fem),
+                                padding: EdgeInsets.fromLTRB(
+                                    1 * fem, 0 * fem, 0 * fem, 0 * fem),
+                                width: double.infinity,
+                                height: 50 * fem,
+                                child: Container(
+                                  // group9976i3 (2037:5839)
+                                  padding: EdgeInsets.fromLTRB(
+                                      0 * fem, 2.25 * fem, 4.5 * fem, 3 * fem),
+                                  width: double.infinity,
+                                  height: 24 * fem,
+                                  child: Row(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      Container(
+                                        // savedtransactionsS1D (2037:5804)
+                                        margin: EdgeInsets.fromLTRB(0 * fem,
+                                            0.75 * fem, 125.5 * fem, 0 * fem),
+                                        child: Text(
+                                          'Saved Transactions',
+                                          style: SafeGoogleFont(
+                                            'Montserrat',
+                                            fontSize: 14 * ffem,
+                                            fontWeight: FontWeight.w600,
+                                            height: 1.2175 * ffem / fem,
+                                            color: Color(0xffffffff),
+                                          ),
+                                        ),
+                                      ),
+                                      Container(
+                                        // personmorekGo (2037:5805)
+                                        width: 15 * fem,
+                                        height: 18.75 * fem,
+                                        child: Image.asset(
+                                          'assets/images/personmore.png',
+                                          width: 15 * fem,
+                                          height: 18.75 * fem,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                              Container(
+                                // settingsH1q (2037:5808)
+                                margin: EdgeInsets.fromLTRB(
+                                    0.5 * fem, 0 * fem, 0 * fem, 24 * fem),
+                                padding: EdgeInsets.fromLTRB(1 * fem,
+                                    0.83 * fem, 0.83 * fem, 0.83 * fem),
+                                width: double.infinity,
+                                height: 53 * fem,
+                                child: Container(
+                                  // autogroup4gy5CPh (LJgNTn69z8j9qP7ygz4gy5)
+                                  margin: EdgeInsets.fromLTRB(
+                                      0 * fem, 0 * fem, 0 * fem, 25.17 * fem),
+                                  padding: EdgeInsets.fromLTRB(
+                                      0 * fem, 1.17 * fem, 0 * fem, 0 * fem),
+                                  width: double.infinity,
+                                  height: 26.17 * fem,
+                                  child: Container(
+                                    // group998vKh (2037:5840)
+                                    width: double.infinity,
+                                    height: double.infinity,
+                                    child: Row(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: [
+                                        Container(
+                                          // settingsTaX (2037:5809)
+                                          margin: EdgeInsets.fromLTRB(0 * fem,
+                                              3 * fem, 198 * fem, 0 * fem),
+                                          child: Text(
+                                            'Settings',
+                                            style: SafeGoogleFont(
+                                              'Montserrat',
+                                              fontSize: 14 * ffem,
+                                              fontWeight: FontWeight.w600,
+                                              height: 1.2175 * ffem / fem,
+                                              color: Color(0xffffffff),
+                                            ),
+                                          ),
+                                        ),
+                                        Container(
+                                          // settingsmoreNhV (2037:5825)
+                                          width: 25 * fem,
+                                          height: 25 * fem,
+                                          child: Image.asset(
+                                            'assets/images/settingsmore.png',
+                                            width: 25 * fem,
+                                            height: 25 * fem,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              Container(
+                                // help6dV (2037:5814)
+                                margin: EdgeInsets.fromLTRB(
+                                    0 * fem, 0 * fem, 0.5 * fem, 0 * fem),
+                                padding: EdgeInsets.fromLTRB(
+                                    1 * fem, 0 * fem, 0 * fem, 0 * fem),
+                                width: double.infinity,
+                                height: 52 * fem,
+                                child: Container(
+                                  // group999pZV (2037:5841)
+                                  padding: EdgeInsets.fromLTRB(
+                                      0 * fem, 3 * fem, 3.47 * fem, 3.47 * fem),
+                                  width: double.infinity,
+                                  height: 26 * fem,
+                                  child: Row(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      Container(
+                                        // helpwu1 (2037:5815)
+                                        margin: EdgeInsets.fromLTRB(0 * fem,
+                                            0 * fem, 227.47 * fem, 1.53 * fem),
+                                        child: Text(
+                                          'Help',
+                                          style: SafeGoogleFont(
+                                            'Montserrat',
+                                            fontSize: 14 * ffem,
+                                            fontWeight: FontWeight.w600,
+                                            height: 1.2175 * ffem / fem,
+                                            color: Color(0xffffffff),
+                                          ),
+                                        ),
+                                      ),
+                                      Container(
+                                        // helpmore4ij (2037:5828)
+                                        margin: EdgeInsets.fromLTRB(0 * fem,
+                                            0.47 * fem, 0 * fem, 0 * fem),
+                                        width: 19.07 * fem,
+                                        height: 19.07 * fem,
+                                        child: Image.asset(
+                                          'assets/images/helpmore.png',
+                                          width: 19.07 * fem,
+                                          height: 19.07 * fem,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Container(
+                          // logoutNjR (2037:5819)
+                          padding: EdgeInsets.fromLTRB(
+                              1 * fem, 0 * fem, 0 * fem, 0 * fem),
+                          width: double.infinity,
+                          height: 52 * fem,
+                          child: Container(
+                            // group1000K8s (2037:5842)
+                            padding: EdgeInsets.fromLTRB(
+                                0 * fem, 3.47 * fem, 5.2 * fem, 3.47 * fem),
+                            width: double.infinity,
+                            height: 26 * fem,
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Container(
+                                  // logoutSDV (2037:5820)
+                                  margin: EdgeInsets.fromLTRB(
+                                      0 * fem, 0 * fem, 212.2 * fem, 0 * fem),
+                                  child: Text(
+                                    'Logout',
+                                    style: SafeGoogleFont(
+                                      'Montserrat',
+                                      fontSize: 14 * ffem,
+                                      fontWeight: FontWeight.w600,
+                                      height: 1.2175 * ffem / fem,
+                                      color: Color(0xffffffff),
+                                    ),
+                                  ),
+                                ),
+                                Container(
+                                  // logoutmorekjy (2037:5830)
+                                  width: 15.6 * fem,
+                                  height: 19.07 * fem,
+                                  child: Image.asset(
+                                    'assets/images/logoutmore.png',
+                                    width: 15.6 * fem,
+                                    height: 19.07 * fem,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
               ],
             ),
           ),

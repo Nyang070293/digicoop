@@ -154,3 +154,9 @@ flutter:
     - assets/images/grabpay.png
     - assets/images/shopeepay.png
     - assets/images/paypal.png
+    - assets/images/empty_profile.png
+    - assets/images/personmore.png
+    - assets/images/notificationsmore.png
+    - assets/images/settingsmore.png
+    - assets/images/helpmore.png
+    - assets/images/logoutmore.png

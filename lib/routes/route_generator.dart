@@ -11,6 +11,7 @@ import 'package:digicoop/page/Signup/success.dart';
 import 'package:digicoop/page/Signup/verificationCode.dart';
 import 'package:digicoop/page/cashin_bank/cashin_main.dart';
 import 'package:digicoop/page/dashboard/dashboard.dart';
+import 'package:digicoop/page/drawer/drawer.dart';
 import 'package:digicoop/page/onBoarding/splashscreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -30,7 +31,8 @@ const String splashscreen = "SplashScreen",
     reviewDetails = "reviewDetails",
     success = "success",
     loading = "loading",
-    cashinMain = "cashinMain";
+    cashinMain = "cashinMain",
+    drawer = "drawer";
 
 // Route
 
@@ -56,6 +58,13 @@ final goRouter = Provider<GoRouter>((ref) {
         path: "/$cashinMain",
         builder: (context, state) {
           return const cashinMainScreen();
+        },
+      ),
+      GoRoute(
+        name: drawer,
+        path: "/$drawer",
+        builder: (context, state) {
+          return const drawerScreen();
         },
       ),
       GoRoute(
