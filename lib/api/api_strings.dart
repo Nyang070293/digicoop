@@ -9,5 +9,6 @@ class DigiCoopAPI {
       city = "$baseUrl/helpers/provinces/",
       validate = "$baseUrl/persons/validate",
       mpin = "$baseUrl/auth/user-set-credentials",
-      register = "$baseUrl/ persons/register";
+      register = "$baseUrl/persons/register",
+      profile = "$baseUrl/persons/get-profile";
 }

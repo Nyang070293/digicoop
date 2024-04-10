@@ -1,7 +1,9 @@
 import 'package:digicoop/page/cashin_bank/cashinBankSelect.dart';
 import 'package:digicoop/page/cashin_bank/cashin_main.dart';
+import 'package:digicoop/routes/route_generator.dart';
 import 'package:digicoop/util/utils.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class cashinBankScreen extends StatefulWidget {
   const cashinBankScreen({super.key});
@@ -13,7 +15,6 @@ class cashinBankScreen extends StatefulWidget {
 class _cashinBankScreenState extends State<cashinBankScreen> {
   @override
   Widget build(BuildContext context) {
-
     double baseWidth = 414;
     double fem = MediaQuery.of(context).size.width / baseWidth;
     double ffem = fem * 0.97;
@@ -53,12 +54,7 @@ class _cashinBankScreenState extends State<cashinBankScreen> {
                     children: [
                       GestureDetector(
                         onTap: () {
-                          Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                              builder: (_) => const cashinMainScreen(),
-                            ),
-                          );
+                          context.pushReplacementNamed(cashinMain);
                         },
                         child: Container(
                           // arrow1y5h (75:714)
@@ -322,13 +318,9 @@ class _cashinBankScreenState extends State<cashinBankScreen> {
                                                 ),
                                                 GestureDetector(
                                                   onTap: () {
-                                                    Navigator.pushReplacement(
-                                                      context,
-                                                      MaterialPageRoute(
-                                                        builder: (_) =>
-                                                            const cashinbankSelectScreen(),
-                                                      ),
-                                                    );
+                                                    context
+                                                        .pushReplacementNamed(
+                                                            cashinbankSelect);
                                                   },
                                                   child: Container(
                                                     // group2489Ef (82:3057)

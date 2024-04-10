@@ -1,8 +1,10 @@
 import 'package:digicoop/page/cashin_bank/cashin_bank.dart';
 import 'package:digicoop/page/cashin_bank/cashresult.dart';
+import 'package:digicoop/routes/route_generator.dart';
 import 'package:digicoop/util/textfield.dart';
 import 'package:digicoop/util/utils.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class ewalletselectScreen extends StatefulWidget {
   const ewalletselectScreen({super.key});
@@ -16,7 +18,6 @@ class _ewalletselectScreenState extends State<ewalletselectScreen> {
   final TextEditingController _number = TextEditingController();
   @override
   Widget build(BuildContext context) {
-
     double baseWidth = 414;
     double fem = MediaQuery.of(context).size.width / baseWidth;
     double ffem = fem * 0.97;
@@ -56,12 +57,7 @@ class _ewalletselectScreenState extends State<ewalletselectScreen> {
                     children: [
                       GestureDetector(
                         onTap: () {
-                          Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                              builder: (_) => const cashinBankScreen(),
-                            ),
-                          );
+                          context.pushReplacementNamed(ewalletmain);
                         },
                         child: Container(
                           // arrow1y5h (75:714)
@@ -225,12 +221,11 @@ class _ewalletselectScreenState extends State<ewalletselectScreen> {
                           top: 505 * fem,
                           child: TextButton(
                             onPressed: () {
-                              Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (_) =>
-                                      const cashresultScreen(index: 0),
-                                ),
+                              context.pushReplacementNamed(
+                                cashresult,
+                                pathParameters: {
+                                  "index": "0",
+                                },
                               );
                             },
                             style: TextButton.styleFrom(

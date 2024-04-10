@@ -1,6 +1,8 @@
 import 'package:digicoop/page/cashin_otc/cashinotc.dart';
+import 'package:digicoop/routes/route_generator.dart';
 import 'package:digicoop/util/utils.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class cashinotcselectScreen extends StatefulWidget {
   const cashinotcselectScreen({super.key});
@@ -12,7 +14,6 @@ class cashinotcselectScreen extends StatefulWidget {
 class _cashinotcselectScreenState extends State<cashinotcselectScreen> {
   @override
   Widget build(BuildContext context) {
-
     double baseWidth = 414;
     double fem = MediaQuery.of(context).size.width / baseWidth;
     double ffem = fem * 0.97;
@@ -52,12 +53,7 @@ class _cashinotcselectScreenState extends State<cashinotcselectScreen> {
                     children: [
                       GestureDetector(
                         onTap: () {
-                          Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                              builder: (_) => const cashinotcScreen(),
-                            ),
-                          );
+                          context.pushReplacementNamed(cashinotc);
                         },
                         child: Container(
                           // arrow1y5h (75:714)

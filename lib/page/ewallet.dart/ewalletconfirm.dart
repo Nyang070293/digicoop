@@ -1,6 +1,8 @@
 import 'package:digicoop/page/ewallet.dart/ewalletselect.dart';
+import 'package:digicoop/routes/route_generator.dart';
 import 'package:digicoop/util/utils.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class ewalletconfirmScreen extends StatefulWidget {
   const ewalletconfirmScreen({super.key});
@@ -53,12 +55,7 @@ class _ewalletconfirmScreenState extends State<ewalletconfirmScreen> {
                     children: [
                       GestureDetector(
                         onTap: () {
-                          Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                              builder: (_) => const ewalletselectScreen(),
-                            ),
-                          );
+                          context.pushReplacementNamed(ewalletselect);
                         },
                         child: Container(
                           // arrow1y5h (75:714)

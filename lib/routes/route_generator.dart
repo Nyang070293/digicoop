@@ -9,9 +9,19 @@ import 'package:digicoop/page/Signup/setupMobilepin.dart';
 import 'package:digicoop/page/Signup/signup.dart';
 import 'package:digicoop/page/Signup/success.dart';
 import 'package:digicoop/page/Signup/verificationCode.dart';
+import 'package:digicoop/page/cashin_bank/cashinBankSelect.dart';
+import 'package:digicoop/page/cashin_bank/cashin_bank.dart';
 import 'package:digicoop/page/cashin_bank/cashin_main.dart';
+import 'package:digicoop/page/cashin_bank/cashresult.dart';
+import 'package:digicoop/page/cashin_ctm/cashinctm.dart';
+import 'package:digicoop/page/cashin_otc/cashinotc.dart';
+import 'package:digicoop/page/cashin_otc/cashinotc_select.dart';
+import 'package:digicoop/page/cooperatives/cooperatives.dart';
+import 'package:digicoop/page/cooperatives/cooperativesDisclaimer.dart';
 import 'package:digicoop/page/dashboard/dashboard.dart';
 import 'package:digicoop/page/drawer/drawer.dart';
+import 'package:digicoop/page/ewallet.dart/ewalletmain.dart';
+import 'package:digicoop/page/ewallet.dart/ewalletselect.dart';
 import 'package:digicoop/page/onBoarding/splashscreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -32,7 +42,17 @@ const String splashscreen = "SplashScreen",
     success = "success",
     loading = "loading",
     cashinMain = "cashinMain",
-    drawer = "drawer";
+    drawer = "drawer",
+    cashinBank = "cashinBank",
+    cashinbankSelect = "cashinbankSelect",
+    cashinctm = "cashinctm",
+    cashinotc = "cashinotc",
+    cashinotcselect = "cashinotcselect",
+    ewalletmain = "ewalletmain",
+    cashresult = "cashresult",
+    ewalletselect = "ewalletselect",
+    cooperatives = "cooperatives",
+    cooperativesDisclaimer = "cooperativesDisclaimer";
 
 // Route
 
@@ -54,10 +74,84 @@ final goRouter = Provider<GoRouter>((ref) {
         },
       ),
       GoRoute(
+        name: cashinBank,
+        path: "/$cashinBank",
+        builder: (context, state) {
+          return const cashinBankScreen();
+        },
+      ),
+      GoRoute(
         name: cashinMain,
         path: "/$cashinMain",
         builder: (context, state) {
           return const cashinMainScreen();
+        },
+      ),
+      GoRoute(
+        name: cashinctm,
+        path: "/$cashinctm",
+        builder: (context, state) {
+          return const cashinctmScreen();
+        },
+      ),
+      GoRoute(
+        name: ewalletselect,
+        path: "/$ewalletselect",
+        builder: (context, state) {
+          return const ewalletselectScreen();
+        },
+      ),
+      GoRoute(
+        name: cooperatives,
+        path: "/$cooperatives",
+        builder: (context, state) {
+          return const cooperativesScreen();
+        },
+      ),
+      GoRoute(
+        name: cooperativesDisclaimer,
+        path: "/$cooperativesDisclaimer",
+        builder: (context, state) {
+          return const cooperativesDisclaimerScreen();
+        },
+      ),
+      GoRoute(
+        name: ewalletmain,
+        path: "/$ewalletmain",
+        builder: (context, state) {
+          return const ewalletmainScreen();
+        },
+      ),
+      GoRoute(
+        name: cashinotc,
+        path: "/$cashinotc",
+        builder: (context, state) {
+          return const cashinotcScreen();
+        },
+      ),
+      GoRoute(
+        name: cashinotcselect,
+        path: "/$cashinotcselect",
+        builder: (context, state) {
+          return const cashinotcselectScreen();
+        },
+      ),
+      //cashinotcselectScreen
+      GoRoute(
+        name: cashinbankSelect,
+        path: "/$cashinbankSelect",
+        builder: (context, state) {
+          return const cashinbankSelectScreen();
+        },
+      ),
+      GoRoute(
+        name: cashresult,
+        path: "/$cashresult/:index",
+        builder: (context, state) {
+          return cashresultScreen(
+            key: state.pageKey,
+            index: state.pathParameters["index"] ?? "0",
+          );
         },
       ),
       GoRoute(

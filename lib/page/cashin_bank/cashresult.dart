@@ -3,7 +3,7 @@ import 'package:digicoop/util/utils.dart';
 import 'package:flutter/material.dart';
 
 class cashresultScreen extends StatefulWidget {
-  final int index;
+  final String index;
   const cashresultScreen({super.key, required this.index});
 
   @override
@@ -37,7 +37,7 @@ class _cashresultScreenState extends State<cashresultScreen> {
                   height: 70,
                 ),
                 Text(
-                  cashinresult[widget.index].title,
+                  cashinresult[int.parse(widget.index)].title,
                   style: SafeGoogleFont(
                     'Montserrat',
                     fontSize: 32 * ffem,
@@ -46,12 +46,14 @@ class _cashresultScreenState extends State<cashresultScreen> {
                     color: const Color(0xff3f3f3f),
                   ),
                 ),
-                cashinresult[widget.index].subtitle == null
+                cashinresult[int.parse(widget.index)].subtitle == null
                     ? const SizedBox()
                     : Padding(
                         padding: const EdgeInsets.only(bottom: 25),
                         child: Text(
-                          cashinresult[widget.index].subtitle.toString(),
+                          cashinresult[int.parse(widget.index)]
+                              .subtitle
+                              .toString(),
                           style: SafeGoogleFont(
                             'Montserrat',
                             fontSize: 24 * ffem,
@@ -61,7 +63,7 @@ class _cashresultScreenState extends State<cashresultScreen> {
                           ),
                         ),
                       ),
-                cashinresult[widget.index].subtitle == null
+                cashinresult[int.parse(widget.index)].subtitle == null
                     ? const SizedBox(
                         height: 60,
                       )
@@ -69,7 +71,7 @@ class _cashresultScreenState extends State<cashresultScreen> {
                         height: 5,
                       ),
                 Image.asset(
-                  cashinresult[widget.index].image,
+                  cashinresult[int.parse(widget.index)].image,
                   fit: BoxFit.fill,
                 ),
                 const SizedBox(height: 70),
@@ -83,7 +85,8 @@ class _cashresultScreenState extends State<cashresultScreen> {
                             color: Colors.black, fontSize: 20.0),
                         children: <TextSpan>[
                           TextSpan(
-                            text: cashinresult[widget.index].discription,
+                            text: cashinresult[int.parse(widget.index)]
+                                .discription,
                             style: SafeGoogleFont(
                               'Montserrat',
                               fontSize: 15 * ffem,
@@ -93,7 +96,8 @@ class _cashresultScreenState extends State<cashresultScreen> {
                             ),
                           ),
                           TextSpan(
-                            text: cashinresult[widget.index].colorDesc,
+                            text:
+                                cashinresult[int.parse(widget.index)].colorDesc,
                             style: SafeGoogleFont(
                               'Montserrat',
                               fontSize: 16 * ffem,
@@ -103,7 +107,8 @@ class _cashresultScreenState extends State<cashresultScreen> {
                             ),
                           ),
                           TextSpan(
-                            text: cashinresult[widget.index].continueDesc,
+                            text: cashinresult[int.parse(widget.index)]
+                                .continueDesc,
                             style: SafeGoogleFont(
                               'Montserrat',
                               fontSize: 16 * ffem,
@@ -125,14 +130,7 @@ class _cashresultScreenState extends State<cashresultScreen> {
                   margin:
                       EdgeInsets.fromLTRB(2 * fem, 0 * fem, 0 * fem, 0 * fem),
                   child: TextButton(
-                    onPressed: () {
-                      // Navigator.pushReplacement(
-                      //   context,
-                      //   MaterialPageRoute(
-                      //     builder: (_) => const emailScreen(),
-                      //   ),
-                      // );
-                    },
+                    onPressed: () {},
                     style: TextButton.styleFrom(
                       padding: EdgeInsets.zero,
                     ),
@@ -159,7 +157,7 @@ class _cashresultScreenState extends State<cashresultScreen> {
                             margin: EdgeInsets.fromLTRB(
                                 0 * fem, 0 * fem, 75.67 * fem, 0 * fem),
                             child: Text(
-                              cashinresult[widget.index].button,
+                              cashinresult[int.parse(widget.index)].button,
                               textAlign: TextAlign.center,
                               style: SafeGoogleFont(
                                 'Montserrat',

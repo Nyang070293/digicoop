@@ -1,7 +1,8 @@
 import 'package:digicoop/page/cashin_bank/cashin_main.dart';
-import 'package:digicoop/page/cashin_otc/cashinotc_select.dart';
+import 'package:digicoop/routes/route_generator.dart';
 import 'package:digicoop/util/utils.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class cashinotcScreen extends StatefulWidget {
   const cashinotcScreen({super.key});
@@ -13,7 +14,6 @@ class cashinotcScreen extends StatefulWidget {
 class _cashinotcScreenState extends State<cashinotcScreen> {
   @override
   Widget build(BuildContext context) {
-
     double baseWidth = 414;
     double fem = MediaQuery.of(context).size.width / baseWidth;
     double ffem = fem * 0.97;
@@ -53,12 +53,7 @@ class _cashinotcScreenState extends State<cashinotcScreen> {
                     children: [
                       GestureDetector(
                         onTap: () {
-                          Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                              builder: (_) => const cashinMainScreen(),
-                            ),
-                          );
+                          context.pushReplacementNamed(cashinMain);
                         },
                         child: Container(
                           // arrow1y5h (75:714)
@@ -322,13 +317,9 @@ class _cashinotcScreenState extends State<cashinotcScreen> {
                                                 ),
                                                 GestureDetector(
                                                   onTap: () {
-                                                    Navigator.pushReplacement(
-                                                      context,
-                                                      MaterialPageRoute(
-                                                        builder: (_) =>
-                                                            const cashinotcselectScreen(),
-                                                      ),
-                                                    );
+                                                    context
+                                                        .pushReplacementNamed(
+                                                            cashinotcselect);
                                                   },
                                                   child: Container(
                                                     // group2489Ef (82:3057)

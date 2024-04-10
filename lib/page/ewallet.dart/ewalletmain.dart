@@ -1,7 +1,9 @@
 import 'package:digicoop/page/cashin_bank/cashin_main.dart';
 import 'package:digicoop/page/ewallet.dart/ewalletselect.dart';
+import 'package:digicoop/routes/route_generator.dart';
 import 'package:digicoop/util/utils.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class ewalletmainScreen extends StatefulWidget {
   const ewalletmainScreen({super.key});
@@ -13,7 +15,6 @@ class ewalletmainScreen extends StatefulWidget {
 class _ewalletmainScreenState extends State<ewalletmainScreen> {
   @override
   Widget build(BuildContext context) {
-
     double baseWidth = 414;
     double fem = MediaQuery.of(context).size.width / baseWidth;
     double ffem = fem * 0.97;
@@ -53,12 +54,7 @@ class _ewalletmainScreenState extends State<ewalletmainScreen> {
                     children: [
                       GestureDetector(
                         onTap: () {
-                          Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                              builder: (_) => const cashinMainScreen(),
-                            ),
-                          );
+                          context.pushReplacementNamed(cashinMain);
                         },
                         child: Container(
                           // arrow1y5h (75:714)
@@ -322,13 +318,9 @@ class _ewalletmainScreenState extends State<ewalletmainScreen> {
                                                 ),
                                                 GestureDetector(
                                                   onTap: () {
-                                                    Navigator.pushReplacement(
-                                                      context,
-                                                      MaterialPageRoute(
-                                                        builder: (_) =>
-                                                            const ewalletselectScreen(),
-                                                      ),
-                                                    );
+                                                    context
+                                                        .pushReplacementNamed(
+                                                            ewalletselect);
                                                   },
                                                   child: Container(
                                                     // group2489Ef (82:3057)

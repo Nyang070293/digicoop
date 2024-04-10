@@ -76,7 +76,7 @@ class _cashinMainScreenState extends State<cashinMainScreen> {
                         margin: EdgeInsets.fromLTRB(
                             10 * fem, 0 * fem, 84 * fem, 0 * fem),
                         child: Text(
-                          'Other E-Wallet',
+                          'Cash In',
                           style: SafeGoogleFont(
                             'Montserrat',
                             fontSize: 18 * ffem,
@@ -168,13 +168,7 @@ class _cashinMainScreenState extends State<cashinMainScreen> {
                                 ),
                                 child: GestureDetector(
                                   onTap: () {
-                                    // Navigator.pushReplacement(
-                                    //   context,
-                                    //   MaterialPageRoute(
-                                    //     builder: (_) =>
-                                    //         const cashinBankScreen(),
-                                    //   ),
-                                    // );
+                                    context.pushReplacementNamed(cashinBank);
                                   },
                                   child: SizedBox(
                                     // autogroupxmqrQ4w (LJbaQGQdzSXcgxGF8PXmqR)
@@ -214,12 +208,7 @@ class _cashinMainScreenState extends State<cashinMainScreen> {
                               ),
                               GestureDetector(
                                 onTap: () {
-                                  Navigator.pushReplacement(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (_) => const cashinctmScreen(),
-                                    ),
-                                  );
+                                  context.pushReplacementNamed(cashinctm);
                                 },
                                 child: Container(
                                   // group960YKZ (75:2086)
@@ -281,12 +270,7 @@ class _cashinMainScreenState extends State<cashinMainScreen> {
                               ),
                               GestureDetector(
                                 onTap: () {
-                                  Navigator.pushReplacement(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (_) => const cashinotcScreen(),
-                                    ),
-                                  );
+                                  context.pushReplacementNamed(cashinotc);
                                 },
                                 child: Container(
                                   // group961yJP (75:2105)
@@ -348,12 +332,7 @@ class _cashinMainScreenState extends State<cashinMainScreen> {
                               ),
                               GestureDetector(
                                 onTap: () {
-                                  Navigator.pushReplacement(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (_) => const ewalletmainScreen(),
-                                    ),
-                                  );
+                                  context.pushReplacementNamed(ewalletmain);
                                 },
                                 child: Container(
                                   // group963bUB (79:2117)
@@ -413,54 +392,59 @@ class _cashinMainScreenState extends State<cashinMainScreen> {
                                   ),
                                 ),
                               ),
-                              Container(
-                                // group964Rbd (80:2136)
-                                padding: EdgeInsets.fromLTRB(
-                                    14.29 * fem, 2 * fem, 14.29 * fem, 2 * fem),
-                                width: double.infinity,
-                                height: 36 * fem,
-                                decoration: BoxDecoration(
-                                  border: Border(
-                                    bottom: BorderSide(
-                                      color: Colors.grey
-                                          .shade200, // You can set your desired border color here.
-                                      width:
-                                          1, // You can set the width of the border.
+                              GestureDetector(
+                                onTap: () {
+                                  context.pushReplacementNamed(cooperatives);
+                                },
+                                child: Container(
+                                  // group964Rbd (80:2136)
+                                  padding: EdgeInsets.fromLTRB(14.29 * fem,
+                                      2 * fem, 14.29 * fem, 2 * fem),
+                                  width: double.infinity,
+                                  height: 36 * fem,
+                                  decoration: BoxDecoration(
+                                    border: Border(
+                                      bottom: BorderSide(
+                                        color: Colors.grey
+                                            .shade200, // You can set your desired border color here.
+                                        width:
+                                            1, // You can set the width of the border.
+                                      ),
                                     ),
                                   ),
-                                ),
-                                child: SizedBox(
-                                  // autogroupuofdMEP (LJbazv5a3LTbWhVyAjuofd)
-                                  width: 123.71 * fem,
-                                  height: 21.63 * fem,
-                                  child: Row(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Container(
-                                        // phhandshakefillG6T (80:2153)
-                                        margin: EdgeInsets.fromLTRB(0 * fem,
-                                            3.06 * fem, 11.29 * fem, 0 * fem),
-                                        width: 26.42 * fem,
-                                        height: 18.57 * fem,
-                                        child: Image.asset(
-                                          'assets/images/ph-handshake.png',
+                                  child: SizedBox(
+                                    // autogroupuofdMEP (LJbazv5a3LTbWhVyAjuofd)
+                                    width: 123.71 * fem,
+                                    height: 21.63 * fem,
+                                    child: Row(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Container(
+                                          // phhandshakefillG6T (80:2153)
+                                          margin: EdgeInsets.fromLTRB(0 * fem,
+                                              3.06 * fem, 11.29 * fem, 0 * fem),
                                           width: 26.42 * fem,
                                           height: 18.57 * fem,
+                                          child: Image.asset(
+                                            'assets/images/ph-handshake.png',
+                                            width: 26.42 * fem,
+                                            height: 18.57 * fem,
+                                          ),
                                         ),
-                                      ),
-                                      Text(
-                                        // cooperativexEB (80:2139)
-                                        'Cooperative',
-                                        style: SafeGoogleFont(
-                                          'Montserrat',
-                                          fontSize: 14 * ffem,
-                                          fontWeight: FontWeight.w500,
-                                          height: 1.2175 * ffem / fem,
-                                          color: const Color(0xff828282),
+                                        Text(
+                                          // cooperativexEB (80:2139)
+                                          'Cooperative',
+                                          style: SafeGoogleFont(
+                                            'Montserrat',
+                                            fontSize: 14 * ffem,
+                                            fontWeight: FontWeight.w500,
+                                            height: 1.2175 * ffem / fem,
+                                            color: const Color(0xff828282),
+                                          ),
                                         ),
-                                      ),
-                                    ],
+                                      ],
+                                    ),
                                   ),
                                 ),
                               ),
