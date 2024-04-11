@@ -362,7 +362,9 @@ class _cooperativesDisclaimerScreenState
                           ),
                         ),
                         GestureDetector(
-                          onTap: () {},
+                          onTap: () {
+                            context.pushReplacementNamed(coopMember);
+                          },
                           child: Container(
                             // group410pJT (114:14312)
                             margin: EdgeInsets.fromLTRB(
