@@ -9,6 +9,12 @@ import 'package:digicoop/page/Signup/setupMobilepin.dart';
 import 'package:digicoop/page/Signup/signup.dart';
 import 'package:digicoop/page/Signup/success.dart';
 import 'package:digicoop/page/Signup/verificationCode.dart';
+import 'package:digicoop/page/bank/bank_add.dart';
+import 'package:digicoop/page/bank/bank_confirm.dart';
+import 'package:digicoop/page/bank/bank_search.dart';
+import 'package:digicoop/page/bank/bank_send.dart';
+import 'package:digicoop/page/bank/bank_success.dart';
+import 'package:digicoop/page/bank/bank_transfer.dart';
 import 'package:digicoop/page/cashin_bank/cashinBankSelect.dart';
 import 'package:digicoop/page/cashin_bank/cashin_bank.dart';
 import 'package:digicoop/page/cashin_bank/cashin_main.dart';
@@ -16,13 +22,18 @@ import 'package:digicoop/page/cashin_bank/cashresult.dart';
 import 'package:digicoop/page/cashin_ctm/cashinctm.dart';
 import 'package:digicoop/page/cashin_otc/cashinotc.dart';
 import 'package:digicoop/page/cashin_otc/cashinotc_select.dart';
+import 'package:digicoop/page/change_password/changePW.dart';
+import 'package:digicoop/page/change_password/loadingPW.dart';
+import 'package:digicoop/page/change_password/successPW.dart';
 import 'package:digicoop/page/cooperatives/coopMember.dart';
 import 'package:digicoop/page/cooperatives/cooperatives.dart';
 import 'package:digicoop/page/cooperatives/cooperativesDisclaimer.dart';
+import 'package:digicoop/page/cooperatives/myCooperatives.dart';
 import 'package:digicoop/page/dashboard/dashboard.dart';
 import 'package:digicoop/page/drawer/drawer.dart';
 import 'package:digicoop/page/ewallet.dart/ewalletmain.dart';
 import 'package:digicoop/page/ewallet.dart/ewalletselect.dart';
+import 'package:digicoop/page/loading/loading.dart';
 import 'package:digicoop/page/onBoarding/splashscreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -52,9 +63,20 @@ const String splashscreen = "SplashScreen",
     ewalletmain = "ewalletmain",
     cashresult = "cashresult",
     ewalletselect = "ewalletselect",
+    mycooperatives = "mycooperatives",
     cooperatives = "cooperatives",
     cooperativesDisclaimer = "cooperativesDisclaimer",
-    coopMember = "coopMember";
+    coopMember = "coopMember",
+    bankTransfer = "bankTranfer",
+    bankSearch = "bankSearch",
+    bankAddAcc = "bankAddAcc",
+    bankSend = "bankSend",
+    bankConfirmation = "bankConfirmation",
+    loadingTransaction = "loadingTransaction",
+    bankSuccess = "bankSuccess",
+    changePassword = "changePassword",
+    loadingChangePW = "loadingChangePW",
+    changePWSuccess = "changePWSuccess";
 
 // Route
 
@@ -83,6 +105,13 @@ final goRouter = Provider<GoRouter>((ref) {
         },
       ),
       GoRoute(
+        name: changePassword,
+        path: "/$changePassword",
+        builder: (context, state) {
+          return const changePasswordScreen();
+        },
+      ),
+      GoRoute(
         name: cashinMain,
         path: "/$cashinMain",
         builder: (context, state) {
@@ -104,6 +133,27 @@ final goRouter = Provider<GoRouter>((ref) {
         },
       ),
       GoRoute(
+        name: bankSuccess,
+        path: "/$bankSuccess",
+        builder: (context, state) {
+          return const bankSuccessScreen();
+        },
+      ),
+      GoRoute(
+        name: changePWSuccess,
+        path: "/$changePWSuccess",
+        builder: (context, state) {
+          return const ChangePWSuccessScreen();
+        },
+      ),
+      GoRoute(
+        name: loadingTransaction,
+        path: "/$loadingTransaction",
+        builder: (context, state) {
+          return const loadingTransactionScreen();
+        },
+      ),
+      GoRoute(
         name: cooperatives,
         path: "/$cooperatives",
         builder: (context, state) {
@@ -111,10 +161,52 @@ final goRouter = Provider<GoRouter>((ref) {
         },
       ),
       GoRoute(
+        name: mycooperatives,
+        path: "/$mycooperatives",
+        builder: (context, state) {
+          return const myCooperativesScreen();
+        },
+      ),
+      GoRoute(
+        name: bankTransfer,
+        path: "/$bankTransfer",
+        builder: (context, state) {
+          return const bankTransferScreen();
+        },
+      ),
+      GoRoute(
+        name: bankSearch,
+        path: "/$bankSearch",
+        builder: (context, state) {
+          return const bankSearchScreen();
+        },
+      ),
+      GoRoute(
+        name: bankAddAcc,
+        path: "/$bankAddAcc",
+        builder: (context, state) {
+          return const bankAddScreen();
+        },
+      ),
+      GoRoute(
+        name: bankSend,
+        path: "/$bankSend",
+        builder: (context, state) {
+          return const bankSendScreen();
+        },
+      ),
+      GoRoute(
         name: cooperativesDisclaimer,
         path: "/$cooperativesDisclaimer",
         builder: (context, state) {
           return const cooperativesDisclaimerScreen();
+        },
+      ),
+      GoRoute(
+        name: bankConfirmation,
+        path: "/$bankConfirmation",
+        builder: (context, state) {
+          return const bankConfirmationScreen();
         },
       ),
       GoRoute(
@@ -239,6 +331,13 @@ final goRouter = Provider<GoRouter>((ref) {
         path: "/$loading",
         builder: (context, state) {
           return const loadingScreen();
+        },
+      ),
+      GoRoute(
+        name: loadingChangePW,
+        path: "/$loadingChangePW",
+        builder: (context, state) {
+          return const loadingChangePWScreen();
         },
       ),
       GoRoute(

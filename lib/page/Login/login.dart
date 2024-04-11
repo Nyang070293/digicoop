@@ -14,7 +14,6 @@ import 'package:digicoop/util/textfield.dart';
 import 'package:digicoop/util/utils.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:encrypt/encrypt.dart' as encrypt;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
@@ -91,9 +90,15 @@ class _loginScreenState extends ConsumerState<loginScreen> {
 
       final decrypt = Aes256.decrypt(encryptData, SharedPrefs.read(totp));
       Map<String, dynamic> jsonData = jsonDecode(decrypt!);
+      //String userCode = jsonData["data"]["userCode"];
       print("login ${jsonData}");
+      //print("userCode ${userCode}");
+      await SharedPrefs.write(userCode, jsonData["data"]["userCode"]);
+      await SharedPrefs.write(personCode, jsonData["data"]["personCode"]);
       // Handle response
       if (response.statusCode == 200) {
+        SharedPrefs.write(MobileNum, username);
+        // ignore: use_build_context_synchronously
         context.pushNamed(dashboard);
       } else if (response.statusCode == 400) {
         Flush.flushMessage(

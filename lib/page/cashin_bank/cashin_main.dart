@@ -394,7 +394,7 @@ class _cashinMainScreenState extends State<cashinMainScreen> {
                               ),
                               GestureDetector(
                                 onTap: () {
-                                  context.pushReplacementNamed(cooperatives);
+                                  context.pushReplacementNamed(mycooperatives);
                                 },
                                 child: Container(
                                   // group964Rbd (80:2136)

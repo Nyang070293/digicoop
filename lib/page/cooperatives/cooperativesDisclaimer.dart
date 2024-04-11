@@ -409,16 +409,22 @@ class _cooperativesDisclaimerScreenState
                                         ),
                                       ),
                                     ),
-                                    Container(
-                                      // solararrowrightbrokenB2X (114:14315)
-                                      margin: EdgeInsets.fromLTRB(
-                                          0 * fem, 2 * fem, 0 * fem, 0 * fem),
-                                      width: 26.67 * fem,
-                                      height: 20 * fem,
-                                      child: Image.asset(
-                                        'assets/images/solar-arrow-right-broken.png',
+                                    GestureDetector(
+                                      onTap: () {
+                                        context
+                                            .pushReplacementNamed(coopMember);
+                                      },
+                                      child: Container(
+                                        // solararrowrightbrokenB2X (114:14315)
+                                        margin: EdgeInsets.fromLTRB(
+                                            0 * fem, 2 * fem, 0 * fem, 0 * fem),
                                         width: 26.67 * fem,
                                         height: 20 * fem,
+                                        child: Image.asset(
+                                          'assets/images/solar-arrow-right-broken.png',
+                                          width: 26.67 * fem,
+                                          height: 20 * fem,
+                                        ),
                                       ),
                                     ),
                                   ],

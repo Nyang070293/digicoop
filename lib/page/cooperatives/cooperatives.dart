@@ -1,4 +1,5 @@
 import 'package:digicoop/routes/route_generator.dart';
+import 'package:digicoop/util/textfield.dart';
 import 'package:digicoop/util/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -11,6 +12,7 @@ class cooperativesScreen extends StatefulWidget {
 }
 
 class _cooperativesScreenState extends State<cooperativesScreen> {
+  final TextEditingController _search = TextEditingController();
   bool isSearchShow = false;
   @override
   Widget build(BuildContext context) {
@@ -55,7 +57,7 @@ class _cooperativesScreenState extends State<cooperativesScreen> {
                     children: [
                       GestureDetector(
                         onTap: () {
-                          context.pushReplacementNamed(cashinMain);
+                          context.pushReplacementNamed(mycooperatives);
                         },
                         child: Container(
                           // arrow1y5h (75:714)
@@ -73,7 +75,7 @@ class _cooperativesScreenState extends State<cooperativesScreen> {
                       Container(
                         // createaccountUHM (75:716)
                         margin: EdgeInsets.fromLTRB(
-                            0 * fem, 0 * fem, 84 * fem, 0 * fem),
+                            0 * fem, 0 * fem, 120 * fem, 0 * fem),
                         child: Text(
                           'Cooperatives',
                           style: SafeGoogleFont(
@@ -86,7 +88,15 @@ class _cooperativesScreenState extends State<cooperativesScreen> {
                         ),
                       ),
                       GestureDetector(
-                        onTap: () {},
+                        onTap: () {
+                          setState(() {
+                            if (isSearchShow) {
+                              isSearchShow = false;
+                            } else {
+                              isSearchShow = true;
+                            }
+                          });
+                        },
                         child: Container(
                           // materialsymbolssearchvFy (85:4642)
                           width: 25.5 * fem,
@@ -110,97 +120,51 @@ class _cooperativesScreenState extends State<cooperativesScreen> {
                         Container(
                           // autogroupu8rtKyR (LJeV6fpNBtoSApJ2LzU8rT)
                           padding: EdgeInsets.fromLTRB(
-                              21 * fem, 58 * fem, 21 * fem, 162 * fem),
+                              21 * fem, 0 * fem, 21 * fem, 162 * fem),
                           width: double.infinity,
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Container(
-                                // group984qRy (114:13943)
-                                margin: EdgeInsets.fromLTRB(
-                                    11 * fem, 0 * fem, 169 * fem, 4 * fem),
-                                padding: EdgeInsets.fromLTRB(
-                                    2.25 * fem, 0 * fem, 0 * fem, 0 * fem),
-                                width: double.infinity,
-                                child: Row(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    Positioned(
-                                      // autogrouprgpzTR9 (LJeZ6yJxdieKxFgU5XRGPZ)
-                                      left: 27 * fem,
-                                      top: 56 * fem,
-                                      child: Container(
-                                        width: 362 * fem,
-                                        height: 34 * fem,
-                                        child: Stack(
-                                          children: [
-                                            Positioned(
-                                              // searchforcooperativesBc3 (114:14607)
-                                              left: 46 * fem,
-                                              top: 4 * fem,
-                                              child: Align(
-                                                child: SizedBox(
-                                                  width: 165 * fem,
-                                                  height: 19 * fem,
-                                                  child: Text(
-                                                    'Search for Cooperatives',
-                                                    style: SafeGoogleFont(
-                                                      'Montserrat',
-                                                      fontSize: 14 * ffem,
-                                                      fontWeight:
-                                                          FontWeight.w400,
-                                                      height: 1.3318751199 *
-                                                          ffem /
-                                                          fem,
-                                                      color: Color(0xff828282),
-                                                    ),
+                              isSearchShow
+                                  ? Container(
+                                      // group984qRy (114:13943)
+                                      margin: EdgeInsets.fromLTRB(
+                                          1 * fem, 0 * fem, 0 * fem, 30 * fem),
+
+                                      width: double.infinity,
+                                      child: Row(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        children: [
+                                          Positioned(
+                                            // autogrouprgpzTR9 (LJeZ6yJxdieKxFgU5XRGPZ)
+                                            left: 27 * fem,
+                                            top: 56 * fem,
+                                            child: Container(
+                                              width: 365 * fem,
+                                              height: 34 * fem,
+                                              child: Stack(
+                                                children: [
+                                                  CommonTextField(
+                                                    controller: _search,
+                                                    labelText:
+                                                        'Search for Cooperatives',
+                                                    prefixIconData:
+                                                        Icons.search,
+                                                    obscureText: false,
+                                                    textInputAction:
+                                                        TextInputAction.next,
+                                                    accentColor:
+                                                        const Color(0xff259ded),
                                                   ),
-                                                ),
+                                                ],
                                               ),
                                             ),
-                                            Positioned(
-                                              // group8464Qw (114:14603)
-                                              left: 0 * fem,
-                                              top: 0 * fem,
-                                              child: Container(
-                                                padding: EdgeInsets.fromLTRB(
-                                                    3.9 * fem,
-                                                    3.75 * fem,
-                                                    3.9 * fem,
-                                                    3.75 * fem),
-                                                width: 362 * fem,
-                                                height: 34 * fem,
-                                                child: Align(
-                                                  // materialsymbolssearchNAj (114:14605)
-                                                  alignment:
-                                                      Alignment.centerLeft,
-                                                  child: SizedBox(
-                                                    width: 23.41 * fem,
-                                                    height: 22.5 * fem,
-                                                    child: Container(
-                                                      margin:
-                                                          EdgeInsets.fromLTRB(
-                                                              0 * fem,
-                                                              0 * fem,
-                                                              330.79 * fem,
-                                                              4 * fem),
-                                                      child: Image.asset(
-                                                        'assets/images/material-symbols-search.png',
-                                                        width: 23.41 * fem,
-                                                        height: 22.5 * fem,
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
+                                          ),
+                                        ],
                                       ),
-                                    ),
-                                  ],
-                                ),
-                              ),
+                                    )
+                                  : const SizedBox(),
                               Container(
                                 // group984qRy (114:13943)
                                 margin: EdgeInsets.fromLTRB(
@@ -231,7 +195,7 @@ class _cooperativesScreenState extends State<cooperativesScreen> {
                                         fontSize: 24 * ffem,
                                         fontWeight: FontWeight.w500,
                                         height: 1.2175 * ffem / fem,
-                                        color: Color(0xff262626),
+                                        color: const Color(0xff262626),
                                       ),
                                     ),
                                   ],
@@ -248,7 +212,7 @@ class _cooperativesScreenState extends State<cooperativesScreen> {
                                     fontSize: 14 * ffem,
                                     fontWeight: FontWeight.w400,
                                     height: 1.3318751199 * ffem / fem,
-                                    color: Color(0xff828282),
+                                    color: const Color(0xff828282),
                                   ),
                                 ),
                               ),
@@ -268,12 +232,12 @@ class _cooperativesScreenState extends State<cooperativesScreen> {
                                   width: double.infinity,
                                   height: double.infinity,
                                   decoration: BoxDecoration(
-                                    color: Color(0xffffffff),
+                                    color: const Color(0xffffffff),
                                     borderRadius:
                                         BorderRadius.circular(5 * fem),
                                     boxShadow: [
                                       BoxShadow(
-                                        color: Color(0x26000000),
+                                        color: const Color(0x26000000),
                                         offset: Offset(0 * fem, 0 * fem),
                                         blurRadius: 2.5 * fem,
                                       ),
@@ -288,8 +252,8 @@ class _cooperativesScreenState extends State<cooperativesScreen> {
                                         height: 14 * fem,
                                         decoration: BoxDecoration(
                                           border: Border.all(
-                                              color: Color(0xffffa412)),
-                                          color: Color(0xfffff1dc),
+                                              color: const Color(0xffffa412)),
+                                          color: const Color(0xfffff1dc),
                                           borderRadius:
                                               BorderRadius.circular(5 * fem),
                                         ),
@@ -301,7 +265,7 @@ class _cooperativesScreenState extends State<cooperativesScreen> {
                                               fontSize: 9 * ffem,
                                               fontWeight: FontWeight.w500,
                                               height: 1.2175 * ffem / fem,
-                                              color: Color(0xffffa412),
+                                              color: const Color(0xffffa412),
                                             ),
                                           ),
                                         ),
@@ -332,7 +296,7 @@ class _cooperativesScreenState extends State<cooperativesScreen> {
                                                   18 * fem,
                                                   18 * fem),
                                               decoration: BoxDecoration(
-                                                color: Color(0xfff1f6ff),
+                                                color: const Color(0xfff1f6ff),
                                                 borderRadius:
                                                     BorderRadius.circular(
                                                         29.5 * fem),
@@ -372,8 +336,8 @@ class _cooperativesScreenState extends State<cooperativesScreen> {
                                                             FontWeight.w600,
                                                         height:
                                                             1.2175 * ffem / fem,
-                                                        color:
-                                                            Color(0xff259ded),
+                                                        color: const Color(
+                                                            0xff259ded),
                                                       ),
                                                     ),
                                                   ),
@@ -448,7 +412,7 @@ class _cooperativesScreenState extends State<cooperativesScreen> {
                                                                       1.2175 *
                                                                           ffem /
                                                                           fem,
-                                                                  color: Color(
+                                                                  color: const Color(
                                                                       0x7f000000),
                                                                 ),
                                                               ),
@@ -514,7 +478,7 @@ class _cooperativesScreenState extends State<cooperativesScreen> {
                                                                       1.2175 *
                                                                           ffem /
                                                                           fem,
-                                                                  color: Color(
+                                                                  color: const Color(
                                                                       0x7f000000),
                                                                 ),
                                                               ),
@@ -539,7 +503,7 @@ class _cooperativesScreenState extends State<cooperativesScreen> {
                                         height: 33 * fem,
                                         decoration: BoxDecoration(
                                           border: Border.all(
-                                              color: Color(0xff259ded)),
+                                              color: const Color(0xff259ded)),
                                           borderRadius:
                                               BorderRadius.circular(100 * fem),
                                         ),
@@ -556,7 +520,7 @@ class _cooperativesScreenState extends State<cooperativesScreen> {
                                                 fontSize: 11 * ffem,
                                                 fontWeight: FontWeight.w600,
                                                 height: 1.2175 * ffem / fem,
-                                                color: Color(0xff259ded),
+                                                color: const Color(0xff259ded),
                                               ),
                                             ),
                                           ),

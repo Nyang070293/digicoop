@@ -54,7 +54,7 @@ class _coopMemberScreenState extends State<coopMemberScreen> {
                     children: [
                       GestureDetector(
                         onTap: () {
-                          context.pushReplacementNamed(cooperatives);
+                          context.pushReplacementNamed(cooperativesDisclaimer);
                         },
                         child: Container(
                           // arrow1y5h (75:714)
@@ -72,7 +72,7 @@ class _coopMemberScreenState extends State<coopMemberScreen> {
                       Container(
                         // createaccountUHM (75:716)
                         margin: EdgeInsets.fromLTRB(
-                            0 * fem, 0 * fem, 84 * fem, 0 * fem),
+                            30 * fem, 0 * fem, 84 * fem, 0 * fem),
                         child: Text(
                           'Loans',
                           style: SafeGoogleFont(
@@ -132,39 +132,47 @@ class _coopMemberScreenState extends State<coopMemberScreen> {
                             ),
                           ),
                         ),
-                        Positioned(
-                          // onboardingcashin2Gf (114:14390)
-                          left: 53 * fem,
-                          top: 248 * fem,
-                          child: Align(
-                            child: SizedBox(
-                              width: 328 * fem,
-                              height: 247 * fem,
-                              child: Image.asset(
-                                'assets/images/onboardingcashin.png',
+                        Container(
+                          margin: EdgeInsets.fromLTRB(
+                              0 * fem, 0 * fem, 0 * fem, 70 * fem),
+                          child: Positioned(
+                            // onboardingcashin2Gf (114:14390)
+                            left: 53 * fem,
+                            top: 248 * fem,
+                            child: Align(
+                              child: SizedBox(
                                 width: 328 * fem,
                                 height: 247 * fem,
+                                child: Image.asset(
+                                  'assets/images/onboardingcashin.png',
+                                  width: 328 * fem,
+                                  height: 247 * fem,
+                                ),
                               ),
                             ),
                           ),
                         ),
-                        Positioned(
-                          // yourmembershipapplicationhasbe (114:14395)
-                          left: 38 * fem,
-                          top: 577 * fem,
-                          child: Align(
-                            child: SizedBox(
-                              width: 336 * fem,
-                              height: 75 * fem,
-                              child: Text(
-                                'Your membership application has been successfully submitted. Please kindly wait while the cooperative is verifying your account details.\n\n',
-                                textAlign: TextAlign.center,
-                                style: SafeGoogleFont(
-                                  'Montserrat',
-                                  fontSize: 14 * ffem,
-                                  fontWeight: FontWeight.w400,
-                                  height: 1.3318751199 * ffem / fem,
-                                  color: Color(0xff231f20),
+                        Container(
+                          margin: EdgeInsets.fromLTRB(
+                              0 * fem, 0 * fem, 0 * fem, 70 * fem),
+                          child: Positioned(
+                            // yourmembershipapplicationhasbe (114:14395)
+                            left: 38 * fem,
+                            top: 677 * fem,
+                            child: Align(
+                              child: SizedBox(
+                                width: 336 * fem,
+                                height: 75 * fem,
+                                child: Text(
+                                  'Your membership application has been successfully submitted. Please kindly wait while the cooperative is verifying your account details.\n\n',
+                                  textAlign: TextAlign.center,
+                                  style: SafeGoogleFont(
+                                    'Montserrat',
+                                    fontSize: 14 * ffem,
+                                    fontWeight: FontWeight.w400,
+                                    height: 1.3318751199 * ffem / fem,
+                                    color: Color(0xff231f20),
+                                  ),
                                 ),
                               ),
                             ),
@@ -173,7 +181,7 @@ class _coopMemberScreenState extends State<coopMemberScreen> {
                         Positioned(
                           // group410vum (114:14397)
                           left: 31 * fem,
-                          top: 732 * fem,
+                          top: 800 * fem,
                           child: TextButton(
                             onPressed: () {},
                             style: TextButton.styleFrom(
@@ -195,36 +203,41 @@ class _coopMemberScreenState extends State<coopMemberScreen> {
                                   ),
                                 ],
                               ),
-                              child: Row(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Container(
-                                    // doneYgF (114:14399)
-                                    margin: EdgeInsets.fromLTRB(
-                                        0 * fem, 0 * fem, 84.17 * fem, 0 * fem),
-                                    child: Text(
-                                      'Done',
-                                      textAlign: TextAlign.center,
-                                      style: SafeGoogleFont(
-                                        'Montserrat',
-                                        fontSize: 24 * ffem,
-                                        fontWeight: FontWeight.w500,
-                                        height: 1.2175 * ffem / fem,
-                                        color: Color(0xffffffff),
+                              child: GestureDetector(
+                                onTap: () {
+                                  context.pushReplacementNamed(mycooperatives);
+                                },
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Container(
+                                      // doneYgF (114:14399)
+                                      margin: EdgeInsets.fromLTRB(0 * fem,
+                                          0 * fem, 84.17 * fem, 0 * fem),
+                                      child: Text(
+                                        'Done',
+                                        textAlign: TextAlign.center,
+                                        style: SafeGoogleFont(
+                                          'Montserrat',
+                                          fontSize: 24 * ffem,
+                                          fontWeight: FontWeight.w500,
+                                          height: 1.2175 * ffem / fem,
+                                          color: Color(0xffffffff),
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                  Container(
-                                    // solararrowrightbrokenrB9 (114:14400)
-                                    width: 26.67 * fem,
-                                    height: 20 * fem,
-                                    child: Image.asset(
-                                      'assets/page-1/images/solar-arrow-right-broken.png',
+                                    Container(
+                                      // solararrowrightbrokenrB9 (114:14400)
                                       width: 26.67 * fem,
                                       height: 20 * fem,
+                                      child: Image.asset(
+                                        'assets/images/solar-arrow-right-broken.png',
+                                        width: 26.67 * fem,
+                                        height: 20 * fem,
+                                      ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
                             ),
                           ),

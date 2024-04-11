@@ -6,7 +6,8 @@ const String refreshToken = "refreshToken",
     tripCode = "tripCode",
     countCompleteTrip = "countCompleteTrip",
     MobileNum = "MobileNum",
-    personCode = "personCode";
+    personCode = "personCode",
+    userCode = "userCode";
 
 const String firstname = "firstname",
     lastname = "lastname",

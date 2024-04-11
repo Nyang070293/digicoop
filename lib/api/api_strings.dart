@@ -10,5 +10,8 @@ class DigiCoopAPI {
       validate = "$baseUrl/persons/validate",
       mpin = "$baseUrl/auth/user-set-credentials",
       register = "$baseUrl/persons/register",
-      profile = "$baseUrl/persons/get-profile";
+      profile = "$baseUrl/persons/get-profile",
+      changePW = "$baseUrl/auth/update-password/stage",
+      generateOTP = "$baseUrl/otp/generate",
+      updatePW = "$baseUrl/auth/update-password";
 }

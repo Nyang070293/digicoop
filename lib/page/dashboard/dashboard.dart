@@ -487,7 +487,7 @@ class _dashboardScreenState extends State<dashboardScreen> {
                                     //buttons
                                     Container(
                                       margin: EdgeInsets.fromLTRB(
-                                          24 * fem, 20 * fem, 0 * fem, 0 * fem),
+                                          24 * fem, 40 * fem, 0 * fem, 0 * fem),
                                       width: 321 * fem,
                                       height: 256 * fem,
                                       child: Column(
@@ -625,83 +625,200 @@ class _dashboardScreenState extends State<dashboardScreen> {
                                                       SizedBox(
                                                         width: 31 * fem,
                                                       ),
-                                                      SizedBox(
-                                                        // frame162984Pd9 (2008:188)
-                                                        width: 57 * fem,
-                                                        child: Column(
-                                                          crossAxisAlignment:
-                                                              CrossAxisAlignment
-                                                                  .center,
-                                                          children: [
-                                                            Container(
-                                                              // senddisabledKFu (2008:190)
-                                                              margin: EdgeInsets
-                                                                  .fromLTRB(
-                                                                      0 * fem,
-                                                                      0 * fem,
-                                                                      0 * fem,
-                                                                      5 * fem),
-                                                              padding: EdgeInsets
-                                                                  .fromLTRB(
-                                                                      13 * fem,
-                                                                      13 * fem,
-                                                                      13.99 *
-                                                                          fem,
-                                                                      13.92 *
-                                                                          fem),
-                                                              width: double
-                                                                  .infinity,
-                                                              decoration:
-                                                                  BoxDecoration(
-                                                                color: const Color(
-                                                                    0xfff0f7ff),
-                                                                borderRadius:
-                                                                    BorderRadius
-                                                                        .circular(5 *
-                                                                            fem),
-                                                                boxShadow: [
-                                                                  BoxShadow(
-                                                                    color: const Color(
-                                                                        0xffe7eaf0),
-                                                                    offset: Offset(
+                                                      GestureDetector(
+                                                        onTap: () {
+                                                          context
+                                                              .pushReplacementNamed(
+                                                                  changePassword);
+                                                        },
+                                                        child: SizedBox(
+                                                          // frame162984Pd9 (2008:188)
+                                                          width: 57 * fem,
+                                                          child: Column(
+                                                            crossAxisAlignment:
+                                                                CrossAxisAlignment
+                                                                    .center,
+                                                            children: [
+                                                              Container(
+                                                                // senddisabledKFu (2008:190)
+                                                                margin: EdgeInsets
+                                                                    .fromLTRB(
                                                                         0 * fem,
-                                                                        3 * fem),
-                                                                    blurRadius:
-                                                                        2.5 *
+                                                                        0 * fem,
+                                                                        0 * fem,
+                                                                        5 * fem),
+                                                                padding: EdgeInsets
+                                                                    .fromLTRB(
+                                                                        13 *
                                                                             fem,
-                                                                  ),
-                                                                ],
-                                                              ),
-                                                              child: Center(
-                                                                // senticonPWf (2008:192)
-                                                                child: SizedBox(
-                                                                  width: 30.01 *
-                                                                      fem,
-                                                                  height:
-                                                                      30.08 *
-                                                                          fem,
-                                                                  child: Image
-                                                                      .asset(
-                                                                    'assets/images/sent-icon.png',
+                                                                        13 *
+                                                                            fem,
+                                                                        13.99 *
+                                                                            fem,
+                                                                        13.92 *
+                                                                            fem),
+                                                                width: double
+                                                                    .infinity,
+                                                                decoration:
+                                                                    BoxDecoration(
+                                                                  color: const Color(
+                                                                      0xfff0f7ff),
+                                                                  borderRadius:
+                                                                      BorderRadius
+                                                                          .circular(5 *
+                                                                              fem),
+                                                                  boxShadow: [
+                                                                    BoxShadow(
+                                                                      color: const Color(
+                                                                          0xffe7eaf0),
+                                                                      offset: Offset(
+                                                                          0 * fem,
+                                                                          3 * fem),
+                                                                      blurRadius:
+                                                                          2.5 *
+                                                                              fem,
+                                                                    ),
+                                                                  ],
+                                                                ),
+                                                                child: Center(
+                                                                  // senticonPWf (2008:192)
+                                                                  child:
+                                                                      SizedBox(
                                                                     width:
                                                                         30.01 *
                                                                             fem,
                                                                     height:
                                                                         30.08 *
                                                                             fem,
+                                                                    child: Image
+                                                                        .asset(
+                                                                      'assets/images/sent-icon.png',
+                                                                      width:
+                                                                          30.01 *
+                                                                              fem,
+                                                                      height:
+                                                                          30.08 *
+                                                                              fem,
+                                                                    ),
                                                                   ),
                                                                 ),
                                                               ),
-                                                            ),
-                                                            Container(
-                                                              // dashboardhnF (2008:189)
-                                                              constraints:
-                                                                  BoxConstraints(
-                                                                maxWidth:
-                                                                    32 * fem,
+                                                              Container(
+                                                                // dashboardhnF (2008:189)
+                                                                constraints:
+                                                                    BoxConstraints(
+                                                                  maxWidth:
+                                                                      32 * fem,
+                                                                ),
+                                                                child: Text(
+                                                                  'Send\nMoney',
+                                                                  textAlign:
+                                                                      TextAlign
+                                                                          .center,
+                                                                  style:
+                                                                      SafeGoogleFont(
+                                                                    'Montserrat',
+                                                                    fontSize:
+                                                                        9 * ffem,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w600,
+                                                                    height: 1 *
+                                                                        ffem /
+                                                                        fem,
+                                                                    color: const Color(
+                                                                        0x7f000000),
+                                                                  ),
+                                                                ),
                                                               ),
-                                                              child: Text(
-                                                                'Send\nMoney',
+                                                            ],
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      SizedBox(
+                                                        width: 31 * fem,
+                                                      ),
+                                                      GestureDetector(
+                                                        onTap: () {
+                                                          context
+                                                              .pushReplacementNamed(
+                                                                  bankTransfer);
+                                                        },
+                                                        child: SizedBox(
+                                                          // frame162986oqH (2008:194)
+                                                          width: 57 * fem,
+                                                          height:
+                                                              double.infinity,
+                                                          child: Column(
+                                                            crossAxisAlignment:
+                                                                CrossAxisAlignment
+                                                                    .center,
+                                                            children: [
+                                                              Container(
+                                                                // paybillsdisabled9u9 (2008:196)
+                                                                margin: EdgeInsets
+                                                                    .fromLTRB(
+                                                                        0 * fem,
+                                                                        0 * fem,
+                                                                        0 * fem,
+                                                                        5 * fem),
+                                                                padding: EdgeInsets
+                                                                    .fromLTRB(
+                                                                        13 *
+                                                                            fem,
+                                                                        12 *
+                                                                            fem,
+                                                                        14 *
+                                                                            fem,
+                                                                        11.58 *
+                                                                            fem),
+                                                                width: double
+                                                                    .infinity,
+                                                                decoration:
+                                                                    BoxDecoration(
+                                                                  color: const Color(
+                                                                      0xfff0f7ff),
+                                                                  borderRadius:
+                                                                      BorderRadius
+                                                                          .circular(5 *
+                                                                              fem),
+                                                                  boxShadow: [
+                                                                    BoxShadow(
+                                                                      color: const Color(
+                                                                          0xffe7eaf0),
+                                                                      offset: Offset(
+                                                                          0 * fem,
+                                                                          3 * fem),
+                                                                      blurRadius:
+                                                                          2.5 *
+                                                                              fem,
+                                                                    ),
+                                                                  ],
+                                                                ),
+                                                                child: Center(
+                                                                  // mobilephonebilliconRrf (2008:198)
+                                                                  child:
+                                                                      SizedBox(
+                                                                    width: 30 *
+                                                                        fem,
+                                                                    height:
+                                                                        33.42 *
+                                                                            fem,
+                                                                    child: Image
+                                                                        .asset(
+                                                                      'assets/images/bank.png',
+                                                                      width: 30 *
+                                                                          fem,
+                                                                      height:
+                                                                          33.42 *
+                                                                              fem,
+                                                                    ),
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                              Text(
+                                                                // dashboardwq1 (2008:195)
+                                                                'Bank\nTransfer',
                                                                 textAlign:
                                                                     TextAlign
                                                                         .center,
@@ -720,103 +837,8 @@ class _dashboardScreenState extends State<dashboardScreen> {
                                                                       0x7f000000),
                                                                 ),
                                                               ),
-                                                            ),
-                                                          ],
-                                                        ),
-                                                      ),
-                                                      SizedBox(
-                                                        width: 31 * fem,
-                                                      ),
-                                                      SizedBox(
-                                                        // frame162986oqH (2008:194)
-                                                        width: 57 * fem,
-                                                        height: double.infinity,
-                                                        child: Column(
-                                                          crossAxisAlignment:
-                                                              CrossAxisAlignment
-                                                                  .center,
-                                                          children: [
-                                                            Container(
-                                                              // paybillsdisabled9u9 (2008:196)
-                                                              margin: EdgeInsets
-                                                                  .fromLTRB(
-                                                                      0 * fem,
-                                                                      0 * fem,
-                                                                      0 * fem,
-                                                                      2 * fem),
-                                                              padding: EdgeInsets
-                                                                  .fromLTRB(
-                                                                      13 * fem,
-                                                                      12 * fem,
-                                                                      14 * fem,
-                                                                      11.58 *
-                                                                          fem),
-                                                              width: double
-                                                                  .infinity,
-                                                              decoration:
-                                                                  BoxDecoration(
-                                                                color: const Color(
-                                                                    0xfff0f7ff),
-                                                                borderRadius:
-                                                                    BorderRadius
-                                                                        .circular(5 *
-                                                                            fem),
-                                                                boxShadow: [
-                                                                  BoxShadow(
-                                                                    color: const Color(
-                                                                        0xffe7eaf0),
-                                                                    offset: Offset(
-                                                                        0 * fem,
-                                                                        3 * fem),
-                                                                    blurRadius:
-                                                                        2.5 *
-                                                                            fem,
-                                                                  ),
-                                                                ],
-                                                              ),
-                                                              child: Center(
-                                                                // mobilephonebilliconRrf (2008:198)
-                                                                child: SizedBox(
-                                                                  width:
-                                                                      30 * fem,
-                                                                  height:
-                                                                      33.42 *
-                                                                          fem,
-                                                                  child: Image
-                                                                      .asset(
-                                                                    'assets/images/mobile-phone-bill-icon.png',
-                                                                    width: 30 *
-                                                                        fem,
-                                                                    height:
-                                                                        33.42 *
-                                                                            fem,
-                                                                  ),
-                                                                ),
-                                                              ),
-                                                            ),
-                                                            Text(
-                                                              // dashboardwq1 (2008:195)
-                                                              'Pay Bills',
-                                                              textAlign:
-                                                                  TextAlign
-                                                                      .center,
-                                                              style:
-                                                                  SafeGoogleFont(
-                                                                'Montserrat',
-                                                                fontSize:
-                                                                    9 * ffem,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w600,
-                                                                height:
-                                                                    2.6666666667 *
-                                                                        ffem /
-                                                                        fem,
-                                                                color: const Color(
-                                                                    0x7f000000),
-                                                              ),
-                                                            ),
-                                                          ],
+                                                            ],
+                                                          ),
                                                         ),
                                                       ),
                                                       SizedBox(
@@ -877,7 +899,7 @@ class _dashboardScreenState extends State<dashboardScreen> {
                                                                       30 * fem,
                                                                   child: Image
                                                                       .asset(
-                                                                    'assets/images/communication-smartphone.png',
+                                                                    'assets/images/mobile-phone-bill-icon.png',
                                                                     width: 30 *
                                                                         fem,
                                                                     height: 30 *
@@ -888,7 +910,7 @@ class _dashboardScreenState extends State<dashboardScreen> {
                                                             ),
                                                             Text(
                                                               // dashboardP4j (2008:202)
-                                                              'E-Load',
+                                                              'Pay Bills',
                                                               textAlign:
                                                                   TextAlign
                                                                       .center,
@@ -979,7 +1001,7 @@ class _dashboardScreenState extends State<dashboardScreen> {
                                                                           fem,
                                                                   child: Image
                                                                       .asset(
-                                                                    'assets/images/home-insurance-icon.png',
+                                                                    'assets/images/communication-smartphone.png',
                                                                     width: 30 *
                                                                         fem,
                                                                     height:
@@ -991,6 +1013,110 @@ class _dashboardScreenState extends State<dashboardScreen> {
                                                             ),
                                                             Container(
                                                               // dashboard6mm (2008:213)
+                                                              margin: EdgeInsets
+                                                                  .fromLTRB(
+                                                                      0 * fem,
+                                                                      0 * fem,
+                                                                      1 * fem,
+                                                                      0 * fem),
+                                                              child: Text(
+                                                                'E-Load',
+                                                                textAlign:
+                                                                    TextAlign
+                                                                        .center,
+                                                                style:
+                                                                    SafeGoogleFont(
+                                                                  'Montserrat',
+                                                                  fontSize:
+                                                                      9 * ffem,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w600,
+                                                                  height:
+                                                                      1.2175 *
+                                                                          ffem /
+                                                                          fem,
+                                                                  color: const Color(
+                                                                      0xff828282),
+                                                                ),
+                                                              ),
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      ),
+                                                      SizedBox(
+                                                        width: 31 * fem,
+                                                      ),
+                                                      SizedBox(
+                                                        // frame162981znb (2008:239)
+                                                        width: 57 * fem,
+                                                        child: Column(
+                                                          crossAxisAlignment:
+                                                              CrossAxisAlignment
+                                                                  .center,
+                                                          children: [
+                                                            Container(
+                                                              // remittancedisabledwxj (2008:241)
+                                                              margin: EdgeInsets
+                                                                  .fromLTRB(
+                                                                      0 * fem,
+                                                                      0 * fem,
+                                                                      0 * fem,
+                                                                      4 * fem),
+                                                              padding: EdgeInsets
+                                                                  .fromLTRB(
+                                                                      15 * fem,
+                                                                      15 * fem,
+                                                                      14.36 *
+                                                                          fem,
+                                                                      14.36 *
+                                                                          fem),
+                                                              width: double
+                                                                  .infinity,
+                                                              decoration:
+                                                                  BoxDecoration(
+                                                                color: const Color(
+                                                                    0xfff0f7ff),
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(5 *
+                                                                            fem),
+                                                                boxShadow: [
+                                                                  BoxShadow(
+                                                                    color: const Color(
+                                                                        0xffe7eaf0),
+                                                                    offset: Offset(
+                                                                        0 * fem,
+                                                                        3 * fem),
+                                                                    blurRadius:
+                                                                        2.5 *
+                                                                            fem,
+                                                                  ),
+                                                                ],
+                                                              ),
+                                                              child: Center(
+                                                                // ctmloginqYK (2008:243)
+                                                                child: SizedBox(
+                                                                  width: 27.64 *
+                                                                      fem,
+                                                                  height:
+                                                                      27.64 *
+                                                                          fem,
+                                                                  child: Image
+                                                                      .asset(
+                                                                    'assets/images/home-insurance-icon.png',
+                                                                    width:
+                                                                        27.64 *
+                                                                            fem,
+                                                                    height:
+                                                                        27.64 *
+                                                                            fem,
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                            ),
+                                                            Container(
+                                                              // dashboardZUK (2008:240)
                                                               margin: EdgeInsets
                                                                   .fromLTRB(
                                                                       0 * fem,
@@ -1011,7 +1137,7 @@ class _dashboardScreenState extends State<dashboardScreen> {
                                                                       FontWeight
                                                                           .w600,
                                                                   height:
-                                                                      1.2175 *
+                                                                      1.6666666667 *
                                                                           ffem /
                                                                           fem,
                                                                   color: const Color(
@@ -1226,110 +1352,6 @@ class _dashboardScreenState extends State<dashboardScreen> {
                                                           ],
                                                         ),
                                                       ),
-                                                      SizedBox(
-                                                        width: 31 * fem,
-                                                      ),
-                                                      SizedBox(
-                                                        // frame162981znb (2008:239)
-                                                        width: 57 * fem,
-                                                        child: Column(
-                                                          crossAxisAlignment:
-                                                              CrossAxisAlignment
-                                                                  .center,
-                                                          children: [
-                                                            Container(
-                                                              // remittancedisabledwxj (2008:241)
-                                                              margin: EdgeInsets
-                                                                  .fromLTRB(
-                                                                      0 * fem,
-                                                                      0 * fem,
-                                                                      0 * fem,
-                                                                      4 * fem),
-                                                              padding: EdgeInsets
-                                                                  .fromLTRB(
-                                                                      15 * fem,
-                                                                      15 * fem,
-                                                                      14.36 *
-                                                                          fem,
-                                                                      14.36 *
-                                                                          fem),
-                                                              width: double
-                                                                  .infinity,
-                                                              decoration:
-                                                                  BoxDecoration(
-                                                                color: const Color(
-                                                                    0xfff0f7ff),
-                                                                borderRadius:
-                                                                    BorderRadius
-                                                                        .circular(5 *
-                                                                            fem),
-                                                                boxShadow: [
-                                                                  BoxShadow(
-                                                                    color: const Color(
-                                                                        0xffe7eaf0),
-                                                                    offset: Offset(
-                                                                        0 * fem,
-                                                                        3 * fem),
-                                                                    blurRadius:
-                                                                        2.5 *
-                                                                            fem,
-                                                                  ),
-                                                                ],
-                                                              ),
-                                                              child: Center(
-                                                                // ctmloginqYK (2008:243)
-                                                                child: SizedBox(
-                                                                  width: 27.64 *
-                                                                      fem,
-                                                                  height:
-                                                                      27.64 *
-                                                                          fem,
-                                                                  child: Image
-                                                                      .asset(
-                                                                    'assets/images/ctmlogin.png',
-                                                                    width:
-                                                                        27.64 *
-                                                                            fem,
-                                                                    height:
-                                                                        27.64 *
-                                                                            fem,
-                                                                  ),
-                                                                ),
-                                                              ),
-                                                            ),
-                                                            Container(
-                                                              // dashboardZUK (2008:240)
-                                                              margin: EdgeInsets
-                                                                  .fromLTRB(
-                                                                      0 * fem,
-                                                                      0 * fem,
-                                                                      1 * fem,
-                                                                      0 * fem),
-                                                              child: Text(
-                                                                'CTM Login',
-                                                                textAlign:
-                                                                    TextAlign
-                                                                        .center,
-                                                                style:
-                                                                    SafeGoogleFont(
-                                                                  'Montserrat',
-                                                                  fontSize:
-                                                                      9 * ffem,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w600,
-                                                                  height:
-                                                                      1.6666666667 *
-                                                                          ffem /
-                                                                          fem,
-                                                                  color: const Color(
-                                                                      0xff828282),
-                                                                ),
-                                                              ),
-                                                            ),
-                                                          ],
-                                                        ),
-                                                      ),
                                                     ],
                                                   ),
                                                 ),
@@ -1446,7 +1468,7 @@ class _dashboardScreenState extends State<dashboardScreen> {
                             top: 240 * fem,
                             child: Container(
                               padding: EdgeInsets.fromLTRB(
-                                  42 * fem, 29.75 * fem, 44.5 * fem, 44 * fem),
+                                  42 * fem, 29.75 * fem, 0 * fem, 44 * fem),
                               width: 414 * fem,
                               height: 460 * fem,
                               decoration: BoxDecoration(
@@ -1458,7 +1480,7 @@ class _dashboardScreenState extends State<dashboardScreen> {
                                   Container(
                                     // autogroupepttbsV (LJesNwrmwTuecBKUPvEPtT)
                                     margin: EdgeInsets.fromLTRB(
-                                        7 * fem, 0 * fem, 6 * fem, 47 * fem),
+                                        7 * fem, 0 * fem, 0 * fem, 47 * fem),
                                     width: double.infinity,
                                     child: Row(
                                       crossAxisAlignment:
@@ -1512,7 +1534,7 @@ class _dashboardScreenState extends State<dashboardScreen> {
                                         Container(
                                           // frame1631347UT (2015:1352)
                                           margin: EdgeInsets.fromLTRB(4 * fem,
-                                              0 * fem, 2.5 * fem, 30 * fem),
+                                              0 * fem, 0 * fem, 30 * fem),
                                           width: double.infinity,
                                           height: 83 * fem,
                                           child: Row(
@@ -1524,7 +1546,7 @@ class _dashboardScreenState extends State<dashboardScreen> {
                                                 margin: EdgeInsets.fromLTRB(
                                                     0 * fem,
                                                     0 * fem,
-                                                    24 * fem,
+                                                    30 * fem,
                                                     0 * fem),
                                                 width: 57 * fem,
                                                 height: double.infinity,
@@ -1673,7 +1695,7 @@ class _dashboardScreenState extends State<dashboardScreen> {
                                                               0 * fem,
                                                               0 * fem,
                                                               0 * fem,
-                                                              2 * fem),
+                                                              5 * fem),
                                                       padding:
                                                           EdgeInsets.fromLTRB(
                                                               13 * fem,
@@ -1695,7 +1717,7 @@ class _dashboardScreenState extends State<dashboardScreen> {
                                                           width: 30 * fem,
                                                           height: 33.42 * fem,
                                                           child: Image.asset(
-                                                            'assets/images/mobile-phone-bill-icon.png',
+                                                            'assets/images/bank.png',
                                                             width: 30 * fem,
                                                             height: 33.42 * fem,
                                                           ),
@@ -1704,7 +1726,7 @@ class _dashboardScreenState extends State<dashboardScreen> {
                                                     ),
                                                     Text(
                                                       // dashboardpr3 (2015:1366)
-                                                      'Pay Bills',
+                                                      'Bank\nTransfer',
                                                       textAlign:
                                                           TextAlign.center,
                                                       style: SafeGoogleFont(
@@ -1712,7 +1734,7 @@ class _dashboardScreenState extends State<dashboardScreen> {
                                                         fontSize: 12 * ffem,
                                                         fontWeight:
                                                             FontWeight.w400,
-                                                        height: 2 * ffem / fem,
+                                                        height: 1 * ffem / fem,
                                                         color:
                                                             Color(0xff000000),
                                                       ),
@@ -1757,7 +1779,7 @@ class _dashboardScreenState extends State<dashboardScreen> {
                                                           width: 30 * fem,
                                                           height: 30 * fem,
                                                           child: Image.asset(
-                                                            'assets/images/communication-smartphone.png',
+                                                            'assets/images/mobile-phone-bill-icon.png',
                                                             width: 30 * fem,
                                                             height: 30 * fem,
                                                           ),
@@ -1766,7 +1788,7 @@ class _dashboardScreenState extends State<dashboardScreen> {
                                                     ),
                                                     Text(
                                                       // dashboardj5q (2015:1373)
-                                                      'E-Load',
+                                                      'Pay Bills',
                                                       textAlign:
                                                           TextAlign.center,
                                                       style: SafeGoogleFont(
@@ -1794,10 +1816,71 @@ class _dashboardScreenState extends State<dashboardScreen> {
                                             crossAxisAlignment:
                                                 CrossAxisAlignment.start,
                                             children: [
+                                              SizedBox(
+                                                // frame162981L31 (2015:1411)
+                                                width: 62 * fem,
+                                                child: Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.center,
+                                                  children: [
+                                                    Container(
+                                                      // remittancedisableds2w (2015:1413)
+                                                      margin:
+                                                          EdgeInsets.fromLTRB(
+                                                              2.5 * fem,
+                                                              0 * fem,
+                                                              2.5 * fem,
+                                                              4 * fem),
+                                                      padding:
+                                                          EdgeInsets.fromLTRB(
+                                                              15 * fem,
+                                                              15 * fem,
+                                                              14.36 * fem,
+                                                              14.36 * fem),
+                                                      width: double.infinity,
+                                                      decoration: BoxDecoration(
+                                                        color:
+                                                            Color(0xfff0f7ff),
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(
+                                                                    5 * fem),
+                                                      ),
+                                                      child: Center(
+                                                        // ctmloginm8K (2015:1415)
+                                                        child: SizedBox(
+                                                          width: 27.64 * fem,
+                                                          height: 27.64 * fem,
+                                                          child: Image.asset(
+                                                            'assets/images/communication-smartphone.png',
+                                                            width: 27.64 * fem,
+                                                            height: 27.64 * fem,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    Text(
+                                                      // dashboard5Pu (2015:1412)
+                                                      'E-Load',
+                                                      textAlign:
+                                                          TextAlign.center,
+                                                      style: SafeGoogleFont(
+                                                        'Inter',
+                                                        fontSize: 12 * ffem,
+                                                        fontWeight:
+                                                            FontWeight.w400,
+                                                        height: 2 * ffem / fem,
+                                                        color:
+                                                            Color(0xff000000),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
                                               Container(
                                                 // frame162980CVD (2015:1383)
                                                 margin: EdgeInsets.fromLTRB(
-                                                    0 * fem,
+                                                    30 * fem,
                                                     0 * fem,
                                                     31 * fem,
                                                     0 * fem),
@@ -2033,82 +2116,6 @@ class _dashboardScreenState extends State<dashboardScreen> {
                                                         ],
                                                       ),
                                                     ),
-                                                    SizedBox(
-                                                      // frame162981L31 (2015:1411)
-                                                      width: 62 * fem,
-                                                      child: Column(
-                                                        crossAxisAlignment:
-                                                            CrossAxisAlignment
-                                                                .center,
-                                                        children: [
-                                                          Container(
-                                                            // remittancedisableds2w (2015:1413)
-                                                            margin: EdgeInsets
-                                                                .fromLTRB(
-                                                                    2.5 * fem,
-                                                                    0 * fem,
-                                                                    2.5 * fem,
-                                                                    4 * fem),
-                                                            padding: EdgeInsets
-                                                                .fromLTRB(
-                                                                    15 * fem,
-                                                                    15 * fem,
-                                                                    14.36 * fem,
-                                                                    14.36 *
-                                                                        fem),
-                                                            width:
-                                                                double.infinity,
-                                                            decoration:
-                                                                BoxDecoration(
-                                                              color: Color(
-                                                                  0xfff0f7ff),
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          5 * fem),
-                                                            ),
-                                                            child: Center(
-                                                              // ctmloginm8K (2015:1415)
-                                                              child: SizedBox(
-                                                                width:
-                                                                    27.64 * fem,
-                                                                height:
-                                                                    27.64 * fem,
-                                                                child:
-                                                                    Image.asset(
-                                                                  'assets/images/ctmlogin.png',
-                                                                  width: 27.64 *
-                                                                      fem,
-                                                                  height:
-                                                                      27.64 *
-                                                                          fem,
-                                                                ),
-                                                              ),
-                                                            ),
-                                                          ),
-                                                          Text(
-                                                            // dashboard5Pu (2015:1412)
-                                                            'CTM Login',
-                                                            textAlign: TextAlign
-                                                                .center,
-                                                            style:
-                                                                SafeGoogleFont(
-                                                              'Inter',
-                                                              fontSize:
-                                                                  12 * ffem,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w400,
-                                                              height: 2 *
-                                                                  ffem /
-                                                                  fem,
-                                                              color: Color(
-                                                                  0xff000000),
-                                                            ),
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    ),
                                                   ],
                                                 ),
                                               ),
@@ -2117,18 +2124,78 @@ class _dashboardScreenState extends State<dashboardScreen> {
                                         ),
                                         Container(
                                           // frame163398p6b (2015:1422)
-                                          margin: EdgeInsets.fromLTRB(0 * fem,
-                                              0 * fem, 178.5 * fem, 0 * fem),
+
                                           width: double.infinity,
                                           height: 83 * fem,
                                           child: Row(
                                             crossAxisAlignment:
                                                 CrossAxisAlignment.center,
                                             children: [
+                                              SizedBox(
+                                                // frame162981L31 (2015:1411)
+                                                width: 62 * fem,
+                                                child: Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.center,
+                                                  children: [
+                                                    Container(
+                                                      // remittancedisableds2w (2015:1413)
+                                                      margin:
+                                                          EdgeInsets.fromLTRB(
+                                                              2.5 * fem,
+                                                              0 * fem,
+                                                              2.5 * fem,
+                                                              4 * fem),
+                                                      padding:
+                                                          EdgeInsets.fromLTRB(
+                                                              15 * fem,
+                                                              15 * fem,
+                                                              14.36 * fem,
+                                                              14.36 * fem),
+                                                      width: double.infinity,
+                                                      decoration: BoxDecoration(
+                                                        color:
+                                                            Color(0xfff0f7ff),
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(
+                                                                    5 * fem),
+                                                      ),
+                                                      child: Center(
+                                                        // ctmloginm8K (2015:1415)
+                                                        child: SizedBox(
+                                                          width: 27.64 * fem,
+                                                          height: 27.64 * fem,
+                                                          child: Image.asset(
+                                                            'assets/images/ctmlogin.png',
+                                                            width: 27.64 * fem,
+                                                            height: 27.64 * fem,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    Text(
+                                                      // dashboard5Pu (2015:1412)
+                                                      'CTM Login',
+                                                      textAlign:
+                                                          TextAlign.center,
+                                                      style: SafeGoogleFont(
+                                                        'Inter',
+                                                        fontSize: 12 * ffem,
+                                                        fontWeight:
+                                                            FontWeight.w400,
+                                                        height: 2 * ffem / fem,
+                                                        color:
+                                                            Color(0xff000000),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
                                               Container(
                                                 // frame162981Fhh (2015:1423)
                                                 margin: EdgeInsets.fromLTRB(
-                                                    0 * fem,
+                                                    30 * fem,
                                                     0 * fem,
                                                     27 * fem,
                                                     0 * fem),

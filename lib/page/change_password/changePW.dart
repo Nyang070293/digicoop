@@ -1,34 +1,75 @@
+import 'dart:convert';
+
+import 'package:digicoop/Function/aes.dart';
+import 'package:digicoop/api/api_strings.dart';
 import 'package:digicoop/constant/flush_bar.dart';
 import 'package:digicoop/constant/keys.dart';
 import 'package:digicoop/constant/shared_pref.dart';
-import 'package:digicoop/page/Signup/about.dart';
-import 'package:email_validator/email_validator.dart';
 import 'package:digicoop/routes/route_generator.dart';
 import 'package:digicoop/util/textfield.dart';
 import 'package:digicoop/util/utils.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:http/http.dart' as http;
 
-class emailScreen extends ConsumerStatefulWidget {
-  const emailScreen({super.key});
+class changePasswordScreen extends StatefulWidget {
+  const changePasswordScreen({super.key});
 
   @override
-  ConsumerState<emailScreen> createState() => _emailScreenState();
+  State<changePasswordScreen> createState() => _changePasswordScreenState();
 }
 
-class _emailScreenState extends ConsumerState<emailScreen> {
-  final TextEditingController _email = TextEditingController();
+class _changePasswordScreenState extends State<changePasswordScreen> {
+  final TextEditingController _newPW = TextEditingController();
+  final TextEditingController _newCPW = TextEditingController();
 
-  Future<void> sendData() async {
-    await SharedPrefs.write(contactOptionId, 2);
-    await SharedPrefs.write(contactOptionValue, _email.text);
+  Future<void> sendData(String newPW, String newCPW) async {
+    try {
+      //print("personCode1 ${SharedPrefs.read(personCode)}");
+      final data =
+          '{"personCode":  "${SharedPrefs.read(personCode)}", "userCode": "${SharedPrefs.read(userCode)}",  "newPassword": "$newPW", "newPasswordConfirm": "$newCPW"}';
 
-    context.pushNamed(homeAddress);
+      final encryptedBody = Aes256.encrypt(data, SharedPrefs.read(totp));
+      print("encryptedBody MPIN $encryptedBody");
+      http.Response response = await http.post(
+        Uri.parse(DigiCoopAPI.changePW),
+        body: {'data': encryptedBody},
+      );
+      // Parse the JSON response body
+      final responseData = json.decode(response.body);
+      // Access specific data from the parsed response
+      var encryptData = responseData['data'];
+
+      final decrypt = Aes256.decrypt(encryptData, SharedPrefs.read(totp));
+      Map<String, dynamic> jsonData = jsonDecode(decrypt!);
+      //String userCode = jsonData["data"]["userCode"];
+      print("data respond ${jsonData}");
+      //print("userCode ${userCode}");
+      // Handle response
+      if (response.statusCode == 200) {
+        context.pushNamed(loadingChangePW);
+      } else if (response.statusCode == 400) {
+        Flush.flushMessage(
+          icons: Icons.error_outline,
+          title: "Error",
+          message: jsonData['message'],
+        );
+      } else {
+        Flush.flushMessage(
+          icons: Icons.error_outline,
+          title: "Error",
+          message: jsonData['message'],
+        );
+      }
+    } catch (e) {
+      print('Error sending encrypted payload: $e');
+    }
   }
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     double baseWidth = 414;
     double fem = MediaQuery.of(context).size.width / baseWidth;
     double ffem = fem * 0.97;
@@ -68,7 +109,7 @@ class _emailScreenState extends ConsumerState<emailScreen> {
                     children: [
                       GestureDetector(
                         onTap: () {
-                          context.pushNamed(about);
+                          context.pushReplacementNamed(dashboard);
                         },
                         child: Container(
                           // arrow1y5h (75:714)
@@ -88,28 +129,13 @@ class _emailScreenState extends ConsumerState<emailScreen> {
                         margin: EdgeInsets.fromLTRB(
                             0 * fem, 0 * fem, 84 * fem, 0 * fem),
                         child: Text(
-                          'Create Account',
+                          'Change Password',
                           style: SafeGoogleFont(
                             'Montserrat',
                             fontSize: 18 * ffem,
                             fontWeight: FontWeight.w600,
                             height: 1.2175 * ffem / fem,
                             color: const Color(0xff231f20),
-                          ),
-                        ),
-                      ),
-                      Container(
-                        // authenticationyE7 (75:717)
-                        margin: EdgeInsets.fromLTRB(
-                            0 * fem, 0 * fem, 0 * fem, 4 * fem),
-                        child: Text(
-                          '3 / 5',
-                          style: SafeGoogleFont(
-                            'Montserrat',
-                            fontSize: 14 * ffem,
-                            fontWeight: FontWeight.w600,
-                            height: 1.2175 * ffem / fem,
-                            color: const Color(0xffc1c1c1),
                           ),
                         ),
                       ),
@@ -124,103 +150,152 @@ class _emailScreenState extends ConsumerState<emailScreen> {
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
                         Container(
-                          // authenticationt6B (75:123)
-                          margin:
-                              EdgeInsets.only(left: 31 * fem, bottom: 18 * fem),
+                          // authenticationWoq (2062:15625)
+                          margin: EdgeInsets.fromLTRB(
+                              31 * fem, 0 * fem, 0 * fem, 10 * fem),
                           child: Text(
-                            'Add your email address',
+                            'Account Security',
                             style: SafeGoogleFont(
                               'Montserrat',
                               fontSize: 24 * ffem,
                               fontWeight: FontWeight.w500,
                               height: 1.2175 * ffem / fem,
-                              color: const Color(0xff262626),
+                              color: Color(0xff262626),
                             ),
                           ),
                         ),
-                        //Desc
                         Container(
-                          // onlyprovideinformationthatistr (75:124)
-                          margin: EdgeInsets.only(
-                            left: 34 * fem,
-                            top: 10 * fem,
+                          // authenticationDy9 (2062:15627)
+                          margin: EdgeInsets.fromLTRB(
+                              31 * fem, 0 * fem, 0 * fem, 9 * fem),
+                          child: Text(
+                            'Change Password',
+                            style: SafeGoogleFont(
+                              'Montserrat',
+                              fontSize: 16 * ffem,
+                              fontWeight: FontWeight.w500,
+                              height: 1.2175 * ffem / fem,
+                              color: Color(0xff262626),
+                            ),
                           ),
+                        ),
+                        Container(
+                          // yourmpinwillbeusedtologintoyou (2062:15646)
+                          margin: EdgeInsets.fromLTRB(
+                              31 * fem, 0 * fem, 0 * fem, 0 * fem),
                           constraints: BoxConstraints(
-                            maxWidth: 289 * fem,
+                            maxWidth: 351 * fem,
                           ),
                           child: Text(
-                            'Only provide information that is True and Correct.',
+                            'Your Password will be used to login to your DigiCOOP account. Do not share your Password to anyone else.',
                             style: SafeGoogleFont(
                               'Montserrat',
                               fontSize: 14 * ffem,
                               fontWeight: FontWeight.w400,
                               height: 1.3318751199 * ffem / fem,
-                              color: const Color(0xff828282),
+                              color: Color(0xff828282),
                             ),
                           ),
                         ),
-                        //text field
                         Container(
-                          // autogroupxkc7tkP (Ga7m5VNzTgSXaJtLbGxkC7)
+                          // autogroupu63hQXq (LJitizYf4v4iPhyu5SU63h)
                           padding: EdgeInsets.fromLTRB(
-                              29 * fem, 41 * fem, 30 * fem, 174 * fem),
+                              29 * fem, 41 * fem, 30 * fem, 0 * fem),
                           width: double.infinity,
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               Container(
-                                // autogroupxa9d3vw (Ga7kiAfBpCwmgctpFyxa9D)
-                                margin: EdgeInsets.only(
-                                    right: 5 * fem, bottom: 19 * fem),
-                                width: 350 * fem,
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.end,
-                                  children: [
-                                    Container(
-                                      // group939kaT (75:400)
-                                      margin: EdgeInsets.only(
-                                          top: 20 * fem, bottom: 19 * fem),
-                                      width: double.infinity,
-                                      height: 70 * fem,
-                                      child: CommonTextField(
-                                        controller: _email,
-                                        labelText: 'Email Address',
-                                        textInputAction: TextInputAction.next,
-                                        accentColor: const Color(0xff259ded),
+                                // group846i2j (2062:15635)
+                                margin: EdgeInsets.fromLTRB(
+                                    2 * fem, 0 * fem, 5 * fem, 0 * fem),
+                                width: double.infinity,
+                                height: 90 * fem,
+                                child: Container(
+                                  // autogroupjt2fdfV (LJiu7Q4zQMZLzmGAQojT2f)
+                                  padding: EdgeInsets.fromLTRB(
+                                      0 * fem, 0 * fem, 0 * fem, 8.73 * fem),
+                                  width: double.infinity,
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.end,
+                                    children: [
+                                      Padding(
+                                        padding: EdgeInsets.fromLTRB(
+                                            0 * fem, 0 * fem, 0 * fem, 0 * fem),
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.stretch,
+                                          children: [
+                                            // Password Field
+                                            CommonTextField(
+                                              controller: _newPW,
+                                              labelText: 'Enter New Password',
+                                              obscureText: true,
+                                              textInputAction:
+                                                  TextInputAction.next,
+                                              accentColor:
+                                                  const Color(0xff259ded),
+                                            ),
+                                            const SizedBox(height: 16),
+                                          ],
+                                        ),
                                       ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                              Container(
+                                // autogrouprdfuoCb (LJitVLGkXfAm5zxPgCrdfu)
+                                margin: EdgeInsets.fromLTRB(
+                                    0 * fem, 0 * fem, 0 * fem, 100 * fem),
+                                width: 354 * fem,
+                                height: 76 * fem,
+                                child: Stack(
+                                  children: [
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.stretch,
+                                      children: [
+                                        // Password Field
+                                        CommonTextField(
+                                          controller: _newCPW,
+                                          labelText: 'Confirm New Password',
+                                          obscureText: true,
+                                          textInputAction: TextInputAction.next,
+                                          accentColor: const Color(0xff259ded),
+                                        ),
+                                        const SizedBox(height: 16),
+                                      ],
                                     ),
-
-                                    /////////////////
                                   ],
                                 ),
                               ),
                               Container(
-                                // group410HZ1 (75:708)
-                                margin: EdgeInsets.only(
-                                  top: 80 * fem,
-                                ),
+                                // group410hSP (2062:15629)
+                                margin: EdgeInsets.fromLTRB(
+                                    2 * fem, 0 * fem, 0 * fem, 0 * fem),
                                 child: TextButton(
                                   onPressed: () {
-                                    if (_email.text.isEmpty) {
+                                    if (_newPW.text.isEmpty) {
                                       Flush.flushMessage(
                                         icons: Icons.error_outline,
                                         title: "Field Required",
-                                        message: "Please enter your Email",
+                                        message:
+                                            "Please enter your new Password",
+                                      );
+                                      return;
+                                    }
+                                    if (_newCPW.text.isEmpty) {
+                                      Flush.flushMessage(
+                                        icons: Icons.error_outline,
+                                        title: "Field Required",
+                                        message:
+                                            "Please enter your Confirm Password",
                                       );
                                       return;
                                     }
 
-                                    if (EmailValidator.validate(_email.text) ==
-                                        false) {
-                                      Flush.flushMessage(
-                                        icons: Icons.error_outline,
-                                        title: "Invalid Email",
-                                        message:
-                                            "Please Enter correct email address",
-                                      );
-                                      return;
-                                    }
-                                    sendData();
+                                    sendData(_newPW.text, _newCPW.text);
                                   },
                                   style: TextButton.styleFrom(
                                     padding: EdgeInsets.zero,
@@ -230,12 +305,12 @@ class _emailScreenState extends ConsumerState<emailScreen> {
                                         15 * fem, 23.67 * fem, 10 * fem),
                                     width: double.infinity,
                                     decoration: BoxDecoration(
-                                      color: const Color(0xff259ded),
+                                      color: Color(0xff259ded),
                                       borderRadius:
                                           BorderRadius.circular(100 * fem),
                                       boxShadow: [
                                         BoxShadow(
-                                          color: const Color(0x3f000000),
+                                          color: Color(0x3f000000),
                                           offset: Offset(0 * fem, 4 * fem),
                                           blurRadius: 2 * fem,
                                         ),
@@ -246,7 +321,7 @@ class _emailScreenState extends ConsumerState<emailScreen> {
                                           CrossAxisAlignment.center,
                                       children: [
                                         Container(
-                                          // proceedhMq (75:710)
+                                          // proceedLET (2062:15631)
                                           margin: EdgeInsets.fromLTRB(0 * fem,
                                               0 * fem, 75.67 * fem, 0 * fem),
                                           child: Text(
@@ -257,12 +332,12 @@ class _emailScreenState extends ConsumerState<emailScreen> {
                                               fontSize: 24 * ffem,
                                               fontWeight: FontWeight.w500,
                                               height: 1.2175 * ffem / fem,
-                                              color: const Color(0xffffffff),
+                                              color: Color(0xffffffff),
                                             ),
                                           ),
                                         ),
                                         Container(
-                                          // solararrowrightbroken1dR (75:711)
+                                          // solararrowrightbrokenqwu (2062:15632)
                                           margin: EdgeInsets.fromLTRB(0 * fem,
                                               0 * fem, 0 * fem, 4 * fem),
                                           width: 26.67 * fem,
