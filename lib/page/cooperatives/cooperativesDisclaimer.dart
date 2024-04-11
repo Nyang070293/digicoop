@@ -361,62 +361,66 @@ class _cooperativesDisclaimerScreenState
                             ],
                           ),
                         ),
-                        Container(
-                          // group410pJT (114:14312)
-                          margin: EdgeInsets.fromLTRB(
-                              30 * fem, 0 * fem, 41 * fem, 60 * fem),
-                          child: TextButton(
-                            onPressed: () {},
-                            style: TextButton.styleFrom(
-                              padding: EdgeInsets.zero,
-                            ),
-                            child: Container(
-                              padding: EdgeInsets.fromLTRB(
-                                  69 * fem, 12 * fem, 23.67 * fem, 13 * fem),
-                              width: double.infinity,
-                              decoration: BoxDecoration(
-                                color: Color(0xff259ded),
-                                borderRadius: BorderRadius.circular(100 * fem),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Color(0x3f000000),
-                                    offset: Offset(0 * fem, 4 * fem),
-                                    blurRadius: 2 * fem,
-                                  ),
-                                ],
+                        GestureDetector(
+                          onTap: () {},
+                          child: Container(
+                            // group410pJT (114:14312)
+                            margin: EdgeInsets.fromLTRB(
+                                30 * fem, 0 * fem, 41 * fem, 60 * fem),
+                            child: TextButton(
+                              onPressed: () {},
+                              style: TextButton.styleFrom(
+                                padding: EdgeInsets.zero,
                               ),
-                              child: Row(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Container(
-                                    // applyasmemberFuZ (114:14314)
-                                    margin: EdgeInsets.fromLTRB(
-                                        0 * fem, 0 * fem, 19.67 * fem, 0 * fem),
-                                    child: Text(
-                                      'Apply as Member',
-                                      textAlign: TextAlign.center,
-                                      style: SafeGoogleFont(
-                                        'Montserrat',
-                                        fontSize: 24 * ffem,
-                                        fontWeight: FontWeight.w500,
-                                        height: 1.2175 * ffem / fem,
-                                        color: Color(0xffffffff),
+                              child: Container(
+                                padding: EdgeInsets.fromLTRB(
+                                    69 * fem, 12 * fem, 23.67 * fem, 13 * fem),
+                                width: double.infinity,
+                                decoration: BoxDecoration(
+                                  color: Color(0xff259ded),
+                                  borderRadius:
+                                      BorderRadius.circular(100 * fem),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Color(0x3f000000),
+                                      offset: Offset(0 * fem, 4 * fem),
+                                      blurRadius: 2 * fem,
+                                    ),
+                                  ],
+                                ),
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Container(
+                                      // applyasmemberFuZ (114:14314)
+                                      margin: EdgeInsets.fromLTRB(0 * fem,
+                                          0 * fem, 19.67 * fem, 0 * fem),
+                                      child: Text(
+                                        'Apply as Member',
+                                        textAlign: TextAlign.center,
+                                        style: SafeGoogleFont(
+                                          'Montserrat',
+                                          fontSize: 24 * ffem,
+                                          fontWeight: FontWeight.w500,
+                                          height: 1.2175 * ffem / fem,
+                                          color: Color(0xffffffff),
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                  Container(
-                                    // solararrowrightbrokenB2X (114:14315)
-                                    margin: EdgeInsets.fromLTRB(
-                                        0 * fem, 2 * fem, 0 * fem, 0 * fem),
-                                    width: 26.67 * fem,
-                                    height: 20 * fem,
-                                    child: Image.asset(
-                                      'assets/images/solar-arrow-right-broken.png',
+                                    Container(
+                                      // solararrowrightbrokenB2X (114:14315)
+                                      margin: EdgeInsets.fromLTRB(
+                                          0 * fem, 2 * fem, 0 * fem, 0 * fem),
                                       width: 26.67 * fem,
                                       height: 20 * fem,
+                                      child: Image.asset(
+                                        'assets/images/solar-arrow-right-broken.png',
+                                        width: 26.67 * fem,
+                                        height: 20 * fem,
+                                      ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
                             ),
                           ),

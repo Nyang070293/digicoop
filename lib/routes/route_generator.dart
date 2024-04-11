@@ -16,6 +16,7 @@ import 'package:digicoop/page/cashin_bank/cashresult.dart';
 import 'package:digicoop/page/cashin_ctm/cashinctm.dart';
 import 'package:digicoop/page/cashin_otc/cashinotc.dart';
 import 'package:digicoop/page/cashin_otc/cashinotc_select.dart';
+import 'package:digicoop/page/cooperatives/coopMember.dart';
 import 'package:digicoop/page/cooperatives/cooperatives.dart';
 import 'package:digicoop/page/cooperatives/cooperativesDisclaimer.dart';
 import 'package:digicoop/page/dashboard/dashboard.dart';
@@ -52,7 +53,8 @@ const String splashscreen = "SplashScreen",
     cashresult = "cashresult",
     ewalletselect = "ewalletselect",
     cooperatives = "cooperatives",
-    cooperativesDisclaimer = "cooperativesDisclaimer";
+    cooperativesDisclaimer = "cooperativesDisclaimer",
+    coopMember = "coopMember";
 
 // Route
 
@@ -144,6 +146,14 @@ final goRouter = Provider<GoRouter>((ref) {
           return const cashinbankSelectScreen();
         },
       ),
+      GoRoute(
+        name: coopMember,
+        path: "/$coopMember",
+        builder: (context, state) {
+          return const coopMemberScreen();
+        },
+      ),
+
       GoRoute(
         name: cashresult,
         path: "/$cashresult/:index",

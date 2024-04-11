@@ -11,6 +11,7 @@ class cooperativesScreen extends StatefulWidget {
 }
 
 class _cooperativesScreenState extends State<cooperativesScreen> {
+  bool isSearchShow = false;
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -84,13 +85,16 @@ class _cooperativesScreenState extends State<cooperativesScreen> {
                           ),
                         ),
                       ),
-                      Container(
-                        // materialsymbolssearchvFy (85:4642)
-                        width: 25.5 * fem,
-                        height: 25.5 * fem,
-                        child: const Icon(
-                          Icons.search_sharp,
-                          size: 32,
+                      GestureDetector(
+                        onTap: () {},
+                        child: Container(
+                          // materialsymbolssearchvFy (85:4642)
+                          width: 25.5 * fem,
+                          height: 25.5 * fem,
+                          child: const Icon(
+                            Icons.search_sharp,
+                            size: 32,
+                          ),
                         ),
                       ),
                     ],
@@ -111,6 +115,92 @@ class _cooperativesScreenState extends State<cooperativesScreen> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
+                              Container(
+                                // group984qRy (114:13943)
+                                margin: EdgeInsets.fromLTRB(
+                                    11 * fem, 0 * fem, 169 * fem, 4 * fem),
+                                padding: EdgeInsets.fromLTRB(
+                                    2.25 * fem, 0 * fem, 0 * fem, 0 * fem),
+                                width: double.infinity,
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Positioned(
+                                      // autogrouprgpzTR9 (LJeZ6yJxdieKxFgU5XRGPZ)
+                                      left: 27 * fem,
+                                      top: 56 * fem,
+                                      child: Container(
+                                        width: 362 * fem,
+                                        height: 34 * fem,
+                                        child: Stack(
+                                          children: [
+                                            Positioned(
+                                              // searchforcooperativesBc3 (114:14607)
+                                              left: 46 * fem,
+                                              top: 4 * fem,
+                                              child: Align(
+                                                child: SizedBox(
+                                                  width: 165 * fem,
+                                                  height: 19 * fem,
+                                                  child: Text(
+                                                    'Search for Cooperatives',
+                                                    style: SafeGoogleFont(
+                                                      'Montserrat',
+                                                      fontSize: 14 * ffem,
+                                                      fontWeight:
+                                                          FontWeight.w400,
+                                                      height: 1.3318751199 *
+                                                          ffem /
+                                                          fem,
+                                                      color: Color(0xff828282),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                            Positioned(
+                                              // group8464Qw (114:14603)
+                                              left: 0 * fem,
+                                              top: 0 * fem,
+                                              child: Container(
+                                                padding: EdgeInsets.fromLTRB(
+                                                    3.9 * fem,
+                                                    3.75 * fem,
+                                                    3.9 * fem,
+                                                    3.75 * fem),
+                                                width: 362 * fem,
+                                                height: 34 * fem,
+                                                child: Align(
+                                                  // materialsymbolssearchNAj (114:14605)
+                                                  alignment:
+                                                      Alignment.centerLeft,
+                                                  child: SizedBox(
+                                                    width: 23.41 * fem,
+                                                    height: 22.5 * fem,
+                                                    child: Container(
+                                                      margin:
+                                                          EdgeInsets.fromLTRB(
+                                                              0 * fem,
+                                                              0 * fem,
+                                                              330.79 * fem,
+                                                              4 * fem),
+                                                      child: Image.asset(
+                                                        'assets/images/material-symbols-search.png',
+                                                        width: 23.41 * fem,
+                                                        height: 22.5 * fem,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
                               Container(
                                 // group984qRy (114:13943)
                                 margin: EdgeInsets.fromLTRB(
