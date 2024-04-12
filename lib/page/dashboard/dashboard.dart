@@ -627,9 +627,9 @@ class _dashboardScreenState extends State<dashboardScreen> {
                                                       ),
                                                       GestureDetector(
                                                         onTap: () {
-                                                          context
-                                                              .pushReplacementNamed(
-                                                                  changePassword);
+                                                          // context
+                                                          //     .pushReplacementNamed(
+                                                          //         changePassword);
                                                         },
                                                         child: SizedBox(
                                                           // frame162984Pd9 (2008:188)

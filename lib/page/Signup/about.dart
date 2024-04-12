@@ -53,7 +53,7 @@ class _aboutScreenState extends ConsumerState<aboutScreen> {
 
     String inputDateString = _birthday.text; //"1999-01-01";
     DateTime inputDate = DateTime.parse(inputDateString);
-    String bDay_formattedDate = DateFormat('yyyy-mm-dd').format(inputDate);
+    String bDay_formattedDate = DateFormat('yyyy-MM-dd').format(inputDate);
     print("birthday $bDay_formattedDate"); // Output: January 01, 1999
 
     await SharedPrefs.write(firstname, _firstName.text);
@@ -571,7 +571,7 @@ class _aboutScreenState extends ConsumerState<aboutScreen> {
                               Container(
                                 // group410HZ1 (75:708)
                                 margin: EdgeInsets.fromLTRB(
-                                    2 * fem, 0 * fem, 0 * fem, 0 * fem),
+                                    2 * fem, 80 * fem, 0 * fem, 0 * fem),
                                 child: TextButton(
                                   onPressed: () {
                                     if (_firstName.text.isEmpty) {

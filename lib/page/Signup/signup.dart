@@ -68,6 +68,7 @@ class _signupScreenState extends ConsumerState<signupScreen> {
       if (response.statusCode == 201) {
         SharedPrefs.write(MobileNum, jsonData['data']['mobileNumber']);
         SharedPrefs.write(personCode, jsonData['data']['personCode']);
+        SharedPrefs.write(accessToken, jsonData['data']['accessToken']);
 
         print("personCode ${SharedPrefs.read(personCode)}");
         context.pushNamed(vCode);

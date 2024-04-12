@@ -579,6 +579,7 @@ class _homeAddressScreenState extends ConsumerState<homeAddressScreen> {
                                       height: 65 * fem,
                                       child: CommonTextField(
                                         controller: _postalCode,
+                                        keyboardType: TextInputType.number,
                                         labelText: 'Postal Code',
                                         textInputAction: TextInputAction.next,
                                         accentColor: const Color(0xff259ded),
@@ -640,7 +641,7 @@ class _homeAddressScreenState extends ConsumerState<homeAddressScreen> {
                                     2 * fem, 0 * fem, 0 * fem, 0 * fem),
                                 child: TextButton(
                                   onPressed: () {
-                                    context.pushNamed(reviewDetails);
+                                    sendData();
                                   },
                                   style: TextButton.styleFrom(
                                     padding: EdgeInsets.zero,

@@ -128,43 +128,55 @@ class _settingScreenState extends State<settingScreen> {
                                         ),
                                       ),
                                     ),
-                                    Container(
-                                      // group338fLT (2045:8215)
-                                      padding: EdgeInsets.fromLTRB(
-                                          0 * fem, 0 * fem, 0 * fem, 0 * fem),
-                                      width: double.infinity,
-                                      child: Row(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Container(
-                                            // changepasswordwom (2045:8218)
-                                            margin: EdgeInsets.fromLTRB(0 * fem,
-                                                0 * fem, 197 * fem, 0 * fem),
-                                            child: Text(
-                                              'Change Password',
-                                              style: SafeGoogleFont(
-                                                'Montserrat',
-                                                fontSize: 16 * ffem,
-                                                fontWeight: FontWeight.w400,
-                                                height: 1.2175 * ffem / fem,
-                                                color: Color(0xff4f4f4f),
+                                    GestureDetector(
+                                      onTap: () {
+                                        context.pushReplacementNamed(
+                                            changePassword);
+                                      },
+                                      child: Container(
+                                        // group338fLT (2045:8215)
+                                        padding: EdgeInsets.fromLTRB(
+                                            0 * fem, 0 * fem, 0 * fem, 0 * fem),
+                                        width: double.infinity,
+                                        child: Row(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Container(
+                                              // changepasswordwom (2045:8218)
+                                              margin: EdgeInsets.fromLTRB(
+                                                  0 * fem,
+                                                  0 * fem,
+                                                  197 * fem,
+                                                  0 * fem),
+                                              child: Text(
+                                                'Change Password',
+                                                style: SafeGoogleFont(
+                                                  'Montserrat',
+                                                  fontSize: 16 * ffem,
+                                                  fontWeight: FontWeight.w400,
+                                                  height: 1.2175 * ffem / fem,
+                                                  color: Color(0xff4f4f4f),
+                                                ),
                                               ),
                                             ),
-                                          ),
-                                          Container(
-                                            // arrow21mH1 (2045:8216)
-                                            margin: EdgeInsets.fromLTRB(0 * fem,
-                                                1 * fem, 0 * fem, 0 * fem),
-                                            width: 11 * fem,
-                                            height: 20 * fem,
-                                            child: Image.asset(
-                                              'assets/images/arrow_black_right.png',
+                                            Container(
+                                              // arrow21mH1 (2045:8216)
+                                              margin: EdgeInsets.fromLTRB(
+                                                  0 * fem,
+                                                  1 * fem,
+                                                  0 * fem,
+                                                  0 * fem),
                                               width: 11 * fem,
                                               height: 20 * fem,
+                                              child: Image.asset(
+                                                'assets/images/arrow_black_right.png',
+                                                width: 11 * fem,
+                                                height: 20 * fem,
+                                              ),
                                             ),
-                                          ),
-                                        ],
+                                          ],
+                                        ),
                                       ),
                                     ),
                                   ],
@@ -354,6 +366,7 @@ class _settingScreenState extends State<settingScreen> {
                                         onChanged: (val) {},
                                         value: true,
                                         enabledThumbColor: Colors.blue,
+                                        enabledTrackColor: Color(0xE0E0E0),
                                         type: GFToggleType.ios,
                                       ),
                                     ],

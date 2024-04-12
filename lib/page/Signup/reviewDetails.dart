@@ -4,7 +4,6 @@ import 'package:digicoop/Function/aes.dart';
 import 'package:digicoop/api/api_strings.dart';
 import 'package:digicoop/constant/keys.dart';
 import 'package:digicoop/constant/shared_pref.dart';
-import 'package:digicoop/page/Signup/loading.dart';
 import 'package:digicoop/routes/route_generator.dart';
 import 'package:digicoop/util/utils.dart';
 import 'package:flutter/material.dart';
@@ -12,6 +11,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
+import 'package:digicoop/constant/flush_bar.dart';
 
 class reviewDetailScreen extends ConsumerStatefulWidget {
   const reviewDetailScreen({super.key});
@@ -37,26 +37,36 @@ class _reviewDetailScreenState extends ConsumerState<reviewDetailScreen> {
   Future<void> sendData() async {
     try {
       final data =
-          '{"firstName": "${SharedPrefs.read(firstname)}","lastName": "${SharedPrefs.read(lastname)}", "middleName": "${SharedPrefs.read(middlename)}", "suffix": "${SharedPrefs.read(suffix)}", "gender": "${SharedPrefs.read(gender)}", "birthDate": "${SharedPrefs.read(birthday)}", "birthPlace": "${SharedPrefs.read(birthplace)}", "civilStatus": "${SharedPrefs.read(civilstatus)}", "address1": "${SharedPrefs.read(address1)}", "address2": "${SharedPrefs.read(address2)}", "cityId": "${SharedPrefs.read(cityId)}","zipCode": "${SharedPrefs.read(zipCode)}","contactOptionId": "2", "contactOptionValue": "${SharedPrefs.read(contactOptionValue)}","addressTypeId": "${SharedPrefs.read(addressTypeId)}"}';
+          '{"firstName": "${SharedPrefs.read(firstname)}","lastName": "${SharedPrefs.read(lastname)}", "middleName": "${SharedPrefs.read(middlename)}", "suffix": "${SharedPrefs.read(suffix)}", "gender": ${SharedPrefs.read(gender)}, "birthDate": "${SharedPrefs.read(birthday)}", "birthPlace": "${SharedPrefs.read(birthplace)}", "civilStatus": ${SharedPrefs.read(civilstatus)}, "address1": "${SharedPrefs.read(address1)}", "address2": "${SharedPrefs.read(address2)}", "cityId": "${SharedPrefs.read(cityId)}","zipCode": "${SharedPrefs.read(zipCode)}","contactOptionId": 2, "contactOptionValue": "${SharedPrefs.read(contactOptionValue)}","addressTypeId": ${SharedPrefs.read(addressTypeId)}}';
 
       final encryptedBody = Aes256.encrypt(data, SharedPrefs.read(totp));
       http.Response response = await http.post(
         Uri.parse(DigiCoopAPI.register),
         body: {'data': encryptedBody},
       );
+      response.headers['Authorization'] =
+          'Bearer ${SharedPrefs.read(accessToken)}';
+      // Parse the JSON response body
+      final responseData = json.decode(response.body);
+      // Access specific data from the parsed response
+      var encryptData = responseData['data'];
 
+      final decrypt = Aes256.decrypt(encryptData, SharedPrefs.read(totp));
+      Map<String, dynamic> jsonData = jsonDecode(decrypt!);
+      print("reg ${jsonData}");
       // Handle response
       if (response.statusCode == 201) {
-        // Parse the JSON response body
-        final responseData = json.decode(response.body);
-        // Access specific data from the parsed response
-        var encryptData = responseData['data'];
-
-        final decrypt = Aes256.decrypt(encryptData, SharedPrefs.read(totp));
-        Map<String, dynamic> jsonData = jsonDecode(decrypt!);
-        print("reg ${jsonData}");
-
+        context.pushReplacementNamed(loading);
         //context.pushNamed(l);
+      } else {
+        Flush.flushMessage(
+          icons: Icons.error_outline,
+          title: "Error",
+          message: jsonData['message']
+              .toString()
+              .replaceAll('[', '')
+              .replaceAll(']', ''),
+        );
       }
     } catch (e) {
       print('Error sending encrypted payload: $e');
@@ -64,7 +74,7 @@ class _reviewDetailScreenState extends ConsumerState<reviewDetailScreen> {
   }
 
   String fullname =
-      "${SharedPrefs.read(firstname)} ${getFirstLetters(SharedPrefs.read(middlename))}. ${SharedPrefs.read(lastname)}";
+      "${SharedPrefs.read(firstname)} ${getFirstLetters(SharedPrefs.read(middlename))}. ${SharedPrefs.read(lastname)} ${SharedPrefs.read(suffix)}";
   String birthDate = DateFormat('MMM dd yyyy')
       .format(DateTime.parse(SharedPrefs.read(birthday)));
 
@@ -98,7 +108,7 @@ class _reviewDetailScreenState extends ConsumerState<reviewDetailScreen> {
                 Container(
                   // autogroupqjsbK19 (Ga7kW1LnPD874LtBUYQJSb)
                   margin:
-                      EdgeInsets.fromLTRB(0 * fem, 0 * fem, 0 * fem, 55 * fem),
+                      EdgeInsets.fromLTRB(0 * fem, 0 * fem, 0 * fem, 50 * fem),
                   padding: EdgeInsets.fromLTRB(
                       33.22 * fem, 25 * fem, 20 * fem, 23 * fem),
                   width: double.infinity,
@@ -177,7 +187,7 @@ class _reviewDetailScreenState extends ConsumerState<reviewDetailScreen> {
                           margin: EdgeInsets.fromLTRB(
                               31 * fem, 0 * fem, 0 * fem, 18 * fem),
                           child: Text(
-                            'Confirm Account Information',
+                            'Confirm Account\nInformation',
                             style: SafeGoogleFont(
                               'Montserrat',
                               fontSize: 24 * ffem,
@@ -264,7 +274,7 @@ class _reviewDetailScreenState extends ConsumerState<reviewDetailScreen> {
                               Container(
                                 // group955BfV (41:6173)
                                 margin: EdgeInsets.fromLTRB(
-                                    5 * fem, 0 * fem, 0 * fem, 2 * fem),
+                                    5 * fem, 0 * fem, 0 * fem, 25 * fem),
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
@@ -506,10 +516,10 @@ class _reviewDetailScreenState extends ConsumerState<reviewDetailScreen> {
                               Container(
                                 // group410DbV (41:6198)
                                 margin: EdgeInsets.fromLTRB(
-                                    2 * fem, 0 * fem, 0 * fem, 54 * fem),
+                                    2 * fem, 0 * fem, 0 * fem, 30 * fem),
                                 child: TextButton(
                                   onPressed: () {
-                                    context.pushReplacementNamed(loading);
+                                    sendData();
                                   },
                                   style: TextButton.styleFrom(
                                     padding: EdgeInsets.zero,
@@ -570,7 +580,7 @@ class _reviewDetailScreenState extends ConsumerState<reviewDetailScreen> {
                               Container(
                                 // editdetailsQpP (41:6204)
                                 margin: EdgeInsets.fromLTRB(
-                                    117 * fem, 0 * fem, 0 * fem, 0 * fem),
+                                    125 * fem, 0 * fem, 0 * fem, 0 * fem),
                                 child: GestureDetector(
                                   onTap: () {
                                     // Handle click action here

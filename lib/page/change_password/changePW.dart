@@ -35,6 +35,7 @@ class _changePasswordScreenState extends State<changePasswordScreen> {
         Uri.parse(DigiCoopAPI.changePW),
         body: {'data': encryptedBody},
       );
+
       // Parse the JSON response body
       final responseData = json.decode(response.body);
       // Access specific data from the parsed response

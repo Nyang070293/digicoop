@@ -7,7 +7,8 @@ const String refreshToken = "refreshToken",
     countCompleteTrip = "countCompleteTrip",
     MobileNum = "MobileNum",
     personCode = "personCode",
-    userCode = "userCode";
+    userCode = "userCode",
+    accessToken = "accessToken";
 
 const String firstname = "firstname",
     lastname = "lastname",

@@ -35,6 +35,8 @@ class _loginScreenState extends ConsumerState<loginScreen> {
 
   void _onTap() {
     context.pushReplacementNamed(signup);
+
+    //context.pushReplacementNamed(about);
   }
 
   void login() {
