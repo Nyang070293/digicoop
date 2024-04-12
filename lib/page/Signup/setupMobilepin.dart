@@ -48,9 +48,10 @@ class _setupMobilepinScreenState extends ConsumerState<setupMobilepinScreen> {
 
       final decrypt = Aes256.decrypt(encryptData, SharedPrefs.read(totp));
       Map<String, dynamic> jsonData = jsonDecode(decrypt!);
-      print("verify ${jsonData}");
+      print("MPIN ${jsonData}");
       // Handle response
       if (response.statusCode == 201) {
+        SharedPrefs.write(accessToken, jsonData['data']['accessToken']);
         context.pushNamed(about);
       } else if (response.statusCode == 400) {
         Flush.flushMessage(
