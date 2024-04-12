@@ -35,6 +35,7 @@ import 'package:digicoop/page/ewallet.dart/ewalletmain.dart';
 import 'package:digicoop/page/ewallet.dart/ewalletselect.dart';
 import 'package:digicoop/page/loading/loading.dart';
 import 'package:digicoop/page/onBoarding/splashscreen.dart';
+import 'package:digicoop/page/setting/setting.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -76,7 +77,8 @@ const String splashscreen = "SplashScreen",
     bankSuccess = "bankSuccess",
     changePassword = "changePassword",
     loadingChangePW = "loadingChangePW",
-    changePWSuccess = "changePWSuccess";
+    changePWSuccess = "changePWSuccess",
+    setting = "setting";
 
 // Route
 
@@ -116,6 +118,13 @@ final goRouter = Provider<GoRouter>((ref) {
         path: "/$cashinMain",
         builder: (context, state) {
           return const cashinMainScreen();
+        },
+      ),
+      GoRoute(
+        name: setting,
+        path: "/$setting",
+        builder: (context, state) {
+          return const settingScreen();
         },
       ),
       GoRoute(

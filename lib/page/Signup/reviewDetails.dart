@@ -67,8 +67,10 @@ class _reviewDetailScreenState extends ConsumerState<reviewDetailScreen> {
       "${SharedPrefs.read(firstname)} ${getFirstLetters(SharedPrefs.read(middlename))}. ${SharedPrefs.read(lastname)}";
   String birthDate = DateFormat('MMM dd yyyy')
       .format(DateTime.parse(SharedPrefs.read(birthday)));
-  String Gender = SharedPrefs.read(gender);
-  String cs = SharedPrefs.read(civilstatus);
+
+  String Gender = SharedPrefs.read(d_gender);
+  String cs = SharedPrefs.read(d_cs);
+
   String bp = SharedPrefs.read(birthplace);
   String emailaddress = SharedPrefs.read(contactOptionValue);
   String home_add =
@@ -507,12 +509,7 @@ class _reviewDetailScreenState extends ConsumerState<reviewDetailScreen> {
                                     2 * fem, 0 * fem, 0 * fem, 54 * fem),
                                 child: TextButton(
                                   onPressed: () {
-                                    Navigator.pushReplacement(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (_) => const loadingScreen(),
-                                      ),
-                                    );
+                                    context.pushReplacementNamed(loading);
                                   },
                                   style: TextButton.styleFrom(
                                     padding: EdgeInsets.zero,

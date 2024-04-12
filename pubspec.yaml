@@ -54,6 +54,8 @@ dependencies:
   another_flushbar: ^1.12.30
   flutter_screenutil: ^5.8.1 
   email_validator:
+  getwidget: ^ 4.0.0
+  
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -169,3 +171,4 @@ flutter:
     - assets/images/logo-dHh.png
     - assets/images/banktransferSuccess.png
     - assets/images/changePWSuccess.png
+    - assets/images/arrow_black_right.png

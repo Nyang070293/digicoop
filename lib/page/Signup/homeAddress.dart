@@ -50,9 +50,9 @@ class _homeAddressScreenState extends ConsumerState<homeAddressScreen> {
     await SharedPrefs.write(zipCode, _postalCode.text);
     await SharedPrefs.write(cityId, _selectedItemCity?.cityID.toString());
     if (_isOfficeAddress) {
-      await SharedPrefs.write(addressTypeId, 1);
+      await SharedPrefs.write(addressTypeId, 2);
     } else {
-      await SharedPrefs.write(addressTypeId, 0);
+      await SharedPrefs.write(addressTypeId, 1);
     }
 
     context.pushNamed(reviewDetails);

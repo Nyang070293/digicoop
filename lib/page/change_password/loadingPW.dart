@@ -36,7 +36,7 @@ class _loadingScreenState extends ConsumerState<loadingChangePWScreen> {
     try {
       //print("personCode1 ${SharedPrefs.read(personCode)}");
       final data =
-          '{"contactOptionId": "1", "otpUsageType": "1", "contactOptionValue": "${SharedPrefs.read(MobileNum)}", "isTest": "0","applicationId": 2}';
+          '{"contactOptionId": "1", "otpUsageType": "1", "contactOptionValue": "${SharedPrefs.read(MobileNum)}", "isTest": "1","applicationId": 2}';
 
       final encryptedBody = Aes256.encrypt(data, SharedPrefs.read(totp));
       print("encryptedBody MPIN $encryptedBody");
@@ -53,21 +53,27 @@ class _loadingScreenState extends ConsumerState<loadingChangePWScreen> {
       Map<String, dynamic> jsonData = jsonDecode(decrypt!);
       //String userCode = jsonData["data"]["userCode"];
       print("data respond ${jsonData}");
-      print("otpCode ${jsonData["otpCode"]}");
+      print("otpCode ${jsonData["data"]["otpCode"]}");
       // Handle response
-      if (response.statusCode == 201) {
-        sendData(jsonData["otpCode"]);
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        sendData(jsonData["data"]["otpCode"]);
       } else if (response.statusCode == 400) {
         Flush.flushMessage(
           icons: Icons.error_outline,
           title: "Error",
-          message: jsonData['message'],
+          message: jsonData['message']
+              .toString()
+              .replaceAll('[', '')
+              .replaceAll(']', ''),
         );
       } else {
         Flush.flushMessage(
           icons: Icons.error_outline,
           title: "Error",
-          message: jsonData['message'],
+          message: jsonData['message']
+              .toString()
+              .replaceAll('[', '')
+              .replaceAll(']', ''),
         );
       }
     } catch (e) {

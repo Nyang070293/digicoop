@@ -92,25 +92,33 @@ class _loginScreenState extends ConsumerState<loginScreen> {
       Map<String, dynamic> jsonData = jsonDecode(decrypt!);
       //String userCode = jsonData["data"]["userCode"];
       print("login ${jsonData}");
-      //print("userCode ${userCode}");
-      await SharedPrefs.write(userCode, jsonData["data"]["userCode"]);
-      await SharedPrefs.write(personCode, jsonData["data"]["personCode"]);
+      print("userCode ${jsonData["statusCode"]}");
+      print("userCode ${jsonData["message"]}");
+
       // Handle response
-      if (response.statusCode == 200) {
+      if (jsonData["statusCode"] == 200) {
+        await SharedPrefs.write(userCode, jsonData["data"]["userCode"]);
+        await SharedPrefs.write(personCode, jsonData["data"]["personCode"]);
         SharedPrefs.write(MobileNum, username);
         // ignore: use_build_context_synchronously
         context.pushNamed(dashboard);
-      } else if (response.statusCode == 400) {
+      } else if (jsonData["statusCode"] == 400) {
         Flush.flushMessage(
           icons: Icons.error_outline,
-          title: "Error",
-          message: "Invalid Authentication credentials.",
+          title: "Invalid Authentication credentials.",
+          message: jsonData['message']
+              .toString()
+              .replaceAll('[', '')
+              .replaceAll(']', ''),
         );
       } else {
         Flush.flushMessage(
           icons: Icons.error_outline,
           title: "Error",
-          message: jsonData['message'],
+          message: jsonData['message']
+              .toString()
+              .replaceAll('[', '')
+              .replaceAll(']', ''),
         );
       }
     } catch (e) {

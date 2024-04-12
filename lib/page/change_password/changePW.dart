@@ -46,19 +46,25 @@ class _changePasswordScreenState extends State<changePasswordScreen> {
       print("data respond ${jsonData}");
       //print("userCode ${userCode}");
       // Handle response
-      if (response.statusCode == 200) {
+      if (response.statusCode == 201) {
         context.pushNamed(loadingChangePW);
       } else if (response.statusCode == 400) {
         Flush.flushMessage(
           icons: Icons.error_outline,
           title: "Error",
-          message: jsonData['message'],
+          message: jsonData['message']
+              .toString()
+              .replaceAll('[', '')
+              .replaceAll(']', ''),
         );
       } else {
         Flush.flushMessage(
           icons: Icons.error_outline,
           title: "Error",
-          message: jsonData['message'],
+          message: jsonData['message']
+              .toString()
+              .replaceAll('[', '')
+              .replaceAll(']', ''),
         );
       }
     } catch (e) {

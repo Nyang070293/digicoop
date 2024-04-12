@@ -1471,7 +1471,7 @@ class _dashboardScreenState extends State<dashboardScreen> {
                                   42 * fem, 29.75 * fem, 0 * fem, 44 * fem),
                               width: 414 * fem,
                               height: 460 * fem,
-                              decoration: BoxDecoration(
+                              decoration: const BoxDecoration(
                                 color: Color(0xffffffff),
                               ),
                               child: Column(
@@ -1500,7 +1500,7 @@ class _dashboardScreenState extends State<dashboardScreen> {
                                               fontSize: 18 * ffem,
                                               fontWeight: FontWeight.w500,
                                               height: 1.2175 * ffem / fem,
-                                              color: Color(0xff231f20),
+                                              color: const Color(0xff231f20),
                                             ),
                                           ),
                                         ),
@@ -1570,8 +1570,8 @@ class _dashboardScreenState extends State<dashboardScreen> {
                                                               13 * fem),
                                                       width: double.infinity,
                                                       decoration: BoxDecoration(
-                                                        color:
-                                                            Color(0xfff0f7ff),
+                                                        color: const Color(
+                                                            0xfff0f7ff),
                                                         borderRadius:
                                                             BorderRadius
                                                                 .circular(
@@ -1601,8 +1601,8 @@ class _dashboardScreenState extends State<dashboardScreen> {
                                                         fontWeight:
                                                             FontWeight.w400,
                                                         height: 2 * ffem / fem,
-                                                        color:
-                                                            Color(0xff000000),
+                                                        color: const Color(
+                                                            0xff000000),
                                                       ),
                                                     ),
                                                   ],
@@ -1637,8 +1637,8 @@ class _dashboardScreenState extends State<dashboardScreen> {
                                                               13.92 * fem),
                                                       width: double.infinity,
                                                       decoration: BoxDecoration(
-                                                        color:
-                                                            Color(0xfff0f7ff),
+                                                        color: const Color(
+                                                            0xfff0f7ff),
                                                         borderRadius:
                                                             BorderRadius
                                                                 .circular(
@@ -1668,8 +1668,8 @@ class _dashboardScreenState extends State<dashboardScreen> {
                                                         fontWeight:
                                                             FontWeight.w400,
                                                         height: 2 * ffem / fem,
-                                                        color:
-                                                            Color(0xff000000),
+                                                        color: const Color(
+                                                            0xff000000),
                                                       ),
                                                     ),
                                                   ],
@@ -1704,8 +1704,8 @@ class _dashboardScreenState extends State<dashboardScreen> {
                                                               11.58 * fem),
                                                       width: double.infinity,
                                                       decoration: BoxDecoration(
-                                                        color:
-                                                            Color(0xfff0f7ff),
+                                                        color: const Color(
+                                                            0xfff0f7ff),
                                                         borderRadius:
                                                             BorderRadius
                                                                 .circular(
@@ -1735,8 +1735,8 @@ class _dashboardScreenState extends State<dashboardScreen> {
                                                         fontWeight:
                                                             FontWeight.w400,
                                                         height: 1 * ffem / fem,
-                                                        color:
-                                                            Color(0xff000000),
+                                                        color: const Color(
+                                                            0xff000000),
                                                       ),
                                                     ),
                                                   ],
@@ -1766,8 +1766,8 @@ class _dashboardScreenState extends State<dashboardScreen> {
                                                               13 * fem),
                                                       width: double.infinity,
                                                       decoration: BoxDecoration(
-                                                        color:
-                                                            Color(0xfff0f7ff),
+                                                        color: const Color(
+                                                            0xfff0f7ff),
                                                         borderRadius:
                                                             BorderRadius
                                                                 .circular(
@@ -1797,8 +1797,8 @@ class _dashboardScreenState extends State<dashboardScreen> {
                                                         fontWeight:
                                                             FontWeight.w400,
                                                         height: 2 * ffem / fem,
-                                                        color:
-                                                            Color(0xff000000),
+                                                        color: const Color(
+                                                            0xff000000),
                                                       ),
                                                     ),
                                                   ],
@@ -1839,8 +1839,8 @@ class _dashboardScreenState extends State<dashboardScreen> {
                                                               14.36 * fem),
                                                       width: double.infinity,
                                                       decoration: BoxDecoration(
-                                                        color:
-                                                            Color(0xfff0f7ff),
+                                                        color: const Color(
+                                                            0xfff0f7ff),
                                                         borderRadius:
                                                             BorderRadius
                                                                 .circular(
@@ -1870,8 +1870,8 @@ class _dashboardScreenState extends State<dashboardScreen> {
                                                         fontWeight:
                                                             FontWeight.w400,
                                                         height: 2 * ffem / fem,
-                                                        color:
-                                                            Color(0xff000000),
+                                                        color: const Color(
+                                                            0xff000000),
                                                       ),
                                                     ),
                                                   ],
@@ -1905,8 +1905,8 @@ class _dashboardScreenState extends State<dashboardScreen> {
                                                               13.28 * fem),
                                                       width: double.infinity,
                                                       decoration: BoxDecoration(
-                                                        color:
-                                                            Color(0xfff0f7ff),
+                                                        color: const Color(
+                                                            0xfff0f7ff),
                                                         borderRadius:
                                                             BorderRadius
                                                                 .circular(
@@ -1937,8 +1937,8 @@ class _dashboardScreenState extends State<dashboardScreen> {
                                                             FontWeight.w400,
                                                         height:
                                                             1.2125 * ffem / fem,
-                                                        color:
-                                                            Color(0xff000000),
+                                                        color: const Color(
+                                                            0xff000000),
                                                       ),
                                                     ),
                                                   ],
@@ -1968,8 +1968,8 @@ class _dashboardScreenState extends State<dashboardScreen> {
                                                               18.89 * fem),
                                                       width: double.infinity,
                                                       decoration: BoxDecoration(
-                                                        color:
-                                                            Color(0xfff0f7ff),
+                                                        color: const Color(
+                                                            0xfff0f7ff),
                                                         borderRadius:
                                                             BorderRadius
                                                                 .circular(
@@ -2006,8 +2006,8 @@ class _dashboardScreenState extends State<dashboardScreen> {
                                                           height: 1.2125 *
                                                               ffem /
                                                               fem,
-                                                          color:
-                                                              Color(0xff000000),
+                                                          color: const Color(
+                                                              0xff000000),
                                                         ),
                                                       ),
                                                     ),
@@ -2059,7 +2059,7 @@ class _dashboardScreenState extends State<dashboardScreen> {
                                                                 double.infinity,
                                                             decoration:
                                                                 BoxDecoration(
-                                                              color: Color(
+                                                              color: const Color(
                                                                   0xfff0f7ff),
                                                               borderRadius:
                                                                   BorderRadius
@@ -2108,7 +2108,7 @@ class _dashboardScreenState extends State<dashboardScreen> {
                                                                 height: 1.2125 *
                                                                     ffem /
                                                                     fem,
-                                                                color: Color(
+                                                                color: const Color(
                                                                     0xff000000),
                                                               ),
                                                             ),
@@ -2122,7 +2122,7 @@ class _dashboardScreenState extends State<dashboardScreen> {
                                             ],
                                           ),
                                         ),
-                                        Container(
+                                        SizedBox(
                                           // frame163398p6b (2015:1422)
 
                                           width: double.infinity,
@@ -2154,8 +2154,8 @@ class _dashboardScreenState extends State<dashboardScreen> {
                                                               14.36 * fem),
                                                       width: double.infinity,
                                                       decoration: BoxDecoration(
-                                                        color:
-                                                            Color(0xfff0f7ff),
+                                                        color: const Color(
+                                                            0xfff0f7ff),
                                                         borderRadius:
                                                             BorderRadius
                                                                 .circular(
@@ -2185,8 +2185,8 @@ class _dashboardScreenState extends State<dashboardScreen> {
                                                         fontWeight:
                                                             FontWeight.w400,
                                                         height: 2 * ffem / fem,
-                                                        color:
-                                                            Color(0xff000000),
+                                                        color: const Color(
+                                                            0xff000000),
                                                       ),
                                                     ),
                                                   ],
@@ -2221,8 +2221,8 @@ class _dashboardScreenState extends State<dashboardScreen> {
                                                               14.82 * fem),
                                                       width: double.infinity,
                                                       decoration: BoxDecoration(
-                                                        color:
-                                                            Color(0xfff0f7ff),
+                                                        color: const Color(
+                                                            0xfff0f7ff),
                                                         borderRadius:
                                                             BorderRadius
                                                                 .circular(
@@ -2252,8 +2252,8 @@ class _dashboardScreenState extends State<dashboardScreen> {
                                                         fontWeight:
                                                             FontWeight.w400,
                                                         height: 2 * ffem / fem,
-                                                        color:
-                                                            Color(0xff000000),
+                                                        color: const Color(
+                                                            0xff000000),
                                                       ),
                                                     ),
                                                   ],
@@ -2283,8 +2283,8 @@ class _dashboardScreenState extends State<dashboardScreen> {
                                                               11.76 * fem),
                                                       width: double.infinity,
                                                       decoration: BoxDecoration(
-                                                        color:
-                                                            Color(0xfff0f7ff),
+                                                        color: const Color(
+                                                            0xfff0f7ff),
                                                         borderRadius:
                                                             BorderRadius
                                                                 .circular(
@@ -2314,8 +2314,8 @@ class _dashboardScreenState extends State<dashboardScreen> {
                                                         fontWeight:
                                                             FontWeight.w400,
                                                         height: 2 * ffem / fem,
-                                                        color:
-                                                            Color(0xff000000),
+                                                        color: const Color(
+                                                            0xff000000),
                                                       ),
                                                     ),
                                                   ],
@@ -2342,7 +2342,7 @@ class _dashboardScreenState extends State<dashboardScreen> {
         ),
       ),
       drawer: Drawer(
-        backgroundColor: Color(0xff259ded),
+        backgroundColor: const Color(0xff259ded),
         child: Positioned(
           // group994J2B (2037:5770)
           left: 0 * fem,
@@ -2350,7 +2350,7 @@ class _dashboardScreenState extends State<dashboardScreen> {
           child: Container(
             width: 414 * fem,
             height: 812 * fem,
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               color: Color(0xb2000000),
             ),
             child: Stack(
@@ -2362,25 +2362,27 @@ class _dashboardScreenState extends State<dashboardScreen> {
                   child: Align(
                     child: SizedBox(
                       width: 325 * fem,
-                      height: 812 * fem,
+                      height: 900 * fem,
                       child: Container(
-                        decoration: BoxDecoration(
+                        decoration: const BoxDecoration(
                           color: Color(0xff259ded),
                         ),
                       ),
                     ),
                   ),
                 ),
+
+                //Verify
                 Positioned(
                   // frame163412VsM (2034:5641)
                   left: 117 * fem,
-                  top: 80 * fem,
+                  top: 130 * fem,
                   child: Container(
                     width: 65 * fem,
                     height: 20 * fem,
                     decoration: BoxDecoration(
-                      border: Border.all(color: Color(0xff93d4ff)),
-                      color: Color(0xffffffff),
+                      border: Border.all(color: const Color(0xff93d4ff)),
+                      color: const Color(0xffffffff),
                       borderRadius: BorderRadius.circular(100 * fem),
                     ),
                     child: Center(
@@ -2391,16 +2393,19 @@ class _dashboardScreenState extends State<dashboardScreen> {
                           fontSize: 9 * ffem,
                           fontWeight: FontWeight.w600,
                           height: 1.2175 * ffem / fem,
-                          color: Color(0xff259ded),
+                          color: const Color(0xff259ded),
                         ),
                       ),
                     ),
                   ),
                 ),
+                //End Verify
+
+                //Name
                 Positioned(
                   // phoebebuffayMuZ (2034:5638)
                   left: 120 * fem,
-                  top: 32 * fem,
+                  top: 90 * fem,
                   child: Align(
                     child: SizedBox(
                       width: 137 * fem,
@@ -2412,23 +2417,26 @@ class _dashboardScreenState extends State<dashboardScreen> {
                           fontSize: 18 * ffem,
                           fontWeight: FontWeight.w600,
                           height: 1.2175 * ffem / fem,
-                          color: Color(0xffffffff),
+                          color: const Color(0xffffffff),
                         ),
                       ),
                     ),
                   ),
                 ),
+                //End Name
+
+                //User Img
                 Positioned(
                   // group9914oy (2034:5643)
                   left: 28 * fem,
-                  top: 25 * fem,
+                  top: 80 * fem,
                   child: Container(
                     padding: EdgeInsets.fromLTRB(
                         2.21 * fem, 2.21 * fem, 2.21 * fem, 2.21 * fem),
                     width: 74 * fem,
                     height: 74 * fem,
                     decoration: BoxDecoration(
-                      color: Color(0xff8fd4ff),
+                      color: const Color(0xff8fd4ff),
                       borderRadius: BorderRadius.circular(37 * fem),
                     ),
                     child: Center(
@@ -2440,8 +2448,8 @@ class _dashboardScreenState extends State<dashboardScreen> {
                           decoration: BoxDecoration(
                             borderRadius:
                                 BorderRadius.circular(34.7910461426 * fem),
-                            color: Color(0xffffffff),
-                            image: DecorationImage(
+                            color: const Color(0xffffffff),
+                            image: const DecorationImage(
                               fit: BoxFit.cover,
                               image: AssetImage(
                                 'assets/images/empty_profile.png',
@@ -2453,10 +2461,13 @@ class _dashboardScreenState extends State<dashboardScreen> {
                     ),
                   ),
                 ),
+                //End
+
+                //Num
                 Positioned(
                   // 4Sb (2034:5640)
                   left: 120 * fem,
-                  top: 56 * fem,
+                  top: 110 * fem,
                   child: Align(
                     child: SizedBox(
                       width: 73 * fem,
@@ -2468,17 +2479,20 @@ class _dashboardScreenState extends State<dashboardScreen> {
                           fontSize: 12 * ffem,
                           fontWeight: FontWeight.w400,
                           height: 1.3318750858 * ffem / fem,
-                          color: Color(0xffffffff),
+                          color: const Color(0xffffffff),
                         ),
                       ),
                     ),
                   ),
                 ),
+                // End
+
+                //Menu
                 Positioned(
                   // frame163415AVd (2037:5838)
-                  left: 20 * fem,
-                  top: 147 * fem,
-                  child: Container(
+                  left: 10 * fem,
+                  top: 200 * fem,
+                  child: SizedBox(
                     width: 286 * fem,
                     height: 411 * fem,
                     child: Column(
@@ -2487,23 +2501,35 @@ class _dashboardScreenState extends State<dashboardScreen> {
                         Container(
                           // autogroupcb7dsuq (LJgMzxXWcNdLnSjvRnCB7D)
                           padding: EdgeInsets.fromLTRB(
-                              0.5 * fem, 0 * fem, 0 * fem, 24 * fem),
+                              0 * fem, 0 * fem, 0 * fem, 24 * fem),
                           width: double.infinity,
+
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
+                              //MyAccount
                               Container(
                                 // myaccountChD (2037:5761)
                                 margin: EdgeInsets.fromLTRB(
-                                    0 * fem, 0 * fem, 0.5 * fem, 24 * fem),
+                                    0 * fem, 0 * fem, 0 * fem, 24 * fem),
                                 padding: EdgeInsets.fromLTRB(
-                                    1 * fem, 0 * fem, 0 * fem, 0 * fem),
-                                width: double.infinity,
+                                    0 * fem, 0 * fem, 0 * fem, 0 * fem),
+                                width: 250 * fem,
                                 height: 40 * fem,
+                                decoration: BoxDecoration(
+                                  border: Border(
+                                    bottom: BorderSide(
+                                      color: Colors
+                                          .white38, // specify the color you want for the border
+                                      width:
+                                          1, // specify the width of the border
+                                    ),
+                                  ),
+                                ),
                                 child: Container(
                                   // group995Kmq (2037:5836)
                                   padding: EdgeInsets.fromLTRB(
-                                      0 * fem, 2.25 * fem, 4.5 * fem, 3 * fem),
+                                      0 * fem, 0 * fem, 0 * fem, 3 * fem),
                                   width: double.infinity,
                                   height: 24 * fem,
                                   child: Row(
@@ -2513,7 +2539,8 @@ class _dashboardScreenState extends State<dashboardScreen> {
                                       Container(
                                         // myaccountF9h (2037:5756)
                                         margin: EdgeInsets.fromLTRB(0 * fem,
-                                            0.75 * fem, 178.5 * fem, 0 * fem),
+                                            0 * fem, 155 * fem, 0 * fem),
+
                                         child: Text(
                                           'My Account',
                                           style: SafeGoogleFont(
@@ -2521,11 +2548,11 @@ class _dashboardScreenState extends State<dashboardScreen> {
                                             fontSize: 14 * ffem,
                                             fontWeight: FontWeight.w600,
                                             height: 1.2175 * ffem / fem,
-                                            color: Color(0xffffffff),
+                                            color: const Color(0xffffffff),
                                           ),
                                         ),
                                       ),
-                                      Container(
+                                      SizedBox(
                                         // personmorexpo (2037:5757)
                                         width: 15 * fem,
                                         height: 18.75 * fem,
@@ -2539,67 +2566,31 @@ class _dashboardScreenState extends State<dashboardScreen> {
                                   ),
                                 ),
                               ),
+                              //end
+
+                              //Notification
                               Container(
-                                // notificationsJNs (2037:5762)
+                                // myaccountChD (2037:5761)
                                 margin: EdgeInsets.fromLTRB(
-                                    0 * fem, 0 * fem, 0.5 * fem, 24 * fem),
+                                    0 * fem, 0 * fem, 0 * fem, 24 * fem),
                                 padding: EdgeInsets.fromLTRB(
-                                    1 * fem, 0 * fem, 0 * fem, 0 * fem),
-                                width: double.infinity,
-                                height: 46 * fem,
-                                child: Container(
-                                  // group996RCb (2037:5837)
-                                  padding: EdgeInsets.fromLTRB(0 * fem,
-                                      0.83 * fem, 0.83 * fem, 0.83 * fem),
-                                  width: double.infinity,
-                                  height: 25 * fem,
-                                  child: Row(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: [
-                                      Container(
-                                        // notificationsLaT (2037:5763)
-                                        margin: EdgeInsets.fromLTRB(0 * fem,
-                                            1 * fem, 170.17 * fem, 0 * fem),
-                                        child: Text(
-                                          'Notifications',
-                                          style: SafeGoogleFont(
-                                            'Montserrat',
-                                            fontSize: 14 * ffem,
-                                            fontWeight: FontWeight.w600,
-                                            height: 1.2175 * ffem / fem,
-                                            color: Color(0xffffffff),
-                                          ),
-                                        ),
-                                      ),
-                                      Container(
-                                        // notificationsmoref6w (2037:5767)
-                                        margin: EdgeInsets.fromLTRB(0 * fem,
-                                            0 * fem, 0 * fem, 2.29 * fem),
-                                        width: 20 * fem,
-                                        height: 21.04 * fem,
-                                        child: Image.asset(
-                                          'assets/images/notificationsmore.png',
-                                          width: 20 * fem,
-                                          height: 21.04 * fem,
-                                        ),
-                                      ),
-                                    ],
+                                    0 * fem, 0 * fem, 0 * fem, 0 * fem),
+                                width: 250 * fem,
+                                height: 40 * fem,
+                                decoration: BoxDecoration(
+                                  border: Border(
+                                    bottom: BorderSide(
+                                      color: Colors
+                                          .white38, // specify the color you want for the border
+                                      width:
+                                          1, // specify the width of the border
+                                    ),
                                   ),
                                 ),
-                              ),
-                              Container(
-                                // savedtransactionsaDu (2037:5803)
-                                margin: EdgeInsets.fromLTRB(
-                                    0 * fem, 0 * fem, 0.5 * fem, 22 * fem),
-                                padding: EdgeInsets.fromLTRB(
-                                    1 * fem, 0 * fem, 0 * fem, 0 * fem),
-                                width: double.infinity,
-                                height: 50 * fem,
                                 child: Container(
-                                  // group9976i3 (2037:5839)
+                                  // group995Kmq (2037:5836)
                                   padding: EdgeInsets.fromLTRB(
-                                      0 * fem, 2.25 * fem, 4.5 * fem, 3 * fem),
+                                      0 * fem, 0 * fem, 0 * fem, 3 * fem),
                                   width: double.infinity,
                                   height: 24 * fem,
                                   child: Row(
@@ -2607,9 +2598,71 @@ class _dashboardScreenState extends State<dashboardScreen> {
                                         CrossAxisAlignment.center,
                                     children: [
                                       Container(
-                                        // savedtransactionsS1D (2037:5804)
+                                        // myaccountF9h (2037:5756)
                                         margin: EdgeInsets.fromLTRB(0 * fem,
-                                            0.75 * fem, 125.5 * fem, 0 * fem),
+                                            0 * fem, 150 * fem, 0 * fem),
+
+                                        child: Text(
+                                          'Notifications',
+                                          style: SafeGoogleFont(
+                                            'Montserrat',
+                                            fontSize: 14 * ffem,
+                                            fontWeight: FontWeight.w600,
+                                            height: 1.2175 * ffem / fem,
+                                            color: const Color(0xffffffff),
+                                          ),
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        // personmorexpo (2037:5757)
+                                        width: 15 * fem,
+                                        height: 18.75 * fem,
+                                        child: Image.asset(
+                                          'assets/images/notificationsmore.png',
+                                          width: 15 * fem,
+                                          height: 18.75 * fem,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                              //end
+
+                              // Saved Transaction
+                              Container(
+                                // myaccountChD (2037:5761)
+                                margin: EdgeInsets.fromLTRB(
+                                    0 * fem, 0 * fem, 0 * fem, 24 * fem),
+                                padding: EdgeInsets.fromLTRB(
+                                    0 * fem, 0 * fem, 0 * fem, 0 * fem),
+                                width: 250 * fem,
+                                height: 40 * fem,
+                                decoration: BoxDecoration(
+                                  border: Border(
+                                    bottom: BorderSide(
+                                      color: Colors
+                                          .white38, // specify the color you want for the border
+                                      width:
+                                          1, // specify the width of the border
+                                    ),
+                                  ),
+                                ),
+                                child: Container(
+                                  // group995Kmq (2037:5836)
+                                  padding: EdgeInsets.fromLTRB(
+                                      0 * fem, 0 * fem, 0 * fem, 3 * fem),
+                                  width: double.infinity,
+                                  height: 24 * fem,
+                                  child: Row(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      Container(
+                                        // myaccountF9h (2037:5756)
+                                        margin: EdgeInsets.fromLTRB(0 * fem,
+                                            0 * fem, 105 * fem, 0 * fem),
+
                                         child: Text(
                                           'Saved Transactions',
                                           style: SafeGoogleFont(
@@ -2617,12 +2670,12 @@ class _dashboardScreenState extends State<dashboardScreen> {
                                             fontSize: 14 * ffem,
                                             fontWeight: FontWeight.w600,
                                             height: 1.2175 * ffem / fem,
-                                            color: Color(0xffffffff),
+                                            color: const Color(0xffffffff),
                                           ),
                                         ),
                                       ),
-                                      Container(
-                                        // personmorekGo (2037:5805)
+                                      SizedBox(
+                                        // personmorexpo (2037:5757)
                                         width: 15 * fem,
                                         height: 18.75 * fem,
                                         child: Image.asset(
@@ -2635,34 +2688,46 @@ class _dashboardScreenState extends State<dashboardScreen> {
                                   ),
                                 ),
                               ),
-                              Container(
-                                // settingsH1q (2037:5808)
-                                margin: EdgeInsets.fromLTRB(
-                                    0.5 * fem, 0 * fem, 0 * fem, 24 * fem),
-                                padding: EdgeInsets.fromLTRB(1 * fem,
-                                    0.83 * fem, 0.83 * fem, 0.83 * fem),
-                                width: double.infinity,
-                                height: 53 * fem,
+                              //end
+
+                              //Setting
+                              GestureDetector(
+                                onTap: () {
+                                  context.pushReplacementNamed(setting);
+                                },
                                 child: Container(
-                                  // autogroup4gy5CPh (LJgNTn69z8j9qP7ygz4gy5)
+                                  // myaccountChD (2037:5761)
                                   margin: EdgeInsets.fromLTRB(
-                                      0 * fem, 0 * fem, 0 * fem, 25.17 * fem),
+                                      0 * fem, 0 * fem, 0 * fem, 24 * fem),
                                   padding: EdgeInsets.fromLTRB(
-                                      0 * fem, 1.17 * fem, 0 * fem, 0 * fem),
-                                  width: double.infinity,
-                                  height: 26.17 * fem,
+                                      0 * fem, 0 * fem, 0 * fem, 0 * fem),
+                                  width: 250 * fem,
+                                  height: 40 * fem,
+                                  decoration: BoxDecoration(
+                                    border: Border(
+                                      bottom: BorderSide(
+                                        color: Colors
+                                            .white38, // specify the color you want for the border
+                                        width:
+                                            1, // specify the width of the border
+                                      ),
+                                    ),
+                                  ),
                                   child: Container(
-                                    // group998vKh (2037:5840)
+                                    // group995Kmq (2037:5836)
+                                    padding: EdgeInsets.fromLTRB(
+                                        0 * fem, 0 * fem, 0 * fem, 3 * fem),
                                     width: double.infinity,
-                                    height: double.infinity,
+                                    height: 24 * fem,
                                     child: Row(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.center,
                                       children: [
                                         Container(
-                                          // settingsTaX (2037:5809)
+                                          // myaccountF9h (2037:5756)
                                           margin: EdgeInsets.fromLTRB(0 * fem,
-                                              3 * fem, 198 * fem, 0 * fem),
+                                              0 * fem, 170 * fem, 0 * fem),
+
                                           child: Text(
                                             'Settings',
                                             style: SafeGoogleFont(
@@ -2670,12 +2735,12 @@ class _dashboardScreenState extends State<dashboardScreen> {
                                               fontSize: 14 * ffem,
                                               fontWeight: FontWeight.w600,
                                               height: 1.2175 * ffem / fem,
-                                              color: Color(0xffffffff),
+                                              color: const Color(0xffffffff),
                                             ),
                                           ),
                                         ),
-                                        Container(
-                                          // settingsmoreNhV (2037:5825)
+                                        SizedBox(
+                                          // personmorexpo (2037:5757)
                                           width: 25 * fem,
                                           height: 25 * fem,
                                           child: Image.asset(
@@ -2689,28 +2754,41 @@ class _dashboardScreenState extends State<dashboardScreen> {
                                   ),
                                 ),
                               ),
+                              //End
+
+                              //Help
                               Container(
-                                // help6dV (2037:5814)
+                                // myaccountChD (2037:5761)
                                 margin: EdgeInsets.fromLTRB(
-                                    0 * fem, 0 * fem, 0.5 * fem, 0 * fem),
+                                    0 * fem, 0 * fem, 0 * fem, 24 * fem),
                                 padding: EdgeInsets.fromLTRB(
-                                    1 * fem, 0 * fem, 0 * fem, 0 * fem),
-                                width: double.infinity,
-                                height: 52 * fem,
+                                    0 * fem, 0 * fem, 0 * fem, 0 * fem),
+                                width: 250 * fem,
+                                height: 40 * fem,
+                                decoration: BoxDecoration(
+                                  border: Border(
+                                    bottom: BorderSide(
+                                      color: Colors
+                                          .white38, // specify the color you want for the border
+                                      width:
+                                          1, // specify the width of the border
+                                    ),
+                                  ),
+                                ),
                                 child: Container(
-                                  // group999pZV (2037:5841)
+                                  // group995Kmq (2037:5836)
                                   padding: EdgeInsets.fromLTRB(
-                                      0 * fem, 3 * fem, 3.47 * fem, 3.47 * fem),
+                                      0 * fem, 0 * fem, 0 * fem, 3 * fem),
                                   width: double.infinity,
-                                  height: 26 * fem,
+                                  height: 24 * fem,
                                   child: Row(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.center,
                                     children: [
                                       Container(
-                                        // helpwu1 (2037:5815)
+                                        // myaccountF9h (2037:5756)
                                         margin: EdgeInsets.fromLTRB(0 * fem,
-                                            0 * fem, 227.47 * fem, 1.53 * fem),
+                                            0 * fem, 195 * fem, 0 * fem),
                                         child: Text(
                                           'Help',
                                           style: SafeGoogleFont(
@@ -2718,7 +2796,7 @@ class _dashboardScreenState extends State<dashboardScreen> {
                                             fontSize: 14 * ffem,
                                             fontWeight: FontWeight.w600,
                                             height: 1.2175 * ffem / fem,
-                                            color: Color(0xffffffff),
+                                            color: const Color(0xffffffff),
                                           ),
                                         ),
                                       ),
@@ -2738,57 +2816,77 @@ class _dashboardScreenState extends State<dashboardScreen> {
                                   ),
                                 ),
                               ),
-                            ],
-                          ),
-                        ),
-                        Container(
-                          // logoutNjR (2037:5819)
-                          padding: EdgeInsets.fromLTRB(
-                              1 * fem, 0 * fem, 0 * fem, 0 * fem),
-                          width: double.infinity,
-                          height: 52 * fem,
-                          child: Container(
-                            // group1000K8s (2037:5842)
-                            padding: EdgeInsets.fromLTRB(
-                                0 * fem, 3.47 * fem, 5.2 * fem, 3.47 * fem),
-                            width: double.infinity,
-                            height: 26 * fem,
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Container(
-                                  // logoutSDV (2037:5820)
-                                  margin: EdgeInsets.fromLTRB(
-                                      0 * fem, 0 * fem, 212.2 * fem, 0 * fem),
-                                  child: Text(
-                                    'Logout',
-                                    style: SafeGoogleFont(
-                                      'Montserrat',
-                                      fontSize: 14 * ffem,
-                                      fontWeight: FontWeight.w600,
-                                      height: 1.2175 * ffem / fem,
-                                      color: Color(0xffffffff),
+                              //End
+
+//Help
+                              Container(
+                                // myaccountChD (2037:5761)
+                                margin: EdgeInsets.fromLTRB(
+                                    0 * fem, 0 * fem, 0 * fem, 24 * fem),
+                                padding: EdgeInsets.fromLTRB(
+                                    0 * fem, 0 * fem, 0 * fem, 0 * fem),
+                                width: 250 * fem,
+                                height: 40 * fem,
+                                decoration: BoxDecoration(
+                                  border: Border(
+                                    bottom: BorderSide(
+                                      color: Colors
+                                          .white38, // specify the color you want for the border
+                                      width:
+                                          1, // specify the width of the border
                                     ),
                                   ),
                                 ),
-                                Container(
-                                  // logoutmorekjy (2037:5830)
-                                  width: 15.6 * fem,
-                                  height: 19.07 * fem,
-                                  child: Image.asset(
-                                    'assets/images/logoutmore.png',
-                                    width: 15.6 * fem,
-                                    height: 19.07 * fem,
+                                child: Container(
+                                  // group995Kmq (2037:5836)
+                                  padding: EdgeInsets.fromLTRB(
+                                      0 * fem, 0 * fem, 0 * fem, 3 * fem),
+                                  width: double.infinity,
+                                  height: 24 * fem,
+                                  child: Row(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      Container(
+                                        // myaccountF9h (2037:5756)
+                                        margin: EdgeInsets.fromLTRB(0 * fem,
+                                            0 * fem, 180 * fem, 0 * fem),
+                                        child: Text(
+                                          'Logout',
+                                          style: SafeGoogleFont(
+                                            'Montserrat',
+                                            fontSize: 14 * ffem,
+                                            fontWeight: FontWeight.w600,
+                                            height: 1.2175 * ffem / fem,
+                                            color: const Color(0xffffffff),
+                                          ),
+                                        ),
+                                      ),
+                                      Container(
+                                        // helpmore4ij (2037:5828)
+                                        margin: EdgeInsets.fromLTRB(0 * fem,
+                                            0.47 * fem, 0 * fem, 0 * fem),
+                                        width: 19.07 * fem,
+                                        height: 19.07 * fem,
+                                        child: Image.asset(
+                                          'assets/images/logoutmore.png',
+                                          width: 19.07 * fem,
+                                          height: 19.07 * fem,
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 ),
-                              ],
-                            ),
+                              ),
+                              //End
+                            ],
                           ),
                         ),
                       ],
                     ),
                   ),
                 ),
+                //End
               ],
             ),
           ),

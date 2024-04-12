@@ -36,14 +36,38 @@ class _aboutScreenState extends ConsumerState<aboutScreen> {
   }
 
   Future<void> sendData() async {
+    //int gender = 0;
+    int civil_status = 0;
+
+    int sex = _selectedGender == "Male" ? 1 : 2;
+
+    if (_selectedCS == "Single") {
+      civil_status = 1;
+    } else if (_selectedCS == "Married") {
+      civil_status = 2;
+    } else if (_selectedCS == "Divorced") {
+      civil_status = 3;
+    } else {
+      civil_status = 4;
+    }
+
+    String inputDateString = _birthday.text; //"1999-01-01";
+    DateTime inputDate = DateTime.parse(inputDateString);
+    String bDay_formattedDate = DateFormat('yyyy-mm-dd').format(inputDate);
+    print("birthday $bDay_formattedDate"); // Output: January 01, 1999
+
     await SharedPrefs.write(firstname, _firstName.text);
     await SharedPrefs.write(lastname, _lastName.text);
     await SharedPrefs.write(middlename, _middleName.text);
     await SharedPrefs.write(suffix, _suffix.text);
-    await SharedPrefs.write(gender, _selectedGender);
-    await SharedPrefs.write(birthday, _birthday.text);
+    await SharedPrefs.write(gender, sex);
+    await SharedPrefs.write(birthday, bDay_formattedDate);
     await SharedPrefs.write(birthplace, _birthplace.text);
-    await SharedPrefs.write(civilstatus, _selectedCS);
+    await SharedPrefs.write(civilstatus, civil_status);
+
+    await SharedPrefs.write(d_gender, _selectedGender);
+    await SharedPrefs.write(d_cs, _selectedCS);
+
     context.pushNamed(email);
   }
 
@@ -507,7 +531,6 @@ class _aboutScreenState extends ConsumerState<aboutScreen> {
                                                         'Married',
                                                         'Divorced',
                                                         'Widowed',
-                                                        'Separated',
                                                       ].map((String value) {
                                                         return DropdownMenuItem<
                                                             String>(

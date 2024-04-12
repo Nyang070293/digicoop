@@ -23,7 +23,9 @@ const String firstname = "firstname",
     address2 = "address2",
     cityId = "cityId",
     addressTypeId = "addressTypeId",
-    zipCode = "zipCode";
+    zipCode = "zipCode",
+    d_gender = "d_gender",
+    d_cs = "d_cs";
 
 DateTime lastCheckedDate = DateTime(1970);
 
