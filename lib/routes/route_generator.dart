@@ -25,6 +25,9 @@ import 'package:digicoop/page/cashin_otc/cashinotc_select.dart';
 import 'package:digicoop/page/change_password/changePW.dart';
 import 'package:digicoop/page/change_password/loadingPW.dart';
 import 'package:digicoop/page/change_password/successPW.dart';
+import 'package:digicoop/page/change_pin/changePin.dart';
+import 'package:digicoop/page/change_pin/loadingPIN.dart';
+import 'package:digicoop/page/change_pin/successPIN.dart';
 import 'package:digicoop/page/cooperatives/coopMember.dart';
 import 'package:digicoop/page/cooperatives/cooperatives.dart';
 import 'package:digicoop/page/cooperatives/cooperativesDisclaimer.dart';
@@ -78,7 +81,10 @@ const String splashscreen = "SplashScreen",
     changePassword = "changePassword",
     loadingChangePW = "loadingChangePW",
     changePWSuccess = "changePWSuccess",
-    setting = "setting";
+    setting = "setting",
+    changePIN = "changePIN",
+    loadingChangePIN = "loadingChangePIN",
+    changePINSuccess = "changePINSuccess";
 
 // Route
 
@@ -111,6 +117,13 @@ final goRouter = Provider<GoRouter>((ref) {
         path: "/$changePassword",
         builder: (context, state) {
           return const changePasswordScreen();
+        },
+      ),
+      GoRoute(
+        name: changePIN,
+        path: "/$changePIN",
+        builder: (context, state) {
+          return const changePINScreen();
         },
       ),
       GoRoute(
@@ -153,6 +166,13 @@ final goRouter = Provider<GoRouter>((ref) {
         path: "/$changePWSuccess",
         builder: (context, state) {
           return const ChangePWSuccessScreen();
+        },
+      ),
+      GoRoute(
+        name: changePINSuccess,
+        path: "/$changePINSuccess",
+        builder: (context, state) {
+          return const ChangePINSuccessScreen();
         },
       ),
       GoRoute(
@@ -347,6 +367,13 @@ final goRouter = Provider<GoRouter>((ref) {
         path: "/$loadingChangePW",
         builder: (context, state) {
           return const loadingChangePWScreen();
+        },
+      ),
+      GoRoute(
+        name: loadingChangePIN,
+        path: "/$loadingChangePIN",
+        builder: (context, state) {
+          return const loadingChangePINScreen();
         },
       ),
       GoRoute(

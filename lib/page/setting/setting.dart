@@ -136,7 +136,7 @@ class _settingScreenState extends State<settingScreen> {
                                       child: Container(
                                         // group338fLT (2045:8215)
                                         padding: EdgeInsets.fromLTRB(
-                                            0 * fem, 0 * fem, 0 * fem, 0 * fem),
+                                            0 * fem, 0 * fem, 0 * fem, 5 * fem),
                                         width: double.infinity,
                                         child: Row(
                                           crossAxisAlignment:
@@ -147,7 +147,7 @@ class _settingScreenState extends State<settingScreen> {
                                               margin: EdgeInsets.fromLTRB(
                                                   0 * fem,
                                                   0 * fem,
-                                                  197 * fem,
+                                                  190 * fem,
                                                   0 * fem),
                                               child: Text(
                                                 'Change Password',
@@ -185,7 +185,7 @@ class _settingScreenState extends State<settingScreen> {
                               Container(
                                 // line3d4K (2045:8220)
                                 margin: EdgeInsets.fromLTRB(
-                                    0 * fem, 0 * fem, 0 * fem, 25 * fem),
+                                    20 * fem, 20 * fem, 20 * fem, 25 * fem),
                                 width: double.infinity,
                                 height: 1 * fem,
                                 decoration: BoxDecoration(
@@ -265,43 +265,48 @@ class _settingScreenState extends State<settingScreen> {
                                     ),
                                   ),
                                 ),
-                                Container(
-                                  // group337HiX (2045:8237)
-                                  padding: EdgeInsets.fromLTRB(
-                                      0 * fem, 0 * fem, 0 * fem, 0 * fem),
-                                  width: double.infinity,
-                                  child: Row(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Container(
-                                        // changempinjqR (2045:8240)
-                                        margin: EdgeInsets.fromLTRB(0 * fem,
-                                            0 * fem, 230 * fem, 0 * fem),
-                                        child: Text(
-                                          'Change MPIN',
-                                          style: SafeGoogleFont(
-                                            'Montserrat',
-                                            fontSize: 16 * ffem,
-                                            fontWeight: FontWeight.w400,
-                                            height: 1.2175 * ffem / fem,
-                                            color: Color(0xff4f4f4f),
+                                GestureDetector(
+                                  onTap: () {
+                                    context.pushReplacementNamed(changePIN);
+                                  },
+                                  child: Container(
+                                    // group337HiX (2045:8237)
+                                    padding: EdgeInsets.fromLTRB(
+                                        0 * fem, 0 * fem, 0 * fem, 0 * fem),
+                                    width: double.infinity,
+                                    child: Row(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Container(
+                                          // changempinjqR (2045:8240)
+                                          margin: EdgeInsets.fromLTRB(0 * fem,
+                                              0 * fem, 230 * fem, 0 * fem),
+                                          child: Text(
+                                            'Change MPIN',
+                                            style: SafeGoogleFont(
+                                              'Montserrat',
+                                              fontSize: 16 * ffem,
+                                              fontWeight: FontWeight.w400,
+                                              height: 1.2175 * ffem / fem,
+                                              color: Color(0xff4f4f4f),
+                                            ),
                                           ),
                                         ),
-                                      ),
-                                      Container(
-                                        // arrow21QAs (2045:8238)
-                                        margin: EdgeInsets.fromLTRB(
-                                            0 * fem, 1 * fem, 0 * fem, 0 * fem),
-                                        width: 11 * fem,
-                                        height: 20 * fem,
-                                        child: Image.asset(
-                                          'assets/images/arrow_black_right.png',
+                                        Container(
+                                          // arrow21QAs (2045:8238)
+                                          margin: EdgeInsets.fromLTRB(0 * fem,
+                                              1 * fem, 0 * fem, 0 * fem),
                                           width: 11 * fem,
                                           height: 20 * fem,
+                                          child: Image.asset(
+                                            'assets/images/arrow_black_right.png',
+                                            width: 11 * fem,
+                                            height: 20 * fem,
+                                          ),
                                         ),
-                                      ),
-                                    ],
+                                      ],
+                                    ),
                                   ),
                                 ),
                               ],
@@ -366,7 +371,6 @@ class _settingScreenState extends State<settingScreen> {
                                         onChanged: (val) {},
                                         value: true,
                                         enabledThumbColor: Colors.blue,
-                                        enabledTrackColor: Color(0xE0E0E0),
                                         type: GFToggleType.ios,
                                       ),
                                     ],

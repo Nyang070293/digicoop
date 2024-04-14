@@ -1,10 +1,18 @@
-import 'package:digicoop/page/cashin_bank/cashin_main.dart';
+import 'dart:convert';
+import 'dart:math';
+
+import 'package:digicoop/Function/aes.dart';
+import 'package:digicoop/api/api_strings.dart';
+import 'package:digicoop/constant/flush_bar.dart';
+import 'package:digicoop/constant/keys.dart';
+import 'package:digicoop/constant/shared_pref.dart';
 import 'package:digicoop/page/nav/mainNav.dart';
 import 'package:digicoop/page/verified/getVerified.dart';
 import 'package:digicoop/routes/route_generator.dart';
 import 'package:digicoop/util/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:http/http.dart' as http;
 
 class dashboardScreen extends StatefulWidget {
   const dashboardScreen({super.key});
@@ -15,13 +23,19 @@ class dashboardScreen extends StatefulWidget {
 
 class _dashboardScreenState extends State<dashboardScreen> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-
+  String Fname = "";
   bool visibility = false;
 
   void _changed(bool stat) {
     setState(() {
       visibility = stat;
     });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getProfile();
   }
 
   void showLogoutConfirmationDialog(BuildContext context) {
@@ -60,6 +74,106 @@ class _dashboardScreenState extends State<dashboardScreen> {
         );
       },
     );
+  }
+
+  Future<void> logOut() async {
+    print("accessToken ${SharedPrefs.read(accessToken)}");
+    final token =
+        SharedPrefs.read(accessToken); // Replace with your access token
+
+// Create headers
+    Map<String, String> headers = {
+      "Authorization": "Bearer $token",
+    };
+
+    // Make POST request
+    try {
+      final response = await http.post(
+        Uri.parse(DigiCoopAPI.logout),
+        headers: headers,
+      );
+
+      // Parse the JSON response body
+      final responseData = json.decode(response.body);
+      // Access specific data from the parsed response
+      var encryptData = responseData['data'];
+
+      final decrypt = Aes256.decrypt(encryptData, SharedPrefs.read(totp));
+      Map<String, dynamic> jsonData = jsonDecode(decrypt!);
+      // Handle response
+      if (response.statusCode == 201) {
+        context.pushReplacementNamed(login);
+        //context.pushNamed(l);
+      } else {
+        Flush.flushMessage(
+          icons: Icons.error_outline,
+          title: "Error",
+          message: jsonData['message']
+              .toString()
+              .replaceAll('[', '')
+              .replaceAll(']', ''),
+        );
+      }
+    } catch (e) {
+      print('dash LOGOUT  Error sending encrypted payload: $e');
+      // Flush.flushMessage(
+      //   icons: Icons.error_outline,
+      //   title: "Error",
+      //   message: 'Error sending encrypted payload: $e',
+      // );
+    }
+  }
+
+  Future<void> getProfile() async {
+    print("accessToken ${SharedPrefs.read(accessToken)}");
+// Create headers
+    Map<String, String> headers = {
+      // Define content-type as JSON
+      'Content-Type': 'application/json',
+      'Authorization':
+          'Bearer ${SharedPrefs.read(accessToken)}', // Add your authorization token here
+    };
+
+    // Make POST request
+    try {
+      final response = await http.post(
+        Uri.parse(DigiCoopAPI.profile),
+        headers: headers,
+      );
+
+      // Parse the JSON response body
+      final responseData = json.decode(response.body);
+      // Access specific data from the parsed response
+      var encryptData = responseData['data'];
+
+      final decrypt = Aes256.decrypt(encryptData, SharedPrefs.read(totp));
+      Map<String, dynamic> jsonData = jsonDecode(decrypt!);
+      print("get profile ${jsonData}");
+      // Handle response
+      if (response.statusCode == 201) {
+        print("FName ${jsonData["data"]["person"]["firstName"]}");
+        Fname = jsonData["data"]["person"]["firstName"];
+        SharedPrefs.write(firstname, jsonData["data"]["person"]["firstName"]);
+        //context.pushReplacementNamed(loading);
+        //context.pushNamed(l);
+      } else {
+        Flush.flushMessage(
+          icons: Icons.error_outline,
+          title: "Error",
+          message: jsonData['message']
+              .toString()
+              .replaceAll('[', '')
+              .replaceAll(']', ''),
+        );
+      }
+    } catch (e) {
+      print('dash Error sending encrypted payload: $e');
+      // Flush.flushMessage(
+      //   icons: Icons.error_outline,
+      //   title: "Error",
+      //   message: 'Error sending encrypted payload: $e',
+      // );
+    }
   }
 
   @override
@@ -141,7 +255,7 @@ class _dashboardScreenState extends State<dashboardScreen> {
                                     Row(
                                       children: [
                                         Text(
-                                          'Hi, Juan',
+                                          'Hi, $Fname',
                                           style: SafeGoogleFont(
                                             'Montserrat',
                                             fontSize: 24 * ffem,
@@ -2818,63 +2932,68 @@ class _dashboardScreenState extends State<dashboardScreen> {
                               ),
                               //End
 
-//Help
-                              Container(
-                                // myaccountChD (2037:5761)
-                                margin: EdgeInsets.fromLTRB(
-                                    0 * fem, 0 * fem, 0 * fem, 24 * fem),
-                                padding: EdgeInsets.fromLTRB(
-                                    0 * fem, 0 * fem, 0 * fem, 0 * fem),
-                                width: 250 * fem,
-                                height: 40 * fem,
-                                decoration: BoxDecoration(
-                                  border: Border(
-                                    bottom: BorderSide(
-                                      color: Colors
-                                          .white38, // specify the color you want for the border
-                                      width:
-                                          1, // specify the width of the border
+                              //Logout
+                              GestureDetector(
+                                onTap: () {
+                                  logOut();
+                                },
+                                child: Container(
+                                  // myaccountChD (2037:5761)
+                                  margin: EdgeInsets.fromLTRB(
+                                      0 * fem, 0 * fem, 0 * fem, 24 * fem),
+                                  padding: EdgeInsets.fromLTRB(
+                                      0 * fem, 0 * fem, 0 * fem, 0 * fem),
+                                  width: 250 * fem,
+                                  height: 40 * fem,
+                                  decoration: BoxDecoration(
+                                    border: Border(
+                                      bottom: BorderSide(
+                                        color: Colors
+                                            .white38, // specify the color you want for the border
+                                        width:
+                                            1, // specify the width of the border
+                                      ),
                                     ),
                                   ),
-                                ),
-                                child: Container(
-                                  // group995Kmq (2037:5836)
-                                  padding: EdgeInsets.fromLTRB(
-                                      0 * fem, 0 * fem, 0 * fem, 3 * fem),
-                                  width: double.infinity,
-                                  height: 24 * fem,
-                                  child: Row(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: [
-                                      Container(
-                                        // myaccountF9h (2037:5756)
-                                        margin: EdgeInsets.fromLTRB(0 * fem,
-                                            0 * fem, 180 * fem, 0 * fem),
-                                        child: Text(
-                                          'Logout',
-                                          style: SafeGoogleFont(
-                                            'Montserrat',
-                                            fontSize: 14 * ffem,
-                                            fontWeight: FontWeight.w600,
-                                            height: 1.2175 * ffem / fem,
-                                            color: const Color(0xffffffff),
+                                  child: Container(
+                                    // group995Kmq (2037:5836)
+                                    padding: EdgeInsets.fromLTRB(
+                                        0 * fem, 0 * fem, 0 * fem, 3 * fem),
+                                    width: double.infinity,
+                                    height: 24 * fem,
+                                    child: Row(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: [
+                                        Container(
+                                          // myaccountF9h (2037:5756)
+                                          margin: EdgeInsets.fromLTRB(0 * fem,
+                                              0 * fem, 180 * fem, 0 * fem),
+                                          child: Text(
+                                            'Logout',
+                                            style: SafeGoogleFont(
+                                              'Montserrat',
+                                              fontSize: 14 * ffem,
+                                              fontWeight: FontWeight.w600,
+                                              height: 1.2175 * ffem / fem,
+                                              color: const Color(0xffffffff),
+                                            ),
                                           ),
                                         ),
-                                      ),
-                                      Container(
-                                        // helpmore4ij (2037:5828)
-                                        margin: EdgeInsets.fromLTRB(0 * fem,
-                                            0.47 * fem, 0 * fem, 0 * fem),
-                                        width: 19.07 * fem,
-                                        height: 19.07 * fem,
-                                        child: Image.asset(
-                                          'assets/images/logoutmore.png',
+                                        Container(
+                                          // helpmore4ij (2037:5828)
+                                          margin: EdgeInsets.fromLTRB(0 * fem,
+                                              0.47 * fem, 0 * fem, 0 * fem),
                                           width: 19.07 * fem,
                                           height: 19.07 * fem,
+                                          child: Image.asset(
+                                            'assets/images/logoutmore.png',
+                                            width: 19.07 * fem,
+                                            height: 19.07 * fem,
+                                          ),
                                         ),
-                                      ),
-                                    ],
+                                      ],
+                                    ),
                                   ),
                                 ),
                               ),

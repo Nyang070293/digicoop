@@ -12,27 +12,28 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:http/http.dart' as http;
 
-class changePasswordScreen extends StatefulWidget {
-  const changePasswordScreen({super.key});
+class changePINScreen extends StatefulWidget {
+  const changePINScreen({super.key});
 
   @override
-  State<changePasswordScreen> createState() => _changePasswordScreenState();
+  State<changePINScreen> createState() => _changePINScreenState();
 }
 
-class _changePasswordScreenState extends State<changePasswordScreen> {
-  final TextEditingController _newPW = TextEditingController();
-  final TextEditingController _newCPW = TextEditingController();
+class _changePINScreenState extends State<changePINScreen> {
+  final TextEditingController _curPIN = TextEditingController();
+  final TextEditingController _newPIN = TextEditingController();
+  final TextEditingController _newCPIN = TextEditingController();
 
-  Future<void> sendData(String newPW, String newCPW) async {
+  Future<void> sendData(String newPIN, String newCPIN) async {
     try {
       //print("personCode1 ${SharedPrefs.read(personCode)}");
       final data =
-          '{"personCode":  "${SharedPrefs.read(personCode)}", "userCode": "${SharedPrefs.read(userCode)}",  "newPassword": "$newPW", "newPasswordConfirm": "$newCPW"}';
+          '{"personCode":  "${SharedPrefs.read(personCode)}", "userCode": "${SharedPrefs.read(userCode)}",  "newPinCode": "$newPIN", "newPinCodeConfirm": "$newCPIN"}';
 
       final encryptedBody = Aes256.encrypt(data, SharedPrefs.read(totp));
       print("encryptedBody MPIN $encryptedBody");
       http.Response response = await http.post(
-        Uri.parse(DigiCoopAPI.changePW),
+        Uri.parse(DigiCoopAPI.changePIN),
         body: {'data': encryptedBody},
       );
 
@@ -48,7 +49,7 @@ class _changePasswordScreenState extends State<changePasswordScreen> {
       //print("userCode ${userCode}");
       // Handle response
       if (response.statusCode == 201) {
-        context.pushNamed(loadingChangePW);
+        context.pushNamed(loadingChangePIN);
       } else if (response.statusCode == 400) {
         Flush.flushMessage(
           icons: Icons.error_outline,
@@ -136,7 +137,7 @@ class _changePasswordScreenState extends State<changePasswordScreen> {
                         margin: EdgeInsets.fromLTRB(
                             0 * fem, 0 * fem, 84 * fem, 0 * fem),
                         child: Text(
-                          'Change Password',
+                          'Change PIN',
                           style: SafeGoogleFont(
                             'Montserrat',
                             fontSize: 18 * ffem,
@@ -176,7 +177,7 @@ class _changePasswordScreenState extends State<changePasswordScreen> {
                           margin: EdgeInsets.fromLTRB(
                               31 * fem, 0 * fem, 0 * fem, 9 * fem),
                           child: Text(
-                            'Change Password',
+                            'Change PIN',
                             style: SafeGoogleFont(
                               'Montserrat',
                               fontSize: 16 * ffem,
@@ -194,7 +195,7 @@ class _changePasswordScreenState extends State<changePasswordScreen> {
                             maxWidth: 351 * fem,
                           ),
                           child: Text(
-                            'Your Password will be used to login to your DigiCOOP account. Do not share your Password to anyone else.',
+                            'Your MPIN will be used to login to your DigiCOOP account. Do not share your MPIN to anyone else.',
                             style: SafeGoogleFont(
                               'Montserrat',
                               fontSize: 14 * ffem,
@@ -217,38 +218,58 @@ class _changePasswordScreenState extends State<changePasswordScreen> {
                                 margin: EdgeInsets.fromLTRB(
                                     2 * fem, 0 * fem, 5 * fem, 0 * fem),
                                 width: double.infinity,
-                                height: 90 * fem,
                                 child: Container(
                                   // autogroupjt2fdfV (LJiu7Q4zQMZLzmGAQojT2f)
                                   padding: EdgeInsets.fromLTRB(
-                                      0 * fem, 0 * fem, 0 * fem, 8.73 * fem),
+                                      0 * fem, 0 * fem, 0 * fem, 0 * fem),
                                   width: double.infinity,
                                   child: Column(
                                     crossAxisAlignment: CrossAxisAlignment.end,
                                     children: [
-                                      Padding(
-                                        padding: EdgeInsets.fromLTRB(
-                                            0 * fem, 0 * fem, 0 * fem, 0 * fem),
-                                        child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.stretch,
-                                          children: [
-                                            // Password Field
-                                            CommonTextField(
-                                              controller: _newPW,
-                                              labelText: 'Enter New Password',
-                                              obscureText: true,
-                                              textInputAction:
-                                                  TextInputAction.next,
-                                              accentColor:
-                                                  const Color(0xff259ded),
-                                            ),
-                                            const SizedBox(height: 16),
-                                          ],
-                                        ),
+                                      Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.stretch,
+                                        children: [
+                                          // Password Field
+                                          CommonTextField(
+                                            controller: _curPIN,
+                                            labelText: 'Enter Current PIN',
+                                            keyboardType: TextInputType.number,
+                                            obscureText: true,
+                                            textInputAction:
+                                                TextInputAction.next,
+                                            accentColor:
+                                                const Color(0xff259ded),
+                                          ),
+                                          const SizedBox(height: 16),
+                                        ],
                                       ),
                                     ],
                                   ),
+                                ),
+                              ),
+                              SizedBox(
+                                width: 354 * fem,
+                                height: 76 * fem,
+                                child: Stack(
+                                  children: [
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.stretch,
+                                      children: [
+                                        // Password Field
+                                        CommonTextField(
+                                          controller: _newPIN,
+                                          labelText: 'Enter New PIN',
+                                          keyboardType: TextInputType.number,
+                                          obscureText: true,
+                                          textInputAction: TextInputAction.next,
+                                          accentColor: const Color(0xff259ded),
+                                        ),
+                                        const SizedBox(height: 16),
+                                      ],
+                                    ),
+                                  ],
                                 ),
                               ),
                               Container(
@@ -265,8 +286,9 @@ class _changePasswordScreenState extends State<changePasswordScreen> {
                                       children: [
                                         // Password Field
                                         CommonTextField(
-                                          controller: _newCPW,
-                                          labelText: 'Confirm New Password',
+                                          controller: _newCPIN,
+                                          labelText: 'Confirm New PIN',
+                                          keyboardType: TextInputType.number,
                                           obscureText: true,
                                           textInputAction: TextInputAction.next,
                                           accentColor: const Color(0xff259ded),
@@ -283,7 +305,7 @@ class _changePasswordScreenState extends State<changePasswordScreen> {
                                     2 * fem, 0 * fem, 0 * fem, 0 * fem),
                                 child: TextButton(
                                   onPressed: () {
-                                    if (_newPW.text.isEmpty) {
+                                    if (_newPIN.text.isEmpty) {
                                       Flush.flushMessage(
                                         icons: Icons.error_outline,
                                         title: "Field Required",
@@ -292,7 +314,7 @@ class _changePasswordScreenState extends State<changePasswordScreen> {
                                       );
                                       return;
                                     }
-                                    if (_newCPW.text.isEmpty) {
+                                    if (_newCPIN.text.isEmpty) {
                                       Flush.flushMessage(
                                         icons: Icons.error_outline,
                                         title: "Field Required",
@@ -302,7 +324,7 @@ class _changePasswordScreenState extends State<changePasswordScreen> {
                                       return;
                                     }
 
-                                    sendData(_newPW.text, _newCPW.text);
+                                    sendData(_newPIN.text, _newCPIN.text);
                                   },
                                   style: TextButton.styleFrom(
                                     padding: EdgeInsets.zero,

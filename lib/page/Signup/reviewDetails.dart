@@ -35,17 +35,33 @@ String getFirstLetters(String text) {
 
 class _reviewDetailScreenState extends ConsumerState<reviewDetailScreen> {
   Future<void> sendData() async {
-    try {
-      final data =
-          '{"firstName": "${SharedPrefs.read(firstname)}","lastName": "${SharedPrefs.read(lastname)}", "middleName": "${SharedPrefs.read(middlename)}", "suffix": "${SharedPrefs.read(suffix)}", "gender": ${SharedPrefs.read(gender)}, "birthDate": "${SharedPrefs.read(birthday)}", "birthPlace": "${SharedPrefs.read(birthplace)}", "civilStatus": ${SharedPrefs.read(civilstatus)}, "address1": "${SharedPrefs.read(address1)}", "address2": "${SharedPrefs.read(address2)}", "cityId": "${SharedPrefs.read(cityId)}","zipCode": "${SharedPrefs.read(zipCode)}","contactOptionId": 2, "contactOptionValue": "${SharedPrefs.read(contactOptionValue)}","addressTypeId": ${SharedPrefs.read(addressTypeId)}}';
+    final data =
+        '{"firstName": "${SharedPrefs.read(firstname)}","lastName": "${SharedPrefs.read(lastname)}", "middleName": "${SharedPrefs.read(middlename)}", "suffix": "${SharedPrefs.read(suffix)}", "gender": ${SharedPrefs.read(gender)}, "birthDate": "${SharedPrefs.read(birthday)}", "birthPlace": "${SharedPrefs.read(birthplace)}", "civilStatus": ${SharedPrefs.read(civilstatus)}, "address1": "${SharedPrefs.read(address1)}", "address2": "${SharedPrefs.read(address2)}", "cityId": "${SharedPrefs.read(cityId)}","zipCode": "${SharedPrefs.read(zipCode)}","contactOptionId": 2, "contactOptionValue": "${SharedPrefs.read(contactOptionValue)}","addressTypeId": ${SharedPrefs.read(addressTypeId)}}';
 
-      final encryptedBody = Aes256.encrypt(data, SharedPrefs.read(totp));
-      http.Response response = await http.post(
+    final encryptedBody = Aes256.encrypt(data, SharedPrefs.read(totp));
+
+    // final url = DigiCoopAPI.register;
+
+// Create headers
+    Map<String, String> headers = {
+      'Content-Type': 'application/json', // Define content-type as JSON
+      'Authorization':
+          'Bearer ${SharedPrefs.read(accessToken)}', // Add your authorization token here
+    };
+
+    // Create body
+    Map<String, dynamic> body = {'data': encryptedBody};
+
+    // Encode body to JSON
+    String requestBody = json.encode(body);
+    // Make POST request
+    try {
+      final response = await http.post(
         Uri.parse(DigiCoopAPI.register),
-        body: {'data': encryptedBody},
+        headers: headers,
+        body: requestBody,
       );
-      response.headers['Authorization'] =
-          'Bearer ${SharedPrefs.read(accessToken)}';
+
       // Parse the JSON response body
       final responseData = json.decode(response.body);
       // Access specific data from the parsed response

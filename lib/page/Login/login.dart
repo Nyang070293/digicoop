@@ -139,8 +139,8 @@ class _loginScreenState extends ConsumerState<loginScreen> {
   @override
   void initState() {
     getTOTP();
-    _numberController.text = "09538699409";
-    _passwordController.text = "Qwerty2.";
+    // _numberController.text = "09269694352";
+    // _passwordController.text = "Qwerty2.";
     super.initState();
   }
 
