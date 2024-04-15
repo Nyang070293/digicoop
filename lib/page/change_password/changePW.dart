@@ -9,17 +9,19 @@ import 'package:digicoop/routes/route_generator.dart';
 import 'package:digicoop/util/textfield.dart';
 import 'package:digicoop/util/utils.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:http/http.dart' as http;
 
-class changePasswordScreen extends StatefulWidget {
+class changePasswordScreen extends ConsumerStatefulWidget {
   const changePasswordScreen({super.key});
 
   @override
-  State<changePasswordScreen> createState() => _changePasswordScreenState();
+  ConsumerState<changePasswordScreen> createState() =>
+      _changePasswordScreenState();
 }
 
-class _changePasswordScreenState extends State<changePasswordScreen> {
+class _changePasswordScreenState extends ConsumerState<changePasswordScreen> {
   final TextEditingController _newPW = TextEditingController();
   final TextEditingController _newCPW = TextEditingController();
 

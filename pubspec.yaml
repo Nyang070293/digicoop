@@ -55,6 +55,7 @@ dependencies:
   flutter_screenutil: ^5.8.1 
   email_validator:
   getwidget: ^ 4.0.0
+  flutter_pin_code_widget: ^0.1.2
   
 dev_dependencies:
   flutter_test:

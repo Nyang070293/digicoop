@@ -37,6 +37,7 @@ import 'package:digicoop/page/drawer/drawer.dart';
 import 'package:digicoop/page/ewallet.dart/ewalletmain.dart';
 import 'package:digicoop/page/ewallet.dart/ewalletselect.dart';
 import 'package:digicoop/page/loading/loading.dart';
+import 'package:digicoop/page/mpin/mpin.dart';
 import 'package:digicoop/page/onBoarding/splashscreen.dart';
 import 'package:digicoop/page/setting/setting.dart';
 import 'package:flutter/material.dart';
@@ -84,7 +85,8 @@ const String splashscreen = "SplashScreen",
     setting = "setting",
     changePIN = "changePIN",
     loadingChangePIN = "loadingChangePIN",
-    changePINSuccess = "changePINSuccess";
+    changePINSuccess = "changePINSuccess",
+    loginMPIN = "loginMPIN";
 
 // Route
 
@@ -110,6 +112,13 @@ final goRouter = Provider<GoRouter>((ref) {
         path: "/$cashinBank",
         builder: (context, state) {
           return const cashinBankScreen();
+        },
+      ),
+      GoRoute(
+        name: loginMPIN,
+        path: "/$loginMPIN",
+        builder: (context, state) {
+          return const mpinScreen();
         },
       ),
       GoRoute(

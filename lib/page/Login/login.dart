@@ -307,11 +307,7 @@ class _loginScreenState extends ConsumerState<loginScreen> {
                               0 * fem, 0 * fem, 77 * fem, 0 * fem),
                           child: InkWell(
                             onTap: () {
-                              Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => MPinPage()),
-                              );
+                              context.pushReplacementNamed(loginMPIN);
                             },
                             child: Text(
                               'Login via MPIN',

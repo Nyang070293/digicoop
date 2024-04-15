@@ -1,13 +1,18 @@
 import 'package:digicoop/page/Login/login.dart';
 import 'package:digicoop/util/utils.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class MPinPage extends StatefulWidget {
+class MPinPage extends ConsumerStatefulWidget {
+  const MPinPage({super.key});
+
   @override
-  _MPinPageState createState() => _MPinPageState();
+  ConsumerState<MPinPage> createState() => _MPinPageState();
 }
 
-class _MPinPageState extends State<MPinPage> {
+class _MPinPageState extends ConsumerState<MPinPage> {
+  bool _isHovered = false;
+  bool _isClicked = false;
   @override
   Widget build(BuildContext context) {
     double baseWidth = 414;
@@ -92,6 +97,34 @@ class _MPinPageState extends State<MPinPage> {
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
+                        MouseRegion(
+                          onEnter: (_) => setState(() => _isHovered = true),
+                          onExit: (_) => setState(() => _isHovered = false),
+                          child: GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                _isClicked = !_isClicked;
+                              });
+                            },
+                            child: AnimatedContainer(
+                              duration: Duration(milliseconds: 200),
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 16, vertical: 8),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(8),
+                                color: _isClicked
+                                    ? Colors.blue
+                                    : (_isHovered
+                                        ? Colors.blue.withOpacity(0.5)
+                                        : Colors.blueAccent),
+                              ),
+                              child: Text(
+                                _isClicked ? 'Clicked!' : 'Click me',
+                                style: TextStyle(color: Colors.white),
+                              ),
+                            ),
+                          ),
+                        ),
                         Container(
                           // group335pMD (41:6775)
                           width: 93 * fem,
