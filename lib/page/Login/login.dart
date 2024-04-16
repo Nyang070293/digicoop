@@ -101,8 +101,12 @@ class _loginScreenState extends ConsumerState<loginScreen> {
       if (jsonData["statusCode"] == 200) {
         await SharedPrefs.write(userCode, jsonData["data"]["userCode"]);
         await SharedPrefs.write(personCode, jsonData["data"]["personCode"]);
-        SharedPrefs.write(MobileNum, username);
+        await SharedPrefs.write(refreshToken, jsonData["data"]["refreshToken"]);
+        await SharedPrefs.write(accessToken, jsonData["data"]["accessToken"]);
+        await SharedPrefs.write(MobileNum, username);
         // ignore: use_build_context_synchronously
+        print("LOGIN refreshToken :  ${SharedPrefs.read(refreshToken)}");
+
         context.pushNamed(dashboard);
       } else if (jsonData["statusCode"] == 400) {
         Flush.flushMessage(
@@ -139,6 +143,10 @@ class _loginScreenState extends ConsumerState<loginScreen> {
   @override
   void initState() {
     getTOTP();
+    if (SharedPrefs.read(MobileNum).toString().isNotEmpty) {
+      _numberController.text = SharedPrefs.read(MobileNum);
+    }
+    print(SharedPrefs.read(accessToken));
     // _numberController.text = "09269694352";
     // _passwordController.text = "Qwerty2.";
     super.initState();
@@ -437,7 +445,7 @@ class _loginScreenState extends ConsumerState<loginScreen> {
                             message: "Please Enter your Password.");
                       } else if (_numberController.text.isNotEmpty ||
                           _passwordController.text.isNotEmpty) {
-                        //showLoadingDialog();
+                        showLoadingDialog();
 
                         // Simulate login action
                         sendData(

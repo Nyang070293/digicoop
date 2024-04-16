@@ -24,6 +24,9 @@ class dashboardScreen extends StatefulWidget {
 class _dashboardScreenState extends State<dashboardScreen> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   String Fname = "";
+  String Fullname = "";
+  String MobileNum = "";
+
   bool visibility = false;
 
   void _changed(bool stat) {
@@ -125,7 +128,7 @@ class _dashboardScreenState extends State<dashboardScreen> {
   }
 
   Future<void> getProfile() async {
-    print("accessToken ${SharedPrefs.read(accessToken)}");
+    // print("accessToken ${SharedPrefs.read(accessToken)}");
 // Create headers
     Map<String, String> headers = {
       // Define content-type as JSON
@@ -151,10 +154,15 @@ class _dashboardScreenState extends State<dashboardScreen> {
       print("get profile ${jsonData}");
       // Handle response
       if (response.statusCode == 201) {
-        print("FName ${jsonData["data"]["person"]["firstName"]}");
-        Fname = jsonData["data"]["person"]["firstName"];
-        SharedPrefs.write(firstname, jsonData["data"]["person"]["firstName"]);
-        //context.pushReplacementNamed(loading);
+        Fname = jsonData["data"]["person"][0]['firstName'];
+        Fullname = jsonData["data"]["person"][0]['firstName'] +
+            " " +
+            jsonData["data"]["person"][0]['lastName'];
+        print("FName $Fname");
+        MobileNum = SharedPrefs.read(MobileNum);
+        SharedPrefs.write(firstname, Fname);
+        SharedPrefs.write(fullName, Fullname);
+        //context.pushReplacementNamed(loading);fullName
         //context.pushNamed(l);
       } else {
         Flush.flushMessage(
@@ -2525,7 +2533,7 @@ class _dashboardScreenState extends State<dashboardScreen> {
                       width: 137 * fem,
                       height: 22 * fem,
                       child: Text(
-                        'Phoebe Buffay',
+                        Fullname,
                         style: SafeGoogleFont(
                           'Montserrat',
                           fontSize: 18 * ffem,
@@ -2587,7 +2595,7 @@ class _dashboardScreenState extends State<dashboardScreen> {
                       width: 73 * fem,
                       height: 16 * fem,
                       child: Text(
-                        '0919 234 123',
+                        MobileNum,
                         style: SafeGoogleFont(
                           'Montserrat',
                           fontSize: 12 * ffem,

@@ -3,6 +3,7 @@ import 'package:flutter_flavor/flutter_flavor.dart';
 class DigiCoopAPI {
   static String baseUrl = FlavorConfig.instance.variables["hostURL"],
       logIn = "$baseUrl/auth/login",
+      logInMPIN = "$baseUrl/auth/login/pincode",
       logout = "$baseUrl/auth/logout",
       createUser = "$baseUrl/persons/user/create",
       regions = "$baseUrl/helpers/regions",

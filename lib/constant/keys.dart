@@ -26,7 +26,8 @@ const String firstname = "firstname",
     addressTypeId = "addressTypeId",
     zipCode = "zipCode",
     d_gender = "d_gender",
-    d_cs = "d_cs";
+    d_cs = "d_cs",
+    fullName = "fullName";
 
 DateTime lastCheckedDate = DateTime(1970);
 
