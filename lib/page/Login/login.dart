@@ -107,8 +107,9 @@ class _loginScreenState extends ConsumerState<loginScreen> {
         // ignore: use_build_context_synchronously
         print("LOGIN refreshToken :  ${SharedPrefs.read(refreshToken)}");
 
-        context.pushNamed(dashboard);
+        context.pushReplacementNamed(dashboard);
       } else if (jsonData["statusCode"] == 400) {
+        context.pop();
         Flush.flushMessage(
           icons: Icons.error_outline,
           title: "Invalid Authentication credentials.",
@@ -406,12 +407,7 @@ class _loginScreenState extends ConsumerState<loginScreen> {
                       height: 20 * fem,
                       child: InkWell(
                         onTap: () {
-                          Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) =>
-                                    const onBoardingCodeScreen()),
-                          );
+                          context.pushReplacementNamed(onBoardingCode);
                         },
                         child: Text(
                           'Use Onboarding Code',

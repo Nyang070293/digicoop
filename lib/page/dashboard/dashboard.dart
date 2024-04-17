@@ -13,6 +13,8 @@ import 'package:digicoop/util/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:intl/intl.dart';
 
 class dashboardScreen extends StatefulWidget {
   const dashboardScreen({super.key});
@@ -25,7 +27,8 @@ class _dashboardScreenState extends State<dashboardScreen> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   String Fname = "";
   String Fullname = "";
-  String MobileNum = "";
+  String Mobile_Num = "";
+  double Balance = 0;
 
   bool visibility = false;
 
@@ -39,6 +42,17 @@ class _dashboardScreenState extends State<dashboardScreen> {
   void initState() {
     super.initState();
     getProfile();
+    getWallet();
+  }
+
+  String formatCurrency(double amount) {
+    var formatter = NumberFormat.currency(locale: 'en_US', symbol: '');
+    return formatter.format(amount);
+  }
+
+  void clearSharedPreferences() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.clear(); // This will clear all SharedPreferences data
   }
 
   void showLogoutConfirmationDialog(BuildContext context) {
@@ -69,7 +83,7 @@ class _dashboardScreenState extends State<dashboardScreen> {
             TextButton(
               onPressed: () {
                 // Perform logout action here
-                context.pushReplacementNamed(login);
+                logOut();
               },
               child: const Text('Yes'),
             ),
@@ -80,13 +94,13 @@ class _dashboardScreenState extends State<dashboardScreen> {
   }
 
   Future<void> logOut() async {
-    print("accessToken ${SharedPrefs.read(accessToken)}");
-    final token =
-        SharedPrefs.read(accessToken); // Replace with your access token
-
+    // print("accessToken ${SharedPrefs.read(accessToken)}");
 // Create headers
     Map<String, String> headers = {
-      "Authorization": "Bearer $token",
+      // Define content-type as JSON
+      'Content-Type': 'application/json',
+      'Authorization':
+          'Bearer ${SharedPrefs.read(accessToken)}', // Add your authorization token here
     };
 
     // Make POST request
@@ -103,10 +117,11 @@ class _dashboardScreenState extends State<dashboardScreen> {
 
       final decrypt = Aes256.decrypt(encryptData, SharedPrefs.read(totp));
       Map<String, dynamic> jsonData = jsonDecode(decrypt!);
+      print("logout ${jsonData}");
       // Handle response
-      if (response.statusCode == 201) {
+      if (response.statusCode == 201 || response.statusCode == 200) {
+        clearSharedPreferences();
         context.pushReplacementNamed(login);
-        //context.pushNamed(l);
       } else {
         Flush.flushMessage(
           icons: Icons.error_outline,
@@ -118,7 +133,61 @@ class _dashboardScreenState extends State<dashboardScreen> {
         );
       }
     } catch (e) {
-      print('dash LOGOUT  Error sending encrypted payload: $e');
+      print('dash Error sending encrypted payload: $e');
+      // Flush.flushMessage(
+      //   icons: Icons.error_outline,
+      //   title: "Error",
+      //   message: 'Error sending encrypted payload: $e',
+      // );
+    }
+  }
+
+  Future<void> getWallet() async {
+    // print("accessToken ${SharedPrefs.read(accessToken)}");
+// Create headers
+    Map<String, String> headers = {
+      // Define content-type as JSON
+      'Content-Type': 'application/json',
+      'Authorization':
+          'Bearer ${SharedPrefs.read(accessToken)}', // Add your authorization token here
+    };
+
+    // Make POST request
+    try {
+      final response = await http.post(
+        Uri.parse(DigiCoopAPI.getWallet),
+        headers: headers,
+      );
+
+      // Parse the JSON response body
+      final responseData = json.decode(response.body);
+      // Access specific data from the parsed response
+      var encryptData = responseData['data'];
+
+      final decrypt = Aes256.decrypt(encryptData, SharedPrefs.read(totp));
+      Map<String, dynamic> jsonData = jsonDecode(decrypt!);
+      print("get wallet ${jsonData}");
+      // Handle response
+      if (response.statusCode == 201) {
+        // print("FName $Fname");
+        setState(() {
+          Balance = jsonData["data"]["availableBalance"];
+        });
+        // print("MobileNum ${SharedPrefs.read(MobileNum).toString()}");
+        // SharedPrefs.write(firstname, Fname);
+        // SharedPrefs.write(fullName, Fullname);
+      } else {
+        Flush.flushMessage(
+          icons: Icons.error_outline,
+          title: "Error",
+          message: jsonData['message']
+              .toString()
+              .replaceAll('[', '')
+              .replaceAll(']', ''),
+        );
+      }
+    } catch (e) {
+      print('dash Error sending encrypted payload: $e');
       // Flush.flushMessage(
       //   icons: Icons.error_outline,
       //   title: "Error",
@@ -154,16 +223,17 @@ class _dashboardScreenState extends State<dashboardScreen> {
       print("get profile ${jsonData}");
       // Handle response
       if (response.statusCode == 201) {
-        Fname = jsonData["data"]["person"][0]['firstName'];
-        Fullname = jsonData["data"]["person"][0]['firstName'] +
-            " " +
-            jsonData["data"]["person"][0]['lastName'];
         print("FName $Fname");
-        MobileNum = SharedPrefs.read(MobileNum);
+        setState(() {
+          Fname = jsonData["data"]["person"][0]['firstName'];
+          Fullname = jsonData["data"]["person"][0]['firstName'] +
+              " " +
+              jsonData["data"]["person"][0]['lastName'];
+          Mobile_Num = SharedPrefs.read(MobileNum);
+        });
+        print("MobileNum ${SharedPrefs.read(MobileNum).toString()}");
         SharedPrefs.write(firstname, Fname);
         SharedPrefs.write(fullName, Fullname);
-        //context.pushReplacementNamed(loading);fullName
-        //context.pushNamed(l);
       } else {
         Flush.flushMessage(
           icons: Icons.error_outline,
@@ -451,24 +521,28 @@ class _dashboardScreenState extends State<dashboardScreen> {
                                                     const SizedBox(
                                                       width: 5,
                                                     ),
-                                                    Text(
-                                                      // F1h (2008:173)
-                                                      '12,535.00',
-                                                      style: SafeGoogleFont(
-                                                        'Montserrat',
-                                                        fontSize: 24 * ffem,
-                                                        fontWeight:
-                                                            FontWeight.w600,
-                                                        height:
-                                                            1.2175 * ffem / fem,
-                                                        color: const Color(
-                                                            0xffecf8ff),
+                                                    SizedBox(
+                                                      width: 150,
+                                                      child: Text(
+                                                        // F1h (2008:173)
+                                                        formatCurrency(Balance),
+                                                        style: SafeGoogleFont(
+                                                          'Montserrat',
+                                                          fontSize: 24 * ffem,
+                                                          fontWeight:
+                                                              FontWeight.w600,
+                                                          height: 1.2175 *
+                                                              ffem /
+                                                              fem,
+                                                          color: const Color(
+                                                              0xffecf8ff),
+                                                        ),
                                                       ),
                                                     ),
                                                     Container(
                                                       margin:
                                                           EdgeInsets.fromLTRB(
-                                                              150 * fem,
+                                                              100 * fem,
                                                               10 * fem,
                                                               0 * fem,
                                                               0 * fem),
@@ -2536,7 +2610,7 @@ class _dashboardScreenState extends State<dashboardScreen> {
                         Fullname,
                         style: SafeGoogleFont(
                           'Montserrat',
-                          fontSize: 18 * ffem,
+                          fontSize: 14 * ffem,
                           fontWeight: FontWeight.w600,
                           height: 1.2175 * ffem / fem,
                           color: const Color(0xffffffff),
@@ -2592,10 +2666,10 @@ class _dashboardScreenState extends State<dashboardScreen> {
                   top: 110 * fem,
                   child: Align(
                     child: SizedBox(
-                      width: 73 * fem,
+                      width: 80 * fem,
                       height: 16 * fem,
                       child: Text(
-                        MobileNum,
+                        Mobile_Num,
                         style: SafeGoogleFont(
                           'Montserrat',
                           fontSize: 12 * ffem,
@@ -2943,7 +3017,7 @@ class _dashboardScreenState extends State<dashboardScreen> {
                               //Logout
                               GestureDetector(
                                 onTap: () {
-                                  logOut();
+                                  showLogoutConfirmationDialog(context);
                                 },
                                 child: Container(
                                   // myaccountChD (2037:5761)

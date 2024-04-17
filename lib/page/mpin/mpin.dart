@@ -55,7 +55,7 @@ class _mpinScreenState extends ConsumerState<mpinScreen> {
         await SharedPrefs.write(accessToken, jsonData["data"]["accessToken"]);
         // await SharedPrefs.write(MobileNum, username);
         // ignore: use_build_context_synchronously
-        context.pushNamed(dashboard);
+        context.pushReplacementNamed(dashboard);
       } else if (jsonData["statusCode"] == 400) {
         Flush.flushMessage(
           icons: Icons.error_outline,
@@ -97,11 +97,11 @@ class _mpinScreenState extends ConsumerState<mpinScreen> {
               Container(
                 // applogowhitevxf (41:6765)
                 margin: EdgeInsets.fromLTRB(
-                    37.5 * fem, 0 * fem, 37.5 * fem, 55 * fem),
+                    37.5 * fem, 0 * fem, 37.5 * fem, 10 * fem),
                 padding: EdgeInsets.fromLTRB(
                     59.2 * fem, 62.32 * fem, 1.73 * fem, 13.5 * fem),
                 width: double.infinity,
-                height: 92 * fem,
+                height: 220 * fem,
                 decoration: const BoxDecoration(
                   image: DecorationImage(
                     fit: BoxFit.cover,
@@ -115,7 +115,7 @@ class _mpinScreenState extends ConsumerState<mpinScreen> {
               Container(
                 // entermpincodeKmq (41:6766)
                 margin:
-                    EdgeInsets.fromLTRB(0 * fem, 0 * fem, 0 * fem, 40 * fem),
+                    EdgeInsets.fromLTRB(0 * fem, 0 * fem, 0 * fem, 20 * fem),
                 child: Text(
                   'Enter MPIN Code',
                   textAlign: TextAlign.center,

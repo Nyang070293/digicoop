@@ -1,11 +1,13 @@
 import 'package:digicoop/model/onBoardingModel.dart';
 import 'package:digicoop/page/Login/login.dart';
+import 'package:digicoop/routes/route_generator.dart';
 import 'package:digicoop/util/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
-class onBoardingScreen extends ConsumerStatefulWidget { 
-    @override
+class onBoardingScreen extends ConsumerStatefulWidget {
+  @override
   ConsumerState<onBoardingScreen> createState() => _onBoardingScreenState();
 }
 
@@ -52,12 +54,7 @@ class _onBoardingScreenState extends ConsumerState<onBoardingScreen> {
                             298 * fem, 30 * fem, 0 * fem, 28 * fem),
                         child: InkWell(
                           onTap: () {
-                            Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(
-                                builder: (_) => loginScreen(),
-                              ),
-                            );
+                            context.pushReplacementNamed(login);
                           },
                           child: Text(
                             'Skip',
@@ -175,12 +172,7 @@ class _onBoardingScreenState extends ConsumerState<onBoardingScreen> {
             child: TextButton(
               onPressed: () {
                 if (currentIndex == contents.length - 1) {
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                      builder: (_) => loginScreen(),
-                    ),
-                  );
+                  context.pushReplacementNamed(login);
                 }
                 _controller.nextPage(
                   duration: const Duration(milliseconds: 100),

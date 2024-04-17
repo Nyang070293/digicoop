@@ -17,5 +17,6 @@ class DigiCoopAPI {
       generateOTP = "$baseUrl/otp/generate",
       updatePW = "$baseUrl/auth/update-password",
       changePIN = "$baseUrl/auth/update-pincode/stage",
-      updatePIN = "$baseUrl/auth/update-pincode";
+      updatePIN = "$baseUrl/auth/update-pincode",
+      getWallet = "$baseUrl/users/get-wallet";
 }
