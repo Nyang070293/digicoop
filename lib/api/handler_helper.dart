@@ -3,6 +3,8 @@ import 'dart:developer';
 import 'dart:io';
 import 'package:another_flushbar/flushbar.dart';
 import 'package:digicoop/constant/colors.dart';
+import 'package:digicoop/constant/keys.dart';
+import 'package:digicoop/constant/shared_pref.dart';
 import 'package:digicoop/routes/route_generator.dart';
 import 'package:digicoop/widgets/text.dart';
 import 'package:dio/dio.dart' as dio;
@@ -73,7 +75,7 @@ class MethodHandler {
                 ? {
                     "Content-Type": "application/json",
                     "Accept": "application/json",
-                    "Authorization": "Bearer " //${SharedPrefs.read(tokenuser)}"
+                    "Authorization": "Bearer  ${SharedPrefs.read(accessToken)}"
                   }
                 : {},
           ),

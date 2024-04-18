@@ -40,6 +40,7 @@ import 'package:digicoop/page/loading/loading.dart';
 import 'package:digicoop/page/mpin/mpin.dart';
 import 'package:digicoop/page/onBoarding/splashscreen.dart';
 import 'package:digicoop/page/onBoardingCode/onBoardingCode.dart';
+import 'package:digicoop/page/payment_method/paymentMethod.dart';
 import 'package:digicoop/page/setting/setting.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -62,6 +63,7 @@ const String splashscreen = "SplashScreen",
     cashinMain = "cashinMain",
     drawer = "drawer",
     cashinBank = "cashinBank",
+    paymentMethod = "paymentMethod",
     cashinbankSelect = "cashinbankSelect",
     cashinctm = "cashinctm",
     cashinotc = "cashinotc",
@@ -111,16 +113,27 @@ final goRouter = Provider<GoRouter>((ref) {
       ),
       GoRoute(
         name: cashinBank,
-        path: "/$cashinBank",
+        path: "/$cashinBank/:categoryId",
         builder: (context, state) {
-          return const cashinBankScreen();
+          return cashinBankScreen(
+            key: state.pageKey,
+            categoryId: state.pathParameters["categoryId"] ?? "0",
+          );
         },
       ),
+
       GoRoute(
         name: onBoardingCode,
         path: "/$onBoardingCode",
         builder: (context, state) {
           return const onBoardingCodeScreen();
+        },
+      ),
+      GoRoute(
+        name: paymentMethod,
+        path: "/$paymentMethod",
+        builder: (context, state) {
+          return const paymentMethodScreen();
         },
       ),
       GoRoute(

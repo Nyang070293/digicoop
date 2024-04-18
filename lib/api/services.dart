@@ -71,4 +71,17 @@ class ServiceHost {
     );
     return response;
   }
+
+  static Future<Response> getPaymentMethod(categoryId) async {
+    // final body = {
+    //   "id": regionId,
+    // };{id}/provinces
+    final newURl = "${DigiCoopAPI.getPaymentMethod + categoryId}/methods";
+    final response = await MethodHandler.helperhandler(
+      url: newURl,
+      type: RequestType.get,
+      haveToken: true,
+    );
+    return response;
+  }
 }

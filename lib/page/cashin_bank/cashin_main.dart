@@ -168,7 +168,7 @@ class _cashinMainScreenState extends State<cashinMainScreen> {
                                 ),
                                 child: GestureDetector(
                                   onTap: () {
-                                    context.pushReplacementNamed(cashinBank);
+                                    context.pushReplacementNamed(paymentMethod);
                                   },
                                   child: SizedBox(
                                     // autogroupxmqrQ4w (LJbaQGQdzSXcgxGF8PXmqR)

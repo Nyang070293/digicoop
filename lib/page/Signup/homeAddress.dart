@@ -40,8 +40,8 @@ class _homeAddressScreenState extends ConsumerState<homeAddressScreen> {
 
   @override
   void initState() {
-    ref.read(region.notifier).getRegion();
     super.initState();
+    ref.read(region.notifier).getRegion();
   }
 
   Future<void> sendData() async {

@@ -197,7 +197,7 @@ class _dashboardScreenState extends State<dashboardScreen> {
   }
 
   Future<void> getProfile() async {
-    // print("accessToken ${SharedPrefs.read(accessToken)}");
+    print("accessToken ${SharedPrefs.read(accessToken)}");
 // Create headers
     Map<String, String> headers = {
       // Define content-type as JSON
