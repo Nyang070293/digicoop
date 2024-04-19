@@ -34,8 +34,9 @@ import 'package:digicoop/page/cooperatives/cooperativesDisclaimer.dart';
 import 'package:digicoop/page/cooperatives/myCooperatives.dart';
 import 'package:digicoop/page/dashboard/dashboard.dart';
 import 'package:digicoop/page/drawer/drawer.dart';
-import 'package:digicoop/page/ewallet.dart/ewalletmain.dart';
-import 'package:digicoop/page/ewallet.dart/ewalletselect.dart';
+import 'package:digicoop/page/ewallet/ewalletconfirm.dart';
+import 'package:digicoop/page/ewallet/ewalletmain.dart';
+import 'package:digicoop/page/ewallet/ewalletselect.dart';
 import 'package:digicoop/page/loading/loading.dart';
 import 'package:digicoop/page/mpin/mpin.dart';
 import 'package:digicoop/page/onBoarding/splashscreen.dart';
@@ -90,7 +91,8 @@ const String splashscreen = "SplashScreen",
     loadingChangePIN = "loadingChangePIN",
     changePINSuccess = "changePINSuccess",
     loginMPIN = "loginMPIN",
-    onBoardingCode = "onBoardingCode";
+    onBoardingCode = "onBoardingCode",
+    ewalletconfirm = "ewalletconfirm";
 
 // Route
 
@@ -180,11 +182,42 @@ final goRouter = Provider<GoRouter>((ref) {
       ),
       GoRoute(
         name: ewalletselect,
-        path: "/$ewalletselect",
+        path:
+            "/$ewalletselect/:img/:name/:aggregatorID/:institutionID/:paymentCategoryID/:paymentMethod/:feeAmount",
         builder: (context, state) {
-          return const ewalletselectScreen();
+          return ewalletselectScreen(
+            key: state.pageKey,
+            img: state.pathParameters["img"] ?? "",
+            name: state.pathParameters["name"] ?? "",
+            aggregatorID: state.pathParameters["aggregatorID"] ?? "",
+            institutionID: state.pathParameters["institutionID"] ?? "",
+            paymentCategoryID: state.pathParameters["paymentCategoryID"] ?? "",
+            paymentMethod: state.pathParameters["paymentMethod"] ?? "",
+            feeAmount: state.pathParameters["feeAmount"] ?? "",
+          );
         },
       ),
+
+      GoRoute(
+        name: ewalletconfirm,
+        path:
+            "/$ewalletconfirm/:img/:name/:aggregatorID/:institutionID/:paymentCategoryID/:paymentMethod/:sf/:mobile/:amount",
+        builder: (context, state) {
+          return ewalletconfirmScreen(
+            key: state.pageKey,
+            img: state.pathParameters["img"] ?? "",
+            name: state.pathParameters["name"] ?? "",
+            aggregatorID: state.pathParameters["aggregatorID"] ?? "",
+            institutionID: state.pathParameters["institutionID"] ?? "",
+            paymentCategoryID: state.pathParameters["paymentCategoryID"] ?? "",
+            paymentMethod: state.pathParameters["paymentMethod"] ?? "",
+            sf: state.pathParameters["sf"] ?? "",
+            mobile: state.pathParameters["mobile"] ?? "",
+            amount: state.pathParameters["amount"] ?? "",
+          );
+        },
+      ),
+
       GoRoute(
         name: bankSuccess,
         path: "/$bankSuccess",
@@ -273,7 +306,7 @@ final goRouter = Provider<GoRouter>((ref) {
         name: ewalletmain,
         path: "/$ewalletmain",
         builder: (context, state) {
-          return const ewalletmainScreen();
+          return const ewalletScreen();
         },
       ),
       GoRoute(
@@ -293,9 +326,18 @@ final goRouter = Provider<GoRouter>((ref) {
       //cashinotcselectScreen
       GoRoute(
         name: cashinbankSelect,
-        path: "/$cashinbankSelect",
+        path:
+            "/$cashinbankSelect/:img/:name/:aggregatorID/:institutionID/:paymentCategoryID/:paymentMethod",
         builder: (context, state) {
-          return const cashinbankSelectScreen();
+          return cashinbankSelectScreen(
+            key: state.pageKey,
+            img: state.pathParameters["img"] ?? "",
+            name: state.pathParameters["name"] ?? "",
+            aggregatorID: state.pathParameters["aggregatorID"] ?? "",
+            institutionID: state.pathParameters["institutionID"] ?? "",
+            paymentCategoryID: state.pathParameters["paymentCategoryID"] ?? "",
+            paymentMethod: state.pathParameters["paymentMethod"] ?? "",
+          );
         },
       ),
       GoRoute(

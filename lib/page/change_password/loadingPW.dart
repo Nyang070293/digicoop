@@ -151,7 +151,7 @@ class _loadingScreenState extends ConsumerState<loadingChangePWScreen> {
                         margin: EdgeInsets.fromLTRB(
                             0 * fem, 200 * fem, 0 * fem, 80 * fem),
                         child: Image.asset(
-                          'assets/images/loading.png',
+                          'assets/images/loading_digi.gif',
                           width: 124.88 * fem,
                           height: 124.88 * fem,
                         ),

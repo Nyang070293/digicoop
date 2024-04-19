@@ -233,6 +233,8 @@ class _dashboardScreenState extends State<dashboardScreen> {
         });
         print("MobileNum ${SharedPrefs.read(MobileNum).toString()}");
         SharedPrefs.write(firstname, Fname);
+        SharedPrefs.write(lastname, jsonData["data"]["person"][0]['lastName']);
+        SharedPrefs.write(emailAdd, jsonData["data"]["person"][0]['email']);
         SharedPrefs.write(fullName, Fullname);
       } else {
         Flush.flushMessage(

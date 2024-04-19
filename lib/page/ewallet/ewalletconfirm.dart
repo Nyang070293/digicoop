@@ -1,21 +1,44 @@
-import 'package:digicoop/page/ewallet.dart/ewalletselect.dart';
 import 'package:digicoop/routes/route_generator.dart';
 import 'package:digicoop/util/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:intl/intl.dart';
 
 class ewalletconfirmScreen extends StatefulWidget {
-  const ewalletconfirmScreen({super.key});
+  final String img,
+      name,
+      paymentMethod,
+      paymentCategoryID,
+      institutionID,
+      aggregatorID,
+      mobile,
+      amount,
+      sf;
 
+  const ewalletconfirmScreen(
+      {super.key,
+      required this.img,
+      required this.name,
+      required this.paymentMethod,
+      required this.paymentCategoryID,
+      required this.institutionID,
+      required this.aggregatorID,
+      required this.mobile,
+      required this.amount,
+      required this.sf});
   @override
   State<ewalletconfirmScreen> createState() => _ewalletconfirmScreenState();
 }
 
 class _ewalletconfirmScreenState extends State<ewalletconfirmScreen> {
+  NumberFormat currencyFormat =
+      NumberFormat.currency(locale: 'en_US', symbol: '');
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-
+    double total = double.parse(widget.amount.toString()) +
+        double.parse(widget.sf.toString());
     double baseWidth = 414;
     double fem = MediaQuery.of(context).size.width / baseWidth;
     double ffem = fem * 0.97;
@@ -138,7 +161,7 @@ class _ewalletconfirmScreenState extends State<ewalletconfirmScreen> {
                                 margin: EdgeInsets.fromLTRB(
                                     0 * fem, 0 * fem, 0 * fem, 74 * fem),
                                 width: double.infinity,
-                                height: 343 * fem,
+                                height: 336 * fem,
                                 child: Container(
                                   // group155Ur3 (97:11414)
                                   padding: EdgeInsets.fromLTRB(
@@ -162,11 +185,11 @@ class _ewalletconfirmScreenState extends State<ewalletconfirmScreen> {
                                       Container(
                                         // autogrouptwbhZcb (LJe68FGBf9ABkTeKKoTWBH)
                                         margin: EdgeInsets.fromLTRB(69 * fem,
-                                            0 * fem, 68 * fem, 6 * fem),
+                                            0 * fem, 68 * fem, 0 * fem),
                                         padding: EdgeInsets.fromLTRB(23 * fem,
                                             0 * fem, 25 * fem, 0 * fem),
                                         width: double.infinity,
-                                        height: 92 * fem,
+                                        height: 107.6 * fem,
                                         child: Container(
                                           // digicoopwhitet95 (97:11433)
                                           padding: EdgeInsets.fromLTRB(
@@ -180,71 +203,9 @@ class _ewalletconfirmScreenState extends State<ewalletconfirmScreen> {
                                             image: DecorationImage(
                                               fit: BoxFit.cover,
                                               image: AssetImage(
-                                                'assets/images/logo-Jf9.png',
+                                                'assets/images/splashscreen.png',
                                               ),
                                             ),
-                                          ),
-                                          child: Row(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.end,
-                                            children: [
-                                              Container(
-                                                // poweredbymif (I97:11433;831:2261)
-                                                margin: EdgeInsets.fromLTRB(
-                                                    0 * fem,
-                                                    0 * fem,
-                                                    2.1 * fem,
-                                                    5.53 * fem),
-                                                width: 57.24 * fem,
-                                                height: 5.36 * fem,
-                                                child: Image.asset(
-                                                  'assets/images/powered-by-Ywq.png',
-                                                  width: 57.24 * fem,
-                                                  height: 5.36 * fem,
-                                                ),
-                                              ),
-                                              Container(
-                                                // group7705UT (I97:11433;831:2256)
-                                                width: 58.73 * fem,
-                                                height: double.infinity,
-                                                child: Stack(
-                                                  children: [
-                                                    Positioned(
-                                                      // autogroupbjk7RHR (LHVdBAF4XMydZZb62dbJk7)
-                                                      left: 0 * fem,
-                                                      top: 0 * fem,
-                                                      child: Align(
-                                                        child: SizedBox(
-                                                          width: 42.47 * fem,
-                                                          height: 16.17 * fem,
-                                                          child: Image.asset(
-                                                            'assets/images/auto-group-bjk7.png',
-                                                            width: 42.47 * fem,
-                                                            height: 16.17 * fem,
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                    Positioned(
-                                                      // autogroupubwfuyH (LHVe1DhKG8xWun1qhaubWF)
-                                                      left: 41.8249511719 * fem,
-                                                      top: 0 * fem,
-                                                      child: Align(
-                                                        child: SizedBox(
-                                                          width: 16.9 * fem,
-                                                          height: 16.17 * fem,
-                                                          child: Image.asset(
-                                                            'assets/images/auto-group-ubwf.png',
-                                                            width: 16.9 * fem,
-                                                            height: 16.17 * fem,
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                            ],
                                           ),
                                         ),
                                       ),
@@ -295,7 +256,7 @@ class _ewalletconfirmScreenState extends State<ewalletconfirmScreen> {
                                                   ),
                                                   Text(
                                                     // gcashaCF (97:11423)
-                                                    'Gcash',
+                                                    widget.name,
                                                     textAlign: TextAlign.right,
                                                     style: SafeGoogleFont(
                                                       'Montserrat',
@@ -345,7 +306,7 @@ class _ewalletconfirmScreenState extends State<ewalletconfirmScreen> {
                                                   ),
                                                   Text(
                                                     // wS7 (97:11420)
-                                                    '0919 123 4560',
+                                                    widget.mobile,
                                                     textAlign: TextAlign.right,
                                                     style: SafeGoogleFont(
                                                       'Montserrat',
@@ -370,7 +331,7 @@ class _ewalletconfirmScreenState extends State<ewalletconfirmScreen> {
                                               width: 333 * fem,
                                               height: 0 * fem,
                                               child: Image.asset(
-                                                'assets/images/line-9-1EX.png',
+                                                'assets/images/line.png',
                                                 width: 333 * fem,
                                                 height: 0 * fem,
                                               ),
@@ -410,7 +371,7 @@ class _ewalletconfirmScreenState extends State<ewalletconfirmScreen> {
                                                   ),
                                                   Text(
                                                     // php10000FLK (97:11426)
-                                                    'PHP 100.00',
+                                                    'PHP ${currencyFormat.format(double.parse(widget.amount))}',
                                                     textAlign: TextAlign.right,
                                                     style: SafeGoogleFont(
                                                       'Montserrat',
@@ -460,7 +421,7 @@ class _ewalletconfirmScreenState extends State<ewalletconfirmScreen> {
                                                   ),
                                                   Text(
                                                     // php200cq5 (97:11432)
-                                                    'PHP 2.00',
+                                                    'PHP ${currencyFormat.format(double.parse(widget.sf))}',
                                                     textAlign: TextAlign.right,
                                                     style: SafeGoogleFont(
                                                       'Montserrat',
@@ -510,7 +471,7 @@ class _ewalletconfirmScreenState extends State<ewalletconfirmScreen> {
                                                   ),
                                                   Text(
                                                     // php12000DZy (97:11429)
-                                                    'PHP 120.00',
+                                                    'PHP ${total.toString()}',
                                                     textAlign: TextAlign.right,
                                                     style: SafeGoogleFont(
                                                       'Montserrat',

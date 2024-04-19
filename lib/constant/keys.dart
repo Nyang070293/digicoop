@@ -8,7 +8,8 @@ const String refreshToken = "refreshToken",
     MobileNum = "MobileNum",
     personCode = "personCode",
     userCode = "userCode",
-    accessToken = "accessToken";
+    accessToken = "accessToken",
+    emailAdd = "emailAdd";
 
 const String firstname = "firstname",
     lastname = "lastname",

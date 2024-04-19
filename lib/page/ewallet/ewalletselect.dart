@@ -1,5 +1,4 @@
-import 'package:digicoop/page/cashin_bank/cashin_bank.dart';
-import 'package:digicoop/page/cashin_bank/cashresult.dart';
+import 'package:digicoop/constant/flush_bar.dart';
 import 'package:digicoop/routes/route_generator.dart';
 import 'package:digicoop/util/textfield.dart';
 import 'package:digicoop/util/utils.dart';
@@ -7,15 +6,58 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 class ewalletselectScreen extends StatefulWidget {
-  const ewalletselectScreen({super.key});
+  final String img,
+      name,
+      paymentMethod,
+      paymentCategoryID,
+      institutionID,
+      aggregatorID,
+      feeAmount;
+
+  const ewalletselectScreen(
+      {super.key,
+      required this.img,
+      required this.name,
+      required this.paymentMethod,
+      required this.paymentCategoryID,
+      required this.institutionID,
+      required this.aggregatorID,
+      required this.feeAmount});
 
   @override
   State<ewalletselectScreen> createState() => _ewalletselectScreenState();
 }
 
 class _ewalletselectScreenState extends State<ewalletselectScreen> {
-  final TextEditingController _amount = TextEditingController();
+  Future<void> gotoConfrim(String number, String amount) async {
+    // img,
+    //   name,
+    //   paymentMethod,
+    //   paymentCategoryID,
+    //   institutionID,
+    //   aggregatorID,
+    //   mobile,
+    //   amount,
+    //   sf,
+    //   totalAmount;
+    context.pushReplacementNamed(
+      ewalletconfirm,
+      pathParameters: {
+        "img": widget.img.toString(),
+        "name": widget.name.toString(),
+        "paymentMethod": widget.paymentMethod.toString(),
+        "paymentCategoryID": widget.paymentCategoryID.toString(),
+        "institutionID": widget.institutionID.toString(),
+        "aggregatorID": widget.aggregatorID.toString(),
+        "mobile": number,
+        "amount": amount,
+        "sf": widget.feeAmount.toString()
+      },
+    );
+  }
+
   final TextEditingController _number = TextEditingController();
+  final TextEditingController _amount = TextEditingController();
   @override
   Widget build(BuildContext context) {
     double baseWidth = 414;
@@ -103,7 +145,7 @@ class _ewalletselectScreenState extends State<ewalletselectScreen> {
                           top: 130 * fem,
                           child: Container(
                             padding: EdgeInsets.fromLTRB(
-                                0 * fem, 0 * fem, 11 * fem, 0 * fem),
+                                30 * fem, 0 * fem, 11 * fem, 0 * fem),
                             width: 244 * fem,
                             height: 58.03 * fem,
                             decoration: BoxDecoration(
@@ -112,37 +154,44 @@ class _ewalletselectScreenState extends State<ewalletselectScreen> {
                             child: Row(
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
-                                Container(
-                                  // rectangle8Q95 (83:3169)
-                                  margin: EdgeInsets.fromLTRB(
-                                      27 * fem, 0 * fem, 22.97 * fem, 0 * fem),
-                                  width: 58.03 * fem,
-                                  height: 58.03 * fem,
-                                  decoration: BoxDecoration(
-                                    borderRadius:
-                                        BorderRadius.circular(5 * fem),
-                                    border:
-                                        Border.all(color: Color(0xffe7e7e7)),
-                                    color: Color(0xffffffff),
-                                    image: DecorationImage(
-                                      image: AssetImage(
-                                        'assets/images/gcash.png',
+                                Image.network(
+                                  widget
+                                      .img, // Replace this with your image URL
+                                  loadingBuilder: (BuildContext context,
+                                      Widget child,
+                                      ImageChunkEvent? loadingProgress) {
+                                    if (loadingProgress == null) return child;
+                                    return Center(
+                                      child: CircularProgressIndicator(
+                                        value: loadingProgress
+                                                    .expectedTotalBytes !=
+                                                null
+                                            ? loadingProgress
+                                                    .cumulativeBytesLoaded /
+                                                loadingProgress
+                                                    .expectedTotalBytes!
+                                            : null,
                                       ),
-                                    ),
-                                  ),
+                                    );
+                                  },
+                                  errorBuilder: (BuildContext context,
+                                      Object exception,
+                                      StackTrace? stackTrace) {
+                                    return const Text('Error loading image');
+                                  },
                                 ),
                                 Container(
                                   // bdounibankincHif (83:3168)
                                   margin: EdgeInsets.fromLTRB(
-                                      0 * fem, 1.37 * fem, 0 * fem, 0 * fem),
+                                      20 * fem, 1.37 * fem, 0 * fem, 0 * fem),
                                   child: Text(
-                                    'GCash',
+                                    widget.name,
                                     style: SafeGoogleFont(
                                       'Montserrat',
                                       fontSize: 16 * ffem,
                                       fontWeight: FontWeight.w600,
                                       height: 1.2175 * ffem / fem,
-                                      color: Color(0xff3f3f3f),
+                                      color: const Color(0xff3f3f3f),
                                     ),
                                   ),
                                 ),
@@ -150,41 +199,41 @@ class _ewalletselectScreenState extends State<ewalletselectScreen> {
                             ),
                           ),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 20,
                         ),
-                        Container(
-                          width: 348 * fem,
-                          height: 70 * fem,
-                          child: Container(
-                            // autogroupbsr5iZ5 (LJbctcRnmghdvRS9zLbSR5)
-                            padding: EdgeInsets.fromLTRB(
-                                30 * fem, 0 * fem, 30 * fem, 0 * fem),
-                            width: double.infinity,
-                            height: 64 * fem,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Container(
-                                  // amount35Z (83:3173)
-                                  margin: EdgeInsets.fromLTRB(
-                                      0 * fem, 0 * fem, 0 * fem, 0 * fem),
-                                  child: CommonTextField(
-                                    controller: _number,
-                                    keyboardType: TextInputType.number,
-                                    labelText: 'Mobile Number',
-                                    textInputAction: TextInputAction.next,
-                                    accentColor: const Color(0xff259ded),
+                        widget.name == "GCash".toUpperCase()
+                            ? SizedBox(
+                                width: 348 * fem,
+                                height: 80 * fem,
+                                child: Container(
+                                  // autogroupbsr5iZ5 (LJbctcRnmghdvRS9zLbSR5)
+                                  padding: EdgeInsets.fromLTRB(
+                                      30 * fem, 0 * fem, 30 * fem, 0 * fem),
+                                  width: double.infinity,
+                                  height: 64 * fem,
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Container(
+                                        // amount35Z (83:3173)
+                                        margin: EdgeInsets.fromLTRB(0 * fem,
+                                            0 * fem, 0 * fem, 20 * fem),
+                                        child: CommonTextField(
+                                          controller: _number,
+                                          keyboardType: TextInputType.number,
+                                          labelText: 'Mobile Number',
+                                          textInputAction: TextInputAction.next,
+                                          accentColor: const Color(0xff259ded),
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 ),
-                              ],
-                            ),
-                          ),
-                        ),
+                              )
+                            : const SizedBox(),
                         SizedBox(
-                          height: 20,
-                        ),
-                        Container(
                           width: 348 * fem,
                           height: 70 * fem,
                           child: Container(
@@ -212,7 +261,7 @@ class _ewalletselectScreenState extends State<ewalletselectScreen> {
                             ),
                           ),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 100,
                         ),
                         Positioned(
@@ -221,27 +270,40 @@ class _ewalletselectScreenState extends State<ewalletselectScreen> {
                           top: 505 * fem,
                           child: TextButton(
                             onPressed: () {
-                              context.pushReplacementNamed(
-                                cashresult,
-                                pathParameters: {
-                                  "index": "0",
-                                },
-                              );
+                              if (widget.name == "GCash".toUpperCase()) {
+                                if (_number.text.isEmpty) {
+                                  Flush.flushMessage(
+                                    icons: Icons.error_outline,
+                                    title: "Field Required",
+                                    message: "Please Enter Mobile Number",
+                                  );
+                                  return;
+                                }
+                              }
+                              if (_amount.text.isEmpty) {
+                                Flush.flushMessage(
+                                  icons: Icons.error_outline,
+                                  title: "Field Required",
+                                  message: "Please Enter Amount",
+                                );
+                                return;
+                              }
+                              gotoConfrim(_number.text, _amount.text);
                             },
                             style: TextButton.styleFrom(
                               padding: EdgeInsets.zero,
                             ),
                             child: Container(
                               padding: EdgeInsets.fromLTRB(
-                                  100 * fem, 15 * fem, 23.67 * fem, 10 * fem),
+                                  126 * fem, 15 * fem, 23.67 * fem, 10 * fem),
                               width: 353 * fem,
                               height: 55 * fem,
                               decoration: BoxDecoration(
-                                color: Color(0xff259ded),
+                                color: const Color(0xff259ded),
                                 borderRadius: BorderRadius.circular(100 * fem),
                                 boxShadow: [
                                   BoxShadow(
-                                    color: Color(0x3f000000),
+                                    color: const Color(0x3f000000),
                                     offset: Offset(0 * fem, 4 * fem),
                                     blurRadius: 2 * fem,
                                   ),
@@ -253,23 +315,23 @@ class _ewalletselectScreenState extends State<ewalletselectScreen> {
                                   Container(
                                     // proceedskj (83:3338)
                                     margin: EdgeInsets.fromLTRB(
-                                        0 * fem, 0 * fem, 50 * fem, 0 * fem),
+                                        0 * fem, 0 * fem, 75.67 * fem, 0 * fem),
                                     child: Text(
-                                      'Send Money',
+                                      'Proceed',
                                       textAlign: TextAlign.center,
                                       style: SafeGoogleFont(
                                         'Montserrat',
                                         fontSize: 24 * ffem,
                                         fontWeight: FontWeight.w500,
                                         height: 1.2175 * ffem / fem,
-                                        color: Color(0xffffffff),
+                                        color: const Color(0xffffffff),
                                       ),
                                     ),
                                   ),
                                   Container(
                                     // solararrowrightbrokenBWX (83:3339)
                                     margin: EdgeInsets.fromLTRB(
-                                        10 * fem, 0 * fem, 0 * fem, 4 * fem),
+                                        0 * fem, 0 * fem, 0 * fem, 4 * fem),
                                     width: 26.67 * fem,
                                     height: 20 * fem,
                                     child: Image.asset(
@@ -283,7 +345,7 @@ class _ewalletselectScreenState extends State<ewalletselectScreen> {
                             ),
                           ),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 330,
                         )
                       ],

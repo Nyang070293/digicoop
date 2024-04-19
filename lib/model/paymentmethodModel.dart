@@ -65,9 +65,9 @@ class PaymentMethod {
     paymentCategoryID = json['paymentCategoryID'];
     paymentCategoryName = json['paymentCategoryName'];
     logo = json['logo'];
-    if (json['paymentMethodDetails'] != null) {
+    if (json['paymentMethod'] != null) {
       paymentMethodDetails = <PaymentMethodDetails>[];
-      json['paymentMethodDetails'].forEach((v) {
+      json['paymentMethod'].forEach((v) {
         paymentMethodDetails!.add(PaymentMethodDetails.fromJson(v));
       });
     }
@@ -79,7 +79,7 @@ class PaymentMethod {
     data['paymentCategoryName'] = paymentCategoryName;
     data['logo'] = logo;
     if (paymentMethodDetails != null) {
-      data['paymentMethodDetails'] =
+      data['paymentMethod'] =
           paymentMethodDetails!.map((v) => v.toJson()).toList();
     }
     return data;

@@ -3,20 +3,19 @@ import 'dart:async';
 import 'package:digicoop/global/paymentMethodGlobal.dart';
 import 'package:digicoop/routes/route_generator.dart';
 import 'package:digicoop/util/utils.dart';
-import 'package:digicoop/widgets/paymentMethodWidget.dart';
+import 'package:digicoop/widgets/ewalletWidget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-class cashinBankScreen extends ConsumerStatefulWidget {
-  final String categoryId;
-  const cashinBankScreen({super.key, required this.categoryId});
+class ewalletScreen extends ConsumerStatefulWidget {
+  const ewalletScreen({super.key});
 
   @override
-  ConsumerState<cashinBankScreen> createState() => _cashinBankScreenState();
+  ConsumerState<ewalletScreen> createState() => _ewalletScreenState();
 }
 
-class _cashinBankScreenState extends ConsumerState<cashinBankScreen> {
+class _ewalletScreenState extends ConsumerState<ewalletScreen> {
   // void getpaymentMethod() {
   //   ref.read(paymentMethodGlobal.notifier).getPaymentMethod(widget.categoryId);
   // }
@@ -24,11 +23,9 @@ class _cashinBankScreenState extends ConsumerState<cashinBankScreen> {
   @override
   void initState() {
     //set the initial value of text field
-    ref.read(paymentMethodGlobal.notifier).getPaymentMethod(widget.categoryId);
+    ref.read(paymentMethodGlobal.notifier).getPaymentMethod("3");
     Timer.periodic(const Duration(seconds: 30), (timer) {
-      ref
-          .read(paymentMethodGlobal.notifier)
-          .getPaymentMethod(widget.categoryId);
+      ref.read(paymentMethodGlobal.notifier).getPaymentMethod("3");
     });
     super.initState();
   }
@@ -94,9 +91,9 @@ class _cashinBankScreenState extends ConsumerState<cashinBankScreen> {
                       Container(
                         // createaccountUHM (75:716)
                         margin: EdgeInsets.fromLTRB(
-                            30 * fem, 0 * fem, 140 * fem, 0 * fem),
+                            0 * fem, 0 * fem, 140 * fem, 0 * fem),
                         child: Text(
-                          'Cash In',
+                          'Other E-Wallet',
                           style: SafeGoogleFont(
                             'Montserrat',
                             fontSize: 18 * ffem,
@@ -138,14 +135,14 @@ class _cashinBankScreenState extends ConsumerState<cashinBankScreen> {
                                 width: 22.13 * fem,
                                 height: 22.13 * fem,
                                 child: Image.asset(
-                                  'assets/images/bank.png',
+                                  'assets/images/e-wallet.png',
                                   width: 22.13 * fem,
                                   height: 22.13 * fem,
                                 ),
                               ),
                               Text(
                                 // bankscgo (75:2076)
-                                'Banks',
+                                'E-Wallet',
                                 style: SafeGoogleFont(
                                   'Montserrat',
                                   fontSize: 24 * ffem,
@@ -162,7 +159,7 @@ class _cashinBankScreenState extends ConsumerState<cashinBankScreen> {
                           margin: EdgeInsets.fromLTRB(
                               27 * fem, 10 * fem, 0 * fem, 20 * fem),
                           child: Text(
-                            'Select a bank',
+                            'Select E-Wallet',
                             style: SafeGoogleFont(
                               'Montserrat',
                               fontSize: 14 * ffem,
@@ -242,8 +239,7 @@ class _cashinBankScreenState extends ConsumerState<cashinBankScreen> {
                                                       padding:
                                                           const EdgeInsets.all(
                                                               8.0),
-                                                      child:
-                                                          paymentMethodWidgets(
+                                                      child: ewalletWidgets(
                                                         name: e.name.toString(),
                                                         image:
                                                             e.logo.toString(),
@@ -265,6 +261,13 @@ class _cashinBankScreenState extends ConsumerState<cashinBankScreen> {
                                                                 .first
                                                                 .paymentCategoryName
                                                                 .toString(),
+                                                        feeAmount: payment_Method
+                                                            .paymentMethod!
+                                                            .first
+                                                            .paymentMethodDetails!
+                                                            .first
+                                                            .feeAmount
+                                                            .toString(),
                                                       ),
                                                     ),
                                                   )

@@ -4,9 +4,20 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 class paymentMethodWidgets extends StatelessWidget {
-  final String name, image;
+  final String name,
+      image,
+      paymentMethod,
+      paymentCategoryID,
+      institutionID,
+      aggregatorID;
   const paymentMethodWidgets(
-      {super.key, required this.name, required this.image});
+      {super.key,
+      required this.name,
+      required this.image,
+      required this.paymentMethod,
+      required this.institutionID,
+      required this.aggregatorID,
+      required this.paymentCategoryID});
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +27,6 @@ class paymentMethodWidgets extends StatelessWidget {
     return Container(
       // group2494h5 (82:3055)
       margin: EdgeInsets.fromLTRB(0 * fem, 0 * fem, 0 * fem, 12.46 * fem),
-      padding: EdgeInsets.fromLTRB(18.67 * fem, 0 * fem, 0 * fem, 0 * fem),
       width: 900 * fem,
       height: 74.16 * fem,
       decoration: BoxDecoration(
@@ -84,6 +94,7 @@ class paymentMethodWidgets extends StatelessWidget {
                     ),
                   ),
                   Container(
+                    width: 150,
                     // bdounibankincf4b (82:3061)
                     margin: EdgeInsets.fromLTRB(
                         0 * fem, 0 * fem, 0 * fem, 0.63 * fem),
@@ -103,7 +114,17 @@ class paymentMethodWidgets extends StatelessWidget {
             ),
             GestureDetector(
               onTap: () {
-                context.pushReplacementNamed(cashinbankSelect);
+                context.pushNamed(
+                  cashinbankSelect,
+                  pathParameters: {
+                    "img": image,
+                    "name": name,
+                    "paymentMethod": paymentMethod,
+                    "paymentCategoryID": paymentCategoryID,
+                    "institutionID": institutionID,
+                    "aggregatorID": aggregatorID
+                  },
+                );
               },
               child: Container(
                 // group2489Ef (82:3057)

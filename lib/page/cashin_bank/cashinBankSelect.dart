@@ -1,21 +1,110 @@
-import 'package:digicoop/page/cashin_bank/cashin_bank.dart';
-import 'package:digicoop/page/cashin_bank/cashresult.dart';
+import 'dart:convert';
+
+import 'package:digicoop/Function/aes.dart';
+import 'package:digicoop/api/api_strings.dart';
+import 'package:digicoop/constant/flush_bar.dart';
+import 'package:digicoop/constant/keys.dart';
+import 'package:digicoop/constant/shared_pref.dart';
 import 'package:digicoop/routes/route_generator.dart';
 import 'package:digicoop/util/textfield.dart';
 import 'package:digicoop/util/utils.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:http/http.dart' as http;
 
-class cashinbankSelectScreen extends StatefulWidget {
-  const cashinbankSelectScreen({super.key});
+class cashinbankSelectScreen extends ConsumerStatefulWidget {
+  final String img,
+      name,
+      paymentMethod,
+      paymentCategoryID,
+      institutionID,
+      aggregatorID;
+  const cashinbankSelectScreen(
+      {super.key,
+      required this.img,
+      required this.name,
+      required this.paymentMethod,
+      required this.paymentCategoryID,
+      required this.institutionID,
+      required this.aggregatorID});
 
   @override
-  State<cashinbankSelectScreen> createState() => _cashinbankSelectScreenState();
+  ConsumerState<cashinbankSelectScreen> createState() =>
+      _cashinbankSelectScreenState();
 }
 
-class _cashinbankSelectScreenState extends State<cashinbankSelectScreen> {
+class _cashinbankSelectScreenState
+    extends ConsumerState<cashinbankSelectScreen> {
+  Future<void> sendData(String amount) async {
+    Map<String, String> headers = {
+      // Define content-type as JSON
+      'Authorization':
+          'Bearer ${SharedPrefs.read(accessToken)}', // Add your authorization token here
+    };
+
+    try {
+      //print("personCode1 ${SharedPrefs.read(personCode)}");
+      final data =
+          '{ "tenderId": 1, "transactionDetails": [{ "paymentMethod": "${widget.paymentMethod}", "amount": $amount,"description": "Topup Transaction", "email": "${SharedPrefs.read(emailAdd)}", "firstName": "${SharedPrefs.read(firstname)}", "lastName": "${SharedPrefs.read(lastname)}", "paymentCategoryID": ${widget.paymentCategoryID}, "institutionID": ${widget.institutionID}, "aggregatorID": ${widget.aggregatorID} }]}';
+
+      final encryptedBody = Aes256.encrypt(data, SharedPrefs.read(totp));
+      print("encryptedBody cash in bank $encryptedBody");
+      http.Response response = await http.post(
+        Uri.parse(DigiCoopAPI.cashinBankAPI),
+        headers: headers,
+        body: {'data': encryptedBody},
+      );
+
+      // Parse the JSON response body
+      final responseData = json.decode(response.body);
+      // Access specific data from the parsed response
+      var encryptData = responseData['data'];
+
+      final decrypt = Aes256.decrypt(encryptData, SharedPrefs.read(totp));
+      Map<String, dynamic> jsonData = jsonDecode(decrypt!);
+      //String userCode = jsonData["data"]["userCode"];
+      print("data cash in bank : ${jsonData}");
+      //print("userCode ${userCode}");
+      // Handle response
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        // Extract transactionStatusID
+        int transactionStatusID = jsonData['data']['transactionOutput'][0]
+            ['transactionDetails'][0]['transactionStatusID'];
+
+        context.pushReplacementNamed(
+          cashresult,
+          pathParameters: {
+            "index": transactionStatusID.toString(),
+          },
+        );
+
+        //context.pushNamed(loadingChangePIN);
+      } else if (response.statusCode == 400) {
+        Flush.flushMessage(
+          icons: Icons.error_outline,
+          title: "Error",
+          message: jsonData['message']
+              .toString()
+              .replaceAll('[', '')
+              .replaceAll(']', ''),
+        );
+      } else {
+        Flush.flushMessage(
+          icons: Icons.error_outline,
+          title: "Error",
+          message: jsonData['message']
+              .toString()
+              .replaceAll('[', '')
+              .replaceAll(']', ''),
+        );
+      }
+    } catch (e) {
+      print('Error sending encrypted payload: $e');
+    }
+  }
+
   final TextEditingController _amount = TextEditingController();
-  final TextEditingController _payment = TextEditingController();
   @override
   Widget build(BuildContext context) {
     double baseWidth = 414;
@@ -103,7 +192,7 @@ class _cashinbankSelectScreenState extends State<cashinbankSelectScreen> {
                           top: 130 * fem,
                           child: Container(
                             padding: EdgeInsets.fromLTRB(
-                                0 * fem, 0 * fem, 11 * fem, 0 * fem),
+                                30 * fem, 0 * fem, 11 * fem, 0 * fem),
                             width: 244 * fem,
                             height: 58.03 * fem,
                             decoration: BoxDecoration(
@@ -112,37 +201,44 @@ class _cashinbankSelectScreenState extends State<cashinbankSelectScreen> {
                             child: Row(
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
-                                Container(
-                                  // rectangle8Q95 (83:3169)
-                                  margin: EdgeInsets.fromLTRB(
-                                      27 * fem, 0 * fem, 22.97 * fem, 0 * fem),
-                                  width: 58.03 * fem,
-                                  height: 58.03 * fem,
-                                  decoration: BoxDecoration(
-                                    borderRadius:
-                                        BorderRadius.circular(5 * fem),
-                                    border:
-                                        Border.all(color: Color(0xffe7e7e7)),
-                                    color: Color(0xffffffff),
-                                    image: DecorationImage(
-                                      image: AssetImage(
-                                        'assets/images/bdo.png',
+                                Image.network(
+                                  widget
+                                      .img, // Replace this with your image URL
+                                  loadingBuilder: (BuildContext context,
+                                      Widget child,
+                                      ImageChunkEvent? loadingProgress) {
+                                    if (loadingProgress == null) return child;
+                                    return Center(
+                                      child: CircularProgressIndicator(
+                                        value: loadingProgress
+                                                    .expectedTotalBytes !=
+                                                null
+                                            ? loadingProgress
+                                                    .cumulativeBytesLoaded /
+                                                loadingProgress
+                                                    .expectedTotalBytes!
+                                            : null,
                                       ),
-                                    ),
-                                  ),
+                                    );
+                                  },
+                                  errorBuilder: (BuildContext context,
+                                      Object exception,
+                                      StackTrace? stackTrace) {
+                                    return const Text('Error loading image');
+                                  },
                                 ),
                                 Container(
                                   // bdounibankincHif (83:3168)
                                   margin: EdgeInsets.fromLTRB(
-                                      0 * fem, 1.37 * fem, 0 * fem, 0 * fem),
+                                      20 * fem, 1.37 * fem, 0 * fem, 0 * fem),
                                   child: Text(
-                                    'BDO Unibank, Inc.',
+                                    widget.name,
                                     style: SafeGoogleFont(
                                       'Montserrat',
                                       fontSize: 16 * ffem,
                                       fontWeight: FontWeight.w600,
                                       height: 1.2175 * ffem / fem,
-                                      color: Color(0xff3f3f3f),
+                                      color: const Color(0xff3f3f3f),
                                     ),
                                   ),
                                 ),
@@ -150,10 +246,10 @@ class _cashinbankSelectScreenState extends State<cashinbankSelectScreen> {
                             ),
                           ),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 20,
                         ),
-                        Container(
+                        SizedBox(
                           width: 348 * fem,
                           height: 70 * fem,
                           child: Container(
@@ -181,38 +277,7 @@ class _cashinbankSelectScreenState extends State<cashinbankSelectScreen> {
                             ),
                           ),
                         ),
-                        SizedBox(
-                          height: 20,
-                        ),
-                        Container(
-                          width: 348 * fem,
-                          height: 70 * fem,
-                          child: Container(
-                            // autogroupbsr5iZ5 (LJbctcRnmghdvRS9zLbSR5)
-                            padding: EdgeInsets.fromLTRB(
-                                30 * fem, 0 * fem, 30 * fem, 0 * fem),
-                            width: double.infinity,
-                            height: 64 * fem,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Container(
-                                  // amount35Z (83:3173)
-                                  margin: EdgeInsets.fromLTRB(
-                                      0 * fem, 0 * fem, 0 * fem, 0 * fem),
-                                  child: CommonTextField(
-                                    controller: _payment,
-                                    keyboardType: TextInputType.number,
-                                    labelText: 'Payment Method',
-                                    textInputAction: TextInputAction.next,
-                                    accentColor: const Color(0xff259ded),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                        SizedBox(
+                        const SizedBox(
                           height: 100,
                         ),
                         Positioned(
@@ -221,12 +286,15 @@ class _cashinbankSelectScreenState extends State<cashinbankSelectScreen> {
                           top: 505 * fem,
                           child: TextButton(
                             onPressed: () {
-                              context.pushReplacementNamed(
-                                cashresult,
-                                pathParameters: {
-                                  "index": "0",
-                                },
-                              );
+                              if (_amount.text.isEmpty) {
+                                Flush.flushMessage(
+                                  icons: Icons.error_outline,
+                                  title: "Field Required",
+                                  message: "Please Enter your Firstname",
+                                );
+                                return;
+                              }
+                              sendData(_amount.text);
                             },
                             style: TextButton.styleFrom(
                               padding: EdgeInsets.zero,
@@ -237,11 +305,11 @@ class _cashinbankSelectScreenState extends State<cashinbankSelectScreen> {
                               width: 353 * fem,
                               height: 55 * fem,
                               decoration: BoxDecoration(
-                                color: Color(0xff259ded),
+                                color: const Color(0xff259ded),
                                 borderRadius: BorderRadius.circular(100 * fem),
                                 boxShadow: [
                                   BoxShadow(
-                                    color: Color(0x3f000000),
+                                    color: const Color(0x3f000000),
                                     offset: Offset(0 * fem, 4 * fem),
                                     blurRadius: 2 * fem,
                                   ),
@@ -262,7 +330,7 @@ class _cashinbankSelectScreenState extends State<cashinbankSelectScreen> {
                                         fontSize: 24 * ffem,
                                         fontWeight: FontWeight.w500,
                                         height: 1.2175 * ffem / fem,
-                                        color: Color(0xffffffff),
+                                        color: const Color(0xffffffff),
                                       ),
                                     ),
                                   ),
@@ -283,7 +351,7 @@ class _cashinbankSelectScreenState extends State<cashinbankSelectScreen> {
                             ),
                           ),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 330,
                         )
                       ],
