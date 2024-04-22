@@ -265,6 +265,9 @@ class _cashinBankScreenState extends ConsumerState<cashinBankScreen> {
                                                                 .first
                                                                 .paymentCategoryName
                                                                 .toString(),
+                                                        aggregatorGivenCode: e
+                                                            .aggregatorGivenCode
+                                                            .toString(),
                                                       ),
                                                     ),
                                                   )

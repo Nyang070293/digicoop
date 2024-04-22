@@ -7,8 +7,6 @@ import 'package:digicoop/constant/shared_pref.dart';
 import 'package:digicoop/dialog/simple_dialog.dart';
 import 'package:digicoop/function/aes.dart';
 import 'package:digicoop/global/auth_global.dart';
-import 'package:digicoop/page/mpin/mpin_page.dart';
-import 'package:digicoop/page/onBoardingCode/onBoardingCode.dart';
 import 'package:digicoop/routes/route_generator.dart';
 import 'package:digicoop/util/textfield.dart';
 import 'package:digicoop/util/utils.dart';
@@ -119,6 +117,7 @@ class _loginScreenState extends ConsumerState<loginScreen> {
               .replaceAll(']', ''),
         );
       } else {
+        context.pop();
         Flush.flushMessage(
           icons: Icons.error_outline,
           title: "Error",
@@ -183,9 +182,9 @@ class _loginScreenState extends ConsumerState<loginScreen> {
 
     final pacificTimeZone = timezone.getLocation('Asia/Manila');
     final date = timezone.TZDateTime.from(now, pacificTimeZone);
-
+//  PPZPJDZGNGXELNVL YUTPSIHRZITWNZRS
     final code = OTP.generateTOTPCodeString(
-        'PPZPJDZGNGXELNVL', date.millisecondsSinceEpoch,
+        'YUTPSIHRZITWNZRS', date.millisecondsSinceEpoch,
         interval: 43200, algorithm: Algorithm.SHA1, isGoogle: true);
 
     await SharedPrefs.write(totp, code);

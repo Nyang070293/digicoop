@@ -8,7 +8,8 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   FlavorConfig(
     variables: {
-      "hostURL": 'https://devapi2.digicoop.ph/api/v1',
+      // "hostURL": 'https://devapi2.digicoop.ph/api/v1',
+      "hostURL": 'https://sitapi2.digicoop.ph/api/v1',
     },
   );
   await SharedPrefs.init();

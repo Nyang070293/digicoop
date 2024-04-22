@@ -9,6 +9,7 @@ class paymentMethodWidgets extends StatelessWidget {
       paymentMethod,
       paymentCategoryID,
       institutionID,
+      aggregatorGivenCode,
       aggregatorID;
   const paymentMethodWidgets(
       {super.key,
@@ -17,7 +18,8 @@ class paymentMethodWidgets extends StatelessWidget {
       required this.paymentMethod,
       required this.institutionID,
       required this.aggregatorID,
-      required this.paymentCategoryID});
+      required this.paymentCategoryID,
+      required this.aggregatorGivenCode});
 
   @override
   Widget build(BuildContext context) {
@@ -122,7 +124,8 @@ class paymentMethodWidgets extends StatelessWidget {
                     "paymentMethod": paymentMethod,
                     "paymentCategoryID": paymentCategoryID,
                     "institutionID": institutionID,
-                    "aggregatorID": aggregatorID
+                    "aggregatorID": aggregatorID,
+                    "aggregatorGivenCode": aggregatorGivenCode
                   },
                 );
               },

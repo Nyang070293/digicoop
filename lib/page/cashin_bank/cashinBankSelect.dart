@@ -19,7 +19,8 @@ class cashinbankSelectScreen extends ConsumerStatefulWidget {
       paymentMethod,
       paymentCategoryID,
       institutionID,
-      aggregatorID;
+      aggregatorID,
+      aggregatorGivenCode;
   const cashinbankSelectScreen(
       {super.key,
       required this.img,
@@ -27,7 +28,8 @@ class cashinbankSelectScreen extends ConsumerStatefulWidget {
       required this.paymentMethod,
       required this.paymentCategoryID,
       required this.institutionID,
-      required this.aggregatorID});
+      required this.aggregatorID,
+      required this.aggregatorGivenCode});
 
   @override
   ConsumerState<cashinbankSelectScreen> createState() =>
@@ -46,7 +48,7 @@ class _cashinbankSelectScreenState
     try {
       //print("personCode1 ${SharedPrefs.read(personCode)}");
       final data =
-          '{ "tenderId": 1, "transactionDetails": [{ "paymentMethod": "${widget.paymentMethod}", "amount": $amount,"description": "Topup Transaction", "email": "${SharedPrefs.read(emailAdd)}", "firstName": "${SharedPrefs.read(firstname)}", "lastName": "${SharedPrefs.read(lastname)}", "paymentCategoryID": ${widget.paymentCategoryID}, "institutionID": ${widget.institutionID}, "aggregatorID": ${widget.aggregatorID} }]}';
+          '{ "tenderId": 1, "transactionDetails": [{ "paymentMethod": "${widget.aggregatorGivenCode}", "amount": $amount,"description": "Topup Transaction", "email": "${SharedPrefs.read(emailAdd)}", "firstName": "${SharedPrefs.read(firstname)}", "lastName": "${SharedPrefs.read(lastname)}", "paymentCategoryID": ${widget.paymentCategoryID}, "institutionID": ${widget.institutionID}, "aggregatorID": ${widget.aggregatorID} }]}';
 
       final encryptedBody = Aes256.encrypt(data, SharedPrefs.read(totp));
       print("encryptedBody cash in bank $encryptedBody");

@@ -327,7 +327,7 @@ final goRouter = Provider<GoRouter>((ref) {
       GoRoute(
         name: cashinbankSelect,
         path:
-            "/$cashinbankSelect/:img/:name/:aggregatorID/:institutionID/:paymentCategoryID/:paymentMethod",
+            "/$cashinbankSelect/:img/:name/:aggregatorID/:institutionID/:paymentCategoryID/:paymentMethod/:aggregatorGivenCode",
         builder: (context, state) {
           return cashinbankSelectScreen(
             key: state.pageKey,
@@ -337,6 +337,8 @@ final goRouter = Provider<GoRouter>((ref) {
             institutionID: state.pathParameters["institutionID"] ?? "",
             paymentCategoryID: state.pathParameters["paymentCategoryID"] ?? "",
             paymentMethod: state.pathParameters["paymentMethod"] ?? "",
+            aggregatorGivenCode:
+                state.pathParameters["aggregatorGivenCode"] ?? "",
           );
         },
       ),
