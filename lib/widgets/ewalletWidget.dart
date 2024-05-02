@@ -10,7 +10,8 @@ class ewalletWidgets extends StatelessWidget {
       paymentCategoryID,
       institutionID,
       aggregatorID,
-      feeAmount;
+      feeAmount,
+      aggregatorGivenCode;
 
   const ewalletWidgets(
       {super.key,
@@ -20,7 +21,8 @@ class ewalletWidgets extends StatelessWidget {
       required this.institutionID,
       required this.aggregatorID,
       required this.paymentCategoryID,
-      required this.feeAmount});
+      required this.feeAmount,
+      required this.aggregatorGivenCode});
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +40,8 @@ class ewalletWidgets extends StatelessWidget {
             "paymentCategoryID": paymentCategoryID,
             "institutionID": institutionID,
             "aggregatorID": aggregatorID,
-            "feeAmount": feeAmount
+            "feeAmount": feeAmount,
+            "aggregatorGivenCode": aggregatorGivenCode
           },
         );
       },

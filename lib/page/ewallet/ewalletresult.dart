@@ -1,16 +1,20 @@
-import 'package:digicoop/model/cashinresultModel.dart';
+import 'package:digicoop/constant/keys.dart';
+import 'package:digicoop/constant/shared_pref.dart';
+import 'package:digicoop/model/ewalletresultModel.dart';
+import 'package:digicoop/routes/route_generator.dart';
 import 'package:digicoop/util/utils.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
-class cashresultScreen extends StatefulWidget {
+class ewalletresultScreen extends StatefulWidget {
   final String index;
-  const cashresultScreen({super.key, required this.index});
+  const ewalletresultScreen({super.key, required this.index});
 
   @override
-  State<cashresultScreen> createState() => _cashresultScreenState();
+  State<ewalletresultScreen> createState() => _ewalletresultScreenState();
 }
 
-class _cashresultScreenState extends State<cashresultScreen> {
+class _ewalletresultScreenState extends State<ewalletresultScreen> {
   @override
   void initState() {
     super.initState();
@@ -37,7 +41,7 @@ class _cashresultScreenState extends State<cashresultScreen> {
                   height: 70,
                 ),
                 Text(
-                  cashinresult[int.parse(widget.index)].title,
+                  ewalletresultSTR[int.parse(widget.index)].title,
                   style: SafeGoogleFont(
                     'Montserrat',
                     fontSize: 32 * ffem,
@@ -46,12 +50,12 @@ class _cashresultScreenState extends State<cashresultScreen> {
                     color: const Color(0xff3f3f3f),
                   ),
                 ),
-                cashinresult[int.parse(widget.index)].subtitle == null
+                ewalletresultSTR[int.parse(widget.index)].subtitle == null
                     ? const SizedBox()
                     : Padding(
                         padding: const EdgeInsets.only(bottom: 25),
                         child: Text(
-                          cashinresult[int.parse(widget.index)]
+                          ewalletresultSTR[int.parse(widget.index)]
                               .subtitle
                               .toString(),
                           style: SafeGoogleFont(
@@ -63,7 +67,7 @@ class _cashresultScreenState extends State<cashresultScreen> {
                           ),
                         ),
                       ),
-                cashinresult[int.parse(widget.index)].subtitle == null
+                ewalletresultSTR[int.parse(widget.index)].subtitle == null
                     ? const SizedBox(
                         height: 60,
                       )
@@ -71,7 +75,7 @@ class _cashresultScreenState extends State<cashresultScreen> {
                         height: 5,
                       ),
                 Image.asset(
-                  cashinresult[int.parse(widget.index)].image,
+                  ewalletresultSTR[int.parse(widget.index)].image,
                   fit: BoxFit.fill,
                 ),
                 const SizedBox(height: 70),
@@ -85,7 +89,7 @@ class _cashresultScreenState extends State<cashresultScreen> {
                             color: Colors.black, fontSize: 20.0),
                         children: <TextSpan>[
                           TextSpan(
-                            text: cashinresult[int.parse(widget.index)]
+                            text: ewalletresultSTR[int.parse(widget.index)]
                                 .discription,
                             style: SafeGoogleFont(
                               'Montserrat',
@@ -96,8 +100,8 @@ class _cashresultScreenState extends State<cashresultScreen> {
                             ),
                           ),
                           TextSpan(
-                            text:
-                                cashinresult[int.parse(widget.index)].colorDesc,
+                            text: ewalletresultSTR[int.parse(widget.index)]
+                                .colorDesc,
                             style: SafeGoogleFont(
                               'Montserrat',
                               fontSize: 16 * ffem,
@@ -107,8 +111,8 @@ class _cashresultScreenState extends State<cashresultScreen> {
                             ),
                           ),
                           TextSpan(
-                            text: cashinresult[int.parse(widget.index)]
-                                .continueDesc,
+                            text: ewalletresultSTR[int.parse(widget.index)]
+                                .continueDesc1,
                             style: SafeGoogleFont(
                               'Montserrat',
                               fontSize: 16 * ffem,
@@ -117,20 +121,86 @@ class _cashresultScreenState extends State<cashresultScreen> {
                               color: const Color(0xff828282),
                             ),
                           ),
+                          TextSpan(
+                            text: ewalletresultSTR[int.parse(widget.index)]
+                                .colorDesc1,
+                            style: SafeGoogleFont(
+                              'Montserrat',
+                              fontSize: 16 * ffem,
+                              fontWeight: FontWeight.bold,
+                              height: 1.3318751199 * ffem / fem,
+                              color: Color.fromARGB(255, 5, 5, 5),
+                            ),
+                          ),
+                          SharedPrefs.read(ewalletName) == "GCASH"
+                              ? TextSpan(
+                                  text:
+                                      ewalletresultSTR[int.parse(widget.index)]
+                                          .continueDesc2,
+                                  style: SafeGoogleFont(
+                                    'Montserrat',
+                                    fontSize: 16 * ffem,
+                                    fontWeight: FontWeight.w400,
+                                    height: 1.3318751199 * ffem / fem,
+                                    color: const Color(0xff828282),
+                                  ),
+                                )
+                              : TextSpan(
+                                  text:
+                                      ewalletresultSTR[int.parse(widget.index)]
+                                          .continueDesc,
+                                  style: SafeGoogleFont(
+                                    'Montserrat',
+                                    fontSize: 16 * ffem,
+                                    fontWeight: FontWeight.w400,
+                                    height: 1.3318751199 * ffem / fem,
+                                    color: const Color(0xff828282),
+                                  ),
+                                ),
+                          SharedPrefs.read(ewalletName) == "GCASH"
+                              ? TextSpan(
+                                  text:
+                                      ewalletresultSTR[int.parse(widget.index)]
+                                          .colorDesc2,
+                                  style: SafeGoogleFont(
+                                    'Montserrat',
+                                    fontSize: 16 * ffem,
+                                    fontWeight: FontWeight.bold,
+                                    height: 1.3318751199 * ffem / fem,
+                                    color: Color.fromARGB(255, 5, 5, 5),
+                                  ),
+                                )
+                              : const TextSpan(),
+                          SharedPrefs.read(ewalletName) == "GCASH"
+                              ? TextSpan(
+                                  text:
+                                      ewalletresultSTR[int.parse(widget.index)]
+                                          .continueDesc,
+                                  style: SafeGoogleFont(
+                                    'Montserrat',
+                                    fontSize: 16 * ffem,
+                                    fontWeight: FontWeight.w400,
+                                    height: 1.3318751199 * ffem / fem,
+                                    color: const Color(0xff828282),
+                                  ),
+                                )
+                              : const TextSpan(),
                         ],
                       ),
                     ),
                   ),
                 ),
-                SizedBox(
-                  height: 150,
+                const SizedBox(
+                  height: 120,
                 ),
                 Container(
                   // group410HZ1 (75:708)
                   margin:
                       EdgeInsets.fromLTRB(2 * fem, 0 * fem, 0 * fem, 0 * fem),
                   child: TextButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      context.pushReplacementNamed(dashboard);
+                    },
                     style: TextButton.styleFrom(
                       padding: EdgeInsets.zero,
                     ),
@@ -157,7 +227,7 @@ class _cashresultScreenState extends State<cashresultScreen> {
                             margin: EdgeInsets.fromLTRB(
                                 0 * fem, 0 * fem, 75.67 * fem, 0 * fem),
                             child: Text(
-                              cashinresult[int.parse(widget.index)].button,
+                              ewalletresultSTR[int.parse(widget.index)].button,
                               textAlign: TextAlign.center,
                               style: SafeGoogleFont(
                                 'Montserrat',

@@ -7,9 +7,11 @@ const String refreshToken = "refreshToken",
     countCompleteTrip = "countCompleteTrip",
     MobileNum = "MobileNum",
     personCode = "personCode",
+    otpIdentifier = "otpIdentifier",
     userCode = "userCode",
     accessToken = "accessToken",
-    emailAdd = "emailAdd";
+    emailAdd = "emailAdd",
+    otp = "otp";
 
 const String firstname = "firstname",
     lastname = "lastname",
@@ -28,7 +30,9 @@ const String firstname = "firstname",
     zipCode = "zipCode",
     d_gender = "d_gender",
     d_cs = "d_cs",
-    fullName = "fullName";
+    fullName = "fullName",
+    cashinamount = "cashinamount",
+    ewalletName = "ewalletName";
 
 DateTime lastCheckedDate = DateTime(1970);
 

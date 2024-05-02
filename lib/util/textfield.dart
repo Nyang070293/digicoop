@@ -8,6 +8,7 @@ class CommonTextField extends StatefulWidget {
   final Function(String)? onChanged;
   final String? helperText;
   final String? labelText;
+  final int? maxLength;
   final int? maxLines;
   final bool hasError;
   final IconData? prefixIconData;
@@ -34,6 +35,7 @@ class CommonTextField extends StatefulWidget {
     this.textColor,
     this.maxLines = 1,
     this.accentColor,
+    this.maxLength,
   }) : super(key: key);
 
   @override
@@ -53,7 +55,7 @@ class _CommonTextFieldState extends State<CommonTextField> {
       onChanged: widget.onChanged,
       textInputAction: widget.textInputAction,
       maxLines: !_isObscure ? widget.maxLines : 1,
-
+      maxLength: widget.maxLength,
       style:
           TextStyle(color: widget.textColor ?? Colors.black), // Set text color
       decoration: InputDecoration(

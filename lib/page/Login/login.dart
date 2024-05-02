@@ -333,15 +333,20 @@ class _loginScreenState extends ConsumerState<loginScreen> {
                           // loginviampinnAj (97:6896)
                           margin: EdgeInsets.fromLTRB(
                               35 * fem, 0 * fem, 0 * fem, 0 * fem),
-                          child: Text(
-                            // forgotpasswordoLj (41:6741)
-                            'Forgot Password?',
-                            style: SafeGoogleFont(
-                              'Montserrat',
-                              fontSize: 16 * ffem,
-                              fontWeight: FontWeight.w500,
-                              height: 1.2175 * ffem / fem,
-                              color: const Color(0xff8fd4ff),
+                          child: InkWell(
+                            onTap: () {
+                              context.pushReplacementNamed(forgotPW);
+                            },
+                            child: Text(
+                              // forgotpasswordoLj (41:6741)
+                              'Forgot Password?',
+                              style: SafeGoogleFont(
+                                'Montserrat',
+                                fontSize: 16 * ffem,
+                                fontWeight: FontWeight.w500,
+                                height: 1.2175 * ffem / fem,
+                                color: const Color(0xff8fd4ff),
+                              ),
                             ),
                           ),
                         ),

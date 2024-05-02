@@ -20,5 +20,8 @@ class DigiCoopAPI {
       updatePIN = "$baseUrl/auth/update-pincode",
       getWallet = "$baseUrl/users/get-wallet",
       getPaymentMethod = "$baseUrl/transactions/payment-categories/",
-      cashinBankAPI = "$baseUrl/transactions/funds/cash-in/v2";
+      cashinBankAPI = "$baseUrl/transactions/funds/cash-in/v2",
+      cashinGCASH = "$baseUrl/transactions/funds/cash-in/gcash",
+      ValidateOTP = "$baseUrl/otp/validate",
+      updatepasswordIdentify = "$baseUrl/auth/update-password/identifier";
 }

@@ -36,7 +36,14 @@ import 'package:digicoop/page/dashboard/dashboard.dart';
 import 'package:digicoop/page/drawer/drawer.dart';
 import 'package:digicoop/page/ewallet/ewalletconfirm.dart';
 import 'package:digicoop/page/ewallet/ewalletmain.dart';
+import 'package:digicoop/page/ewallet/ewalletresult.dart';
 import 'package:digicoop/page/ewallet/ewalletselect.dart';
+import 'package:digicoop/page/ewallet/loadingEwallet.dart';
+import 'package:digicoop/page/forgotpassword/fpw_changepw.dart';
+import 'package:digicoop/page/forgotpassword/loadingfpw.dart';
+import 'package:digicoop/page/forgotpassword/mobile.dart';
+import 'package:digicoop/page/forgotpassword/otpCode.dart';
+import 'package:digicoop/page/forgotpassword/successfpw.dart';
 import 'package:digicoop/page/loading/loading.dart';
 import 'package:digicoop/page/mpin/mpin.dart';
 import 'package:digicoop/page/onBoarding/splashscreen.dart';
@@ -71,6 +78,7 @@ const String splashscreen = "SplashScreen",
     cashinotcselect = "cashinotcselect",
     ewalletmain = "ewalletmain",
     cashresult = "cashresult",
+    ewalletresult = "ewalletresult",
     ewalletselect = "ewalletselect",
     mycooperatives = "mycooperatives",
     cooperatives = "cooperatives",
@@ -91,8 +99,15 @@ const String splashscreen = "SplashScreen",
     loadingChangePIN = "loadingChangePIN",
     changePINSuccess = "changePINSuccess",
     loginMPIN = "loginMPIN",
+    forgotPW = "forgotPW",
     onBoardingCode = "onBoardingCode",
-    ewalletconfirm = "ewalletconfirm";
+    ewalletconfirm = "ewalletconfirm",
+    loadingEwallet = "loadingEwallet",
+    otpCode = "otpCode",
+    changeFPW = "changeFPW",
+    successFPW = "successFPW",
+    loadingFPW = "loadingFPW",
+    mobile = "mobile";
 
 // Route
 
@@ -113,6 +128,46 @@ final goRouter = Provider<GoRouter>((ref) {
           return const SplashScreen();
         },
       ),
+
+      GoRoute(
+        name: mobile,
+        path: "/$mobile",
+        builder: (context, state) {
+          return const mobileScreen();
+        },
+      ),
+      GoRoute(
+        name: otpCode,
+        path: "/$otpCode",
+        builder: (context, state) {
+          return const otpCodeScreen();
+        },
+      ),
+      GoRoute(
+        name: successFPW,
+        path: "/$successFPW",
+        builder: (context, state) {
+          return const ChangeFPWSuccessScreen();
+        },
+      ),
+      //fpw_changePasswordScreen
+      GoRoute(
+        name: changeFPW,
+        path: "/$changeFPW",
+        builder: (context, state) {
+          return const fpw_changePasswordScreen();
+        },
+      ),
+      GoRoute(
+        name: loadingFPW,
+        path: "/$loadingFPW/:otpCode",
+        builder: (context, state) {
+          return loadingFPWScreen(
+            key: state.pageKey,
+            otpCode: state.pathParameters["otpCode"] ?? "0",
+          );
+        },
+      ),
       GoRoute(
         name: cashinBank,
         path: "/$cashinBank/:categoryId",
@@ -123,7 +178,13 @@ final goRouter = Provider<GoRouter>((ref) {
           );
         },
       ),
-
+      GoRoute(
+        name: forgotPW,
+        path: "/$forgotPW",
+        builder: (context, state) {
+          return const mobileScreen();
+        },
+      ),
       GoRoute(
         name: onBoardingCode,
         path: "/$onBoardingCode",
@@ -183,7 +244,7 @@ final goRouter = Provider<GoRouter>((ref) {
       GoRoute(
         name: ewalletselect,
         path:
-            "/$ewalletselect/:img/:name/:aggregatorID/:institutionID/:paymentCategoryID/:paymentMethod/:feeAmount",
+            "/$ewalletselect/:img/:name/:aggregatorID/:institutionID/:paymentCategoryID/:paymentMethod/:feeAmount/:aggregatorGivenCode",
         builder: (context, state) {
           return ewalletselectScreen(
             key: state.pageKey,
@@ -194,6 +255,8 @@ final goRouter = Provider<GoRouter>((ref) {
             paymentCategoryID: state.pathParameters["paymentCategoryID"] ?? "",
             paymentMethod: state.pathParameters["paymentMethod"] ?? "",
             feeAmount: state.pathParameters["feeAmount"] ?? "",
+            aggregatorGivenCode:
+                state.pathParameters["aggregatorGivenCode"] ?? "",
           );
         },
       ),
@@ -201,7 +264,7 @@ final goRouter = Provider<GoRouter>((ref) {
       GoRoute(
         name: ewalletconfirm,
         path:
-            "/$ewalletconfirm/:img/:name/:aggregatorID/:institutionID/:paymentCategoryID/:paymentMethod/:sf/:mobile/:amount",
+            "/$ewalletconfirm/:img/:name/:aggregatorID/:institutionID/:paymentCategoryID/:paymentMethod/:sf/:mobile/:amount/:aggregatorGivenCode",
         builder: (context, state) {
           return ewalletconfirmScreen(
             key: state.pageKey,
@@ -212,8 +275,10 @@ final goRouter = Provider<GoRouter>((ref) {
             paymentCategoryID: state.pathParameters["paymentCategoryID"] ?? "",
             paymentMethod: state.pathParameters["paymentMethod"] ?? "",
             sf: state.pathParameters["sf"] ?? "",
-            mobile: state.pathParameters["mobile"] ?? "",
+            mobile: state.pathParameters["mobile"] ?? " ",
             amount: state.pathParameters["amount"] ?? "",
+            aggregatorGivenCode:
+                state.pathParameters["aggregatorGivenCode"] ?? "",
           );
         },
       ),
@@ -343,6 +408,26 @@ final goRouter = Provider<GoRouter>((ref) {
         },
       ),
       GoRoute(
+        name: loadingEwallet,
+        path:
+            "/$loadingEwallet/:name/:aggregatorID/:institutionID/:paymentCategoryID/:paymentMethod/:sf/:mobile/:amount/:aggregatorGivenCode",
+        builder: (context, state) {
+          return loadingEwalletScreen(
+            key: state.pageKey,
+            name: state.pathParameters["name"] ?? "",
+            aggregatorID: state.pathParameters["aggregatorID"] ?? "",
+            institutionID: state.pathParameters["institutionID"] ?? "",
+            paymentCategoryID: state.pathParameters["paymentCategoryID"] ?? "",
+            paymentMethod: state.pathParameters["paymentMethod"] ?? "",
+            sf: state.pathParameters["sf"] ?? "",
+            mobile: state.pathParameters["mobile"] ?? "",
+            amount: state.pathParameters["amount"] ?? "",
+            aggregatorGivenCode:
+                state.pathParameters["aggregatorGivenCode"] ?? "",
+          );
+        },
+      ),
+      GoRoute(
         name: coopMember,
         path: "/$coopMember",
         builder: (context, state) {
@@ -355,6 +440,16 @@ final goRouter = Provider<GoRouter>((ref) {
         path: "/$cashresult/:index",
         builder: (context, state) {
           return cashresultScreen(
+            key: state.pageKey,
+            index: state.pathParameters["index"] ?? "0",
+          );
+        },
+      ),
+      GoRoute(
+        name: ewalletresult,
+        path: "/$ewalletresult/:index",
+        builder: (context, state) {
+          return ewalletresultScreen(
             key: state.pageKey,
             index: state.pathParameters["index"] ?? "0",
           );

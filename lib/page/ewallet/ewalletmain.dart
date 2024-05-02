@@ -1,4 +1,3 @@
-import 'dart:async';
 
 import 'package:digicoop/global/paymentMethodGlobal.dart';
 import 'package:digicoop/routes/route_generator.dart';
@@ -24,9 +23,9 @@ class _ewalletScreenState extends ConsumerState<ewalletScreen> {
   void initState() {
     //set the initial value of text field
     ref.read(paymentMethodGlobal.notifier).getPaymentMethod("3");
-    Timer.periodic(const Duration(seconds: 30), (timer) {
-      ref.read(paymentMethodGlobal.notifier).getPaymentMethod("3");
-    });
+    // Timer.periodic(const Duration(seconds: 30), (timer) {
+    //   ref.read(paymentMethodGlobal.notifier).getPaymentMethod("3");
+    // });
     super.initState();
   }
 
@@ -245,6 +244,9 @@ class _ewalletScreenState extends ConsumerState<ewalletScreen> {
                                                             e.logo.toString(),
                                                         aggregatorID: e
                                                             .aggregatorID
+                                                            .toString(),
+                                                        aggregatorGivenCode: e
+                                                            .aggregatorGivenCode
                                                             .toString(),
                                                         institutionID: e
                                                             .institutionID

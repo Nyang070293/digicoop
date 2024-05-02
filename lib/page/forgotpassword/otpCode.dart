@@ -6,7 +6,6 @@ import 'package:digicoop/api/api_strings.dart';
 import 'package:digicoop/constant/flush_bar.dart';
 import 'package:digicoop/constant/keys.dart';
 import 'package:digicoop/constant/shared_pref.dart';
-import 'package:digicoop/page/Signup/setupMobilepin.dart';
 import 'package:digicoop/routes/route_generator.dart';
 import 'package:digicoop/util/utils.dart';
 import 'package:flutter/material.dart';
@@ -15,16 +14,14 @@ import 'package:go_router/go_router.dart';
 import 'package:pinput/pinput.dart';
 import 'package:http/http.dart' as http;
 
-class verificationCodeScreen extends ConsumerStatefulWidget {
-  const verificationCodeScreen({super.key});
+class otpCodeScreen extends ConsumerStatefulWidget {
+  const otpCodeScreen({super.key});
 
   @override
-  ConsumerState<verificationCodeScreen> createState() =>
-      _verificationCodeScreenState();
+  ConsumerState<otpCodeScreen> createState() => _otpCodeScreenState();
 }
 
-class _verificationCodeScreenState
-    extends ConsumerState<verificationCodeScreen> {
+class _otpCodeScreenState extends ConsumerState<otpCodeScreen> {
   int _start = 60;
   late Timer _timer;
 
@@ -51,14 +48,14 @@ class _verificationCodeScreenState
 
   Future<void> sendData(String otp) async {
     try {
-      print("personCode1 ${SharedPrefs.read(personCode)}");
+      // print("personCode1 ${SharedPrefs.read(personCode)}");
       final data =
-          '{"applicationId": 2,  "personCode": "${SharedPrefs.read(personCode)}",  "otpCode": "$otp"}';
+          '{"otpUsageType":1, "applicationId": 2,  "personCode": "${SharedPrefs.read(personCode)}",  "otpCode": "$otp"}';
 
       final encryptedBody = Aes256.encrypt(data, SharedPrefs.read(totp));
-      print("encryptedBody $encryptedBody");
+      print("encryptedBodys otp $encryptedBody");
       http.Response response = await http.post(
-        Uri.parse(DigiCoopAPI.validate),
+        Uri.parse(DigiCoopAPI.ValidateOTP),
         body: {'data': encryptedBody},
       );
       // Parse the JSON response body
@@ -68,10 +65,12 @@ class _verificationCodeScreenState
 
       final decrypt = Aes256.decrypt(encryptData, SharedPrefs.read(totp));
       Map<String, dynamic> jsonData = jsonDecode(decrypt!);
-      print("verify ${jsonData}");
-      // Handle response
-      if (response.statusCode == 201) {
-        context.pushNamed(mpin);
+      print("verify otp fpw ${jsonData}");
+      // Handle response otpIdentifier otp
+      if (response.statusCode == 201 || response.statusCode == 200) {
+        SharedPrefs.write(otpIdentifier, jsonData['data']['otpIdentifier']);
+        SharedPrefs.write(otp, otp);
+        context.pushReplacementNamed(changeFPW);
       } else {
         Flush.flushMessage(
           icons: Icons.error_outline,
@@ -123,7 +122,7 @@ class _verificationCodeScreenState
                 children: [
                   GestureDetector(
                     onTap: () {
-                      context.pushNamed(signup);
+                      context.pushReplacementNamed(mobile);
                     },
                     child: Container(
                       // arrow1qLs (33:2006)
@@ -143,7 +142,7 @@ class _verificationCodeScreenState
                     margin: EdgeInsets.fromLTRB(
                         0 * fem, 0 * fem, 143 * fem, 15 * fem),
                     child: Text(
-                      'Verification Code',
+                      'OTP',
                       style: SafeGoogleFont(
                         'Montserrat',
                         fontSize: 24 * ffem,

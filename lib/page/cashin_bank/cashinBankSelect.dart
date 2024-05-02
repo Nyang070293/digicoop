@@ -38,6 +38,30 @@ class cashinbankSelectScreen extends ConsumerStatefulWidget {
 
 class _cashinbankSelectScreenState
     extends ConsumerState<cashinbankSelectScreen> {
+  void showLoadingDialog() {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return const AlertDialog(
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              CircularProgressIndicator(),
+              SizedBox(height: 16),
+              Text(
+                "Please Wait...",
+                style: TextStyle(
+                  fontFamily: 'Poppins',
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
   Future<void> sendData(String amount) async {
     Map<String, String> headers = {
       // Define content-type as JSON
@@ -73,7 +97,7 @@ class _cashinbankSelectScreenState
         // Extract transactionStatusID
         int transactionStatusID = jsonData['data']['transactionOutput'][0]
             ['transactionDetails'][0]['transactionStatusID'];
-
+        await SharedPrefs.write(cashinamount, amount);
         context.pushReplacementNamed(
           cashresult,
           pathParameters: {
@@ -296,6 +320,7 @@ class _cashinbankSelectScreenState
                                 );
                                 return;
                               }
+                              showLoadingDialog();
                               sendData(_amount.text);
                             },
                             style: TextButton.styleFrom(

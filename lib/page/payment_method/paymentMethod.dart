@@ -27,7 +27,7 @@ class _paymentMethodScreenState extends ConsumerState<paymentMethodScreen> {
 
   Future<void> sendData() async {
     //int gender = 0;
-    String PM = _selectedPM == "Bank Deposit ATM " ? "1" : "2";
+    String PM = _selectedPM == "Bank Deposit ATM" ? "1" : "2";
     context.pushNamed(
       cashinBank,
       pathParameters: {

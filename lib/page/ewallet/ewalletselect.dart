@@ -1,4 +1,6 @@
 import 'package:digicoop/constant/flush_bar.dart';
+import 'package:digicoop/constant/keys.dart';
+import 'package:digicoop/constant/shared_pref.dart';
 import 'package:digicoop/routes/route_generator.dart';
 import 'package:digicoop/util/textfield.dart';
 import 'package:digicoop/util/utils.dart';
@@ -12,7 +14,8 @@ class ewalletselectScreen extends StatefulWidget {
       paymentCategoryID,
       institutionID,
       aggregatorID,
-      feeAmount;
+      feeAmount,
+      aggregatorGivenCode;
 
   const ewalletselectScreen(
       {super.key,
@@ -22,7 +25,8 @@ class ewalletselectScreen extends StatefulWidget {
       required this.paymentCategoryID,
       required this.institutionID,
       required this.aggregatorID,
-      required this.feeAmount});
+      required this.feeAmount,
+      required this.aggregatorGivenCode});
 
   @override
   State<ewalletselectScreen> createState() => _ewalletselectScreenState();
@@ -40,6 +44,8 @@ class _ewalletselectScreenState extends State<ewalletselectScreen> {
     //   amount,
     //   sf,
     //   totalAmount;
+    await SharedPrefs.write(ewalletName, widget.name.toString());
+
     context.pushReplacementNamed(
       ewalletconfirm,
       pathParameters: {
@@ -49,7 +55,8 @@ class _ewalletselectScreenState extends State<ewalletselectScreen> {
         "paymentCategoryID": widget.paymentCategoryID.toString(),
         "institutionID": widget.institutionID.toString(),
         "aggregatorID": widget.aggregatorID.toString(),
-        "mobile": number,
+        "aggregatorGivenCode": widget.aggregatorGivenCode.toString(),
+        "mobile": number == "" ? " " : number,
         "amount": amount,
         "sf": widget.feeAmount.toString()
       },

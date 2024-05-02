@@ -1,8 +1,16 @@
+import 'dart:convert';
+
+import 'package:digicoop/Function/aes.dart';
+import 'package:digicoop/api/api_strings.dart';
+import 'package:digicoop/constant/flush_bar.dart';
+import 'package:digicoop/constant/keys.dart';
+import 'package:digicoop/constant/shared_pref.dart';
 import 'package:digicoop/routes/route_generator.dart';
 import 'package:digicoop/util/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
+import 'package:http/http.dart' as http;
 
 class ewalletconfirmScreen extends StatefulWidget {
   final String img,
@@ -13,7 +21,8 @@ class ewalletconfirmScreen extends StatefulWidget {
       aggregatorID,
       mobile,
       amount,
-      sf;
+      sf,
+      aggregatorGivenCode;
 
   const ewalletconfirmScreen(
       {super.key,
@@ -25,7 +34,8 @@ class ewalletconfirmScreen extends StatefulWidget {
       required this.aggregatorID,
       required this.mobile,
       required this.amount,
-      required this.sf});
+      required this.sf,
+      required this.aggregatorGivenCode});
   @override
   State<ewalletconfirmScreen> createState() => _ewalletconfirmScreenState();
 }
@@ -78,7 +88,7 @@ class _ewalletconfirmScreenState extends State<ewalletconfirmScreen> {
                     children: [
                       GestureDetector(
                         onTap: () {
-                          context.pushReplacementNamed(ewalletselect);
+                          context.pushReplacementNamed(ewalletmain);
                         },
                         child: Container(
                           // arrow1y5h (75:714)
@@ -129,7 +139,7 @@ class _ewalletconfirmScreenState extends State<ewalletconfirmScreen> {
                               fontSize: 18 * ffem,
                               fontWeight: FontWeight.w500,
                               height: 1.2175 * ffem / fem,
-                              color: Color(0xff333333),
+                              color: const Color(0xff333333),
                             ),
                           ),
                         ),
@@ -144,7 +154,7 @@ class _ewalletconfirmScreenState extends State<ewalletconfirmScreen> {
                               fontSize: 14 * ffem,
                               fontWeight: FontWeight.w400,
                               height: 1.3318751199 * ffem / fem,
-                              color: Color(0xff828282),
+                              color: const Color(0xff828282),
                             ),
                           ),
                         ),
@@ -169,10 +179,10 @@ class _ewalletconfirmScreenState extends State<ewalletconfirmScreen> {
                                   width: double.infinity,
                                   height: double.infinity,
                                   decoration: BoxDecoration(
-                                    color: Color(0xff259ded),
+                                    color: const Color(0xff259ded),
                                     boxShadow: [
                                       BoxShadow(
-                                        color: Color(0x262e2e2e),
+                                        color: const Color(0x262e2e2e),
                                         offset: Offset(4 * fem, 9 * fem),
                                         blurRadius: 10 * fem,
                                       ),
@@ -199,7 +209,7 @@ class _ewalletconfirmScreenState extends State<ewalletconfirmScreen> {
                                               13.5 * fem),
                                           width: double.infinity,
                                           height: double.infinity,
-                                          decoration: BoxDecoration(
+                                          decoration: const BoxDecoration(
                                             image: DecorationImage(
                                               fit: BoxFit.cover,
                                               image: AssetImage(
@@ -214,7 +224,7 @@ class _ewalletconfirmScreenState extends State<ewalletconfirmScreen> {
                                         padding: EdgeInsets.fromLTRB(14 * fem,
                                             23 * fem, 17 * fem, 30 * fem),
                                         width: double.infinity,
-                                        decoration: BoxDecoration(
+                                        decoration: const BoxDecoration(
                                           color: Color(0xffffffff),
                                         ),
                                         child: Column(
@@ -226,7 +236,7 @@ class _ewalletconfirmScreenState extends State<ewalletconfirmScreen> {
                                               margin: EdgeInsets.fromLTRB(
                                                   1 * fem,
                                                   0 * fem,
-                                                  119 * fem,
+                                                  0 * fem,
                                                   23 * fem),
                                               width: double.infinity,
                                               child: Row(
@@ -238,7 +248,7 @@ class _ewalletconfirmScreenState extends State<ewalletconfirmScreen> {
                                                     margin: EdgeInsets.fromLTRB(
                                                         0 * fem,
                                                         1 * fem,
-                                                        75 * fem,
+                                                        0 * fem,
                                                         0 * fem),
                                                     child: Text(
                                                       'Service Provide',
@@ -249,10 +259,13 @@ class _ewalletconfirmScreenState extends State<ewalletconfirmScreen> {
                                                             FontWeight.w500,
                                                         height:
                                                             1.2175 * ffem / fem,
-                                                        color:
-                                                            Color(0xff828282),
+                                                        color: const Color(
+                                                            0xff828282),
                                                       ),
                                                     ),
+                                                  ),
+                                                  const SizedBox(
+                                                    width: 50,
                                                   ),
                                                   Text(
                                                     // gcashaCF (97:11423)
@@ -265,7 +278,8 @@ class _ewalletconfirmScreenState extends State<ewalletconfirmScreen> {
                                                           FontWeight.w500,
                                                       height:
                                                           1.2175 * ffem / fem,
-                                                      color: Color(0xff262626),
+                                                      color: const Color(
+                                                          0xff262626),
                                                     ),
                                                   ),
                                                 ],
@@ -276,7 +290,7 @@ class _ewalletconfirmScreenState extends State<ewalletconfirmScreen> {
                                               margin: EdgeInsets.fromLTRB(
                                                   1 * fem,
                                                   0 * fem,
-                                                  68 * fem,
+                                                  60 * fem,
                                                   18 * fem),
                                               width: double.infinity,
                                               child: Row(
@@ -288,7 +302,7 @@ class _ewalletconfirmScreenState extends State<ewalletconfirmScreen> {
                                                     margin: EdgeInsets.fromLTRB(
                                                         0 * fem,
                                                         0 * fem,
-                                                        72 * fem,
+                                                        0 * fem,
                                                         0 * fem),
                                                     child: Text(
                                                       'Mobile Number',
@@ -299,10 +313,13 @@ class _ewalletconfirmScreenState extends State<ewalletconfirmScreen> {
                                                             FontWeight.w500,
                                                         height:
                                                             1.2175 * ffem / fem,
-                                                        color:
-                                                            Color(0xff828282),
+                                                        color: const Color(
+                                                            0xff828282),
                                                       ),
                                                     ),
+                                                  ),
+                                                  const SizedBox(
+                                                    width: 50,
                                                   ),
                                                   Text(
                                                     // wS7 (97:11420)
@@ -315,7 +332,8 @@ class _ewalletconfirmScreenState extends State<ewalletconfirmScreen> {
                                                           FontWeight.w500,
                                                       height:
                                                           1.2175 * ffem / fem,
-                                                      color: Color(0xff262626),
+                                                      color: const Color(
+                                                          0xff262626),
                                                     ),
                                                   ),
                                                 ],
@@ -348,26 +366,21 @@ class _ewalletconfirmScreenState extends State<ewalletconfirmScreen> {
                                                 crossAxisAlignment:
                                                     CrossAxisAlignment.start,
                                                 children: [
-                                                  Container(
-                                                    // amountj75 (97:11425)
-                                                    margin: EdgeInsets.fromLTRB(
-                                                        0 * fem,
-                                                        0 * fem,
-                                                        116 * fem,
-                                                        0 * fem),
-                                                    child: Text(
-                                                      'Amount',
-                                                      style: SafeGoogleFont(
-                                                        'Montserrat',
-                                                        fontSize: 12 * ffem,
-                                                        fontWeight:
-                                                            FontWeight.w500,
-                                                        height:
-                                                            1.2175 * ffem / fem,
-                                                        color:
-                                                            Color(0xff828282),
-                                                      ),
+                                                  Text(
+                                                    'Amount',
+                                                    style: SafeGoogleFont(
+                                                      'Montserrat',
+                                                      fontSize: 12 * ffem,
+                                                      fontWeight:
+                                                          FontWeight.w500,
+                                                      height:
+                                                          1.2175 * ffem / fem,
+                                                      color: const Color(
+                                                          0xff828282),
                                                     ),
+                                                  ),
+                                                  const SizedBox(
+                                                    width: 90,
                                                   ),
                                                   Text(
                                                     // php10000FLK (97:11426)
@@ -380,7 +393,8 @@ class _ewalletconfirmScreenState extends State<ewalletconfirmScreen> {
                                                           FontWeight.w500,
                                                       height:
                                                           1.2175 * ffem / fem,
-                                                      color: Color(0xff262626),
+                                                      color: const Color(
+                                                          0xff262626),
                                                     ),
                                                   ),
                                                 ],
@@ -398,26 +412,21 @@ class _ewalletconfirmScreenState extends State<ewalletconfirmScreen> {
                                                 crossAxisAlignment:
                                                     CrossAxisAlignment.start,
                                                 children: [
-                                                  Container(
-                                                    // servicefeehy1 (97:11431)
-                                                    margin: EdgeInsets.fromLTRB(
-                                                        0 * fem,
-                                                        0 * fem,
-                                                        99 * fem,
-                                                        0 * fem),
-                                                    child: Text(
-                                                      'Service Fee',
-                                                      style: SafeGoogleFont(
-                                                        'Montserrat',
-                                                        fontSize: 12 * ffem,
-                                                        fontWeight:
-                                                            FontWeight.w500,
-                                                        height:
-                                                            1.2175 * ffem / fem,
-                                                        color:
-                                                            Color(0xff828282),
-                                                      ),
+                                                  Text(
+                                                    'Service Fee',
+                                                    style: SafeGoogleFont(
+                                                      'Montserrat',
+                                                      fontSize: 12 * ffem,
+                                                      fontWeight:
+                                                          FontWeight.w500,
+                                                      height:
+                                                          1.2175 * ffem / fem,
+                                                      color: const Color(
+                                                          0xff828282),
                                                     ),
+                                                  ),
+                                                  SizedBox(
+                                                    width: 70,
                                                   ),
                                                   Text(
                                                     // php200cq5 (97:11432)
@@ -430,7 +439,8 @@ class _ewalletconfirmScreenState extends State<ewalletconfirmScreen> {
                                                           FontWeight.w500,
                                                       height:
                                                           1.2175 * ffem / fem,
-                                                      color: Color(0xff262626),
+                                                      color: const Color(
+                                                          0xff262626),
                                                     ),
                                                   ),
                                                 ],
@@ -453,7 +463,7 @@ class _ewalletconfirmScreenState extends State<ewalletconfirmScreen> {
                                                     margin: EdgeInsets.fromLTRB(
                                                         0 * fem,
                                                         0 * fem,
-                                                        85 * fem,
+                                                        0 * fem,
                                                         0 * fem),
                                                     child: Text(
                                                       'Total Amount',
@@ -464,14 +474,17 @@ class _ewalletconfirmScreenState extends State<ewalletconfirmScreen> {
                                                             FontWeight.w500,
                                                         height:
                                                             1.2175 * ffem / fem,
-                                                        color:
-                                                            Color(0xff828282),
+                                                        color: const Color(
+                                                            0xff828282),
                                                       ),
                                                     ),
                                                   ),
+                                                  SizedBox(
+                                                    width: 55,
+                                                  ),
                                                   Text(
                                                     // php12000DZy (97:11429)
-                                                    'PHP ${total.toString()}',
+                                                    'PHP ${currencyFormat.format(total)}',
                                                     textAlign: TextAlign.right,
                                                     style: SafeGoogleFont(
                                                       'Montserrat',
@@ -480,7 +493,8 @@ class _ewalletconfirmScreenState extends State<ewalletconfirmScreen> {
                                                           FontWeight.w500,
                                                       height:
                                                           1.2175 * ffem / fem,
-                                                      color: Color(0xff262626),
+                                                      color: const Color(
+                                                          0xff262626),
                                                     ),
                                                   ),
                                                 ],
@@ -498,7 +512,28 @@ class _ewalletconfirmScreenState extends State<ewalletconfirmScreen> {
                                 margin: EdgeInsets.fromLTRB(
                                     6 * fem, 0 * fem, 5 * fem, 0 * fem),
                                 child: TextButton(
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    context.pushReplacementNamed(
+                                      loadingEwallet,
+                                      pathParameters: {
+                                        "name": widget.name.toString(),
+                                        "paymentMethod":
+                                            widget.paymentMethod.toString(),
+                                        "paymentCategoryID":
+                                            widget.paymentCategoryID.toString(),
+                                        "institutionID":
+                                            widget.institutionID.toString(),
+                                        "aggregatorID":
+                                            widget.aggregatorID.toString(),
+                                        "aggregatorGivenCode": widget
+                                            .aggregatorGivenCode
+                                            .toString(),
+                                        "mobile": widget.mobile.toString(),
+                                        "amount": widget.amount.toString(),
+                                        "sf": widget.sf.toString()
+                                      },
+                                    );
+                                  },
                                   style: TextButton.styleFrom(
                                     padding: EdgeInsets.zero,
                                   ),
@@ -507,12 +542,12 @@ class _ewalletconfirmScreenState extends State<ewalletconfirmScreen> {
                                         12 * fem, 23.67 * fem, 13 * fem),
                                     width: double.infinity,
                                     decoration: BoxDecoration(
-                                      color: Color(0xff259ded),
+                                      color: const Color(0xff259ded),
                                       borderRadius:
                                           BorderRadius.circular(100 * fem),
                                       boxShadow: [
                                         BoxShadow(
-                                          color: Color(0x3f000000),
+                                          color: const Color(0x3f000000),
                                           offset: Offset(0 * fem, 4 * fem),
                                           blurRadius: 2 * fem,
                                         ),
@@ -534,7 +569,7 @@ class _ewalletconfirmScreenState extends State<ewalletconfirmScreen> {
                                               fontSize: 24 * ffem,
                                               fontWeight: FontWeight.w500,
                                               height: 1.2175 * ffem / fem,
-                                              color: Color(0xffffffff),
+                                              color: const Color(0xffffffff),
                                             ),
                                           ),
                                         ),

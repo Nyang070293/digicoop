@@ -7,7 +7,11 @@ class resultContent {
   String? subtitle;
   String discription;
   String? colorDesc;
+  String? colorDesc1;
+  String? colorDesc2;
   String? continueDesc;
+  String? continueDesc1;
+  String? continueDesc2;
   String button;
 
   resultContent(
@@ -16,19 +20,27 @@ class resultContent {
       this.subtitle,
       required this.discription,
       this.colorDesc,
+      this.colorDesc1,
+      this.colorDesc2,
       this.continueDesc,
+      this.continueDesc1,
+      this.continueDesc2,
       required this.button});
 }
 
-List<resultContent> cashinresult = [
+List<resultContent> ewalletresultSTR = [
   resultContent(
       title: 'Success!',
-      subtitle: 'Cash-In Completed',
+      subtitle: 'Transaction Completed',
       image: 'assets/images/cashin_success.png',
-      discription: "A cash-in transaction of ",
+      discription: "Your transaction amounting to ",
       colorDesc: "PHP ${SharedPrefs.read(cashinamount)}",
+      continueDesc1: " for ",
+      colorDesc1: "${SharedPrefs.read(ewalletName)}",
+      continueDesc2: " mobile number ",
+      colorDesc2: "${SharedPrefs.read(MobileNum)}",
       continueDesc:
-          "has been successfully completed. A receipt will be sent to you via email. Thank you.",
+          "\n was successful. \n\nCheck your email for the receipt and details. Thank you.",
       button: "Done"),
   resultContent(
       title: 'Sorry,',

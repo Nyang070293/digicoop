@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:digicoop/global/paymentMethodGlobal.dart';
 import 'package:digicoop/routes/route_generator.dart';
 import 'package:digicoop/util/utils.dart';
@@ -25,11 +23,11 @@ class _cashinBankScreenState extends ConsumerState<cashinBankScreen> {
   void initState() {
     //set the initial value of text field
     ref.read(paymentMethodGlobal.notifier).getPaymentMethod(widget.categoryId);
-    Timer.periodic(const Duration(seconds: 30), (timer) {
-      ref
-          .read(paymentMethodGlobal.notifier)
-          .getPaymentMethod(widget.categoryId);
-    });
+    // Timer.periodic(const Duration(seconds: 30), (timer) {
+    //   ref
+    //       .read(paymentMethodGlobal.notifier)
+    //       .getPaymentMethod(widget.categoryId);
+    // });
     super.initState();
   }
 
