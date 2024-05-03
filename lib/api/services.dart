@@ -84,4 +84,21 @@ class ServiceHost {
     );
     return response;
   }
+
+  static Future<Response> getBankList() async {
+    // final body = {
+    //   "id": regionId,
+    // };{id}/provinces
+    const body = '{"page":1,  "limit": 100,  "search": ""}';
+
+    final encryptedBody =
+        '{"data": "${Aes256.encrypt(body, SharedPrefs.read(totp))}"}';
+    final response = await MethodHandler.helperhandler(
+      url: DigiCoopAPI.bankList,
+      type: RequestType.get,
+      haveToken: true,
+      data: encryptedBody,
+    );
+    return response;
+  }
 }

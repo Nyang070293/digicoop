@@ -22,6 +22,30 @@ class mobileScreen extends StatefulWidget {
 class _mobileScreenState extends State<mobileScreen> {
   final TextEditingController _mobile = TextEditingController();
 
+  void showLoadingDialog() {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return const AlertDialog(
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              CircularProgressIndicator(),
+              SizedBox(height: 16),
+              Text(
+                "Please Wait....",
+                style: TextStyle(
+                  fontFamily: 'Poppins',
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
   Future<void> sendData(String number) async {
     try {
       final data =
@@ -44,9 +68,14 @@ class _mobileScreenState extends State<mobileScreen> {
       // Handle response
       if (response.statusCode == 201 || response.statusCode == 200) {
         SharedPrefs.write(personCode, jsonData['data']['personCode']);
-
         SharedPrefs.write(userCode, jsonData['data']['userCode']);
-        context.pushReplacementNamed(otpCode);
+        // context.pushReplacementNamed(otpCode);
+        context.pushReplacementNamed(
+          otpCode,
+          pathParameters: {
+            "mobile": number,
+          },
+        );
       } else {
         Flush.flushMessage(
           icons: Icons.error_outline,
@@ -217,6 +246,7 @@ class _mobileScreenState extends State<mobileScreen> {
                                       );
                                       return;
                                     }
+                                    showLoadingDialog();
                                     sendData(_mobile.text);
                                     // sendData(_newPIN.text, _newCPIN.text);
                                   },

@@ -14,7 +14,8 @@ import 'package:go_router/go_router.dart';
 import 'package:http/http.dart' as http;
 
 class fpw_changePasswordScreen extends ConsumerStatefulWidget {
-  const fpw_changePasswordScreen({super.key});
+  final String otpCode;
+  const fpw_changePasswordScreen({super.key, required this.otpCode});
 
   @override
   ConsumerState<fpw_changePasswordScreen> createState() =>
@@ -55,7 +56,7 @@ class _fpw_changePasswordScreenState
         context.pushReplacementNamed(
           loadingFPW,
           pathParameters: {
-            "otpCode": SharedPrefs.read(otp),
+            "otpCode": widget.otpCode,
           },
         );
       } else if (response.statusCode == 400) {

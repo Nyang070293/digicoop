@@ -138,9 +138,12 @@ final goRouter = Provider<GoRouter>((ref) {
       ),
       GoRoute(
         name: otpCode,
-        path: "/$otpCode",
+        path: "/$otpCode/:mobile",
         builder: (context, state) {
-          return const otpCodeScreen();
+          return otpCodeScreen(
+            key: state.pageKey,
+            mobile: state.pathParameters["mobile"] ?? "0",
+          );
         },
       ),
       GoRoute(
@@ -153,9 +156,12 @@ final goRouter = Provider<GoRouter>((ref) {
       //fpw_changePasswordScreen
       GoRoute(
         name: changeFPW,
-        path: "/$changeFPW",
+        path: "/$changeFPW/:otpCode",
         builder: (context, state) {
-          return const fpw_changePasswordScreen();
+          return fpw_changePasswordScreen(
+            key: state.pageKey,
+            otpCode: state.pathParameters["otpCode"] ?? "0",
+          );
         },
       ),
       GoRoute(

@@ -23,5 +23,6 @@ class DigiCoopAPI {
       cashinBankAPI = "$baseUrl/transactions/funds/cash-in/v2",
       cashinGCASH = "$baseUrl/transactions/funds/cash-in/gcash",
       ValidateOTP = "$baseUrl/otp/validate",
-      updatepasswordIdentify = "$baseUrl/auth/update-password/identifier";
+      updatepasswordIdentify = "$baseUrl/auth/update-password/identifier",
+      bankList = "$baseUrl/transactions/banks/v2";
 }

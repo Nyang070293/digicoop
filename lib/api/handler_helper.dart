@@ -70,6 +70,7 @@ class MethodHandler {
       try {
         final response = await d.get(
           url,
+          data: data,
           options: dio.Options(
             headers: haveToken == true
                 ? {
