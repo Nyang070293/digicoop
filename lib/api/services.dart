@@ -86,18 +86,30 @@ class ServiceHost {
   }
 
   static Future<Response> getBankList() async {
-    // final body = {
-    //   "id": regionId,
-    // };{id}/provinces
-    const body = '{"page":1,  "limit": 100,  "search": ""}';
-
-    final encryptedBody =
-        '{"data": "${Aes256.encrypt(body, SharedPrefs.read(totp))}"}';
+    Map<String, dynamic> parameters = {
+      'page': '1',
+      'limit': '10',
+      'search': '',
+    };
     final response = await MethodHandler.helperhandler(
       url: DigiCoopAPI.bankList,
       type: RequestType.get,
       haveToken: true,
-      data: encryptedBody,
+      parameters: parameters,
+    );
+    return response;
+  }
+
+  static Future<Response> getBankUser() async {
+    Map<String, dynamic> parameters = {
+      'page': '1',
+      'limit': '10',
+    };
+    final response = await MethodHandler.helperhandler(
+      url: DigiCoopAPI.bankUser,
+      type: RequestType.get,
+      haveToken: true,
+      parameters: parameters,
     );
     return response;
   }

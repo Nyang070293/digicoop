@@ -16,11 +16,16 @@ enum RequestType { post, get, delete }
 class MethodHandler {
   static final d = dio.Dio();
   static Future<dio.Response> helperhandler(
-      {String? url, dynamic data, bool? haveToken, RequestType? type}) async {
+      {String? url,
+      dynamic data,
+      bool? haveToken,
+      RequestType? type,
+      dynamic parameters}) async {
     log("url - $url", name: "helperhandler");
     log("data - $data", name: "helperhandler");
     log("haveToken - $haveToken", name: "helperhandler");
     log("RequestType - ${type?.name}", name: "helperhandler");
+    log("parameters - $parameters", name: "helperhandler");
     //tokenuser
     //log("tokenuser - ${SharedPrefs.read(tokenuser)}", name: "helperhandler");
     //log("Authorization Bearer ${SharedPrefs.read(tokenuser)}",
@@ -70,7 +75,8 @@ class MethodHandler {
       try {
         final response = await d.get(
           url,
-          data: data,
+          queryParameters: parameters,
+          // data: data,
           options: dio.Options(
             headers: haveToken == true
                 ? {

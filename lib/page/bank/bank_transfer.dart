@@ -1,4 +1,5 @@
 import 'package:digicoop/global/bankGlobal.dart';
+import 'package:digicoop/global/bankUserGlobal.dart';
 import 'package:digicoop/routes/route_generator.dart';
 import 'package:digicoop/util/utils.dart';
 import 'package:digicoop/widgets/bankWidget.dart';
@@ -18,6 +19,7 @@ class _bankTransferScreenState extends ConsumerState<bankTransferScreen> {
   void initState() {
     //set the initial value of text field
     ref.read(bankGlobal.notifier).getBank();
+    ref.read(bankUserGlobal.notifier).getUserBank();
     // Timer.periodic(const Duration(seconds: 30), (timer) {
     //   ref
     //       .read(paymentMethodGlobal.notifier)
@@ -29,6 +31,7 @@ class _bankTransferScreenState extends ConsumerState<bankTransferScreen> {
   @override
   Widget build(BuildContext context) {
     final bank = ref.watch(bankGlobal).data;
+    final bankUser = ref.watch(bankUserGlobal).data;
 
     double baseWidth = 414;
     double fem = MediaQuery.of(context).size.width / baseWidth;
@@ -160,7 +163,7 @@ class _bankTransferScreenState extends ConsumerState<bankTransferScreen> {
                                           ),
                                         ),
                                       ),
-                                      Container(
+                                      SizedBox(
                                         // autogroupxk3vYLF (LJcLcARD7nAkRHtEHJXK3V)
                                         width: double.infinity,
                                         height: 746 * fem,
@@ -170,7 +173,7 @@ class _bankTransferScreenState extends ConsumerState<bankTransferScreen> {
                                               // autogroupdol3Ujh (LJcLTv9x2MGAgRJRtSDoL3)
                                               left: 34 * fem,
                                               top: 191 * fem,
-                                              child: Container(
+                                              child: SizedBox(
                                                 width: 108 * fem,
                                                 height: 30 * fem,
                                                 child: Row(
@@ -270,282 +273,29 @@ class _bankTransferScreenState extends ConsumerState<bankTransferScreen> {
                                                   // group230vtX (87:5406)
                                                   width: 598 * fem,
                                                   height: double.infinity,
-                                                  child: ListView(
-                                                    scrollDirection:
-                                                        Axis.horizontal,
-                                                    children: <Widget>[
-                                                      GestureDetector(
-                                                        onTap: () {
-                                                          context
-                                                              .pushReplacementNamed(
-                                                                  bankAddAcc);
-                                                        },
-                                                        child: Container(
-                                                          // group1415WX (87:5407)
-                                                          margin: EdgeInsets
-                                                              .fromLTRB(
-                                                                  0 * fem,
-                                                                  0 * fem,
-                                                                  18 * fem,
-                                                                  0 * fem),
-                                                          width: 70 * fem,
-                                                          height:
-                                                              double.infinity,
-                                                          child: Column(
-                                                            crossAxisAlignment:
-                                                                CrossAxisAlignment
-                                                                    .center,
-                                                            children: [
-                                                              Container(
-                                                                // addaccountcFZ (87:5409)
-                                                                margin: EdgeInsets
-                                                                    .fromLTRB(
-                                                                        0 * fem,
-                                                                        0 * fem,
-                                                                        0 * fem,
-                                                                        13 *
-                                                                            fem),
-                                                                padding: EdgeInsets
-                                                                    .fromLTRB(
-                                                                        20 *
-                                                                            fem,
-                                                                        20 *
-                                                                            fem,
-                                                                        21 *
-                                                                            fem,
-                                                                        21 *
-                                                                            fem),
-                                                                width: double
-                                                                    .infinity,
-                                                                height:
-                                                                    70 * fem,
-                                                                decoration:
-                                                                    BoxDecoration(
-                                                                  color: const Color(
-                                                                      0xffffffff),
-                                                                  borderRadius:
-                                                                      BorderRadius
-                                                                          .circular(35 *
-                                                                              fem),
-                                                                  boxShadow: [
-                                                                    BoxShadow(
-                                                                      color: const Color(
-                                                                          0x3f000000),
-                                                                      offset: Offset(
-                                                                          0 * fem,
-                                                                          4 * fem),
-                                                                      blurRadius:
-                                                                          2 * fem,
-                                                                    ),
-                                                                  ],
-                                                                ),
-                                                                child:
-                                                                    Container(
-                                                                  // group218gWK (87:5411)
-                                                                  width: double
-                                                                      .infinity,
-                                                                  height: double
-                                                                      .infinity,
-                                                                  child: Stack(
-                                                                    children: [
-                                                                      Positioned(
-                                                                        // rectangle31EXq (87:5412)
-                                                                        left: 13.0000001311 *
-                                                                            fem,
-                                                                        top: 0 *
-                                                                            fem,
-                                                                        child:
-                                                                            Align(
-                                                                          child:
-                                                                              SizedBox(
-                                                                            width:
-                                                                                3 * fem,
-                                                                            height:
-                                                                                29 * fem,
-                                                                            child:
-                                                                                Container(
-                                                                              decoration: BoxDecoration(
-                                                                                borderRadius: BorderRadius.circular(2 * fem),
-                                                                                color: const Color(0xff8fd4ff),
-                                                                              ),
-                                                                            ),
-                                                                          ),
-                                                                        ),
-                                                                      ),
-                                                                      Positioned(
-                                                                        // rectangle32M6f (87:5413)
-                                                                        left: 0 *
-                                                                            fem,
-                                                                        top: 12.9999987324 *
-                                                                            fem,
-                                                                        child:
-                                                                            Align(
-                                                                          child:
-                                                                              SizedBox(
-                                                                            width:
-                                                                                29 * fem,
-                                                                            height:
-                                                                                3 * fem,
-                                                                            child:
-                                                                                Container(
-                                                                              decoration: BoxDecoration(
-                                                                                borderRadius: BorderRadius.circular(2.0000007153 * fem),
-                                                                                color: const Color(0xff8fd4ff),
-                                                                              ),
-                                                                            ),
-                                                                          ),
-                                                                        ),
-                                                                      ),
-                                                                    ],
-                                                                  ),
-                                                                ),
-                                                              ),
-                                                              Container(
-                                                                // addaccountrZD (87:5408)
-                                                                margin: EdgeInsets
-                                                                    .fromLTRB(
-                                                                        1 * fem,
-                                                                        0 * fem,
-                                                                        0 * fem,
-                                                                        0 * fem),
-                                                                constraints:
-                                                                    BoxConstraints(
-                                                                  maxWidth:
-                                                                      55 * fem,
-                                                                ),
-                                                                child: Text(
-                                                                  'Add\nAccount',
-                                                                  textAlign:
-                                                                      TextAlign
-                                                                          .center,
-                                                                  style:
-                                                                      SafeGoogleFont(
-                                                                    'Montserrat',
-                                                                    fontSize:
-                                                                        13 *
-                                                                            ffem,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w400,
-                                                                    height:
-                                                                        1.2175 *
-                                                                            ffem /
-                                                                            fem,
-                                                                    color: const Color(
-                                                                        0xff4f4f4f),
-                                                                  ),
-                                                                ),
-                                                              ),
-                                                            ],
-                                                          ),
-                                                        ),
-                                                      ),
-                                                      Container(
-                                                        // group135wMh (87:5426)
-                                                        margin:
-                                                            EdgeInsets.fromLTRB(
-                                                                0 * fem,
-                                                                0 * fem,
-                                                                13 * fem,
-                                                                0 * fem),
-                                                        decoration:
-                                                            BoxDecoration(
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(
-                                                                      35 * fem),
-                                                        ),
-                                                        child: Column(
-                                                          crossAxisAlignment:
-                                                              CrossAxisAlignment
-                                                                  .start,
-                                                          children: [
-                                                            Container(
-                                                              // group133GPy (87:5428)
-                                                              margin: EdgeInsets
-                                                                  .fromLTRB(
-                                                                      0 * fem,
-                                                                      0 * fem,
-                                                                      0 * fem,
-                                                                      13 * fem),
-                                                              width: 70 * fem,
-                                                              decoration:
-                                                                  BoxDecoration(
-                                                                borderRadius:
-                                                                    BorderRadius
-                                                                        .circular(35 *
-                                                                            fem),
-                                                              ),
-                                                              child: Center(
-                                                                // rectangle2CoR (87:5429)
-                                                                child: SizedBox(
-                                                                  width: double
-                                                                      .infinity,
-                                                                  height:
-                                                                      70 * fem,
-                                                                  child:
-                                                                      Container(
-                                                                    decoration:
-                                                                        BoxDecoration(
-                                                                      borderRadius:
-                                                                          BorderRadius.circular(35 *
-                                                                              fem),
-                                                                      color: const Color(
-                                                                          0xffffffff),
-                                                                      image:
-                                                                          const DecorationImage(
-                                                                        image:
-                                                                            AssetImage(
-                                                                          'assets/images/ub.png',
-                                                                        ),
-                                                                      ),
-                                                                      boxShadow: [
-                                                                        BoxShadow(
-                                                                          color:
-                                                                              const Color(0x21010101),
-                                                                          offset: Offset(
-                                                                              0 * fem,
-                                                                              2 * fem),
-                                                                          blurRadius:
-                                                                              3 * fem,
-                                                                        ),
-                                                                      ],
-                                                                    ),
-                                                                  ),
-                                                                ),
+                                                  child: SingleChildScrollView(
+                                                    child: Column(
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .center,
+                                                      children: bankUser.banks
+                                                          ?.map(
+                                                            (e) => Padding(
+                                                              padding:
+                                                                  const EdgeInsets
+                                                                      .all(8.0),
+                                                              child:
+                                                                  bankWidgets(
+                                                                name: e.bankName
+                                                                    .toString(),
+                                                                image: e
+                                                                    .primaryLogo
+                                                                    .toString(),
                                                               ),
                                                             ),
-                                                            Container(
-                                                              // unionbankJLf (87:5427)
-                                                              margin: EdgeInsets
-                                                                  .fromLTRB(
-                                                                      2 * fem,
-                                                                      0 * fem,
-                                                                      0 * fem,
-                                                                      0 * fem),
-                                                              child: Text(
-                                                                'Unionbank',
-                                                                style:
-                                                                    SafeGoogleFont(
-                                                                  'Montserrat',
-                                                                  fontSize:
-                                                                      13 * ffem,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w400,
-                                                                  height:
-                                                                      1.2175 *
-                                                                          ffem /
-                                                                          fem,
-                                                                  color: const Color(
-                                                                      0xff4f4f4f),
-                                                                ),
-                                                              ),
-                                                            ),
-                                                          ],
-                                                        ),
-                                                      ),
-                                                    ],
+                                                          )
+                                                          .toList(),
+                                                    ),
                                                   ),
                                                 ),
                                               ),
@@ -561,7 +311,7 @@ class _bankTransferScreenState extends ConsumerState<bankTransferScreen> {
                                 // group976RvP (87:5338)
                                 left: 27 * fem,
                                 top: 300 * fem,
-                                child: Container(
+                                child: SizedBox(
                                   width: 362 * fem,
                                   height: 535.15 * fem,
                                   child: Stack(
@@ -618,482 +368,32 @@ class _bankTransferScreenState extends ConsumerState<bankTransferScreen> {
                                                     0 * fem),
                                                 width: 362 * fem,
                                                 height: 522.4 * fem,
-                                                child: Column(
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.center,
-                                                  children:  bank.banks
-                                                  !.map(
-                                                    (e) => Padding(
-                                                      padding:
-                                                          const EdgeInsets.all(
-                                                              8.0),
-                                                      child:
-                                                          bankWidgets(
-                                                        name: e.bankName.toString(),
-                                                        image:
-                                                            e.primaryLogo.toString(),
-                                                        
-                                                      ),
-                                                    ),
-                                                  )
-                                                  .toList(),
-
-
-                                                    // Container(
-                                                    //   // group2494h5 (82:3055)
-                                                    //   margin:
-                                                    //       EdgeInsets.fromLTRB(
-                                                    //           0 * fem,
-                                                    //           0 * fem,
-                                                    //           0 * fem,
-                                                    //           12.46 * fem),
-                                                    //   padding:
-                                                    //       EdgeInsets.fromLTRB(
-                                                    //           18.67 * fem,
-                                                    //           0 * fem,
-                                                    //           0 * fem,
-                                                    //           0 * fem),
-                                                    //   width: 900 * fem,
-                                                    //   height: 74.16 * fem,
-                                                    //   decoration: BoxDecoration(
-                                                    //     border: Border(
-                                                    //       bottom: BorderSide(
-                                                    //         color: Colors.grey
-                                                    //             .shade200, // You can set your desired border color here.
-                                                    //         width:
-                                                    //             1, // You can set the width of the border.
-                                                    //       ),
-                                                    //     ),
-                                                    //   ),
-                                                    //   child: Container(
-                                                    //     // autogroupgz7qmLb (LJbbgPwnYr5AkPZckegz7q)
-
-                                                    //     padding:
-                                                    //         EdgeInsets.fromLTRB(
-                                                    //             0 * fem,
-                                                    //             0 * fem,
-                                                    //             0 * fem,
-                                                    //             20 * fem),
-                                                    //     width: double.infinity,
-                                                    //     height: 58.03 * fem,
-                                                    //     child: Row(
-                                                    //       crossAxisAlignment:
-                                                    //           CrossAxisAlignment
-                                                    //               .center,
-                                                    //       children: [
-                                                    //         Container(
-                                                    //           // group259hk3 (82:3060)
-                                                    //           margin: EdgeInsets
-                                                    //               .fromLTRB(
-                                                    //                   0 * fem,
-                                                    //                   0 * fem,
-                                                    //                   52.73 *
-                                                    //                       fem,
-                                                    //                   0 * fem),
-                                                    //           padding: EdgeInsets
-                                                    //               .fromLTRB(
-                                                    //                   0 * fem,
-                                                    //                   0 * fem,
-                                                    //                   36.07 *
-                                                    //                       fem,
-                                                    //                   0 * fem),
-                                                    //           height: double
-                                                    //               .infinity,
-                                                    //           decoration:
-                                                    //               BoxDecoration(
-                                                    //             borderRadius:
-                                                    //                 BorderRadius
-                                                    //                     .circular(5 *
-                                                    //                         fem),
-                                                    //           ),
-                                                    //           child:
-                                                    //               GestureDetector(
-                                                    //             onTap: () {
-                                                    //               context.pushReplacementNamed(
-                                                    //                   bankSend);
-                                                    //             },
-                                                    //             child: Row(
-                                                    //               crossAxisAlignment:
-                                                    //                   CrossAxisAlignment
-                                                    //                       .center,
-                                                    //               children: [
-                                                    //                 Container(
-                                                    //                   // rectangle8yxT (82:3062)
-                                                    //                   margin: EdgeInsets.fromLTRB(
-                                                    //                       0 *
-                                                    //                           fem,
-                                                    //                       0 *
-                                                    //                           fem,
-                                                    //                       23.83 *
-                                                    //                           fem,
-                                                    //                       0 * fem),
-                                                    //                   width:
-                                                    //                       60.19 *
-                                                    //                           fem,
-                                                    //                   height:
-                                                    //                       58.03 *
-                                                    //                           fem,
-                                                    //                   decoration:
-                                                    //                       BoxDecoration(
-                                                    //                     borderRadius:
-                                                    //                         BorderRadius.circular(5 *
-                                                    //                             fem),
-                                                    //                     border: Border.all(
-                                                    //                         color:
-                                                    //                             const Color(0xffe7e7e7)),
-                                                    //                     color: const Color(
-                                                    //                         0xffffffff),
-                                                    //                   ),
-                                                    //                   child:
-                                                    //                       const Center(
-                                                    //                     child:
-                                                    //                         Image(
-                                                    //                       image:
-                                                    //                           AssetImage('assets/images/bdo.png'),
-                                                    //                       width:
-                                                    //                           40, // Optional: Set image width
-                                                    //                       height:
-                                                    //                           40, // Optional: Set image height
-                                                    //                     ),
-                                                    //                   ),
-                                                    //                 ),
-                                                    //                 Container(
-                                                    //                   // bdounibankincf4b (82:3061)
-                                                    //                   margin: EdgeInsets.fromLTRB(
-                                                    //                       0 *
-                                                    //                           fem,
-                                                    //                       0 *
-                                                    //                           fem,
-                                                    //                       0 *
-                                                    //                           fem,
-                                                    //                       0.63 *
-                                                    //                           fem),
-                                                    //                   child:
-                                                    //                       Text(
-                                                    //                     'BDO Unibank, Inc.',
-                                                    //                     style:
-                                                    //                         SafeGoogleFont(
-                                                    //                       'Montserrat',
-                                                    //                       fontSize:
-                                                    //                           14 * ffem,
-                                                    //                       fontWeight:
-                                                    //                           FontWeight.w600,
-                                                    //                       height: 1.2175 *
-                                                    //                           ffem /
-                                                    //                           fem,
-                                                    //                       color:
-                                                    //                           const Color(0xff3f3f3f),
-                                                    //                     ),
-                                                    //                   ),
-                                                    //                 ),
-                                                    //               ],
-                                                    //             ),
-                                                    //           ),
-                                                    //         ),
-                                                    //         GestureDetector(
-                                                    //           onTap: () {
-                                                    //             context
-                                                    //                 .pushReplacementNamed(
-                                                    //                     bankSend);
-                                                    //           },
-                                                    //           child: Container(
-                                                    //             // group2489Ef (82:3057)
-                                                    //             margin: EdgeInsets
-                                                    //                 .fromLTRB(
-                                                    //                     0 * fem,
-                                                    //                     0 * fem,
-                                                    //                     0 * fem,
-                                                    //                     0.84 *
-                                                    //                         fem),
-                                                    //             width:
-                                                    //                 9.6 * fem,
-                                                    //             height:
-                                                    //                 16.82 * fem,
-                                                    //             child:
-                                                    //                 Image.asset(
-                                                    //               'assets/images/arrow_blue_right.png',
-                                                    //               width:
-                                                    //                   9.6 * fem,
-                                                    //               height:
-                                                    //                   16.82 *
-                                                    //                       fem,
-                                                    //             ),
-                                                    //           ),
-                                                    //         ),
-                                                    //       ],
-                                                    //     ),
-                                                    //   ),
-                                                    // ),
-
-                                                    // Container(
-                                                    //   // group250F2o (82:3086)
-                                                    //   margin: EdgeInsets.fromLTRB(
-                                                    //       0 * fem,
-                                                    //       0 * fem,
-                                                    //       0 * fem,
-                                                    //       12.45 * fem),
-                                                    //   padding: EdgeInsets.fromLTRB(
-                                                    //       18.67 * fem,
-                                                    //       0 * fem,
-                                                    //       0 * fem,
-                                                    //       0 * fem),
-                                                    //   width: double.infinity,
-                                                    //   height: 74.16 * fem,
-                                                    //   decoration: BoxDecoration(
-                                                    //     border: Border(
-                                                    //       bottom: BorderSide(
-                                                    //         color: Colors.grey
-                                                    //             .shade200, // You can set your desired border color here.
-                                                    //         width:
-                                                    //             1, // You can set the width of the border.
-                                                    //       ),
-                                                    //     ),
-                                                    //   ),
-                                                    //   child: Container(
-                                                    //     // group248M5q (82:3088)
-                                                    //     padding: EdgeInsets.fromLTRB(
-                                                    //         0 * fem,
-                                                    //         0 * fem,
-                                                    //         0 * fem,
-                                                    //         20 * fem),
-                                                    //     width: double.infinity,
-                                                    //     height: 58.03 * fem,
-                                                    //     child: Row(
-                                                    //       crossAxisAlignment:
-                                                    //           CrossAxisAlignment
-                                                    //               .center,
-                                                    //       children: [
-                                                    //         Container(
-                                                    //           // group1334W3 (82:3092)
-                                                    //           margin:
-                                                    //               EdgeInsets.fromLTRB(
-                                                    //                   0 * fem,
-                                                    //                   0 * fem,
-                                                    //                   23.83 * fem,
-                                                    //                   0 * fem),
-                                                    //           width: 60.19 * fem,
-                                                    //           height: double.infinity,
-                                                    //           decoration:
-                                                    //               BoxDecoration(
-                                                    //             borderRadius:
-                                                    //                 BorderRadius
-                                                    //                     .circular(
-                                                    //                         5 * fem),
-                                                    //           ),
-                                                    //           child: Center(
-                                                    //             // rectangle8ngw (82:3093)
-                                                    //             child: SizedBox(
-                                                    //               width:
-                                                    //                   double.infinity,
-                                                    //               height: 58.03 * fem,
-                                                    //               child: Container(
-                                                    //                 decoration:
-                                                    //                     BoxDecoration(
-                                                    //                   borderRadius:
-                                                    //                       BorderRadius
-                                                    //                           .circular(5 *
-                                                    //                               fem),
-                                                    //                   border: Border.all(
-                                                    //                       color: const Color(
-                                                    //                           0xffe7e7e7)),
-                                                    //                   color: const Color(
-                                                    //                       0xffffffff),
-                                                    //                 ),
-                                                    //                 child:
-                                                    //                     const Center(
-                                                    //                   child: Image(
-                                                    //                     image: AssetImage(
-                                                    //                         'assets/images/ub.png'),
-                                                    //                     width:
-                                                    //                         40, // Optional: Set image width
-                                                    //                     height:
-                                                    //                         40, // Optional: Set image height
-                                                    //                   ),
-                                                    //                 ),
-                                                    //               ),
-                                                    //             ),
-                                                    //           ),
-                                                    //         ),
-                                                    //         Container(
-                                                    //           // unionbankHdh (82:3091)
-                                                    //           margin:
-                                                    //               EdgeInsets.fromLTRB(
-                                                    //                   0 * fem,
-                                                    //                   0.13 * fem,
-                                                    //                   141.8 * fem,
-                                                    //                   0 * fem),
-                                                    //           child: Text(
-                                                    //             'Unionbank',
-                                                    //             style: SafeGoogleFont(
-                                                    //               'Montserrat',
-                                                    //               fontSize: 14 * ffem,
-                                                    //               fontWeight:
-                                                    //                   FontWeight.w600,
-                                                    //               height: 1.2175 *
-                                                    //                   ffem /
-                                                    //                   fem,
-                                                    //               color: const Color(
-                                                    //                   0xff262626),
-                                                    //             ),
-                                                    //           ),
-                                                    //         ),
-                                                    //         Container(
-                                                    //           // arrow21Pgj (82:3089)
-                                                    //           margin:
-                                                    //               EdgeInsets.fromLTRB(
-                                                    //                   0 * fem,
-                                                    //                   0 * fem,
-                                                    //                   0 * fem,
-                                                    //                   0.84 * fem),
-                                                    //           width: 9.6 * fem,
-                                                    //           height: 16.82 * fem,
-                                                    //           child: Image.asset(
-                                                    //             'assets/images/arrow_blue_right.png',
-                                                    //             width: 9.6 * fem,
-                                                    //             height: 16.82 * fem,
-                                                    //           ),
-                                                    //         ),
-                                                    //       ],
-                                                    //     ),
-                                                    //   ),
-                                                    // ),
-                                                    // Container(
-                                                    //   // group251Vzf (82:3070)
-                                                    //   margin: EdgeInsets.fromLTRB(
-                                                    //       0 * fem,
-                                                    //       0 * fem,
-                                                    //       0 * fem,
-                                                    //       12.46 * fem),
-                                                    //   padding: EdgeInsets.fromLTRB(
-                                                    //       18.67 * fem,
-                                                    //       0 * fem,
-                                                    //       0 * fem,
-                                                    //       0 * fem),
-                                                    //   width: double.infinity,
-                                                    //   height: 75.01 * fem,
-                                                    //   decoration: BoxDecoration(
-                                                    //     border: Border(
-                                                    //       bottom: BorderSide(
-                                                    //         color: Colors.grey
-                                                    //             .shade200, // You can set your desired border color here.
-                                                    //         width:
-                                                    //             1, // You can set the width of the border.
-                                                    //       ),
-                                                    //     ),
-                                                    //   ),
-                                                    //   child: Container(
-                                                    //     // group248p1M (82:3072)
-                                                    //     padding: EdgeInsets.fromLTRB(
-                                                    //         0 * fem,
-                                                    //         0 * fem,
-                                                    //         0 * fem,
-                                                    //         20 * fem),
-                                                    //     width: double.infinity,
-                                                    //     height: 58.03 * fem,
-                                                    //     child: Row(
-                                                    //       crossAxisAlignment:
-                                                    //           CrossAxisAlignment
-                                                    //               .center,
-                                                    //       children: [
-                                                    //         Container(
-                                                    //           // group226Kio (82:3076)
-                                                    //           margin:
-                                                    //               EdgeInsets.fromLTRB(
-                                                    //                   0 * fem,
-                                                    //                   0 * fem,
-                                                    //                   37.31 * fem,
-                                                    //                   0 * fem),
-                                                    //           width: 60.19 * fem,
-                                                    //           height: double.infinity,
-                                                    //           decoration:
-                                                    //               BoxDecoration(
-                                                    //             borderRadius:
-                                                    //                 BorderRadius
-                                                    //                     .circular(
-                                                    //                         5 * fem),
-                                                    //           ),
-                                                    //           child: Center(
-                                                    //             // rectangle8TKD (82:3077)
-                                                    //             child: SizedBox(
-                                                    //               width:
-                                                    //                   double.infinity,
-                                                    //               height: 58.03 * fem,
-                                                    //               child: Container(
-                                                    //                 decoration:
-                                                    //                     BoxDecoration(
-                                                    //                   borderRadius:
-                                                    //                       BorderRadius
-                                                    //                           .circular(5 *
-                                                    //                               fem),
-                                                    //                   border: Border.all(
-                                                    //                       color: const Color(
-                                                    //                           0xffe7e7e7)),
-                                                    //                   color: const Color(
-                                                    //                       0xffffffff),
-                                                    //                 ),
-                                                    //                 child:
-                                                    //                     const Center(
-                                                    //                   child: Image(
-                                                    //                     image: AssetImage(
-                                                    //                         'assets/images/bpi.png'),
-                                                    //                     width:
-                                                    //                         40, // Optional: Set image width
-                                                    //                     height:
-                                                    //                         40, // Optional: Set image height
-                                                    //                   ),
-                                                    //                 ),
-                                                    //               ),
-                                                    //             ),
-                                                    //           ),
-                                                    //         ),
-                                                    //         Container(
-                                                    //           // bpiZNF (82:3075)
-                                                    //           margin:
-                                                    //               EdgeInsets.fromLTRB(
-                                                    //                   0 * fem,
-                                                    //                   0 * fem,
-                                                    //                   180 * fem,
-                                                    //                   0 * fem),
-                                                    //           child: Text(
-                                                    //             'BPI',
-                                                    //             style: SafeGoogleFont(
-                                                    //               'Montserrat',
-                                                    //               fontSize: 14 * ffem,
-                                                    //               fontWeight:
-                                                    //                   FontWeight.w600,
-                                                    //               height: 1.2175 *
-                                                    //                   ffem /
-                                                    //                   fem,
-                                                    //               color: const Color(
-                                                    //                   0xff000000),
-                                                    //             ),
-                                                    //           ),
-                                                    //         ),
-                                                    //         Container(
-                                                    //           // arrow21rcF (82:3073)
-                                                    //           margin:
-                                                    //               EdgeInsets.fromLTRB(
-                                                    //                   0 * fem,
-                                                    //                   0 * fem,
-                                                    //                   0 * fem,
-                                                    //                   0 * fem),
-                                                    //           width: 9.6 * fem,
-                                                    //           height: 16.82 * fem,
-                                                    //           child: Image.asset(
-                                                    //             'assets/images/arrow_blue_right.png',
-                                                    //             width: 9.6 * fem,
-                                                    //             height: 16.82 * fem,
-                                                    //           ),
-                                                    //         ),
-                                                    //       ],
-                                                    //     ),
-                                                    //   ),
-                                                    // ),
-                                                  ],
+                                                child: SingleChildScrollView(
+                                                  child: Column(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .center,
+                                                    children: bank.banks!
+                                                        .map(
+                                                          (e) => Padding(
+                                                            padding:
+                                                                const EdgeInsets
+                                                                    .all(8.0),
+                                                            child: bankWidgets(
+                                                              name: e.bankName
+                                                                  .toString(),
+                                                              image: e
+                                                                  .primaryLogo
+                                                                  .toString(),
+                                                            ),
+                                                          ),
+                                                        )
+                                                        .toList(),
+                                                  ),
                                                 ),
                                               ),
                                             ),
-                                     
+                                    ],
                                   ),
                                 ),
                               ),

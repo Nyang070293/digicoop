@@ -15,7 +15,7 @@ class bankWidgets extends StatelessWidget {
     return Container(
       // group2494h5 (82:3055)
       margin: EdgeInsets.fromLTRB(0 * fem, 0 * fem, 0 * fem, 12.46 * fem),
-      padding: EdgeInsets.fromLTRB(18.67 * fem, 0 * fem, 0 * fem, 0 * fem),
+      padding: EdgeInsets.fromLTRB(5 * fem, 0 * fem, 0 * fem, 0 * fem),
       width: 900 * fem,
       height: 74.16 * fem,
       decoration: BoxDecoration(
@@ -38,10 +38,8 @@ class bankWidgets extends StatelessWidget {
           children: [
             Container(
               // group259hk3 (82:3060)
-              margin:
-                  EdgeInsets.fromLTRB(0 * fem, 0 * fem, 52.73 * fem, 0 * fem),
-              padding:
-                  EdgeInsets.fromLTRB(0 * fem, 0 * fem, 36.07 * fem, 0 * fem),
+              margin: EdgeInsets.fromLTRB(0 * fem, 0 * fem, 0 * fem, 0 * fem),
+              padding: EdgeInsets.fromLTRB(0 * fem, 0 * fem, 0 * fem, 0 * fem),
               height: double.infinity,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(5 * fem),
@@ -56,7 +54,7 @@ class bankWidgets extends StatelessWidget {
                     Container(
                       // rectangle8yxT (82:3062)
                       margin: EdgeInsets.fromLTRB(
-                          0 * fem, 0 * fem, 23.83 * fem, 0 * fem),
+                          0 * fem, 0 * fem, 10 * fem, 0 * fem),
                       width: 60.19 * fem,
                       height: 58.03 * fem,
                       decoration: BoxDecoration(
@@ -91,6 +89,7 @@ class bankWidgets extends StatelessWidget {
                       // bdounibankincf4b (82:3061)
                       margin: EdgeInsets.fromLTRB(
                           0 * fem, 0 * fem, 0 * fem, 0.63 * fem),
+                      width: 250 * fem,
                       child: Text(
                         name,
                         style: SafeGoogleFont(
