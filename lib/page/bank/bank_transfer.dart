@@ -257,49 +257,64 @@ class _bankTransferScreenState extends ConsumerState<bankTransferScreen> {
                                               ),
                                             ),
                                             //Recent Bank
-                                            Positioned(
-                                              // frame12QfH (87:5405)
-                                              left: 22 * fem,
-                                              top: 22 * fem,
-                                              child: Container(
-                                                padding: EdgeInsets.fromLTRB(
-                                                    7 * fem,
-                                                    0 * fem,
-                                                    0 * fem,
-                                                    0 * fem),
-                                                width: 387 * fem,
-                                                height: 115 * fem,
-                                                child: SizedBox(
-                                                  // group230vtX (87:5406)
-                                                  width: 598 * fem,
-                                                  height: double.infinity,
-                                                  child: SingleChildScrollView(
-                                                    child: Column(
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .center,
-                                                      children: bankUser.banks
-                                                          ?.map(
-                                                            (e) => Padding(
-                                                              padding:
-                                                                  const EdgeInsets
-                                                                      .all(8.0),
-                                                              child:
-                                                                  bankWidgets(
-                                                                name: e.bankName
-                                                                    .toString(),
-                                                                image: e
-                                                                    .primaryLogo
-                                                                    .toString(),
-                                                              ),
-                                                            ),
-                                                          )
-                                                          .toList(),
+                                            bankUser == null
+                                                ? const Center(
+                                                    child: SizedBox(
+                                                        width: 30,
+                                                        height: 30,
+                                                        child:
+                                                            CircularProgressIndicator(
+                                                                color: Colors
+                                                                    .green)),
+                                                  )
+                                                : Positioned(
+                                                    // frame12QfH (87:5405)
+                                                    left: 22 * fem,
+                                                    top: 22 * fem,
+                                                    child: Container(
+                                                      padding:
+                                                          EdgeInsets.fromLTRB(
+                                                              7 * fem,
+                                                              0 * fem,
+                                                              0 * fem,
+                                                              0 * fem),
+                                                      width: 387 * fem,
+                                                      height: 115 * fem,
+                                                      child: SizedBox(
+                                                        // group230vtX (87:5406)
+                                                        width: 598 * fem,
+                                                        height: double.infinity,
+                                                        child:
+                                                            SingleChildScrollView(
+                                                          child: Column(
+                                                            crossAxisAlignment:
+                                                                CrossAxisAlignment
+                                                                    .center,
+                                                            children:
+                                                                bankUser.banks!
+                                                                    .map(
+                                                                      (e) =>
+                                                                          Padding(
+                                                                        padding: const EdgeInsets
+                                                                            .all(
+                                                                            8.0),
+                                                                        child:
+                                                                            bankWidgets(
+                                                                          name: e
+                                                                              .bankName
+                                                                              .toString(),
+                                                                          image: e
+                                                                              .bankLogo
+                                                                              .toString(),
+                                                                        ),
+                                                                      ),
+                                                                    )
+                                                                    .toList(),
+                                                          ),
+                                                        ),
+                                                      ),
                                                     ),
                                                   ),
-                                                ),
-                                              ),
-                                            ),
                                           ],
                                         ),
                                       ),
