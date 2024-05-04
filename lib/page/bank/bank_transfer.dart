@@ -2,6 +2,7 @@ import 'package:digicoop/global/bankGlobal.dart';
 import 'package:digicoop/global/bankUserGlobal.dart';
 import 'package:digicoop/routes/route_generator.dart';
 import 'package:digicoop/util/utils.dart';
+import 'package:digicoop/widgets/bankUserWidget.dart';
 import 'package:digicoop/widgets/bankWidget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -15,6 +16,17 @@ class bankTransferScreen extends ConsumerStatefulWidget {
 }
 
 class _bankTransferScreenState extends ConsumerState<bankTransferScreen> {
+  Future<void> gotoBannkSearch() async {
+    //int gender = 0;
+    print("press done");
+    context.pushReplacementNamed(
+      bankSearch,
+      pathParameters: {
+        "type": "0",
+      },
+    );
+  }
+
   @override
   void initState() {
     //set the initial value of text field
@@ -124,307 +136,234 @@ class _bankTransferScreenState extends ConsumerState<bankTransferScreen> {
                 Expanded(
                   child: SingleChildScrollView(
                     child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
                         Container(
-                          // autogroupakfmbkT (LJcLGLeuaZkHD2uaZoaKfm)
+                          // recentbanktransfer38b (87:5404)
                           margin: EdgeInsets.fromLTRB(
-                              0 * fem, 0 * fem, 0 * fem, 50 * fem),
-                          width: double.infinity,
-                          height: 600 * fem,
-                          child: Stack(
+                              20 * fem, 0 * fem, 0 * fem, 0 * fem),
+                          child: Text(
+                            'Recent bank transfer',
+                            style: SafeGoogleFont(
+                              'Montserrat',
+                              fontSize: 18 * ffem,
+                              fontWeight: FontWeight.w500,
+                              height: 1.2175 * ffem / fem,
+                              color: const Color(0xff333333),
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          child: Row(
                             children: [
-                              Positioned(
-                                // group488vGw (87:5332)
-                                left: 0 * fem,
-                                top: 0 * fem,
-                                child: Container(
-                                  width: 414 * fem,
-                                  height: 896 * fem,
-                                  decoration: const BoxDecoration(
-                                    color: Color(0xffffffff),
-                                  ),
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.stretch,
-                                    children: [
-                                      Container(
-                                        // recentbanktransfer38b (87:5404)
-                                        margin: EdgeInsets.fromLTRB(22 * fem,
-                                            0 * fem, 0 * fem, 0 * fem),
-                                        child: Text(
-                                          'Recent bank transfer',
-                                          style: SafeGoogleFont(
-                                            'Montserrat',
-                                            fontSize: 18 * ffem,
-                                            fontWeight: FontWeight.w500,
-                                            height: 1.2175 * ffem / fem,
-                                            color: const Color(0xff333333),
-                                          ),
+                              Column(
+                                children: [
+                                  Container(
+                                    margin: EdgeInsets.fromLTRB(
+                                        10 * fem, 10 * fem, 0 * fem, 0 * fem),
+                                    width: 60.0,
+                                    height: 60.0,
+                                    decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      color: Colors.white,
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: Colors.black.withOpacity(0.3),
+                                          spreadRadius: 1,
+                                          blurRadius: 5,
+                                          offset: const Offset(0,
+                                              3), // changes position of shadow
                                         ),
+                                      ],
+                                    ),
+                                    child: RawMaterialButton(
+                                      onPressed: () {
+                                        // Add your button's onPressed action here
+                                        // gotoBannkSearch();
+                                        context.pushReplacementNamed(
+                                          bankSearch,
+                                          pathParameters: {
+                                            "type": "0",
+                                          },
+                                        );
+                                      },
+                                      elevation: 1.0,
+                                      fillColor: Colors.blue,
+                                      child: Icon(
+                                        Icons.add,
+                                        color: Colors.white,
+                                        size: 24.0,
                                       ),
-                                      SizedBox(
-                                        // autogroupxk3vYLF (LJcLcARD7nAkRHtEHJXK3V)
-                                        width: double.infinity,
-                                        height: 746 * fem,
-                                        child: Stack(
-                                          children: [
-                                            Positioned(
-                                              // autogroupdol3Ujh (LJcLTv9x2MGAgRJRtSDoL3)
-                                              left: 34 * fem,
-                                              top: 191 * fem,
-                                              child: SizedBox(
-                                                width: 108 * fem,
-                                                height: 30 * fem,
-                                                child: Row(
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.center,
-                                                  children: [
-                                                    Container(
-                                                      // vectoro1H (87:5392)
-                                                      margin:
-                                                          EdgeInsets.fromLTRB(
-                                                              0 * fem,
-                                                              0 * fem,
-                                                              9.88 * fem,
-                                                              1.88 * fem),
-                                                      width: 22.13 * fem,
-                                                      height: 22.13 * fem,
-                                                      child: Image.asset(
-                                                        'assets/images/bank.png',
-                                                        width: 22.13 * fem,
-                                                        height: 22.13 * fem,
-                                                      ),
+                                      padding: EdgeInsets.all(15.0),
+                                      shape: CircleBorder(),
+                                    ),
+                                  ),
+                                  Container(
+                                    margin: EdgeInsets.fromLTRB(
+                                        20 * fem, 10 * fem, 0 * fem, 0 * fem),
+                                    child: Text(
+                                      'Add Account',
+                                      style: SafeGoogleFont(
+                                        'Montserrat',
+                                        fontSize: 14 * ffem,
+                                        fontWeight: FontWeight.w600,
+                                        height: 1.2175 * ffem / fem,
+                                        color: const Color(0xff231f20),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              bankUser == null
+                                  ? const Center(
+                                      child: SizedBox(
+                                          width: 30,
+                                          height: 30,
+                                          child: CircularProgressIndicator(
+                                              color: Colors.green)),
+                                    )
+                                  : Positioned(
+                                      // frame12QfH (87:5405)
+                                      left: 25 * fem,
+                                      top: 22 * fem,
+                                      child: Container(
+                                        width: 300 * ffem,
+                                        padding: EdgeInsets.fromLTRB(
+                                            7 * fem, 0 * fem, 0 * fem, 0 * fem),
+                                        height: 115 * fem,
+                                        child: SizedBox(
+                                          // group230vtX (87:5406)
+                                          height: double.infinity,
+                                          child: SingleChildScrollView(
+                                            scrollDirection: Axis.horizontal,
+                                            child: Row(
+                                              children: bankUser.banks!
+                                                  .map(
+                                                    (e) => bankUserWidgets(
+                                                      name: e.bankAccountName
+                                                          .toString(),
+                                                      image:
+                                                          e.bankLogo.toString(),
                                                     ),
-                                                    Text(
-                                                      // authenticationtoR (87:5336)
-                                                      'Banks',
-                                                      style: SafeGoogleFont(
-                                                        'Montserrat',
-                                                        fontSize: 24 * ffem,
-                                                        fontWeight:
-                                                            FontWeight.w500,
-                                                        height:
-                                                            1.2175 * ffem / fem,
-                                                        color: const Color(
-                                                            0xff262626),
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                            ),
-                                            Positioned(
-                                              // selectabankdW7 (87:5337)
-                                              left: 34 * fem,
-                                              top: 225 * fem,
-                                              child: Align(
-                                                child: SizedBox(
-                                                  width: 95 * fem,
-                                                  height: 19 * fem,
-                                                  child: Text(
-                                                    'Select a bank',
-                                                    style: SafeGoogleFont(
-                                                      'Montserrat',
-                                                      fontSize: 14 * ffem,
-                                                      fontWeight:
-                                                          FontWeight.w400,
-                                                      height: 1.3318751199 *
-                                                          ffem /
-                                                          fem,
-                                                      color: const Color(
-                                                          0xff828282),
-                                                    ),
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                            Positioned(
-                                              // line4i1m (87:5438)
-                                              left: 27 * fem,
-                                              top: 172 * fem,
-                                              child: Align(
-                                                child: SizedBox(
-                                                  width: 362 * fem,
-                                                  height: 1 * fem,
-                                                  child: Container(
-                                                    decoration:
-                                                        const BoxDecoration(
-                                                      color: Color(0xffe0e0e0),
-                                                    ),
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                            //Recent Bank
-                                            bankUser == null
-                                                ? const Center(
-                                                    child: SizedBox(
-                                                        width: 30,
-                                                        height: 30,
-                                                        child:
-                                                            CircularProgressIndicator(
-                                                                color: Colors
-                                                                    .green)),
                                                   )
-                                                : Positioned(
-                                                    // frame12QfH (87:5405)
-                                                    left: 22 * fem,
-                                                    top: 22 * fem,
-                                                    child: Container(
-                                                      padding:
-                                                          EdgeInsets.fromLTRB(
-                                                              7 * fem,
-                                                              0 * fem,
-                                                              0 * fem,
-                                                              0 * fem),
-                                                      width: 387 * fem,
-                                                      height: 115 * fem,
-                                                      child: SizedBox(
-                                                        // group230vtX (87:5406)
-                                                        width: 598 * fem,
-                                                        height: double.infinity,
-                                                        child:
-                                                            SingleChildScrollView(
-                                                          child: Column(
-                                                            crossAxisAlignment:
-                                                                CrossAxisAlignment
-                                                                    .center,
-                                                            children:
-                                                                bankUser.banks!
-                                                                    .map(
-                                                                      (e) =>
-                                                                          Padding(
-                                                                        padding: const EdgeInsets
-                                                                            .all(
-                                                                            8.0),
-                                                                        child:
-                                                                            bankWidgets(
-                                                                          name: e
-                                                                              .bankName
-                                                                              .toString(),
-                                                                          image: e
-                                                                              .bankLogo
-                                                                              .toString(),
-                                                                        ),
-                                                                      ),
-                                                                    )
-                                                                    .toList(),
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ),
-                                          ],
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                              Positioned(
-                                // group976RvP (87:5338)
-                                left: 27 * fem,
-                                top: 300 * fem,
-                                child: SizedBox(
-                                  width: 362 * fem,
-                                  height: 535.15 * fem,
-                                  child: Stack(
-                                    children: [
-                                      Positioned(
-                                        // rectangle8MJF (87:5339)
-                                        left: 0 * fem,
-                                        top: 0.154296875 * fem,
-                                        child: Align(
-                                          child: SizedBox(
-                                            width: 362 * fem,
-                                            height: 535 * fem,
-                                            child: Container(
-                                              decoration: BoxDecoration(
-                                                borderRadius:
-                                                    BorderRadius.circular(
-                                                        5 * fem),
-                                                border: Border.all(
-                                                    color: const Color(
-                                                        0xfff5f5f5)),
-                                                color: const Color(0xffffffff),
-                                                boxShadow: [
-                                                  BoxShadow(
-                                                    color:
-                                                        const Color(0xffcbd2df),
-                                                    offset: Offset(
-                                                        0 * fem, 4 * fem),
-                                                    blurRadius: 2 * fem,
-                                                  ),
-                                                ],
-                                              ),
+                                                  .toList(),
                                             ),
                                           ),
                                         ),
                                       ),
-                                      bank == null
-                                          ? const Center(
-                                              child: SizedBox(
-                                                  width: 30,
-                                                  height: 30,
-                                                  child:
-                                                      CircularProgressIndicator(
-                                                          color: Colors.green)),
-                                            )
-                                          : Positioned(
-                                              // group258dWf (87:5340)
-                                              left: 0 * fem,
-                                              top: 0 * fem,
-                                              child: Container(
-                                                padding: EdgeInsets.fromLTRB(
-                                                    0 * fem,
-                                                    13.46 * fem,
-                                                    0 * fem,
-                                                    0 * fem),
-                                                width: 362 * fem,
-                                                height: 522.4 * fem,
-                                                child: SingleChildScrollView(
-                                                  child: Column(
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .center,
-                                                    children: bank.banks!
-                                                        .map(
-                                                          (e) => Padding(
-                                                            padding:
-                                                                const EdgeInsets
-                                                                    .all(8.0),
-                                                            child: bankWidgets(
-                                                              name: e.bankName
-                                                                  .toString(),
-                                                              image: e
-                                                                  .primaryLogo
-                                                                  .toString(),
-                                                            ),
-                                                          ),
-                                                        )
-                                                        .toList(),
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                    ],
-                                  ),
-                                ),
-                              ),
+                                    ),
                             ],
                           ),
                         ),
-                        Text(
-                          // viewallbanksh7m (87:5442)
-                          'View All Banks',
-                          style: SafeGoogleFont(
-                            'Montserrat',
-                            fontSize: 16 * ffem,
-                            fontWeight: FontWeight.w500,
-                            height: 1.2175 * ffem / fem,
-                            color: const Color(0xff8fd4ff),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        Positioned(
+                          // group976RvP (87:5338)
+                          left: 20 * fem,
+                          top: 200 * fem,
+                          child: SizedBox(
+                            width: 390 * fem,
+                            height: 535.15 * fem,
+                            child: Stack(
+                              children: [
+                                Positioned(
+                                  // rectangle8MJF (87:5339)
+                                  left: 20 * fem,
+                                  top: 0.154296875 * fem,
+                                  child: Align(
+                                    child: SizedBox(
+                                      width: 370 * fem,
+                                      height: 535 * fem,
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(5 * fem),
+                                          border: Border.all(
+                                              color: const Color(0xfff5f5f5)),
+                                          color: const Color(0xffffffff),
+                                          boxShadow: [
+                                            BoxShadow(
+                                              color: const Color(0xffcbd2df),
+                                              offset: Offset(0 * fem, 4 * fem),
+                                              blurRadius: 2 * fem,
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                bank == null
+                                    ? const Center(
+                                        child: SizedBox(
+                                            width: 30,
+                                            height: 30,
+                                            child: CircularProgressIndicator(
+                                                color: Colors.green)),
+                                      )
+                                    : Positioned(
+                                        // group258dWf (87:5340)
+                                        left: 20 * fem,
+                                        top: 0 * fem,
+                                        child: Container(
+                                          padding: EdgeInsets.fromLTRB(0 * fem,
+                                              13.46 * fem, 0 * fem, 0 * fem),
+                                          width: 362 * fem,
+                                          height: 522.4 * fem,
+                                          child: SingleChildScrollView(
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.center,
+                                              children: bank.banks!
+                                                  .map(
+                                                    (e) => Padding(
+                                                      padding:
+                                                          const EdgeInsets.all(
+                                                              8.0),
+                                                      child: bankWidgets(
+                                                        name: e.bankName
+                                                            .toString(),
+                                                        image: e.primaryLogo
+                                                            .toString(),
+                                                        institutionID: e
+                                                            .institutionID
+                                                            .toString(),
+                                                        bankCode: e.bankCode
+                                                            .toString(),
+                                                        aggregatorID: e
+                                                            .aggregatorID
+                                                            .toString(),
+                                                      ),
+                                                    ),
+                                                  )
+                                                  .toList(),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                              ],
+                            ),
                           ),
+                        ),
+                        SizedBox(
+                          height: 50,
+                        ),
+                        Center(
+                          child: Text(
+                            // viewallbanksh7m (87:5442)
+                            'View All Banks',
+                            style: SafeGoogleFont(
+                              'Montserrat',
+                              fontSize: 16 * ffem,
+                              fontWeight: FontWeight.w500,
+                              height: 1.2175 * ffem / fem,
+                              color: const Color(0xff8fd4ff),
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          height: 100,
                         ),
                       ],
                     ),

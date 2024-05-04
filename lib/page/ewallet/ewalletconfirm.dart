@@ -1,16 +1,8 @@
-import 'dart:convert';
-
-import 'package:digicoop/Function/aes.dart';
-import 'package:digicoop/api/api_strings.dart';
-import 'package:digicoop/constant/flush_bar.dart';
-import 'package:digicoop/constant/keys.dart';
-import 'package:digicoop/constant/shared_pref.dart';
 import 'package:digicoop/routes/route_generator.dart';
 import 'package:digicoop/util/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
-import 'package:http/http.dart' as http;
 
 class ewalletconfirmScreen extends StatefulWidget {
   final String img,
@@ -46,7 +38,6 @@ class _ewalletconfirmScreenState extends State<ewalletconfirmScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
     double total = double.parse(widget.amount.toString()) +
         double.parse(widget.sf.toString());
     double baseWidth = 414;

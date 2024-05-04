@@ -3,9 +3,25 @@ import 'package:digicoop/util/customCheckbox.dart';
 import 'package:digicoop/util/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:intl/intl.dart';
 
 class bankConfirmationScreen extends StatefulWidget {
-  const bankConfirmationScreen({super.key});
+  final String bankName,
+      acctName,
+      acctNum,
+      amount,
+      institutionID,
+      bankCode,
+      aggregatorID;
+  const bankConfirmationScreen(
+      {super.key,
+      required this.bankName,
+      required this.acctName,
+      required this.acctNum,
+      required this.amount,
+      required this.institutionID,
+      required this.bankCode,
+      required this.aggregatorID});
 
   @override
   State<bankConfirmationScreen> createState() => _bankConfirmationScreenState();
@@ -13,9 +29,12 @@ class bankConfirmationScreen extends StatefulWidget {
 
 class _bankConfirmationScreenState extends State<bankConfirmationScreen> {
   bool _isSaved = false;
+  NumberFormat currencyFormat =
+      NumberFormat.currency(locale: 'en_US', symbol: '');
+
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
+    double total = double.parse(widget.amount.toString()) + double.parse("20");
 
     double baseWidth = 414;
     double fem = MediaQuery.of(context).size.width / baseWidth;
@@ -204,7 +223,7 @@ class _bankConfirmationScreenState extends State<bankConfirmationScreen> {
                                               margin: EdgeInsets.fromLTRB(
                                                   1 * fem,
                                                   0 * fem,
-                                                  85 * fem,
+                                                  0 * fem,
                                                   23 * fem),
                                               width: double.infinity,
                                               child: Row(
@@ -212,11 +231,12 @@ class _bankConfirmationScreenState extends State<bankConfirmationScreen> {
                                                     CrossAxisAlignment.center,
                                                 children: [
                                                   Container(
+                                                    width: 130 * ffem,
                                                     // banknameZFm (2082:810)
                                                     margin: EdgeInsets.fromLTRB(
                                                         0 * fem,
                                                         1 * fem,
-                                                        96 * fem,
+                                                        0 * fem,
                                                         0 * fem),
                                                     child: Text(
                                                       'Bank Name',
@@ -234,7 +254,7 @@ class _bankConfirmationScreenState extends State<bankConfirmationScreen> {
                                                   ),
                                                   Text(
                                                     // unionbankUNj (2082:811)
-                                                    'Unionbank',
+                                                    widget.bankName,
                                                     textAlign: TextAlign.right,
                                                     style: SafeGoogleFont(
                                                       'Montserrat',
@@ -255,7 +275,7 @@ class _bankConfirmationScreenState extends State<bankConfirmationScreen> {
                                               margin: EdgeInsets.fromLTRB(
                                                   1 * fem,
                                                   0 * fem,
-                                                  55 * fem,
+                                                  0 * fem,
                                                   23 * fem),
                                               width: double.infinity,
                                               child: Row(
@@ -263,11 +283,12 @@ class _bankConfirmationScreenState extends State<bankConfirmationScreen> {
                                                     CrossAxisAlignment.start,
                                                 children: [
                                                   Container(
+                                                    width: 130 * ffem,
                                                     // accountnumberMBd (2082:807)
                                                     margin: EdgeInsets.fromLTRB(
                                                         0 * fem,
                                                         0 * fem,
-                                                        62 * fem,
+                                                        0 * fem,
                                                         0 * fem),
                                                     child: Text(
                                                       'Account Number',
@@ -285,7 +306,7 @@ class _bankConfirmationScreenState extends State<bankConfirmationScreen> {
                                                   ),
                                                   Text(
                                                     // ru5 (2082:808)
-                                                    '1234 5678 0009',
+                                                    widget.acctNum,
                                                     textAlign: TextAlign.right,
                                                     style: SafeGoogleFont(
                                                       'Montserrat',
@@ -306,7 +327,7 @@ class _bankConfirmationScreenState extends State<bankConfirmationScreen> {
                                               margin: EdgeInsets.fromLTRB(
                                                   1 * fem,
                                                   0 * fem,
-                                                  30 * fem,
+                                                  0 * fem,
                                                   19 * fem),
                                               width: double.infinity,
                                               child: Row(
@@ -314,11 +335,12 @@ class _bankConfirmationScreenState extends State<bankConfirmationScreen> {
                                                     CrossAxisAlignment.start,
                                                 children: [
                                                   Container(
+                                                    width: 130 * ffem,
                                                     // accountnamew9q (2082:816)
                                                     margin: EdgeInsets.fromLTRB(
                                                         0 * fem,
                                                         0 * fem,
-                                                        76 * fem,
+                                                        0 * fem,
                                                         0 * fem),
                                                     child: Text(
                                                       'Account Name',
@@ -336,7 +358,7 @@ class _bankConfirmationScreenState extends State<bankConfirmationScreen> {
                                                   ),
                                                   Text(
                                                     // juanchodelacruzFRR (2082:817)
-                                                    'Juancho Dela Cruz',
+                                                    widget.acctName,
                                                     textAlign: TextAlign.right,
                                                     style: SafeGoogleFont(
                                                       'Montserrat',
@@ -370,7 +392,7 @@ class _bankConfirmationScreenState extends State<bankConfirmationScreen> {
                                               margin: EdgeInsets.fromLTRB(
                                                   1 * fem,
                                                   0 * fem,
-                                                  70 * fem,
+                                                  0 * fem,
                                                   23 * fem),
                                               width: double.infinity,
                                               child: Row(
@@ -378,12 +400,9 @@ class _bankConfirmationScreenState extends State<bankConfirmationScreen> {
                                                     CrossAxisAlignment.start,
                                                 children: [
                                                   Container(
+                                                    width: 130 * ffem,
                                                     // amountdB5 (2082:813)
-                                                    margin: EdgeInsets.fromLTRB(
-                                                        0 * fem,
-                                                        0 * fem,
-                                                        116 * fem,
-                                                        0 * fem),
+
                                                     child: Text(
                                                       'Amount',
                                                       style: SafeGoogleFont(
@@ -400,7 +419,7 @@ class _bankConfirmationScreenState extends State<bankConfirmationScreen> {
                                                   ),
                                                   Text(
                                                     // php3500008tX (2082:814)
-                                                    'PHP 3,500.00',
+                                                    'PHP ${currencyFormat.format(double.parse(widget.amount))}',
                                                     textAlign: TextAlign.right,
                                                     style: SafeGoogleFont(
                                                       'Montserrat',
@@ -421,7 +440,7 @@ class _bankConfirmationScreenState extends State<bankConfirmationScreen> {
                                               margin: EdgeInsets.fromLTRB(
                                                   0 * fem,
                                                   0 * fem,
-                                                  91 * fem,
+                                                  0 * fem,
                                                   23 * fem),
                                               width: double.infinity,
                                               child: Row(
@@ -429,11 +448,12 @@ class _bankConfirmationScreenState extends State<bankConfirmationScreen> {
                                                     CrossAxisAlignment.start,
                                                 children: [
                                                   Container(
+                                                    width: 130 * ffem,
                                                     // servicefeeQb9 (2082:822)
                                                     margin: EdgeInsets.fromLTRB(
                                                         0 * fem,
                                                         0 * fem,
-                                                        97 * fem,
+                                                        0 * fem,
                                                         0 * fem),
                                                     child: Text(
                                                       'Service Fee',
@@ -472,7 +492,7 @@ class _bankConfirmationScreenState extends State<bankConfirmationScreen> {
                                               margin: EdgeInsets.fromLTRB(
                                                   0 * fem,
                                                   0 * fem,
-                                                  71 * fem,
+                                                  0 * fem,
                                                   0 * fem),
                                               width: double.infinity,
                                               child: Row(
@@ -480,11 +500,12 @@ class _bankConfirmationScreenState extends State<bankConfirmationScreen> {
                                                     CrossAxisAlignment.start,
                                                 children: [
                                                   Container(
+                                                    width: 130 * ffem,
                                                     // totalamount1aw (2082:819)
                                                     margin: EdgeInsets.fromLTRB(
                                                         0 * fem,
                                                         0 * fem,
-                                                        84 * fem,
+                                                        0 * fem,
                                                         0 * fem),
                                                     child: Text(
                                                       'Total Amount',
@@ -502,7 +523,7 @@ class _bankConfirmationScreenState extends State<bankConfirmationScreen> {
                                                   ),
                                                   Text(
                                                     // php352000KrX (2082:820)
-                                                    'PHP 3,520.00',
+                                                    'PHP ${currencyFormat.format(total)}',
                                                     textAlign: TextAlign.right,
                                                     style: SafeGoogleFont(
                                                       'Montserrat',
@@ -615,8 +636,11 @@ class _bankConfirmationScreenState extends State<bankConfirmationScreen> {
                                         children: [
                                           Container(
                                             // proceedwQ3 (2082:790)
-                                            margin: EdgeInsets.fromLTRB(0 * fem,
-                                                0 * fem, 89.17 * fem, 0 * fem),
+                                            margin: EdgeInsets.fromLTRB(
+                                                20 * fem,
+                                                0 * fem,
+                                                89.17 * fem,
+                                                0 * fem),
                                             child: Text(
                                               'Proceed',
                                               textAlign: TextAlign.center,

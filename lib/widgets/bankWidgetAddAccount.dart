@@ -3,15 +3,13 @@ import 'package:digicoop/util/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-class bankWidgets extends StatelessWidget {
-  final String name, image, institutionID, bankCode, aggregatorID;
-  const bankWidgets({
+class bankWidgetsSearch extends StatelessWidget {
+  final String name, image, institutionID;
+  const bankWidgetsSearch({
     super.key,
     required this.name,
     required this.image,
     required this.institutionID,
-    required this.bankCode,
-    required this.aggregatorID,
   });
 
   @override
@@ -53,15 +51,13 @@ class bankWidgets extends StatelessWidget {
               ),
               child: GestureDetector(
                 onTap: () {
-                  // context.pushReplacementNamed(bankSend);
+                  // context.pushReplacementNamed(bankAddAcc);
                   context.pushReplacementNamed(
-                    bankSend,
+                    bankAddAcc,
                     pathParameters: {
                       "image": image,
                       "bankName": name,
                       "institutionID": institutionID,
-                      "bankCode": bankCode,
-                      "aggregatorID": aggregatorID,
                     },
                   );
                 },
@@ -124,15 +120,12 @@ class bankWidgets extends StatelessWidget {
             ),
             GestureDetector(
               onTap: () {
-                // context.pushReplacementNamed(bankSend);
+                //context.pushReplacementNamed(bankAddAcc);
                 context.pushReplacementNamed(
-                  bankSend,
+                  bankAddAcc,
                   pathParameters: {
                     "image": image,
                     "bankName": name,
-                    "institutionID": institutionID,
-                    "bankCode": bankCode,
-                    "aggregatorID": aggregatorID,
                   },
                 );
               },
