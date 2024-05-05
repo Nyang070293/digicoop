@@ -35,6 +35,30 @@ class _aboutScreenState extends ConsumerState<aboutScreen> {
     super.initState();
   }
 
+  void showLoadingDialog() {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return const AlertDialog(
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              CircularProgressIndicator(),
+              SizedBox(height: 16),
+              Text(
+                "Please Wait....",
+                style: TextStyle(
+                  fontFamily: 'Poppins',
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
   Future<void> sendData() async {
     //int gender = 0;
     int civil_status = 0;
@@ -580,51 +604,40 @@ class _aboutScreenState extends ConsumerState<aboutScreen> {
                                         title: "Field Required",
                                         message: "Please Enter your Firstname",
                                       );
-                                      return;
-                                    }
-                                    if (_lastName.text.isEmpty) {
+                                    } else if (_lastName.text.isEmpty) {
                                       Flush.flushMessage(
                                         icons: Icons.error_outline,
                                         title: "Field Required",
                                         message: "Please Enter your Lastname",
                                       );
-                                      return;
-                                    }
-
-                                    if (_birthday.text.isEmpty) {
+                                    } else if (_birthday.text.isEmpty) {
                                       Flush.flushMessage(
                                         icons: Icons.error_outline,
                                         title: "Field Required",
                                         message: "Please Enter your Birthday",
                                       );
-                                      return;
-                                    }
-                                    if (_birthplace.text.isEmpty) {
+                                    } else if (_birthplace.text.isEmpty) {
                                       Flush.flushMessage(
                                         icons: Icons.error_outline,
                                         title: "Field Required",
                                         message: "Please Enter your Birthplace",
                                       );
-                                      return;
-                                    }
-                                    if (_selectedGender == "") {
+                                    } else if (_selectedGender == "") {
                                       Flush.flushMessage(
                                         icons: Icons.error_outline,
                                         title: "Field Required",
-                                        message: "Please Select a Gender",
+                                        message: "Please Select Gender",
                                       );
-                                      return;
-                                    }
-                                    if (_selectedCS == "") {
+                                    } else if (_selectedCS == "") {
                                       Flush.flushMessage(
                                         icons: Icons.error_outline,
                                         title: "Field Required",
-                                        message: "Please Select a Civil Status",
+                                        message: "Please Select Civil Status",
                                       );
-                                      return;
+                                    } else {
+                                      showLoadingDialog();
+                                      sendData();
                                     }
-
-                                    sendData();
                                   },
                                   style: TextButton.styleFrom(
                                     padding: EdgeInsets.zero,

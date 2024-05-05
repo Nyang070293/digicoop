@@ -6,7 +6,6 @@ import 'package:digicoop/api/api_strings.dart';
 import 'package:digicoop/constant/flush_bar.dart';
 import 'package:digicoop/constant/keys.dart';
 import 'package:digicoop/constant/shared_pref.dart';
-import 'package:digicoop/page/Signup/setupMobilepin.dart';
 import 'package:digicoop/routes/route_generator.dart';
 import 'package:digicoop/util/utils.dart';
 import 'package:flutter/material.dart';
@@ -27,6 +26,8 @@ class _verificationCodeScreenState
     extends ConsumerState<verificationCodeScreen> {
   int _start = 60;
   late Timer _timer;
+  bool isTimeOver = false;
+  final pinController = TextEditingController();
 
   void initState() {
     super.initState();
@@ -34,6 +35,7 @@ class _verificationCodeScreenState
       if (_start == 0) {
         setState(() {
           _timer.cancel();
+          isTimeOver = true;
         });
       } else {
         setState(() {
@@ -49,7 +51,85 @@ class _verificationCodeScreenState
     super.dispose();
   }
 
+  void showLoadingDialog() {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return const AlertDialog(
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              CircularProgressIndicator(),
+              SizedBox(height: 16),
+              Text(
+                "Please Wait....",
+                style: TextStyle(
+                  fontFamily: 'Poppins',
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  Future<void> gnrtOTP() async {
+    pinController.clear();
+
+    _start = 60;
+    isTimeOver = false;
+    _timer = Timer.periodic(Duration(seconds: 1), (Timer timer) {
+      if (_start == 0) {
+        setState(() {
+          _timer.cancel();
+          isTimeOver = true;
+        });
+      } else {
+        setState(() {
+          _start--;
+        });
+      }
+    });
+// MobileNum
+    try {
+      final data =
+          '{"contactOptionId": 1,  "otpUsageType": 1,  "contactOptionValue": "${SharedPrefs.read(MobileNum)}", "isTest":0, "applicationId": 2}';
+
+      final encryptedBody = Aes256.encrypt(data, SharedPrefs.read(totp));
+      print("mobile otp $encryptedBody");
+      http.Response response = await http.post(
+        Uri.parse(DigiCoopAPI.generateOTP),
+        body: {'data': encryptedBody},
+      );
+      // Parse the JSON response body
+      final responseData = json.decode(response.body);
+      // Access specific data from the parsed response
+      var encryptData = responseData['data'];
+
+      final decrypt = Aes256.decrypt(encryptData, SharedPrefs.read(totp));
+      Map<String, dynamic> jsonData = jsonDecode(decrypt!);
+      print("otp mobile ${jsonData}");
+      // Handle response
+      if (response.statusCode == 201 || response.statusCode == 200) {
+        SharedPrefs.write(personCode, jsonData['data']['personCode']);
+        SharedPrefs.write(userCode, jsonData['data']['userCode']);
+        // context.pushReplacementNamed(otpCode);
+      } else {
+        Flush.flushMessage(
+          icons: Icons.error_outline,
+          title: "Error",
+          message: jsonData['message'],
+        );
+      }
+    } catch (e) {
+      print('Error sending encrypted payload: $e');
+    }
+  }
+
   Future<void> sendData(String otp) async {
+    showLoadingDialog();
     try {
       print("personCode1 ${SharedPrefs.read(personCode)}");
       final data =
@@ -71,7 +151,7 @@ class _verificationCodeScreenState
       print("verify ${jsonData}");
       // Handle response
       if (response.statusCode == 201) {
-        context.pushNamed(mpin);
+        context.pushReplacementNamed(mpin);
       } else {
         Flush.flushMessage(
           icons: Icons.error_outline,
@@ -205,6 +285,7 @@ class _verificationCodeScreenState
                               border: Border.all(color: Colors.grey),
                             ),
                           ),
+                          controller: pinController,
                           onCompleted: (pin) => sendData(pin),
                         ),
                       ],
@@ -213,9 +294,9 @@ class _verificationCodeScreenState
                   Container(
                     // autogrouphnbzJuu (Ga6QDb7bJaMqj5m1PohnBZ)
                     margin: EdgeInsets.fromLTRB(
-                        0 * fem, 0 * fem, 37 * fem, 50 * fem),
+                        0 * fem, 0 * fem, 0 * fem, 50 * fem),
                     padding: EdgeInsets.fromLTRB(
-                        63 * fem, 0 * fem, 27 * fem, 0 * fem),
+                        40 * fem, 0 * fem, 0 * fem, 0 * fem),
                     width: 318 * fem,
                     height: 76 * fem,
                     child: Container(
@@ -225,32 +306,57 @@ class _verificationCodeScreenState
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          Container(
-                            // resendcodein2UX (35:2020)
-                            margin: EdgeInsets.fromLTRB(
-                                0 * fem, 0 * fem, 9 * fem, 0 * fem),
-                            child: Text(
-                              'Resend Code in',
-                              style: SafeGoogleFont(
-                                'Montserrat',
-                                fontSize: 16 * ffem,
-                                fontWeight: FontWeight.w500,
-                                height: 1.2175 * ffem / fem,
-                                color: const Color(0xffbdbdbd),
-                              ),
-                            ),
-                          ),
-                          Text(
-                            // seconds4RD (35:2021)
-                            '$_start seconds',
-                            style: SafeGoogleFont(
-                              'Montserrat',
-                              fontSize: 16 * ffem,
-                              fontWeight: FontWeight.w600,
-                              height: 1.2175 * ffem / fem,
-                              color: const Color(0xff259ded),
-                            ),
-                          ),
+                          isTimeOver
+                              ? const SizedBox()
+                              : Container(
+                                  // resendcodein2UX (35:2020)
+                                  margin: EdgeInsets.fromLTRB(
+                                      30 * fem, 0 * fem, 9 * fem, 0 * fem),
+                                  child: Text(
+                                    'Resend Code in',
+                                    style: SafeGoogleFont(
+                                      'Montserrat',
+                                      fontSize: 16 * ffem,
+                                      fontWeight: FontWeight.w500,
+                                      height: 1.2175 * ffem / fem,
+                                      color: const Color(0xffbdbdbd),
+                                    ),
+                                  ),
+                                ),
+                          isTimeOver
+                              ? Container(
+                                  margin: EdgeInsets.fromLTRB(
+                                      80 * fem, 0 * fem, 9 * fem, 0 * fem),
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      gnrtOTP();
+                                    },
+                                    child: Center(
+                                      child: Text(
+                                        // seconds4RD (35:2021)
+                                        'Resend Code',
+                                        style: SafeGoogleFont(
+                                          'Montserrat',
+                                          fontSize: 16 * ffem,
+                                          fontWeight: FontWeight.w600,
+                                          height: 1.2175 * ffem / fem,
+                                          color: const Color(0xff259ded),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                )
+                              : Text(
+                                  // seconds4RD (35:2021)
+                                  '$_start seconds',
+                                  style: SafeGoogleFont(
+                                    'Montserrat',
+                                    fontSize: 16 * ffem,
+                                    fontWeight: FontWeight.w600,
+                                    height: 1.2175 * ffem / fem,
+                                    color: const Color(0xff259ded),
+                                  ),
+                                ),
                         ],
                       ),
                     ),
@@ -258,7 +364,7 @@ class _verificationCodeScreenState
                   Container(
                     // group410nEj (35:2022)
                     margin: EdgeInsets.fromLTRB(
-                        10 * fem, 0 * fem, 10 * fem, 10 * fem),
+                        10 * fem, 0 * fem, 30 * fem, 10 * fem),
                     child: TextButton(
                       onPressed: () {
                         // Navigator.pushReplacement(
@@ -273,7 +379,7 @@ class _verificationCodeScreenState
                       ),
                       child: Container(
                         padding: EdgeInsets.fromLTRB(
-                            142 * fem, 20 * fem, 23.67 * fem, 20 * fem),
+                            130 * fem, 20 * fem, 30 * fem, 20 * fem),
                         width: double.infinity,
                         decoration: BoxDecoration(
                           color: const Color(0xff259ded),
@@ -292,7 +398,7 @@ class _verificationCodeScreenState
                             Container(
                               // verify68w (35:2024)
                               margin: EdgeInsets.fromLTRB(
-                                  0 * fem, 0 * fem, 91.67 * fem, 0 * fem),
+                                  0 * fem, 0 * fem, 80 * fem, 0 * fem),
                               child: Text(
                                 'Verify',
                                 textAlign: TextAlign.center,

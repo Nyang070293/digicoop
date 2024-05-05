@@ -1,3 +1,4 @@
+import 'package:digicoop/constant/flush_bar.dart';
 import 'package:digicoop/constant/keys.dart';
 import 'package:digicoop/constant/shared_pref.dart';
 import 'package:digicoop/global/cityGlobal.dart';
@@ -42,6 +43,30 @@ class _homeAddressScreenState extends ConsumerState<homeAddressScreen> {
   void initState() {
     super.initState();
     ref.read(region.notifier).getRegion();
+  }
+
+  void showLoadingDialog() {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return const AlertDialog(
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              CircularProgressIndicator(),
+              SizedBox(height: 16),
+              Text(
+                "Please Wait....",
+                style: TextStyle(
+                  fontFamily: 'Poppins',
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
   }
 
   Future<void> sendData() async {
@@ -641,7 +666,48 @@ class _homeAddressScreenState extends ConsumerState<homeAddressScreen> {
                                     2 * fem, 0 * fem, 0 * fem, 0 * fem),
                                 child: TextButton(
                                   onPressed: () {
-                                    sendData();
+                                    if (_address1.text.isEmpty) {
+                                      Flush.flushMessage(
+                                        icons: Icons.error_outline,
+                                        title: "Field Required",
+                                        message:
+                                            "Please Enter Address(House No/Bldg/Flr)",
+                                      );
+                                    } else if (_address1.text.isEmpty) {
+                                      Flush.flushMessage(
+                                        icons: Icons.error_outline,
+                                        title: "Field Required",
+                                        message:
+                                            "Please Enter Address(Subd/Brgy/Purok)",
+                                      );
+                                    } else if (_selectedItem == "") {
+                                      Flush.flushMessage(
+                                        icons: Icons.error_outline,
+                                        title: "Field Required",
+                                        message: "Please Select Region",
+                                      );
+                                    } else if (_selectedItemProvince == "") {
+                                      Flush.flushMessage(
+                                        icons: Icons.error_outline,
+                                        title: "Field Required",
+                                        message: "Please Select Province",
+                                      );
+                                    } else if (_selectedItemCity == "") {
+                                      Flush.flushMessage(
+                                        icons: Icons.error_outline,
+                                        title: "Field Required",
+                                        message: "Please Select City",
+                                      );
+                                    } else if (_postalCode.text.isEmpty) {
+                                      Flush.flushMessage(
+                                        icons: Icons.error_outline,
+                                        title: "Field Required",
+                                        message: "Please Enter Postal Code",
+                                      );
+                                    } else {
+                                      showLoadingDialog();
+                                      sendData();
+                                    }
                                   },
                                   style: TextButton.styleFrom(
                                     padding: EdgeInsets.zero,

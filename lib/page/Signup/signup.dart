@@ -30,19 +30,29 @@ class _signupScreenState extends ConsumerState<signupScreen> {
     context.pushReplacementNamed(login);
   }
 
-  // Future<void> sendData(String Num) async {
-  //   ref.read(userCreate.notifier).createUser(Num);
-
-  //   int? user = ref.watch(userCreate).statusCode;
-
-  //   if (user == 201) {
-  //     SharedPrefs.write(
-  //         MobileNum, ref.watch(userCreate).data?.mobileNumber.toString());
-  //     SharedPrefs.write(
-  //         personCode, ref.watch(userCreate).data?.personCode.toString());
-  //     context.pushNamed(vCode);
-  //   }
-  // }
+  void showLoadingDialog() {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return const AlertDialog(
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              CircularProgressIndicator(),
+              SizedBox(height: 16),
+              Text(
+                "Please Wait....",
+                style: TextStyle(
+                  fontFamily: 'Poppins',
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
 
   Future<void> sendData(String num) async {
     try {
@@ -176,6 +186,7 @@ class _signupScreenState extends ConsumerState<signupScreen> {
                         CommonTextField(
                           controller: _numberController,
                           labelText: 'Enter Mobile No.',
+                          maxLength: 11,
                           keyboardType: TextInputType.number,
                           prefixIconData: Icons.phone,
                           textInputAction: TextInputAction.next,
@@ -260,14 +271,26 @@ class _signupScreenState extends ConsumerState<signupScreen> {
                         10 * fem, 0 * fem, 0 * fem, 80 * fem),
                     child: TextButton(
                       onPressed: () {
+                        String phoneNumber = _numberController.text;
+
                         if (_numberController.text.isEmpty) {
                           Flush.flushMessage(
                             icons: Icons.error_outline,
                             title: "Field Required",
                             message: "Please enter your Mobile Number.",
                           );
-                        } else {
+                        }
+
+                        if (phoneNumber.startsWith("09")) {
+                          // print("Phone number starts with '09'");
+                          showLoadingDialog();
                           sendData(_numberController.text);
+                        } else {
+                          Flush.flushMessage(
+                            icons: Icons.error_outline,
+                            title: "Invalid format for Mobile Number.",
+                            message: "Please follow this format: 09xxxxxxxxx",
+                          );
                         }
                       },
                       style: TextButton.styleFrom(
