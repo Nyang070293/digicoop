@@ -317,6 +317,7 @@ class _loginScreenState extends ConsumerState<loginScreen> {
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
+<<<<<<< HEAD
                         isAccesToken
                             ? Container(
                                 // loginviampinnAj (97:6896)
@@ -345,6 +346,25 @@ class _loginScreenState extends ConsumerState<loginScreen> {
                                 child: SizedBox(
                                   width: 190,
                                 ),
+=======
+                        Container(
+                          // loginviampinnAj (97:6896)
+                          margin: EdgeInsets.fromLTRB(
+                              0 * fem, 0 * fem, 77 * fem, 0 * fem),
+                          child: InkWell(
+                            onTap: () {
+                                 context.pushReplacementNamed(loginMPIN);
+                              // context.pushReplacementNamed(about);
+                            },
+                            child: Text(
+                              'Login via MPIN',
+                              style: SafeGoogleFont(
+                                'Montserrat',
+                                fontSize: 16 * ffem,
+                                fontWeight: FontWeight.w500,
+                                height: 1.2175 * ffem / fem,
+                                color: const Color(0xff8fd4ff),
+>>>>>>> ea40b1602836647c42454981645e1d1c41002519
                               ),
                         Container(
                           // loginviampinnAj (97:6896)

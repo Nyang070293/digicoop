@@ -34,6 +34,30 @@ String getFirstLetters(String text) {
 }
 
 class _reviewDetailScreenState extends ConsumerState<reviewDetailScreen> {
+  void showLoadingDialog() {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return const AlertDialog(
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              CircularProgressIndicator(),
+              SizedBox(height: 16),
+              Text(
+                "Please Wait....",
+                style: TextStyle(
+                  fontFamily: 'Poppins',
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
   Future<void> sendData() async {
     final data =
         '{"firstName": "${SharedPrefs.read(firstname)}","lastName": "${SharedPrefs.read(lastname)}", "middleName": "${SharedPrefs.read(middlename)}", "suffix": "${SharedPrefs.read(suffix)}", "gender": ${SharedPrefs.read(gender)}, "birthDate": "${SharedPrefs.read(birthday)}", "birthPlace": "${SharedPrefs.read(birthplace)}", "civilStatus": ${SharedPrefs.read(civilstatus)}, "address1": "${SharedPrefs.read(address1)}", "address2": "${SharedPrefs.read(address2)}", "cityId": "${SharedPrefs.read(cityId)}","zipCode": "${SharedPrefs.read(zipCode)}","contactOptionId": 2, "contactOptionValue": "${SharedPrefs.read(contactOptionValue)}","addressTypeId": ${SharedPrefs.read(addressTypeId)}}';
@@ -535,6 +559,7 @@ class _reviewDetailScreenState extends ConsumerState<reviewDetailScreen> {
                                     2 * fem, 0 * fem, 0 * fem, 30 * fem),
                                 child: TextButton(
                                   onPressed: () {
+                                    showLoadingDialog();
                                     sendData();
                                   },
                                   style: TextButton.styleFrom(

@@ -28,6 +28,30 @@ class _setupMobilepinScreenState extends ConsumerState<setupMobilepinScreen> {
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _cpasswordController = TextEditingController();
 
+  void showLoadingDialog() {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return const AlertDialog(
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              CircularProgressIndicator(),
+              SizedBox(height: 16),
+              Text(
+                "Please Wait....",
+                style: TextStyle(
+                  fontFamily: 'Poppins',
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
   Future<void> sendData(String password, String pinCode, String CpinCode,
       String Cpassword) async {
     try {
@@ -336,17 +360,21 @@ class _setupMobilepinScreenState extends ConsumerState<setupMobilepinScreen> {
                                           "Please Enter 6-Digit Mobile Pin",
                                     );
                                   }
-
-                                  if (_cmobileController.text.isEmpty) {
+                                  if (_mobileController.text.length < 6) {
+                                    Flush.flushMessage(
+                                      icons: Icons.error_outline,
+                                      title: "Field Required",
+                                      message:
+                                          "Please Enter 6-Digit Mobile Pin",
+                                    );
+                                  } else if (_cmobileController.text.isEmpty) {
                                     Flush.flushMessage(
                                       icons: Icons.error_outline,
                                       title: "Field Required",
                                       message:
                                           "Please Enter Confirmation 6-Digit Mobile Pin",
                                     );
-                                  }
-
-                                  if (_mobileController.text !=
+                                  } else if (_mobileController.text !=
                                       _cmobileController.text) {
                                     Flush.flushMessage(
                                       icons: Icons.error_outline,
@@ -354,26 +382,21 @@ class _setupMobilepinScreenState extends ConsumerState<setupMobilepinScreen> {
                                       message:
                                           "Confirmation Mobile Pin does not match ",
                                     );
-                                  }
-
-                                  if (_passwordController.text.isEmpty) {
+                                  } else if (_passwordController.text.isEmpty) {
                                     Flush.flushMessage(
                                       icons: Icons.error_outline,
                                       title: "Field Required",
                                       message: "Please Enter Password",
                                     );
-                                  }
-
-                                  if (_cpasswordController.text.isEmpty) {
+                                  } else if (_cpasswordController
+                                      .text.isEmpty) {
                                     Flush.flushMessage(
                                       icons: Icons.error_outline,
                                       title: "Field Required",
                                       message:
                                           "Please Enter Confirmation Password",
                                     );
-                                  }
-
-                                  if (_passwordController.text !=
+                                  } else if (_passwordController.text !=
                                       _cpasswordController.text) {
                                     Flush.flushMessage(
                                       icons: Icons.error_outline,
@@ -381,13 +404,14 @@ class _setupMobilepinScreenState extends ConsumerState<setupMobilepinScreen> {
                                       message:
                                           "Confirmation Password does not match ",
                                     );
+                                  } else {
+                                    showLoadingDialog();
+                                    sendData(
+                                        _passwordController.text,
+                                        _mobileController.text,
+                                        _cmobileController.text,
+                                        _cpasswordController.text);
                                   }
-
-                                  sendData(
-                                      _passwordController.text,
-                                      _mobileController.text,
-                                      _cmobileController.text,
-                                      _cpasswordController.text);
                                 },
                                 style: TextButton.styleFrom(
                                   padding: EdgeInsets.zero,

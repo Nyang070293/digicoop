@@ -25,5 +25,6 @@ class DigiCoopAPI {
       ValidateOTP = "$baseUrl/otp/validate",
       updatepasswordIdentify = "$baseUrl/auth/update-password/identifier",
       bankList = "$baseUrl/transactions/banks/v2",
-      bankUser = "$baseUrl/transactions/banks/user";
+      bankUser = "$baseUrl/transactions/banks/user",
+      addBankacct = "$baseUrl/transactions/banks/attach";
 }

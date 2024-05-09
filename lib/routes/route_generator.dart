@@ -340,23 +340,39 @@ final goRouter = Provider<GoRouter>((ref) {
       ),
       GoRoute(
         name: bankSearch,
-        path: "/$bankSearch",
+        path: "/$bankSearch/:type",
         builder: (context, state) {
-          return const bankSearchScreen();
+          return bankSearchScreen(
+            key: state.pageKey,
+            type: state.pathParameters["type"] ?? "0",
+          );
         },
       ),
       GoRoute(
         name: bankAddAcc,
-        path: "/$bankAddAcc",
+        path: "/$bankAddAcc/:image/:bankName/:institutionID",
         builder: (context, state) {
-          return const bankAddScreen();
+          return bankAddScreen(
+            key: state.pageKey,
+            image: state.pathParameters["image"] ?? "0",
+            bankName: state.pathParameters["bankName"] ?? "0",
+            institutionID: state.pathParameters["institutionID"] ?? "0",
+          );
         },
       ),
       GoRoute(
         name: bankSend,
-        path: "/$bankSend",
+        path:
+            "/$bankSend/:image/:bankName/:institutionID/:bankCode/:aggregatorID",
         builder: (context, state) {
-          return const bankSendScreen();
+          return bankSendScreen(
+            key: state.pageKey,
+            image: state.pathParameters["image"] ?? "0",
+            bankName: state.pathParameters["bankName"] ?? "0",
+            institutionID: state.pathParameters["institutionID"] ?? "0",
+            bankCode: state.pathParameters["bankCode"] ?? "0",
+            aggregatorID: state.pathParameters["aggregatorID"] ?? "0",
+          );
         },
       ),
       GoRoute(
@@ -368,9 +384,19 @@ final goRouter = Provider<GoRouter>((ref) {
       ),
       GoRoute(
         name: bankConfirmation,
-        path: "/$bankConfirmation",
+        path:
+            "/$bankConfirmation/:bankName/:acctName/:acctNum/:amount/:institutionID/:bankCode/:aggregatorID",
         builder: (context, state) {
-          return const bankConfirmationScreen();
+          return bankConfirmationScreen(
+            key: state.pageKey,
+            bankName: state.pathParameters["bankName"] ?? "0",
+            acctName: state.pathParameters["acctName"] ?? "0",
+            acctNum: state.pathParameters["acctNum"] ?? "0",
+            amount: state.pathParameters["amount"] ?? "0",
+            institutionID: state.pathParameters["institutionID"] ?? "0",
+            bankCode: state.pathParameters["bankCode"] ?? "0",
+            aggregatorID: state.pathParameters["aggregatorID"] ?? "0",
+          );
         },
       ),
       GoRoute(
