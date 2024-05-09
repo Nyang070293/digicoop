@@ -80,6 +80,30 @@ class _mpinScreenState extends ConsumerState<mpinScreen> {
     }
   }
 
+  void showLoadingDialog() {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return const AlertDialog(
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              CircularProgressIndicator(),
+              SizedBox(height: 16),
+              Text(
+                "Logging in...",
+                style: TextStyle(
+                  fontFamily: 'Poppins',
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     double baseWidth = 414;
@@ -138,6 +162,7 @@ class _mpinScreenState extends ConsumerState<mpinScreen> {
                   onChangedPin: (pin) {
                     // check the PIN length and check different PINs with 4,5.. length.
                     if (pin.length == 6) {
+                      showLoadingDialog();
                       sendData(pin);
                     }
                   },

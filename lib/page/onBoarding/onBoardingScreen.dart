@@ -32,6 +32,13 @@ class _onBoardingScreenState extends ConsumerState<onBoardingScreen> {
     double baseWidth = 414;
     double fem = MediaQuery.of(context).size.width / baseWidth;
     double ffem = fem * 0.97;
+    final screenWidth = MediaQuery.of(context).size.width;
+    // final screenHeight = MediaQuery.of(context).size.height;
+    // final textScaleFactor = MediaQuery.of(context).textScaleFactor;
+
+    // Calculate text size based on screen dimensions or other factors
+    final fontSize = screenWidth * 0.05;
+
     return Scaffold(
       body: Column(
         children: [
@@ -51,7 +58,7 @@ class _onBoardingScreenState extends ConsumerState<onBoardingScreen> {
                     children: [
                       Container(
                         margin: EdgeInsets.fromLTRB(
-                            298 * fem, 30 * fem, 0 * fem, 28 * fem),
+                            295 * fem, 30 * fem, 0 * fem, 28 * fem),
                         child: InkWell(
                           onTap: () {
                             context.pushReplacementNamed(login);
@@ -60,7 +67,7 @@ class _onBoardingScreenState extends ConsumerState<onBoardingScreen> {
                             'Skip',
                             style: SafeGoogleFont(
                               'Montserrat',
-                              fontSize: 18 * ffem,
+                              fontSize: 18,
                               fontWeight: FontWeight.w500,
                               height: 1.2175 * ffem / fem,
                               color: const Color(0xffbdbdbd),

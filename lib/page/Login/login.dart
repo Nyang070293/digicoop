@@ -28,6 +28,7 @@ class loginScreen extends ConsumerStatefulWidget {
 }
 
 class _loginScreenState extends ConsumerState<loginScreen> {
+  bool isAccesToken = false;
   final TextEditingController _numberController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
@@ -146,7 +147,14 @@ class _loginScreenState extends ConsumerState<loginScreen> {
     if (SharedPrefs.read(MobileNum).toString().isNotEmpty) {
       _numberController.text = SharedPrefs.read(MobileNum);
     }
-    print(SharedPrefs.read(accessToken));
+
+    setState(() {
+      if (SharedPrefs.read(accessToken).toString().isNotEmpty) {
+        isAccesToken = true;
+      }
+    });
+
+    // print(SharedPrefs.read(accessToken));
     // _numberController.text = "09269694352";
     // _passwordController.text = "Qwerty2.";
     super.initState();
@@ -309,26 +317,35 @@ class _loginScreenState extends ConsumerState<loginScreen> {
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        Container(
-                          // loginviampinnAj (97:6896)
-                          margin: EdgeInsets.fromLTRB(
-                              0 * fem, 0 * fem, 77 * fem, 0 * fem),
-                          child: InkWell(
-                            onTap: () {
-                              context.pushReplacementNamed(loginMPIN);
-                            },
-                            child: Text(
-                              'Login via MPIN',
-                              style: SafeGoogleFont(
-                                'Montserrat',
-                                fontSize: 16 * ffem,
-                                fontWeight: FontWeight.w500,
-                                height: 1.2175 * ffem / fem,
-                                color: const Color(0xff8fd4ff),
+                        isAccesToken
+                            ? Container(
+                                // loginviampinnAj (97:6896)
+                                margin: EdgeInsets.fromLTRB(
+                                    0 * fem, 0 * fem, 77 * fem, 0 * fem),
+                                child: InkWell(
+                                  onTap: () {
+                                    context.pushReplacementNamed(loginMPIN);
+                                  },
+                                  child: Text(
+                                    'Login via MPIN',
+                                    style: SafeGoogleFont(
+                                      'Montserrat',
+                                      fontSize: 16 * ffem,
+                                      fontWeight: FontWeight.w500,
+                                      height: 1.2175 * ffem / fem,
+                                      color: const Color(0xff8fd4ff),
+                                    ),
+                                  ),
+                                ),
+                              )
+                            : Container(
+                                // loginviampinnAj (97:6896)
+                                margin: EdgeInsets.fromLTRB(
+                                    0 * fem, 0 * fem, 0 * fem, 0 * fem),
+                                child: SizedBox(
+                                  width: 190,
+                                ),
                               ),
-                            ),
-                          ),
-                        ),
                         Container(
                           // loginviampinnAj (97:6896)
                           margin: EdgeInsets.fromLTRB(
