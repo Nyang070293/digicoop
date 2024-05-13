@@ -22,9 +22,12 @@ class DigiCoopAPI {
       getPaymentMethod = "$baseUrl/transactions/payment-categories/",
       cashinBankAPI = "$baseUrl/transactions/funds/cash-in/v2",
       cashinGCASH = "$baseUrl/transactions/funds/cash-in/gcash",
+      // ignore: non_constant_identifier_names
       ValidateOTP = "$baseUrl/otp/validate",
       updatepasswordIdentify = "$baseUrl/auth/update-password/identifier",
       bankList = "$baseUrl/transactions/banks/v2",
       bankUser = "$baseUrl/transactions/banks/user",
-      addBankacct = "$baseUrl/transactions/banks/attach";
+      addBankacct = "$baseUrl/transactions/banks/attach",
+      bankTransfer = "$baseUrl/transactions/funds/cash-out",
+      sf_api = "$baseUrl/transactions/dbc/service-fee";
 }

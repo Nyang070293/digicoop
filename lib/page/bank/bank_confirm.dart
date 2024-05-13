@@ -1,9 +1,17 @@
+import 'dart:convert';
+
+import 'package:digicoop/Function/aes.dart';
+import 'package:digicoop/api/api_strings.dart';
+import 'package:digicoop/constant/flush_bar.dart';
+import 'package:digicoop/constant/keys.dart';
+import 'package:digicoop/constant/shared_pref.dart';
 import 'package:digicoop/routes/route_generator.dart';
 import 'package:digicoop/util/customCheckbox.dart';
 import 'package:digicoop/util/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
+import 'package:http/http.dart' as http;
 
 class bankConfirmationScreen extends StatefulWidget {
   final String bankName,
@@ -29,13 +37,128 @@ class bankConfirmationScreen extends StatefulWidget {
 
 class _bankConfirmationScreenState extends State<bankConfirmationScreen> {
   bool _isSaved = false;
+  double sf_amount = 0;
+  double total = 0;
   NumberFormat currencyFormat =
       NumberFormat.currency(locale: 'en_US', symbol: '');
 
+  Future<void> sendData() async {
+    try {
+      Map<String, String> headers = {
+        // Define content-type as JSON
+        'Authorization':
+            'Bearer ${SharedPrefs.read(accessToken)}', // Add your authorization token here
+      };
+      final data =
+          '{"tenderId": 1,"transactionDetails": [{ "bankCode": "${widget.bankCode}}", "accountName": "${widget.acctName}",  "amount": ${widget.amount}, "description": "This is a test transaction","institutionID": ${widget.institutionID},"aggregatorID": ${widget.aggregatorID}, "accountName": "${widget.acctName}", "alternateName": " "}],"otpCode": "${SharedPrefs.read(totp)}", "otpType": 1 , "attach": 0}';
+
+      final encryptedBody = Aes256.encrypt(data, SharedPrefs.read(totp));
+      print("encryptedBody bank transfer $encryptedBody");
+      http.Response response = await http.post(
+        Uri.parse(DigiCoopAPI.bankTransfer),
+        headers: headers,
+        body: {'data': encryptedBody},
+      );
+      // Parse the JSON response body
+      final responseData = json.decode(response.body);
+      // Access specific data from the parsed response
+      var encryptData = responseData['data'];
+
+      final decrypt = Aes256.decrypt(encryptData, SharedPrefs.read(totp));
+      Map<String, dynamic> jsonData = jsonDecode(decrypt!);
+      //String userCode = jsonData["data"]["userCode"];
+      print("data add bank transfer ${jsonData}");
+      //print("userCode ${userCode}");
+      // Handle response
+      if (response.statusCode == 201) {
+        context.pushReplacementNamed(bankTransfer);
+      } else if (response.statusCode == 400) {
+        Flush.flushMessage(
+          icons: Icons.error_outline,
+          title: "Error",
+          message: jsonData['message'],
+        );
+      } else {
+        Flush.flushMessage(
+          icons: Icons.error_outline,
+          title: "Error",
+          message: jsonData['message'],
+        );
+      }
+    } catch (e) {
+      print('Error sending encrypted payload: $e');
+    }
+  }
+
+  Future<void> getSF() async {
+    int feeTypeId = 0;
+    try {
+      Map<String, String> headers = {
+        // Define content-type as JSON
+        'Authorization':
+            'Bearer ${SharedPrefs.read(accessToken)}', // Add your authorization token here
+      };
+
+      if (double.parse(widget.amount) >= 50000) {
+        feeTypeId = 5;
+      } else {
+        feeTypeId = 4;
+      }
+
+      final data =
+          '{ "institutionId": ${widget.institutionID}, "aggregatorId": ${widget.aggregatorID}, "cooperativeBranchCode": null, "feeTypeID": $feeTypeId, "merchantCode": null }';
+
+      final encryptedBody = Aes256.encrypt(data, SharedPrefs.read(totp));
+      print("encryptedBody sf $encryptedBody");
+      http.Response response = await http.post(
+        Uri.parse(DigiCoopAPI.sf_api),
+        headers: headers,
+        body: {'data': encryptedBody},
+      );
+      // Parse the JSON response body
+      final responseData = json.decode(response.body);
+      // Access specific data from the parsed response
+      var encryptData = responseData['data'];
+
+      final decrypt = Aes256.decrypt(encryptData, SharedPrefs.read(totp));
+      Map<String, dynamic> jsonData = jsonDecode(decrypt!);
+      //String userCode = jsonData["data"]["userCode"];
+      print("data sf ${jsonData}");
+      //print("userCode ${userCode}");
+      // Handle response
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        // context.pushReplacementNamed(bankTransfer);
+        setState(() {
+          sf_amount = jsonData["data"]["totalFee"];
+          total = double.parse(widget.amount.toString()) +
+              jsonData["data"]["totalFee"];
+        });
+      } else if (response.statusCode == 400) {
+        Flush.flushMessage(
+          icons: Icons.error_outline,
+          title: "Error",
+          message: jsonData['message'],
+        );
+      } else {
+        Flush.flushMessage(
+          icons: Icons.error_outline,
+          title: "Error",
+          message: jsonData['message'],
+        );
+      }
+    } catch (e) {
+      print('Error sending encrypted payload: $e');
+    }
+  }
+
+  @override
+  void initState() {
+    getSF();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
-    double total = double.parse(widget.amount.toString()) + double.parse("20");
-
     double baseWidth = 414;
     double fem = MediaQuery.of(context).size.width / baseWidth;
     double ffem = fem * 0.97;
@@ -471,7 +594,7 @@ class _bankConfirmationScreenState extends State<bankConfirmationScreen> {
                                                   ),
                                                   Text(
                                                     // php2000Ky1 (2082:823)
-                                                    'PHP 20.00',
+                                                    'PHP ${currencyFormat.format(sf_amount)}',
                                                     textAlign: TextAlign.right,
                                                     style: SafeGoogleFont(
                                                       'Montserrat',

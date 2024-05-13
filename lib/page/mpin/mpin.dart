@@ -57,6 +57,7 @@ class _mpinScreenState extends ConsumerState<mpinScreen> {
         // ignore: use_build_context_synchronously
         context.pushReplacementNamed(dashboard);
       } else if (jsonData["statusCode"] == 400) {
+        context.pop();
         Flush.flushMessage(
           icons: Icons.error_outline,
           title: "Invalid Authentication credentials.",
@@ -66,6 +67,7 @@ class _mpinScreenState extends ConsumerState<mpinScreen> {
               .replaceAll(']', ''),
         );
       } else {
+        context.pop();
         Flush.flushMessage(
           icons: Icons.error_outline,
           title: "Error",

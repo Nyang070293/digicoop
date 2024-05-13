@@ -15,6 +15,7 @@ import 'package:digicoop/page/bank/bank_search.dart';
 import 'package:digicoop/page/bank/bank_send.dart';
 import 'package:digicoop/page/bank/bank_success.dart';
 import 'package:digicoop/page/bank/bank_transfer.dart';
+import 'package:digicoop/page/camera_preview/verify_cam.dart';
 import 'package:digicoop/page/cashin_bank/cashinBankSelect.dart';
 import 'package:digicoop/page/cashin_bank/cashin_bank.dart';
 import 'package:digicoop/page/cashin_bank/cashin_main.dart';
@@ -107,7 +108,8 @@ const String splashscreen = "SplashScreen",
     changeFPW = "changeFPW",
     successFPW = "successFPW",
     loadingFPW = "loadingFPW",
-    mobile = "mobile";
+    mobile = "mobile",
+    verifyCam = "verifyCam";
 
 // Route
 
@@ -128,6 +130,14 @@ final goRouter = Provider<GoRouter>((ref) {
           return const SplashScreen();
         },
       ),
+
+      // GoRoute(
+      //   name: verifyCam,
+      //   path: "/$verifyCam",
+      //   builder: (context, state) {
+      //     return CameraScreen();
+      //   },
+      // ),
 
       GoRoute(
         name: mobile,
