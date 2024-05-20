@@ -42,54 +42,6 @@ class _bankConfirmationScreenState extends State<bankConfirmationScreen> {
   NumberFormat currencyFormat =
       NumberFormat.currency(locale: 'en_US', symbol: '');
 
-  Future<void> sendData() async {
-    try {
-      Map<String, String> headers = {
-        // Define content-type as JSON
-        'Authorization':
-            'Bearer ${SharedPrefs.read(accessToken)}', // Add your authorization token here
-      };
-      final data =
-          '{"tenderId": 1,"transactionDetails": [{ "bankCode": "${widget.bankCode}}", "accountName": "${widget.acctName}",  "amount": ${widget.amount}, "description": "This is a test transaction","institutionID": ${widget.institutionID},"aggregatorID": ${widget.aggregatorID}, "accountName": "${widget.acctName}", "alternateName": " "}],"otpCode": "${SharedPrefs.read(totp)}", "otpType": 1 , "attach": 0}';
-
-      final encryptedBody = Aes256.encrypt(data, SharedPrefs.read(totp));
-      print("encryptedBody bank transfer $encryptedBody");
-      http.Response response = await http.post(
-        Uri.parse(DigiCoopAPI.bankTransfer),
-        headers: headers,
-        body: {'data': encryptedBody},
-      );
-      // Parse the JSON response body
-      final responseData = json.decode(response.body);
-      // Access specific data from the parsed response
-      var encryptData = responseData['data'];
-
-      final decrypt = Aes256.decrypt(encryptData, SharedPrefs.read(totp));
-      Map<String, dynamic> jsonData = jsonDecode(decrypt!);
-      //String userCode = jsonData["data"]["userCode"];
-      print("data add bank transfer ${jsonData}");
-      //print("userCode ${userCode}");
-      // Handle response
-      if (response.statusCode == 201) {
-        context.pushReplacementNamed(bankTransfer);
-      } else if (response.statusCode == 400) {
-        Flush.flushMessage(
-          icons: Icons.error_outline,
-          title: "Error",
-          message: jsonData['message'],
-        );
-      } else {
-        Flush.flushMessage(
-          icons: Icons.error_outline,
-          title: "Error",
-          message: jsonData['message'],
-        );
-      }
-    } catch (e) {
-      print('Error sending encrypted payload: $e');
-    }
-  }
-
   Future<void> getSF() async {
     int feeTypeId = 0;
     try {
@@ -241,7 +193,7 @@ class _bankConfirmationScreenState extends State<bankConfirmationScreen> {
                         Container(
                           // allgoodwXu (2082:799)
                           margin: EdgeInsets.fromLTRB(
-                              31 * fem, 0 * fem, 0 * fem, 0 * fem),
+                              26 * fem, 0 * fem, 0 * fem, 0 * fem),
                           child: Text(
                             'All Good?',
                             style: SafeGoogleFont(
@@ -728,7 +680,21 @@ class _bankConfirmationScreenState extends State<bankConfirmationScreen> {
                                 margin: EdgeInsets.fromLTRB(
                                     6 * fem, 0 * fem, 0 * fem, 0 * fem),
                                 child: TextButton(
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    // context.pushReplacementNamed(bankOTP);
+                                    context.pushReplacementNamed(
+                                      bankOTP,
+                                      pathParameters: {
+                                        "bankName": widget.bankName,
+                                        "acctName": widget.acctName,
+                                        "acctNum": widget.acctNum,
+                                        "amount": widget.amount,
+                                        "institutionID": widget.institutionID,
+                                        "bankCode": widget.bankCode,
+                                        "aggregatorID": widget.aggregatorID,
+                                      },
+                                    );
+                                  },
                                   style: TextButton.styleFrom(
                                     padding: EdgeInsets.zero,
                                   ),
@@ -750,8 +716,7 @@ class _bankConfirmationScreenState extends State<bankConfirmationScreen> {
                                     ),
                                     child: GestureDetector(
                                       onTap: () {
-                                        context.pushReplacementNamed(
-                                            loadingTransaction);
+                                        // context.pushReplacementNamed();
                                       },
                                       child: Row(
                                         crossAxisAlignment:

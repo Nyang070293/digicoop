@@ -55,14 +55,23 @@ class _setupMobilepinScreenState extends ConsumerState<setupMobilepinScreen> {
   Future<void> sendData(String password, String pinCode, String CpinCode,
       String Cpassword) async {
     try {
-      //print("personCode1 ${SharedPrefs.read(personCode)}");
-      final data =
-          '{"password": "$password",  "personCode": "${SharedPrefs.read(personCode)}",  "pinCode": "$pinCode", "pinCodeConfirm":"$CpinCode", "passwordConfirm": "$Cpassword"}';
+      //print("personCode1 ${SharedPrefs.read(personCode)}"); mpinOnboarding
+      final data;
+      String url = "";
+      if (SharedPrefs.read(branchCode).toString().isNotEmpty) {
+        data =
+            '{  "personCode": "${SharedPrefs.read(personCode)}", "cooperativeBranchCode": "${SharedPrefs.read(branchCode)}",  "pinCode": "$pinCode", "pinCodeConfirm":"$CpinCode", "password": "$password", "passwordConfirm": "$Cpassword"}';
+        url = DigiCoopAPI.mpinOnboarding;
+      } else {
+        data =
+            '{"password": "$password",  "personCode": "${SharedPrefs.read(personCode)}",  "pinCode": "$pinCode", "pinCodeConfirm":"$CpinCode", "passwordConfirm": "$Cpassword"}';
+        url = DigiCoopAPI.mpin;
+      }
 
       final encryptedBody = Aes256.encrypt(data, SharedPrefs.read(totp));
       print("encryptedBody MPIN $encryptedBody");
       http.Response response = await http.post(
-        Uri.parse(DigiCoopAPI.mpin),
+        Uri.parse(url),
         body: {'data': encryptedBody},
       );
       // Parse the JSON response body

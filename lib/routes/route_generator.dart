@@ -11,6 +11,7 @@ import 'package:digicoop/page/Signup/success.dart';
 import 'package:digicoop/page/Signup/verificationCode.dart';
 import 'package:digicoop/page/bank/bank_add.dart';
 import 'package:digicoop/page/bank/bank_confirm.dart';
+import 'package:digicoop/page/bank/bank_otp.dart';
 import 'package:digicoop/page/bank/bank_search.dart';
 import 'package:digicoop/page/bank/bank_send.dart';
 import 'package:digicoop/page/bank/bank_success.dart';
@@ -109,7 +110,8 @@ const String splashscreen = "SplashScreen",
     successFPW = "successFPW",
     loadingFPW = "loadingFPW",
     mobile = "mobile",
-    verifyCam = "verifyCam";
+    verifyCam = "verifyCam",
+    bankOTP = "bankOTP";
 
 // Route
 
@@ -398,6 +400,23 @@ final goRouter = Provider<GoRouter>((ref) {
             "/$bankConfirmation/:bankName/:acctName/:acctNum/:amount/:institutionID/:bankCode/:aggregatorID",
         builder: (context, state) {
           return bankConfirmationScreen(
+            key: state.pageKey,
+            bankName: state.pathParameters["bankName"] ?? "0",
+            acctName: state.pathParameters["acctName"] ?? "0",
+            acctNum: state.pathParameters["acctNum"] ?? "0",
+            amount: state.pathParameters["amount"] ?? "0",
+            institutionID: state.pathParameters["institutionID"] ?? "0",
+            bankCode: state.pathParameters["bankCode"] ?? "0",
+            aggregatorID: state.pathParameters["aggregatorID"] ?? "0",
+          );
+        },
+      ),
+      GoRoute(
+        name: bankOTP,
+        path:
+            "/$bankOTP/:bankName/:acctName/:acctNum/:amount/:institutionID/:bankCode/:aggregatorID",
+        builder: (context, state) {
+          return bank_otpScreen(
             key: state.pageKey,
             bankName: state.pathParameters["bankName"] ?? "0",
             acctName: state.pathParameters["acctName"] ?? "0",

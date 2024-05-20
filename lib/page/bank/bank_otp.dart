@@ -15,7 +15,22 @@ import 'package:pinput/pinput.dart';
 import 'package:http/http.dart' as http;
 
 class bank_otpScreen extends ConsumerStatefulWidget {
-  const bank_otpScreen({super.key});
+  final String bankName,
+      acctName,
+      acctNum,
+      amount,
+      institutionID,
+      bankCode,
+      aggregatorID;
+  const bank_otpScreen(
+      {super.key,
+      required this.bankName,
+      required this.acctName,
+      required this.acctNum,
+      required this.amount,
+      required this.institutionID,
+      required this.bankCode,
+      required this.aggregatorID});
 
   @override
   ConsumerState<bank_otpScreen> createState() => _bank_otpScreenState();
@@ -29,6 +44,7 @@ class _bank_otpScreenState extends ConsumerState<bank_otpScreen> {
 
   void initState() {
     super.initState();
+    gnrtOTP();
     _timer = Timer.periodic(Duration(seconds: 1), (Timer timer) {
       if (_start == 0) {
         setState(() {
@@ -93,7 +109,7 @@ class _bank_otpScreenState extends ConsumerState<bank_otpScreen> {
 // MobileNum
     try {
       final data =
-          '{"contactOptionId": 1,  "otpUsageType": 1,  "contactOptionValue": "${SharedPrefs.read(MobileNum)}", "isTest":0, "applicationId": 2}';
+          '{"contactOptionId": 1,  "otpUsageType": 5,  "contactOptionValue": "${SharedPrefs.read(MobileNum)}", "isTest":0, "applicationId": 2}';
 
       final encryptedBody = Aes256.encrypt(data, SharedPrefs.read(totp));
       print("mobile otp $encryptedBody");
@@ -126,17 +142,17 @@ class _bank_otpScreenState extends ConsumerState<bank_otpScreen> {
     }
   }
 
-  Future<void> sendData(String otp) async {
+  Future<void> validateOTP(String otp) async {
     showLoadingDialog();
     try {
-      print("personCode1 ${SharedPrefs.read(personCode)}");
+      // print("personCode1 ${SharedPrefs.read(personCode)}");
       final data =
-          '{"applicationId": 2,  "personCode": "${SharedPrefs.read(personCode)}",  "otpCode": "$otp"}';
+          '{"otpUsageType": 5, "applicationId": 2,  "personCode": "${SharedPrefs.read(personCode)}",  "otpCode": "$otp"}';
 
       final encryptedBody = Aes256.encrypt(data, SharedPrefs.read(totp));
-      print("encryptedBody $encryptedBody");
+      print("encryptedBody verify OTP $encryptedBody");
       http.Response response = await http.post(
-        Uri.parse(DigiCoopAPI.validate),
+        Uri.parse(DigiCoopAPI.ValidateOTP),
         body: {'data': encryptedBody},
       );
       // Parse the JSON response body
@@ -146,11 +162,63 @@ class _bank_otpScreenState extends ConsumerState<bank_otpScreen> {
 
       final decrypt = Aes256.decrypt(encryptData, SharedPrefs.read(totp));
       Map<String, dynamic> jsonData = jsonDecode(decrypt!);
-      print("verify ${jsonData}");
+      print("verify OTP ${jsonData}");
+      // Handle response
+      if (response.statusCode == 201 || response.statusCode == 200) {
+        //  SharedPrefs.write(otpIdentifier, jsonData['data']['otpIdentifier']);
+        sendData(pinController.text);
+      } else {
+        context.pop();
+        Flush.flushMessage(
+          icons: Icons.error_outline,
+          title: "Error",
+          message: jsonData['message'],
+        );
+      }
+    } catch (e) {
+      print('Error sending encrypted payload: $e');
+    }
+  }
+
+  Future<void> sendData(String otp) async {
+    try {
+      Map<String, String> headers = {
+        // Define content-type as JSON
+        'Authorization':
+            'Bearer ${SharedPrefs.read(accessToken)}', // Add your authorization token here
+      };
+      final data =
+          '{"tenderId": 1,"transactionDetails": [{ "bankCode": "${widget.bankCode}}", "accountName": "${widget.acctName}",  "amount": ${widget.amount}, "description": "This is a test transaction","institutionID": ${widget.institutionID},"aggregatorID": ${widget.aggregatorID}, "accountName": "${widget.acctName}", "alternateName": " "}],"otpCode": "$otp", "otpType": 2 , "attach": 0}';
+
+      final encryptedBody = Aes256.encrypt(data, SharedPrefs.read(totp));
+      print("encryptedBody bank transfer $encryptedBody");
+      http.Response response = await http.post(
+        Uri.parse(DigiCoopAPI.bankTransfer),
+        headers: headers,
+        body: {'data': encryptedBody},
+      );
+      // Parse the JSON response body
+      final responseData = json.decode(response.body);
+      // Access specific data from the parsed response
+      var encryptData = responseData['data'];
+
+      final decrypt = Aes256.decrypt(encryptData, SharedPrefs.read(totp));
+      Map<String, dynamic> jsonData = jsonDecode(decrypt!);
+      //String userCode = jsonData["data"]["userCode"];
+      print("data confirm bank transfer ${jsonData}");
+      //print("userCode ${userCode}");
       // Handle response
       if (response.statusCode == 201) {
-        context.pushReplacementNamed(mpin);
+        context.pushReplacementNamed(bankSuccess);
+      } else if (response.statusCode == 400) {
+        context.pop();
+        Flush.flushMessage(
+          icons: Icons.error_outline,
+          title: "Error",
+          message: jsonData['message'],
+        );
       } else {
+        context.pop();
         Flush.flushMessage(
           icons: Icons.error_outline,
           title: "Error",
@@ -201,7 +269,7 @@ class _bank_otpScreenState extends ConsumerState<bank_otpScreen> {
                 children: [
                   GestureDetector(
                     onTap: () {
-                      context.pushNamed(signup);
+                      context.pushNamed(bankConfirmation);
                     },
                     child: Container(
                       // arrow1qLs (33:2006)
@@ -221,7 +289,7 @@ class _bank_otpScreenState extends ConsumerState<bank_otpScreen> {
                     margin: EdgeInsets.fromLTRB(
                         0 * fem, 0 * fem, 143 * fem, 15 * fem),
                     child: Text(
-                      'Verification Code',
+                      'OTP Code',
                       style: SafeGoogleFont(
                         'Montserrat',
                         fontSize: 24 * ffem,
@@ -284,7 +352,7 @@ class _bank_otpScreenState extends ConsumerState<bank_otpScreen> {
                             ),
                           ),
                           controller: pinController,
-                          onCompleted: (pin) => sendData(pin),
+                          onCompleted: (pin) => validateOTP(pin),
                         ),
                       ],
                     ),
@@ -371,6 +439,7 @@ class _bank_otpScreenState extends ConsumerState<bank_otpScreen> {
                         //     builder: (_) => const setupMobilepinScreen(),
                         //   ),
                         // );
+                        validateOTP(pinController.text);
                       },
                       style: TextButton.styleFrom(
                         padding: EdgeInsets.zero,

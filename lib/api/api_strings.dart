@@ -11,6 +11,7 @@ class DigiCoopAPI {
       city = "$baseUrl/helpers/provinces/",
       validate = "$baseUrl/persons/validate",
       mpin = "$baseUrl/auth/user-set-credentials",
+      mpinOnboarding = "$baseUrl/auth/set-credentials",
       register = "$baseUrl/persons/register",
       profile = "$baseUrl/persons/get-profile",
       changePW = "$baseUrl/auth/update-password/stage",
@@ -29,5 +30,6 @@ class DigiCoopAPI {
       bankUser = "$baseUrl/transactions/banks/user",
       addBankacct = "$baseUrl/transactions/banks/attach",
       bankTransfer = "$baseUrl/transactions/funds/cash-out",
-      sf_api = "$baseUrl/transactions/dbc/service-fee";
+      sf_api = "$baseUrl/transactions/dbc/service-fee",
+      onboardingCode = "$baseUrl/persons/onboarding-code/verify";
 }

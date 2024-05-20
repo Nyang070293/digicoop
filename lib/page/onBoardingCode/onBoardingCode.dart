@@ -1,8 +1,16 @@
-import 'package:digicoop/page/Login/login.dart';
-import 'package:digicoop/page/Signup/verificationCode.dart';
+import 'dart:convert';
+
+import 'package:digicoop/Function/aes.dart';
+import 'package:digicoop/api/api_strings.dart';
+import 'package:digicoop/constant/flush_bar.dart';
+import 'package:digicoop/constant/keys.dart';
+import 'package:digicoop/constant/shared_pref.dart';
+import 'package:digicoop/routes/route_generator.dart';
 import 'package:digicoop/util/textfield.dart';
 import 'package:digicoop/util/utils.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:http/http.dart' as http;
 
 class onBoardingCodeScreen extends StatefulWidget {
   const onBoardingCodeScreen({super.key});
@@ -14,6 +22,85 @@ class onBoardingCodeScreen extends StatefulWidget {
 class _onBoardingCodeScreenState extends State<onBoardingCodeScreen> {
   final TextEditingController _numberController = TextEditingController();
   final TextEditingController _codeController = TextEditingController();
+
+  void showLoadingDialog() {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return const AlertDialog(
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              CircularProgressIndicator(),
+              SizedBox(height: 16),
+              Text(
+                "Please Wait....",
+                style: TextStyle(
+                  fontFamily: 'Poppins',
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  Future<void> sendData(String num, String onBoarding) async {
+    try {
+      final data =
+          '{ "mobileNumber": "$num", "onboardingCode": "$onBoarding", "isTest": 1, "applicationId": 2}';
+
+      final encryptedBody = Aes256.encrypt(data, SharedPrefs.read(totp));
+      print("encryptedBody onboarding $encryptedBody");
+      http.Response response = await http.post(
+        Uri.parse(DigiCoopAPI.onboardingCode),
+        body: {'data': encryptedBody},
+      );
+
+      // Handle response
+      // Parse the JSON response body
+      final responseData = json.decode(response.body);
+      // Access specific data from the parsed response
+      var encryptData = responseData['data'];
+
+      final decrypt = Aes256.decrypt(encryptData, SharedPrefs.read(totp));
+      Map<String, dynamic> jsonData = jsonDecode(decrypt!);
+      print("mobile onBoarding ${jsonData}");
+
+      if (response.statusCode == 200) {
+        if (jsonData['isExisting']) {
+          context.pushReplacementNamed(login);
+        } else {
+          SharedPrefs.write(branchCode, jsonData['branchCode']);
+          SharedPrefs.write(MobileNum, jsonData['data']['mobileNumber']);
+          SharedPrefs.write(personCode, jsonData['data']['personCode']);
+
+          // print("personCode ${SharedPrefs.read(personCode)}");
+        }
+
+        context.pushReplacementNamed(vCode);
+      } else if (response.statusCode == 400) {
+        String msg = jsonData['message'].toString().replaceAll('[', '');
+        msg = msg.replaceAll(']', '');
+        context.pop();
+        Flush.flushMessage(
+          icons: Icons.error_outline,
+          title: "Error",
+          message: msg,
+        );
+      }
+    } catch (e) {
+      context.pop();
+      Flush.flushMessage(
+        icons: Icons.error_outline,
+        title: "Error",
+        message: 'Error sending encrypted payload: $e',
+      );
+      print('Error sending encrypted payload: $e');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -38,12 +125,7 @@ class _onBoardingCodeScreenState extends State<onBoardingCodeScreen> {
               children: [
                 GestureDetector(
                   onTap: () {
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                        builder: (_) => const loginScreen(),
-                      ),
-                    );
+                    context.pushReplacementNamed(login);
                   },
                   child: Container(
                     // arrow1NcP (27:1768)
@@ -73,34 +155,24 @@ class _onBoardingCodeScreenState extends State<onBoardingCodeScreen> {
                     ),
                   ),
                 ),
-                Container(
-                  // group846z7y (33:2002)
-                  margin:
-                      EdgeInsets.fromLTRB(10 * fem, 0 * fem, 5 * fem, 30 * fem),
-                  width: double.infinity,
-                  height: 65 * fem,
-                  child: SizedBox(
-                    // autogroupmgoq7iP (LJaVdQLZfk7uGUAhL5mgoq)
-                    width: double.infinity,
-                    height: 64 * fem,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Container(
-                          // entermobilenoSEs (33:1983)
-                          margin: EdgeInsets.fromLTRB(
-                              0 * fem, 0 * fem, 0 * fem, 0 * fem),
-                          child: CommonTextField(
-                            controller: _numberController,
-                            labelText: 'Enter Mobile No.',
-                            keyboardType: TextInputType.number,
-                            prefixIconData: Icons.phone,
-                            textInputAction: TextInputAction.next,
-                            accentColor: const Color(0xff259ded),
-                          ),
-                        ),
-                      ],
-                    ),
+                Padding(
+                  padding:
+                      EdgeInsets.fromLTRB(13 * fem, 0 * fem, 0 * fem, 0 * fem),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      // Password Field
+                      CommonTextField(
+                        controller: _numberController,
+                        labelText: 'Enter Mobile No.',
+                        maxLength: 11,
+                        keyboardType: TextInputType.number,
+                        prefixIconData: Icons.phone,
+                        textInputAction: TextInputAction.next,
+                        accentColor: const Color(0xff259ded),
+                      ),
+                      const SizedBox(height: 16),
+                    ],
                   ),
                 ),
                 Container(
@@ -135,12 +207,35 @@ class _onBoardingCodeScreenState extends State<onBoardingCodeScreen> {
                       10 * fem, 130 * fem, 0 * fem, 0 * fem),
                   child: TextButton(
                     onPressed: () {
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                          builder: (_) => const verificationCodeScreen(),
-                        ),
-                      );
+                      String phoneNumber = _numberController.text;
+
+                      if (_numberController.text.isEmpty) {
+                        Flush.flushMessage(
+                          icons: Icons.error_outline,
+                          title: "Field Required",
+                          message: "Please enter your Mobile Number.",
+                        );
+                      }
+
+                      if (_codeController.text.isEmpty) {
+                        Flush.flushMessage(
+                          icons: Icons.error_outline,
+                          title: "Field Required",
+                          message: "Please enter Onboarding Code.",
+                        );
+                      }
+
+                      if (phoneNumber.startsWith("09")) {
+                        // print("Phone number starts with '09'");
+                        showLoadingDialog();
+                        sendData(_numberController.text, _codeController.text);
+                      } else {
+                        Flush.flushMessage(
+                          icons: Icons.error_outline,
+                          title: "Invalid format for Mobile Number.",
+                          message: "Please follow this format: 09xxxxxxxxx",
+                        );
+                      }
                     },
                     style: TextButton.styleFrom(
                       padding: EdgeInsets.zero,

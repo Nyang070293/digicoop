@@ -15,7 +15,9 @@ import 'package:pinput/pinput.dart';
 import 'package:http/http.dart' as http;
 
 class verificationCodeScreen extends ConsumerStatefulWidget {
-  const verificationCodeScreen({super.key});
+  const verificationCodeScreen({
+    super.key,
+  });
 
   @override
   ConsumerState<verificationCodeScreen> createState() =>
@@ -31,18 +33,19 @@ class _verificationCodeScreenState
 
   void initState() {
     super.initState();
-    _timer = Timer.periodic(Duration(seconds: 1), (Timer timer) {
-      if (_start == 0) {
-        setState(() {
-          _timer.cancel();
-          isTimeOver = true;
-        });
-      } else {
-        setState(() {
-          _start--;
-        });
-      }
-    });
+    gnrtOTP();
+    // _timer = Timer.periodic(Duration(seconds: 1), (Timer timer) {
+    //   if (_start == 0) {
+    //     setState(() {
+    //       _timer.cancel();
+    //       isTimeOver = true;
+    //     });
+    //   } else {
+    //     setState(() {
+    //       _start--;
+    //     });
+    //   }
+    // });
   }
 
   @override
