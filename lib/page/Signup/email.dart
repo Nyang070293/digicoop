@@ -1,7 +1,6 @@
 import 'package:digicoop/constant/flush_bar.dart';
 import 'package:digicoop/constant/keys.dart';
 import 'package:digicoop/constant/shared_pref.dart';
-import 'package:digicoop/page/Signup/about.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:digicoop/routes/route_generator.dart';
 import 'package:digicoop/util/textfield.dart';

@@ -7,13 +7,14 @@ import 'package:digicoop/constant/flush_bar.dart';
 import 'package:digicoop/constant/keys.dart';
 import 'package:digicoop/constant/shared_pref.dart';
 import 'package:digicoop/routes/route_generator.dart';
-import 'package:digicoop/util/textfield.dart'; 
+import 'package:digicoop/util/textfield.dart';
 import 'package:digicoop/util/utils.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class signupScreen extends ConsumerStatefulWidget {
   const signupScreen({super.key});
@@ -53,7 +54,19 @@ class _signupScreenState extends ConsumerState<signupScreen> {
     );
   }
 
+  void clearSharedPreferences() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    List<String> keys = prefs.getKeys().toList();
+
+    for (String key in keys) {
+      if (key != "totp") {
+        prefs.remove(key);
+      }
+    } // This will clear all SharedPreferences data
+  }
+
   Future<void> sendData(String num) async {
+    clearSharedPreferences();
     try {
       final data =
           '{"applicationId": "2",  "isTest": "0",  "mobileNumber": "$num"}';
@@ -74,7 +87,7 @@ class _signupScreenState extends ConsumerState<signupScreen> {
       Map<String, dynamic> jsonData = jsonDecode(decrypt!);
       print("mobile ${jsonData}");
 
-      if (response.statusCode == 201) {
+      if (response.statusCode == 200 || response.statusCode == 201) {
         SharedPrefs.write(MobileNum, jsonData['data']['mobileNumber']);
         SharedPrefs.write(personCode, jsonData['data']['personCode']);
 

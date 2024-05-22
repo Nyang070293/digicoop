@@ -83,7 +83,7 @@ class _setupMobilepinScreenState extends ConsumerState<setupMobilepinScreen> {
       Map<String, dynamic> jsonData = jsonDecode(decrypt!);
       print("MPIN ${jsonData}");
       // Handle response
-      if (response.statusCode == 201) {
+      if (response.statusCode == 200 || response.statusCode == 201) {
         SharedPrefs.write(accessToken, jsonData['data']['accessToken']);
         context.pushNamed(about);
       } else if (response.statusCode == 400) {

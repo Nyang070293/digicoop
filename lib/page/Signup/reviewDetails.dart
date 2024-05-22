@@ -95,10 +95,11 @@ class _reviewDetailScreenState extends ConsumerState<reviewDetailScreen> {
       Map<String, dynamic> jsonData = jsonDecode(decrypt!);
       print("reg ${jsonData}");
       // Handle response
-      if (response.statusCode == 201) {
+      if (response.statusCode == 200 || response.statusCode == 201) {
         context.pushReplacementNamed(loading);
         //context.pushNamed(l);
       } else {
+        context.pop();
         Flush.flushMessage(
           icons: Icons.error_outline,
           title: "Error",

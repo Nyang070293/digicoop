@@ -269,7 +269,7 @@ class _bank_otpScreenState extends ConsumerState<bank_otpScreen> {
                 children: [
                   GestureDetector(
                     onTap: () {
-                      context.pushNamed(bankConfirmation);
+                      context.pushReplacementNamed(bankTransfer);
                     },
                     child: Container(
                       // arrow1qLs (33:2006)

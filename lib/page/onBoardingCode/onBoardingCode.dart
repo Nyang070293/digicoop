@@ -11,6 +11,7 @@ import 'package:digicoop/util/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class onBoardingCodeScreen extends StatefulWidget {
   const onBoardingCodeScreen({super.key});
@@ -47,10 +48,22 @@ class _onBoardingCodeScreenState extends State<onBoardingCodeScreen> {
     );
   }
 
+  void clearSharedPreferences() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    List<String> keys = prefs.getKeys().toList();
+
+    for (String key in keys) {
+      if (key != "totp") {
+        prefs.remove(key);
+      }
+    } // This will clear all SharedPreferences data
+  }
+
   Future<void> sendData(String num, String onBoarding) async {
+    clearSharedPreferences();
     try {
       final data =
-          '{ "mobileNumber": "$num", "onboardingCode": "$onBoarding", "isTest": 1, "applicationId": 2}';
+          '{ "mobileNumber": "$num", "onboardingCode": "$onBoarding", "isTest": 0, "applicationId": 2 }';
 
       final encryptedBody = Aes256.encrypt(data, SharedPrefs.read(totp));
       print("encryptedBody onboarding $encryptedBody");
@@ -69,19 +82,19 @@ class _onBoardingCodeScreenState extends State<onBoardingCodeScreen> {
       Map<String, dynamic> jsonData = jsonDecode(decrypt!);
       print("mobile onBoarding ${jsonData}");
 
-      if (response.statusCode == 200) {
+      if (response.statusCode == 200 || response.statusCode == 201) {
         if (jsonData['isExisting']) {
           context.pushReplacementNamed(login);
         } else {
           SharedPrefs.write(branchCode, jsonData['branchCode']);
           SharedPrefs.write(MobileNum, jsonData['data']['mobileNumber']);
           SharedPrefs.write(personCode, jsonData['data']['personCode']);
-
+          context.pushReplacementNamed(vCode);
           // print("personCode ${SharedPrefs.read(personCode)}");
         }
 
-        context.pushReplacementNamed(vCode);
-      } else if (response.statusCode == 400) {
+        // if (response.statusCode == 400) {
+      } else {
         String msg = jsonData['message'].toString().replaceAll('[', '');
         msg = msg.replaceAll(']', '');
         context.pop();

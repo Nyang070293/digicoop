@@ -153,9 +153,10 @@ class _verificationCodeScreenState
       Map<String, dynamic> jsonData = jsonDecode(decrypt!);
       print("verify ${jsonData}");
       // Handle response
-      if (response.statusCode == 201) {
+      if (response.statusCode == 200 || response.statusCode == 201) {
         context.pushReplacementNamed(mpin);
       } else {
+        context.pop();
         Flush.flushMessage(
           icons: Icons.error_outline,
           title: "Error",
@@ -163,6 +164,12 @@ class _verificationCodeScreenState
         );
       }
     } catch (e) {
+      context.pop();
+      Flush.flushMessage(
+        icons: Icons.error_outline,
+        title: "Error",
+        message: 'Error sending encrypted payload: $e',
+      );
       print('Error sending encrypted payload: $e');
     }
   }

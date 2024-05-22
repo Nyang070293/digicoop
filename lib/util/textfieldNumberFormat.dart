@@ -86,8 +86,8 @@ class _CommonTextFieldState extends State<textfieldNumberFormat> {
                   });
                 },
                 icon: Icon(_isObscure
-                    ? widget.passwordShowIcon ?? Icons.visibility
-                    : widget.passwordHideIcon ?? Icons.visibility_off),
+                    ? widget.passwordShowIcon ?? Icons.visibility_off
+                    : widget.passwordHideIcon ?? Icons.visibility),
                 color: widget.accentColor ?? theme.colorScheme.primary,
               )
             : null,

@@ -8,7 +8,6 @@ import 'package:digicoop/model/cityModel.dart';
 import 'package:digicoop/model/provinceModel.dart';
 import 'package:digicoop/model/regionModel.dart';
 import 'package:digicoop/page/Signup/email.dart';
-import 'package:digicoop/page/Signup/reviewDetails.dart';
 import 'package:digicoop/routes/route_generator.dart';
 import 'package:digicoop/util/customCheckbox.dart';
 import 'package:digicoop/util/textfield.dart';
