@@ -50,12 +50,12 @@ class _frontIdScreenState extends State<frontIdScreen> {
                       GestureDetector(
                         onTap: () {
                           // Handle the tap on the image
-                          Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                              builder: (_) => photoIDScreen(),
-                            ),
-                          );
+                          // Navigator.pushReplacement(
+                          //   context,
+                          //   MaterialPageRoute(
+                          //     builder: (_) => photoIDScreen(),
+                          //   ),
+                          // );
                         },
                         child: Container(
                           // materialsymbolslightcloseqNf (2025:4509)

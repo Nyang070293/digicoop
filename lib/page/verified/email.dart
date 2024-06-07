@@ -1,18 +1,31 @@
-import 'package:digicoop/page/verified/about.dart';
-import 'package:digicoop/page/verified/address.dart';
+import 'package:digicoop/constant/flush_bar.dart';
+import 'package:digicoop/constant/keys.dart';
+import 'package:digicoop/constant/shared_pref.dart';
+import 'package:email_validator/email_validator.dart';
+import 'package:digicoop/routes/route_generator.dart';
 import 'package:digicoop/util/textfield.dart';
 import 'package:digicoop/util/utils.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
-class emailScreen extends StatefulWidget {
-  const emailScreen({super.key});
+class emailVerifiedScreen extends ConsumerStatefulWidget {
+  const emailVerifiedScreen({super.key});
 
   @override
-  State<emailScreen> createState() => _emailScreenState();
+  ConsumerState<emailVerifiedScreen> createState() => _emailScreenState();
 }
 
-class _emailScreenState extends State<emailScreen> {
+class _emailScreenState extends ConsumerState<emailVerifiedScreen> {
   final TextEditingController _email = TextEditingController();
+
+  Future<void> sendData() async {
+    await SharedPrefs.write(contactOptionId, 2);
+    await SharedPrefs.write(contactOptionValue, _email.text);
+
+    context.pushReplacementNamed(AddressVerifiedScreen);
+  }
+
   @override
   Widget build(BuildContext context) {
     double baseWidth = 414;
@@ -54,12 +67,7 @@ class _emailScreenState extends State<emailScreen> {
                     children: [
                       GestureDetector(
                         onTap: () {
-                          Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                              builder: (_) => const aboutScreen(),
-                            ),
-                          );
+                          context.pushNamed(about);
                         },
                         child: Container(
                           // arrow1y5h (75:714)
@@ -79,7 +87,7 @@ class _emailScreenState extends State<emailScreen> {
                         margin: EdgeInsets.fromLTRB(
                             0 * fem, 0 * fem, 84 * fem, 0 * fem),
                         child: Text(
-                          'Get Verified',
+                          'Create Account',
                           style: SafeGoogleFont(
                             'Montserrat',
                             fontSize: 18 * ffem,
@@ -92,9 +100,9 @@ class _emailScreenState extends State<emailScreen> {
                       Container(
                         // authenticationyE7 (75:717)
                         margin: EdgeInsets.fromLTRB(
-                            50 * fem, 0 * fem, 0 * fem, 4 * fem),
+                            0 * fem, 0 * fem, 0 * fem, 4 * fem),
                         child: Text(
-                          '1 / 4',
+                          '3 / 5',
                           style: SafeGoogleFont(
                             'Montserrat',
                             fontSize: 14 * ffem,
@@ -192,12 +200,26 @@ class _emailScreenState extends State<emailScreen> {
                                 ),
                                 child: TextButton(
                                   onPressed: () {
-                                    Navigator.pushReplacement(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (_) => homeAddressScreen(),
-                                      ),
-                                    );
+                                    if (_email.text.isEmpty) {
+                                      Flush.flushMessage(
+                                        icons: Icons.error_outline,
+                                        title: "Field Required",
+                                        message: "Please enter your Email",
+                                      );
+                                      return;
+                                    }
+
+                                    if (EmailValidator.validate(_email.text) ==
+                                        false) {
+                                      Flush.flushMessage(
+                                        icons: Icons.error_outline,
+                                        title: "Invalid Email",
+                                        message:
+                                            "Please Enter correct email address",
+                                      );
+                                      return;
+                                    }
+                                    sendData();
                                   },
                                   style: TextButton.styleFrom(
                                     padding: EdgeInsets.zero,

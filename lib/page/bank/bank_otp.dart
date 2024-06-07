@@ -45,18 +45,18 @@ class _bank_otpScreenState extends ConsumerState<bank_otpScreen> {
   void initState() {
     super.initState();
     gnrtOTP();
-    _timer = Timer.periodic(Duration(seconds: 1), (Timer timer) {
-      if (_start == 0) {
-        setState(() {
-          _timer.cancel();
-          isTimeOver = true;
-        });
-      } else {
-        setState(() {
-          _start--;
-        });
-      }
-    });
+    // _timer = Timer.periodic(Duration(seconds: 1), (Timer timer) {
+    //   if (_start == 0) {
+    //     setState(() {
+    //       _timer.cancel();
+    //       isTimeOver = true;
+    //     });
+    //   } else {
+    //     setState(() {
+    //       _start--;
+    //     });
+    //   }
+    // });
   }
 
   @override
@@ -131,10 +131,14 @@ class _bank_otpScreenState extends ConsumerState<bank_otpScreen> {
         SharedPrefs.write(userCode, jsonData['data']['userCode']);
         // context.pushReplacementNamed(otpCode);
       } else {
+        context.pop();
         Flush.flushMessage(
           icons: Icons.error_outline,
           title: "Error",
-          message: jsonData['message'],
+          message: jsonData['message']
+              .toString()
+              .replaceAll('[', '')
+              .replaceAll(']', ''),
         );
       }
     } catch (e) {
@@ -172,7 +176,10 @@ class _bank_otpScreenState extends ConsumerState<bank_otpScreen> {
         Flush.flushMessage(
           icons: Icons.error_outline,
           title: "Error",
-          message: jsonData['message'],
+          message: jsonData['message']
+              .toString()
+              .replaceAll('[', '')
+              .replaceAll(']', ''),
         );
       }
     } catch (e) {
@@ -188,7 +195,7 @@ class _bank_otpScreenState extends ConsumerState<bank_otpScreen> {
             'Bearer ${SharedPrefs.read(accessToken)}', // Add your authorization token here
       };
       final data =
-          '{"tenderId": 1,"transactionDetails": [{ "bankCode": "${widget.bankCode}}", "accountName": "${widget.acctName}",  "amount": ${widget.amount}, "description": "This is a test transaction","institutionID": ${widget.institutionID},"aggregatorID": ${widget.aggregatorID}, "accountName": "${widget.acctName}", "alternateName": " "}],"otpCode": "$otp", "otpType": 2 , "attach": 0}';
+          '{"tenderId": 1,"transactionDetails": [{ "bankCode": "${widget.bankCode}", "accountNumber": "${widget.acctNum}",  "amount": ${widget.amount}, "description": "This is a test transaction","institutionID": ${widget.institutionID},"aggregatorID": ${widget.aggregatorID}, "accountName": "${widget.acctName}", "alternateName": " "}],"otpCode": "$otp", "otpType": 2 , "attach": 0}';
 
       final encryptedBody = Aes256.encrypt(data, SharedPrefs.read(totp));
       print("encryptedBody bank transfer $encryptedBody");
@@ -208,21 +215,27 @@ class _bank_otpScreenState extends ConsumerState<bank_otpScreen> {
       print("data confirm bank transfer ${jsonData}");
       //print("userCode ${userCode}");
       // Handle response
-      if (response.statusCode == 201) {
+      if (response.statusCode == 201 || response.statusCode == 200) {
         context.pushReplacementNamed(bankSuccess);
       } else if (response.statusCode == 400) {
         context.pop();
         Flush.flushMessage(
           icons: Icons.error_outline,
           title: "Error",
-          message: jsonData['message'],
+          message: jsonData['message']
+              .toString()
+              .replaceAll('[', '')
+              .replaceAll(']', ''),
         );
       } else {
         context.pop();
         Flush.flushMessage(
           icons: Icons.error_outline,
           title: "Error",
-          message: jsonData['message'],
+          message: jsonData['message']
+              .toString()
+              .replaceAll('[', '')
+              .replaceAll(']', ''),
         );
       }
     } catch (e) {

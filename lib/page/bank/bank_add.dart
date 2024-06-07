@@ -86,27 +86,39 @@ class _bankAddScreenState extends State<bankAddScreen> {
       if (response.statusCode == 201) {
         context.pushReplacementNamed(bankTransfer);
       } else if (response.statusCode == 400) {
+        context.pop();
         Flush.flushMessage(
           icons: Icons.error_outline,
           title: "Error",
-          message: jsonData['message'],
+          message: jsonData['message']
+              .toString()
+              .replaceAll('[', '')
+              .replaceAll(']', ''),
         );
       } else {
+        context.pop();
         Flush.flushMessage(
           icons: Icons.error_outline,
           title: "Error",
-          message: jsonData['message'],
+          message: jsonData['message']
+              .toString()
+              .replaceAll('[', '')
+              .replaceAll(']', ''),
         );
       }
     } catch (e) {
+      context.pop();
+      Flush.flushMessage(
+        icons: Icons.error_outline,
+        title: "Error",
+        message: 'Error sending encrypted payload: $e',
+      );
       print('Error sending encrypted payload: $e');
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-
     double baseWidth = 414;
     double fem = MediaQuery.of(context).size.width / baseWidth;
     double ffem = fem * 0.97;

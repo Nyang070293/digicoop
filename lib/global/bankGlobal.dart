@@ -32,4 +32,22 @@ class bankClass extends StateNotifier<bankModel> {
       }
     }
   }
+
+  Future<void> getBankAll() async {
+    final result = await ServiceHost.getBankAllList();
+    if (result.statusCode == 200) {
+      String sentence = result.data.toString();
+      List<String> words = sentence.split(': ');
+
+      String modifiedString = words[1].substring(0, words[1].length - 1);
+
+      final decrypt = Aes256.decrypt(modifiedString, SharedPrefs.read(totp));
+      Map<String, dynamic> json = jsonDecode(decrypt!);
+      print("Bank : $json");
+
+      if (mounted) {
+        state = bankModel.fromJson(json);
+      }
+    }
+  }
 }

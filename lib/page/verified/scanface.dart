@@ -1,16 +1,86 @@
-import 'package:digicoop/page/verified/workInformation.dart';
+import 'package:camera/camera.dart';
+import 'package:digicoop/main.dart';
 import 'package:digicoop/page/verified/frontId.dart';
+import 'package:digicoop/routes/route_generator.dart';
+import 'package:digicoop/util/face_detection_overlay.dart';
 import 'package:digicoop/util/utils.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:google_mlkit_face_detection/google_mlkit_face_detection.dart';
 
-class scanfaceScreen extends StatefulWidget {
-  const scanfaceScreen({super.key});
+class CameraScreen extends StatefulWidget {
+  const CameraScreen({super.key});
 
   @override
-  State<scanfaceScreen> createState() => _scanfaceScreenState();
+  State<CameraScreen> createState() => _scanfaceScreenState();
 }
 
-class _scanfaceScreenState extends State<scanfaceScreen> {
+class _scanfaceScreenState extends State<CameraScreen> {
+  late CameraController _controller;
+  late Future<void> _initializeControllerFuture;
+  bool _faceFound = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = CameraController(
+      cameras.last,
+      ResolutionPreset.max,
+    );
+
+    _initializeControllerFuture = _controller.initialize();
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  Widget _overlay() {
+    return Stack(
+      children: [
+        // FutureBuilder<void>(
+        //   future: _initializeControllerFuture,
+        //   builder: (context, snapshot) {
+        //     if (snapshot.connectionState == ConnectionState.done) {
+        //       return ClipOval(
+        //         child: CameraPreview(_controller),
+        //       );
+        //     } else {
+        //       return const Center(child: CircularProgressIndicator());
+        //     }
+        //   },
+        // ),
+        // Align(
+        //   alignment: Alignment.center,
+        //   child: ClipOval(
+        //     child: CameraPreview(_controller),
+        //   ),
+        // ),
+        // Align(
+        //   alignment: Alignment.topCenter,
+        //   child: SafeArea(
+        //     child: Container(
+        //       width: MediaQuery.of(context).size.width * 0.80,
+        //       margin: const EdgeInsets.only(top: 20),
+        //       padding: const EdgeInsets.symmetric(vertical: 15),
+        //       decoration: BoxDecoration(
+        //         borderRadius: BorderRadius.circular(12),
+        //         color: _faceFound ? Colors.green.shade700 : Colors.red.shade700,
+        //       ),
+        //       child: Text(
+        //         _faceFound ? 'Deteksi Wajah Berhasil' : 'Deteksi Wajah Gagal',
+        //         textAlign: TextAlign.center,
+        //         style: const TextStyle(color: Colors.white),
+        //       ),
+        //     ),
+        //   ),
+        // )
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     double baseWidth = 414;
@@ -52,12 +122,7 @@ class _scanfaceScreenState extends State<scanfaceScreen> {
                     children: [
                       GestureDetector(
                         onTap: () {
-                          Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                              builder: (_) => const workInformationScreen(),
-                            ),
-                          );
+                          context.pushReplacementNamed(SOI);
                         },
                         child: Container(
                           // arrow1y5h (75:714)
@@ -143,7 +208,7 @@ class _scanfaceScreenState extends State<scanfaceScreen> {
                                               fontSize: 24 * ffem,
                                               fontWeight: FontWeight.w500,
                                               height: 1.2175 * ffem / fem,
-                                              color: Color(0xff262626),
+                                              color: const Color(0xff262626),
                                             ),
                                           ),
                                         ),
@@ -164,7 +229,7 @@ class _scanfaceScreenState extends State<scanfaceScreen> {
                                               fontSize: 14 * ffem,
                                               fontWeight: FontWeight.w400,
                                               height: 1.3318751199 * ffem / fem,
-                                              color: Color(0xff828282),
+                                              color: const Color(0xff828282),
                                             ),
                                           ),
                                         ),
@@ -187,44 +252,65 @@ class _scanfaceScreenState extends State<scanfaceScreen> {
                                       top: 0 * fem,
                                       child: Align(
                                         child: SizedBox(
-                                          width: 192 * fem,
-                                          height: 192 * fem,
-                                          child: Container(
-                                            decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(
-                                                      96 * fem),
-                                              color: Color(0xff245ca8),
-                                            ),
+                                          width: 200 * fem,
+                                          height: 200 * fem,
+                                          child: FutureBuilder<void>(
+                                            future: _initializeControllerFuture,
+                                            builder: (context, snapshot) {
+                                              if (snapshot.connectionState ==
+                                                  ConnectionState.done) {
+                                                return ClipOval(
+                                                  child: FaceDetectionOverlay(
+                                                    cameras: cameras,
+                                                    faceDetectorOptions:
+                                                        FaceDetectorOptions(
+                                                      enableClassification:
+                                                          false,
+                                                      enableContours: false,
+                                                    ),
+                                                    resultCallback:
+                                                        _resultCallback,
+                                                  ),
+                                                );
+                                              } else {
+                                                return const Center(
+                                                    child:
+                                                        CircularProgressIndicator());
+                                              }
+                                            },
                                           ),
                                         ),
                                       ),
                                     ),
-                                    Positioned(
-                                      // ellipse76Qib (2025:4209)
-                                      left: 88 * fem,
-                                      top: 6 * fem,
-                                      child: Align(
-                                        child: SizedBox(
-                                          width: 180 * fem,
-                                          height: 180 * fem,
-                                          child: Container(
-                                            decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(
-                                                      90 * fem),
-                                              color: Color(0xffffffff),
-                                              image: DecorationImage(
-                                                fit: BoxFit.cover,
-                                                image: AssetImage(
-                                                  'assets/images/ellipse-76-bg.png',
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
+
+                                    //  return ClipOval(
+                                    //                 child: CameraPreview(
+                                    //                     _controller));
+                                    // Positioned(
+                                    //   // ellipse76Qib (2025:4209)
+                                    //   left: 88 * fem,
+                                    //   top: 6 * fem,
+                                    //   child: Align(
+                                    //     child: SizedBox(
+                                    //       width: 180 * fem,
+                                    //       height: 180 * fem,
+                                    //       child: Container(
+                                    //         decoration: BoxDecoration(
+                                    //           borderRadius:
+                                    //               BorderRadius.circular(
+                                    //                   90 * fem),
+                                    //           color: Color(0xffffffff),
+                                    //           image: DecorationImage(
+                                    //             fit: BoxFit.cover,
+                                    //             image: AssetImage(
+                                    //               'assets/images/ellipse-76-bg.png',
+                                    //             ),
+                                    //           ),
+                                    //         ),
+                                    //       ),
+                                    //     ),
+                                    //   ),
+                                    // ),
                                   ],
                                 ),
                               ),
@@ -243,7 +329,7 @@ class _scanfaceScreenState extends State<scanfaceScreen> {
                                     fontSize: 14 * ffem,
                                     fontWeight: FontWeight.w400,
                                     height: 1.3318751199 * ffem / fem,
-                                    color: Color(0xff828282),
+                                    color: const Color(0xff828282),
                                   ),
                                 ),
                               ),
@@ -256,7 +342,7 @@ class _scanfaceScreenState extends State<scanfaceScreen> {
                                     Navigator.pushReplacement(
                                       context,
                                       MaterialPageRoute(
-                                        builder: (_) => frontIdScreen(),
+                                        builder: (_) => const frontIdScreen(),
                                       ),
                                     );
                                   },
@@ -268,12 +354,12 @@ class _scanfaceScreenState extends State<scanfaceScreen> {
                                         15 * fem, 23.67 * fem, 10 * fem),
                                     width: double.infinity,
                                     decoration: BoxDecoration(
-                                      color: Color(0xff259ded),
+                                      color: const Color(0xff259ded),
                                       borderRadius:
                                           BorderRadius.circular(100 * fem),
                                       boxShadow: [
                                         BoxShadow(
-                                          color: Color(0x3f000000),
+                                          color: const Color(0x3f000000),
                                           offset: Offset(0 * fem, 4 * fem),
                                           blurRadius: 2 * fem,
                                         ),
@@ -295,7 +381,7 @@ class _scanfaceScreenState extends State<scanfaceScreen> {
                                               fontSize: 24 * ffem,
                                               fontWeight: FontWeight.w500,
                                               height: 1.2175 * ffem / fem,
-                                              color: Color(0xffffffff),
+                                              color: const Color(0xffffffff),
                                             ),
                                           ),
                                         ),
@@ -329,5 +415,36 @@ class _scanfaceScreenState extends State<scanfaceScreen> {
         ),
       ),
     );
+  }
+
+  void _resultCallback(List result) {
+    if (result.isNotEmpty) {
+      for (final Face face in result) {
+        final width = MediaQuery.of(context).size.width;
+        final height = MediaQuery.of(context).size.height;
+
+        final xPositionStart = width * 0.15;
+        final xPositionEnd = width - (width * 0.15);
+        final yPositionStart = height * 0.30;
+        final yPositionEnd = height - (height * 0.30);
+
+        if ((face.boundingBox.left > xPositionStart &&
+                face.boundingBox.left < xPositionEnd) &&
+            (face.boundingBox.top > yPositionStart &&
+                face.boundingBox.top < yPositionEnd)) {
+          setState(() {
+            _faceFound = true;
+          });
+        } else {
+          setState(() {
+            _faceFound = false;
+          });
+        }
+      }
+    } else {
+      setState(() {
+        _faceFound = false;
+      });
+    }
   }
 }

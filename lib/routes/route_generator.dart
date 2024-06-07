@@ -1,4 +1,5 @@
 import 'package:digicoop/constant/colors.dart';
+import 'package:digicoop/main.dart';
 import 'package:digicoop/page/Login/login.dart';
 import 'package:digicoop/page/Signup/about.dart';
 import 'package:digicoop/page/Signup/email.dart';
@@ -16,7 +17,7 @@ import 'package:digicoop/page/bank/bank_search.dart';
 import 'package:digicoop/page/bank/bank_send.dart';
 import 'package:digicoop/page/bank/bank_success.dart';
 import 'package:digicoop/page/bank/bank_transfer.dart';
-import 'package:digicoop/page/camera_preview/verify_cam.dart';
+import 'package:digicoop/page/bank/bank_viewall.dart';
 import 'package:digicoop/page/cashin_bank/cashinBankSelect.dart';
 import 'package:digicoop/page/cashin_bank/cashin_bank.dart';
 import 'package:digicoop/page/cashin_bank/cashin_main.dart';
@@ -52,12 +53,22 @@ import 'package:digicoop/page/onBoarding/splashscreen.dart';
 import 'package:digicoop/page/onBoardingCode/onBoardingCode.dart';
 import 'package:digicoop/page/payment_method/paymentMethod.dart';
 import 'package:digicoop/page/setting/setting.dart';
+import 'package:digicoop/page/verified/about.dart';
+import 'package:digicoop/page/verified/address.dart';
+import 'package:digicoop/page/verified/camera.dart';
+import 'package:digicoop/page/verified/email.dart';
+import 'package:digicoop/page/verified/getVerified.dart';
+import 'package:digicoop/page/verified/photo.dart';
+import 'package:digicoop/page/verified/photo1.dart';
+import 'package:digicoop/page/verified/scanface.dart';
+import 'package:digicoop/page/verified/workInformation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 const String splashscreen = "SplashScreen",
+    bankViewAll = "bankViewAll",
     login = "login",
     signup = "signup",
     vCode = "vCode",
@@ -111,7 +122,13 @@ const String splashscreen = "SplashScreen",
     loadingFPW = "loadingFPW",
     mobile = "mobile",
     verifyCam = "verifyCam",
-    bankOTP = "bankOTP";
+    bankOTP = "bankOTP",
+    verifiedScreen = "verifiedScreen",
+    aboutScren = "aboutScren",
+    emailScren = "emailScren",
+    AddressVerifiedScreen = "AddressVerifiedScreen",
+    SOI = "SOI",
+    CameraVerifiedScreen = "CameraVerifiedScreen";
 
 // Route
 
@@ -132,14 +149,60 @@ final goRouter = Provider<GoRouter>((ref) {
           return const SplashScreen();
         },
       ),
+      GoRoute(
+        name: AddressVerifiedScreen,
+        path: "/$AddressVerifiedScreen",
+        builder: (context, state) {
+          return const homeAddressVerifiedScreen();
+        },
+      ),
+      GoRoute(
+        name: CameraVerifiedScreen,
+        path: "/$CameraVerifiedScreen",
+        builder: (context, state) {
+          return CameraScreen();
+        },
+      ),
 
       // GoRoute(
-      //   name: verifyCam,
-      //   path: "/$verifyCam",
+      //   name: CameraVerifiedScreen,
+      //   path: "/$CameraVerifiedScreen",
       //   builder: (context, state) {
-      //     return CameraScreen();
+      //     return CameraScreen(
+      //       camera: cameras.last,
+      //     );
       //   },
       // ),
+      GoRoute(
+        name: SOI,
+        path: "/$SOI",
+        builder: (context, state) {
+          return workInformationScreen();
+        },
+      ),
+      GoRoute(
+        name: verifiedScreen,
+        path: "/$verifiedScreen",
+        builder: (context, state) {
+          return getverifiedScreen();
+        },
+      ),
+
+      GoRoute(
+        name: emailScren,
+        path: "/$emailScren",
+        builder: (context, state) {
+          return emailVerifiedScreen();
+        },
+      ),
+
+      GoRoute(
+        name: aboutScren,
+        path: "/$aboutScren",
+        builder: (context, state) {
+          return aboutVerifiedScreen();
+        },
+      ),
 
       GoRoute(
         name: mobile,
@@ -298,6 +361,13 @@ final goRouter = Provider<GoRouter>((ref) {
             aggregatorGivenCode:
                 state.pathParameters["aggregatorGivenCode"] ?? "",
           );
+        },
+      ),
+      GoRoute(
+        name: bankViewAll,
+        path: "/$bankViewAll",
+        builder: (context, state) {
+          return const bankviewallScreen();
         },
       ),
 

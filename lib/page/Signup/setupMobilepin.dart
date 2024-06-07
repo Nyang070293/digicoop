@@ -250,22 +250,23 @@ class _setupMobilepinScreenState extends ConsumerState<setupMobilepinScreen> {
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               Container(
-                                // group846bZ9 (75:99)
-                                margin: EdgeInsets.only(bottom: 20 * fem),
-                                width: 500,
+                                // group847KfV (75:107)
+                                margin: EdgeInsets.only(bottom: 22 * fem),
+                                width: double.infinity,
                                 height: 65 * fem,
-                                child: SizedBox(
+                                child: Container(
+                                  // autogrouprw5vfUT (Ga7jCiAurNxzh8MEvfRW5V)
+                                  padding: EdgeInsets.only(bottom: 5.73 * fem),
                                   width: double.infinity,
                                   height: 64 * fem,
                                   child: Column(
                                     crossAxisAlignment: CrossAxisAlignment.end,
                                     children: [
-                                      textfieldNumberFormat(
+                                      CommonTextField(
                                         controller: _mobileController,
-                                        keyboardType: TextInputType.number,
                                         labelText: 'Enter 6-Digit Mobile Pin.',
-                                        maxLength: 6,
                                         obscureText: true,
+                                        keyboardType: TextInputType.number,
                                         textInputAction: TextInputAction.next,
                                         accentColor: const Color(0xff259ded),
                                       ),
@@ -274,27 +275,29 @@ class _setupMobilepinScreenState extends ConsumerState<setupMobilepinScreen> {
                                 ),
                               ),
                               Container(
-                                // autogroupnqck5sd (Ga7iLuGa9y4mtF58sHNqCK)
-                                margin: EdgeInsets.only(bottom: 20 * fem),
-                                width: 354 * fem,
-                                height: 76 * fem,
-                                child: Stack(
-                                  children: [
-                                    SizedBox(
-                                      width: double.infinity,
-                                      height: 64 * fem,
-                                      child: textfieldNumberFormat(
+                                // group847KfV (75:107)
+                                margin: EdgeInsets.only(bottom: 22 * fem),
+                                width: double.infinity,
+                                height: 65 * fem,
+                                child: Container(
+                                  // autogrouprw5vfUT (Ga7jCiAurNxzh8MEvfRW5V)
+                                  padding: EdgeInsets.only(bottom: 5.73 * fem),
+                                  width: double.infinity,
+                                  height: 64 * fem,
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.end,
+                                    children: [
+                                      CommonTextField(
                                         controller: _cmobileController,
-                                        keyboardType: TextInputType.number,
                                         labelText:
                                             'Confirm 6-Digit Mobile Pin.',
-                                        maxLength: 6,
                                         obscureText: true,
+                                        keyboardType: TextInputType.number,
                                         textInputAction: TextInputAction.next,
                                         accentColor: const Color(0xff259ded),
                                       ),
-                                    ),
-                                  ],
+                                    ],
+                                  ),
                                 ),
                               ),
                               Container(

@@ -84,7 +84,7 @@ class _bankSendScreenState extends State<bankSendScreen> {
       final decrypt = Aes256.decrypt(encryptData, SharedPrefs.read(totp));
       Map<String, dynamic> jsonData = jsonDecode(decrypt!);
       //String userCode = jsonData["data"]["userCode"];
-      print("data  add bank acct ${jsonData}");
+      print("data add bank acct ${jsonData}");
       //print("userCode ${userCode}");
       // Handle response
       if (response.statusCode == 201) {
@@ -106,13 +106,19 @@ class _bankSendScreenState extends State<bankSendScreen> {
         Flush.flushMessage(
           icons: Icons.error_outline,
           title: "Error",
-          message: jsonData['message'],
+          message: jsonData['message']
+              .toString()
+              .replaceAll('[', '')
+              .replaceAll(']', ''),
         );
       } else {
         Flush.flushMessage(
           icons: Icons.error_outline,
           title: "Error",
-          message: jsonData['message'],
+          message: jsonData['message']
+              .toString()
+              .replaceAll('[', '')
+              .replaceAll(']', ''),
         );
       }
     } catch (e) {
@@ -122,8 +128,6 @@ class _bankSendScreenState extends State<bankSendScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-
     double baseWidth = 414;
     double fem = MediaQuery.of(context).size.width / baseWidth;
     double ffem = fem * 0.97;

@@ -48,6 +48,22 @@ class ServiceHost {
     return response;
   }
 
+  static Future<Response> getSOI() async {
+    final response = await MethodHandler.helperhandler(
+      url: DigiCoopAPI.SOI,
+      type: RequestType.get,
+    );
+    return response;
+  }
+
+  static Future<Response> getNOW() async {
+    final response = await MethodHandler.helperhandler(
+      url: DigiCoopAPI.NatureWork,
+      type: RequestType.get,
+    );
+    return response;
+  }
+
   static Future<Response> getProvince(regionId) async {
     // final body = {
     //   "id": regionId,
@@ -89,6 +105,21 @@ class ServiceHost {
     Map<String, dynamic> parameters = {
       'page': '1',
       'limit': '10',
+      'search': '',
+    };
+    final response = await MethodHandler.helperhandler(
+      url: DigiCoopAPI.bankList,
+      type: RequestType.get,
+      haveToken: true,
+      parameters: parameters,
+    );
+    return response;
+  }
+
+  static Future<Response> getBankAllList() async {
+    Map<String, dynamic> parameters = {
+      'page': '1',
+      'limit': '500',
       'search': '',
     };
     final response = await MethodHandler.helperhandler(

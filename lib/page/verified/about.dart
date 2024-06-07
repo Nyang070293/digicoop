@@ -1,26 +1,31 @@
-import 'package:digicoop/page/verified/email.dart';
-import 'package:digicoop/page/verified/getVerified.dart';
+import 'package:digicoop/constant/flush_bar.dart';
+import 'package:digicoop/constant/keys.dart';
+import 'package:digicoop/constant/shared_pref.dart';
+import 'package:digicoop/routes/route_generator.dart';
 import 'package:digicoop/util/textfield.dart';
 import 'package:digicoop/util/utils.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 
-class aboutScreen extends StatefulWidget {
+class aboutVerifiedScreen extends ConsumerStatefulWidget {
   final Function(String)? onChanged;
 
-  const aboutScreen({super.key, this.onChanged});
+  const aboutVerifiedScreen({super.key, this.onChanged});
 
   @override
-  State<aboutScreen> createState() => _aboutScreenState();
+  ConsumerState<aboutVerifiedScreen> createState() => _aboutScreenState();
 }
 
-class _aboutScreenState extends State<aboutScreen> {
+class _aboutScreenState extends ConsumerState<aboutVerifiedScreen> {
   final TextEditingController _firstName = TextEditingController();
   final TextEditingController _middleName = TextEditingController();
   final TextEditingController _lastName = TextEditingController();
-  final TextEditingController _suffix = TextEditingController();
-  final TextEditingController _birthday = TextEditingController();
   final TextEditingController _nationality = TextEditingController();
+  final TextEditingController _suffix = TextEditingController();
+  final TextEditingController _birthplace = TextEditingController();
+  final TextEditingController _birthday = TextEditingController();
 
   String? _selectedGender;
   String? _selectedCS;
@@ -29,6 +34,67 @@ class _aboutScreenState extends State<aboutScreen> {
   void initState() {
     _birthday.text = ""; //set the initial value of text field
     super.initState();
+  }
+
+  void showLoadingDialog() {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return const AlertDialog(
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              CircularProgressIndicator(),
+              SizedBox(height: 16),
+              Text(
+                "Please Wait....",
+                style: TextStyle(
+                  fontFamily: 'Poppins',
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  Future<void> sendData() async {
+    //int gender = 0;
+    int civil_status = 0;
+
+    int sex = _selectedGender == "Male" ? 1 : 2;
+
+    if (_selectedCS == "Single") {
+      civil_status = 1;
+    } else if (_selectedCS == "Married") {
+      civil_status = 2;
+    } else if (_selectedCS == "Divorced") {
+      civil_status = 3;
+    } else {
+      civil_status = 4;
+    }
+
+    String inputDateString = _birthday.text; //"1999-01-01";
+    DateTime inputDate = DateTime.parse(inputDateString);
+    String bDay_formattedDate = DateFormat('yyyy-MM-dd').format(inputDate);
+    print("birthday $bDay_formattedDate"); // Output: January 01, 1999
+
+    await SharedPrefs.write(firstname, _firstName.text);
+    await SharedPrefs.write(lastname, _lastName.text);
+    await SharedPrefs.write(middlename, _middleName.text);
+    await SharedPrefs.write(suffix, _suffix.text);
+    await SharedPrefs.write(gender, sex);
+    await SharedPrefs.write(birthday, bDay_formattedDate);
+    await SharedPrefs.write(birthplace, _birthplace.text);
+    await SharedPrefs.write(civilstatus, civil_status);
+    await SharedPrefs.write(nationality, _nationality.text);
+
+    await SharedPrefs.write(d_gender, _selectedGender);
+    await SharedPrefs.write(d_cs, _selectedCS);
+
+    context.pushReplacementNamed(emailScren);
   }
 
   @override
@@ -74,12 +140,7 @@ class _aboutScreenState extends State<aboutScreen> {
                     children: [
                       GestureDetector(
                         onTap: () {
-                          Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                              builder: (_) => const getverifiedScreen(),
-                            ),
-                          );
+                          context.pushReplacementNamed(verifiedScreen);
                         },
                         child: Container(
                           // arrow1y5h (75:714)
@@ -112,9 +173,9 @@ class _aboutScreenState extends State<aboutScreen> {
                       Container(
                         // authenticationyE7 (75:717)
                         margin: EdgeInsets.fromLTRB(
-                            50 * fem, 0 * fem, 0 * fem, 4 * fem),
+                            0 * fem, 0 * fem, 0 * fem, 4 * fem),
                         child: Text(
-                          '1 / 4',
+                          '1 / 7',
                           style: SafeGoogleFont(
                             'Montserrat',
                             fontSize: 14 * ffem,
@@ -318,7 +379,19 @@ class _aboutScreenState extends State<aboutScreen> {
                                         },
                                       ),
                                     ),
-
+                                    Container(
+                                      // group942Gqd (75:409)
+                                      margin: EdgeInsets.fromLTRB(
+                                          2 * fem, 0 * fem, 5 * fem, 19 * fem),
+                                      width: double.infinity,
+                                      height: 65 * fem,
+                                      child: CommonTextField(
+                                        controller: _birthplace,
+                                        labelText: 'Birthplace',
+                                        textInputAction: TextInputAction.next,
+                                        accentColor: const Color(0xff259ded),
+                                      ),
+                                    ),
                                     Container(
                                       // group944qfm (75:434)
                                       margin: EdgeInsets.fromLTRB(
@@ -484,7 +557,6 @@ class _aboutScreenState extends State<aboutScreen> {
                                                         'Married',
                                                         'Divorced',
                                                         'Widowed',
-                                                        'Separated',
                                                       ].map((String value) {
                                                         return DropdownMenuItem<
                                                             String>(
@@ -517,22 +589,19 @@ class _aboutScreenState extends State<aboutScreen> {
                                         ],
                                       ),
                                     ),
-
                                     Container(
-                                      // group942Gqd (75:409)
+                                      // group939kaT (75:400)
                                       margin: EdgeInsets.fromLTRB(
-                                          2 * fem, 0 * fem, 5 * fem, 19 * fem),
+                                          0 * fem, 0 * fem, 0 * fem, 19 * fem),
                                       width: double.infinity,
                                       height: 65 * fem,
                                       child: CommonTextField(
                                         controller: _nationality,
                                         labelText: 'Nationality',
-                                        obscureText: false,
                                         textInputAction: TextInputAction.next,
                                         accentColor: const Color(0xff259ded),
                                       ),
                                     ),
-
                                     /////////////////
                                   ],
                                 ),
@@ -540,15 +609,49 @@ class _aboutScreenState extends State<aboutScreen> {
                               Container(
                                 // group410HZ1 (75:708)
                                 margin: EdgeInsets.fromLTRB(
-                                    2 * fem, 0 * fem, 0 * fem, 0 * fem),
+                                    2 * fem, 80 * fem, 0 * fem, 0 * fem),
                                 child: TextButton(
                                   onPressed: () {
-                                    Navigator.pushReplacement(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (_) => const emailScreen(),
-                                      ),
-                                    );
+                                    if (_firstName.text.isEmpty) {
+                                      Flush.flushMessage(
+                                        icons: Icons.error_outline,
+                                        title: "Field Required",
+                                        message: "Please Enter your Firstname",
+                                      );
+                                    } else if (_lastName.text.isEmpty) {
+                                      Flush.flushMessage(
+                                        icons: Icons.error_outline,
+                                        title: "Field Required",
+                                        message: "Please Enter your Lastname",
+                                      );
+                                    } else if (_birthday.text.isEmpty) {
+                                      Flush.flushMessage(
+                                        icons: Icons.error_outline,
+                                        title: "Field Required",
+                                        message: "Please Enter your Birthday",
+                                      );
+                                    } else if (_birthplace.text.isEmpty) {
+                                      Flush.flushMessage(
+                                        icons: Icons.error_outline,
+                                        title: "Field Required",
+                                        message: "Please Enter your Birthplace",
+                                      );
+                                    } else if (_selectedGender == "") {
+                                      Flush.flushMessage(
+                                        icons: Icons.error_outline,
+                                        title: "Field Required",
+                                        message: "Please Select Gender",
+                                      );
+                                    } else if (_selectedCS == "") {
+                                      Flush.flushMessage(
+                                        icons: Icons.error_outline,
+                                        title: "Field Required",
+                                        message: "Please Select Civil Status",
+                                      );
+                                    } else {
+                                      showLoadingDialog();
+                                      sendData();
+                                    }
                                   },
                                   style: TextButton.styleFrom(
                                     padding: EdgeInsets.zero,

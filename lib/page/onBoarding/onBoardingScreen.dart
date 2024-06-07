@@ -58,7 +58,7 @@ class _onBoardingScreenState extends ConsumerState<onBoardingScreen> {
                     children: [
                       Container(
                         margin: EdgeInsets.fromLTRB(
-                            295 * fem, 30 * fem, 0 * fem, 28 * fem),
+                            290 * fem, 30 * fem, 0 * fem, 28 * fem),
                         child: InkWell(
                           onTap: () {
                             context.pushReplacementNamed(login);
@@ -67,7 +67,7 @@ class _onBoardingScreenState extends ConsumerState<onBoardingScreen> {
                             'Skip',
                             style: SafeGoogleFont(
                               'Montserrat',
-                              fontSize: 18,
+                              fontSize: 16,
                               fontWeight: FontWeight.w500,
                               height: 1.2175 * ffem / fem,
                               color: const Color(0xffbdbdbd),

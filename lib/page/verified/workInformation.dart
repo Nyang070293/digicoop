@@ -1,25 +1,35 @@
-import 'package:digicoop/page/verified/address.dart';
-import 'package:digicoop/page/verified/scanface.dart';
+import 'package:digicoop/global/natureWorkGlobal.dart';
+import 'package:digicoop/global/sourceofIncomeGlobal.dart';
+import 'package:digicoop/model/natureWorkModel.dart';
+import 'package:digicoop/model/sourceofIncomeModel.dart';
+import 'package:digicoop/routes/route_generator.dart';
 import 'package:digicoop/util/utils.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
-class workInformationScreen extends StatefulWidget {
+class workInformationScreen extends ConsumerStatefulWidget {
   final Function(String)? onChanged;
 
   const workInformationScreen({super.key, this.onChanged});
 
   @override
-  State<workInformationScreen> createState() => _workInformationScreenState();
+  ConsumerState<workInformationScreen> createState() =>
+      _workInformationScreenState();
 }
 
-class _workInformationScreenState extends State<workInformationScreen> {
-  String? _selectedSource;
+class _workInformationScreenState extends ConsumerState<workInformationScreen> {
   String? _selectedNature;
+
+  SourceOfIncome? _selectedItemSOI;
+  NatureOfWork? _selectedItemNOW;
 
   @override
   void initState() {
     //set the initial value of text field
     super.initState();
+    ref.read(sourceofincome.notifier).getSOI();
+    ref.read(natureWork.notifier).getNatureWork();
   }
 
   @override
@@ -27,6 +37,12 @@ class _workInformationScreenState extends State<workInformationScreen> {
     double baseWidth = 414;
     double fem = MediaQuery.of(context).size.width / baseWidth;
     double ffem = fem * 0.97;
+    List<SourceOfIncome>? _selectedSOI =
+        ref.watch(sourceofincome).data?.sourceOfIncome?.toList();
+
+    List<NatureOfWork>? _selectedNOW =
+        ref.watch(natureWork).data?.natureOfWork?.toList();
+
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
@@ -63,12 +79,7 @@ class _workInformationScreenState extends State<workInformationScreen> {
                     children: [
                       GestureDetector(
                         onTap: () {
-                          Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                              builder: (_) => const homeAddressScreen(),
-                            ),
-                          );
+                          context.pushReplacementNamed(AddressVerifiedScreen);
                         },
                         child: Container(
                           // arrow1y5h (75:714)
@@ -222,29 +233,25 @@ class _workInformationScreenState extends State<workInformationScreen> {
                                                         .infinity, // Set width as per your requirement
                                                     child:
                                                         DropdownButtonFormField<
-                                                            String>(
-                                                      value: _selectedSource,
-                                                      onChanged:
-                                                          (String? newValue) {
-                                                        setState(() {
-                                                          _selectedSource =
-                                                              newValue;
-                                                          if (widget
-                                                                  .onChanged !=
-                                                              null) {
-                                                            widget.onChanged!(
-                                                                _selectedSource!);
-                                                          }
-                                                        });
-                                                      },
-                                                      items: <String>['', '']
-                                                          .map((String value) {
+                                                            SourceOfIncome>(
+                                                      value: _selectedItemSOI,
+                                                      items: _selectedSOI
+                                                          ?.map((data) {
                                                         return DropdownMenuItem<
-                                                            String>(
-                                                          value: value,
-                                                          child: Text(value),
+                                                            SourceOfIncome>(
+                                                          value: data,
+                                                          child: Text(data.name
+                                                              .toString()),
                                                         );
                                                       }).toList(),
+                                                      onChanged: (newValue) {
+                                                        setState(() {
+                                                          _selectedItemSOI =
+                                                              newValue;
+                                                        });
+                                                        print(
+                                                            "SElected SOI ${newValue?.sourceOfIncomeID}");
+                                                      },
                                                       decoration:
                                                           const InputDecoration(
                                                         border:
@@ -286,7 +293,7 @@ class _workInformationScreenState extends State<workInformationScreen> {
                                             top: 0 * fem,
                                             child: Align(
                                               child: SizedBox(
-                                                width: 90 * fem,
+                                                width: 130 * fem,
                                                 height: 18 * fem,
                                                 child: Text(
                                                   'Nature of Work',
@@ -311,7 +318,7 @@ class _workInformationScreenState extends State<workInformationScreen> {
                                               height: 65 * fem,
                                               child: Column(
                                                 crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
+                                                    CrossAxisAlignment.stretch,
                                                 children: [
                                                   SizedBox(
                                                     width: double
@@ -319,31 +326,30 @@ class _workInformationScreenState extends State<workInformationScreen> {
 
                                                     child:
                                                         DropdownButtonFormField<
-                                                            String>(
-                                                      value: _selectedNature,
-                                                      onChanged:
-                                                          (String? newValue) {
-                                                        setState(() {
-                                                          _selectedNature =
-                                                              newValue;
-                                                          if (widget
-                                                                  .onChanged !=
-                                                              null) {
-                                                            widget.onChanged!(
-                                                                _selectedNature!);
-                                                          }
-                                                        });
-                                                      },
-                                                      items: <String>[
-                                                        '',
-                                                        '',
-                                                      ].map((String value) {
+                                                            NatureOfWork>(
+                                                      value: _selectedItemNOW,
+                                                      items: _selectedNOW
+                                                          ?.map((data) {
                                                         return DropdownMenuItem<
-                                                            String>(
-                                                          value: value,
-                                                          child: Text(value),
+                                                            NatureOfWork>(
+                                                          value: data,
+                                                          child: Text(
+                                                              data.name
+                                                                  .toString(),
+                                                              style:
+                                                                  const TextStyle(
+                                                                      fontSize:
+                                                                          14)),
                                                         );
                                                       }).toList(),
+                                                      onChanged: (newValue) {
+                                                        setState(() {
+                                                          _selectedItemNOW =
+                                                              newValue;
+                                                        });
+                                                        print(
+                                                            "SElected NOW ${newValue?.natureOfWorkID}");
+                                                      },
                                                       decoration:
                                                           const InputDecoration(
                                                         border:
@@ -380,12 +386,12 @@ class _workInformationScreenState extends State<workInformationScreen> {
                                     2 * fem, 0 * fem, 0 * fem, 0 * fem),
                                 child: TextButton(
                                   onPressed: () {
-                                    Navigator.pushReplacement(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (_) => const scanfaceScreen(),
-                                      ),
-                                    );
+                                    // Navigator.pushReplacement(
+                                    //   context,
+                                    //   MaterialPageRoute(
+                                    //     builder: (_) => const scanfaceScreen(),
+                                    //   ),
+                                    // );
                                   },
                                   style: TextButton.styleFrom(
                                     padding: EdgeInsets.zero,

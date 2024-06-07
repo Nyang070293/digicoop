@@ -94,6 +94,7 @@ class _signupScreenState extends ConsumerState<signupScreen> {
         print("personCode ${SharedPrefs.read(personCode)}");
         context.pushNamed(vCode);
       } else if (response.statusCode == 400) {
+        context.pop();
         String msg = jsonData['message'].toString().replaceAll('[', '');
         msg = msg.replaceAll(']', '');
         Flush.flushMessage(

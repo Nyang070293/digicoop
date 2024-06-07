@@ -31,5 +31,8 @@ class DigiCoopAPI {
       addBankacct = "$baseUrl/transactions/banks/attach",
       bankTransfer = "$baseUrl/transactions/funds/cash-out",
       sf_api = "$baseUrl/transactions/dbc/service-fee",
-      onboardingCode = "$baseUrl/persons/onboarding-code/verify";
+      onboardingCode = "$baseUrl/persons/onboarding-code/verify",
+      SOI = "$baseUrl/helpers/sources-of-income",
+      NatureWork = "$baseUrl/helpers/natures-of-work",
+      Identifications = "$baseUrl/helpers/identifications";
 }

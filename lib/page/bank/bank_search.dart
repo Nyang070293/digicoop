@@ -1,8 +1,7 @@
 import 'package:digicoop/global/bankGlobal.dart';
 import 'package:digicoop/routes/route_generator.dart';
 import 'package:digicoop/util/textfield.dart';
-import 'package:digicoop/util/utils.dart';
-import 'package:digicoop/widgets/bankUserWidget.dart';
+import 'package:digicoop/util/utils.dart'; 
 import 'package:digicoop/widgets/bankWidgetAddAccount.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

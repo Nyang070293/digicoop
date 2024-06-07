@@ -55,12 +55,12 @@ class _confirmScreenState extends State<confirmScreen> {
                     children: [
                       GestureDetector(
                         onTap: () {
-                          Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                              builder: (_) => const photoIDScreen(),
-                            ),
-                          );
+                          // Navigator.pushReplacement(
+                          //   context,
+                          //   MaterialPageRoute(
+                          //     builder: (_) => const photoIDScreen(),
+                          //   ),
+                          // );
                         },
                         child: Container(
                           // arrow1y5h (75:714)

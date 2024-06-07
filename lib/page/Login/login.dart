@@ -92,6 +92,7 @@ class _loginScreenState extends ConsumerState<loginScreen> {
       final decrypt = Aes256.decrypt(encryptData, SharedPrefs.read(totp));
       Map<String, dynamic> jsonData = jsonDecode(decrypt!);
       //String userCode = jsonData["data"]["userCode"];
+
       print("login ${jsonData}");
       print("userCode ${jsonData["statusCode"]}");
       print("userCode ${jsonData["message"]}");
@@ -325,7 +326,8 @@ class _loginScreenState extends ConsumerState<loginScreen> {
                                 child: InkWell(
                                   onTap: () {
                                     // context.pushReplacementNamed(loginMPIN);
-                                    context.pushReplacementNamed(mpin);
+                                    context.pushReplacementNamed(
+                                        CameraVerifiedScreen);
                                   },
                                   child: Text(
                                     'Login via MPIN',
@@ -348,8 +350,8 @@ class _loginScreenState extends ConsumerState<loginScreen> {
                               35 * fem, 0 * fem, 0 * fem, 0 * fem),
                           child: InkWell(
                             onTap: () {
-                              // context.pushReplacementNamed(forgotPW);
-                              context.pushReplacementNamed(verifyCam);
+                              context.pushReplacementNamed(forgotPW);
+                              // context.pushReplacementNamed(verifyCam);
                             },
                             child: Text(
                               // forgotpasswordoLj (41:6741)

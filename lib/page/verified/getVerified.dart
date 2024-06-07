@@ -1,5 +1,4 @@
 import 'package:digicoop/page/dashboard/dashboard.dart';
-import 'package:digicoop/page/verified/about.dart';
 import 'package:digicoop/util/utils.dart';
 import 'package:flutter/material.dart';
 
@@ -13,7 +12,6 @@ class getverifiedScreen extends StatefulWidget {
 class _getverifiedScreenState extends State<getverifiedScreen> {
   @override
   Widget build(BuildContext context) {
-   
     double baseWidth = 414;
     double fem = MediaQuery.of(context).size.width / baseWidth;
     double ffem = fem * 0.97;
@@ -630,12 +628,12 @@ class _getverifiedScreenState extends State<getverifiedScreen> {
                                 31 * fem, 0 * fem, 30 * fem, 0 * fem),
                             child: TextButton(
                               onPressed: () {
-                                Navigator.pushReplacement(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (_) => aboutScreen(),
-                                  ),
-                                );
+                                // Navigator.pushReplacement(
+                                //   context,
+                                //   MaterialPageRoute(
+                                //     builder: (_) => aboutScreen(),
+                                //   ),
+                                // );
                               },
                               style: TextButton.styleFrom(
                                 padding: EdgeInsets.zero,

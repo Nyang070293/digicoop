@@ -53,7 +53,7 @@ class _CommonTextFieldState extends State<textfieldNumberFormat> {
     return TextField(
       controller: widget.controller,
       keyboardType: widget.keyboardType,
-      obscureText: !_isObscure,
+      obscureText: widget.obscureText ? !_isObscure : widget.obscureText,
       onChanged: widget.onChanged,
       textInputAction: widget.textInputAction,
       maxLines: !_isObscure ? widget.maxLines : 1,
