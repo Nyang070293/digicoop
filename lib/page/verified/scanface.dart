@@ -1,12 +1,14 @@
 import 'package:camera/camera.dart';
-import 'package:digicoop/main.dart';
 import 'package:digicoop/page/verified/frontId.dart';
 import 'package:digicoop/routes/route_generator.dart';
-import 'package:digicoop/util/face_detection_overlay.dart';
 import 'package:digicoop/util/utils.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:google_mlkit_face_detection/google_mlkit_face_detection.dart';
+import 'package:google_ml_kit/google_ml_kit.dart';
+import 'package:path_provider/path_provider.dart';
+import 'dart:io';
+import 'package:path/path.dart' as path;
 
 class CameraScreen extends StatefulWidget {
   const CameraScreen({super.key});
@@ -16,69 +18,172 @@ class CameraScreen extends StatefulWidget {
 }
 
 class _scanfaceScreenState extends State<CameraScreen> {
-  late CameraController _controller;
-  late Future<void> _initializeControllerFuture;
-  bool _faceFound = false;
-
+  CameraController? _cameraController;
+  FaceDetector? _faceDetector;
+  bool _isDetectingFaces = false;
+  bool _isProcessingImage = false;
+  bool _faceDetected = false;
+  String _status = 'Initializing...';
+  String imagePath = "";
   @override
   void initState() {
     super.initState();
-    _controller = CameraController(
-      cameras.last,
-      ResolutionPreset.max,
+    _initializeCamera();
+    _initializeFaceDetector();
+    // loadFilePath();
+  }
+
+  Future<void> _initializeCamera() async {
+    try {
+      final cameras = await availableCameras();
+      final frontCamera = cameras.firstWhere(
+          (camera) => camera.lensDirection == CameraLensDirection.front);
+
+      _cameraController = CameraController(frontCamera, ResolutionPreset.high);
+      await _cameraController!.initialize();
+      _cameraController!.startImageStream((CameraImage image) {
+        if (!_isDetectingFaces) {
+          _isDetectingFaces = true;
+          _detectFaces(image);
+        }
+      });
+
+      setState(() {
+        _status = 'Camera Initialized';
+      });
+    } catch (e) {
+      setState(() {
+        _status = 'Error initializing camera: $e';
+      });
+    }
+  }
+
+  Future<void> loadFilePath() async {
+    final path = await getFilePath('photo.jpg');
+    setState(() {
+      imagePath = path;
+    });
+  }
+
+  void deleteImage(String fileName) async {
+    final directory = await getApplicationDocumentsDirectory();
+    String path = '${directory.path}/$fileName';
+    final file = File(path);
+
+    try {
+      if (await file.exists()) {
+        await file.delete();
+        print('File deleted successfully');
+      } else {
+        print('File not found');
+      }
+    } catch (e) {
+      print('Error occurred while deleting the file: $e');
+    }
+  }
+
+  Future<String> getFilePath(String fileName) async {
+    final directory = await getApplicationDocumentsDirectory();
+    return '${directory.path}/$fileName';
+  }
+
+  void _initializeFaceDetector() {
+    _faceDetector = GoogleMlKit.vision.faceDetector(
+      FaceDetectorOptions(
+        enableTracking: true,
+        performanceMode: FaceDetectorMode.accurate,
+      ),
+    );
+    setState(() {
+      _status = 'Face Detector Initialized';
+    });
+  }
+
+  Future<void> _detectFaces(CameraImage image) async {
+    if (_isProcessingImage) {
+      _isDetectingFaces = false;
+      return;
+    }
+
+    _isProcessingImage = true;
+
+    final WriteBuffer allBytes = WriteBuffer();
+    for (Plane plane in image.planes) {
+      allBytes.putUint8List(plane.bytes);
+    }
+    final bytes = allBytes.done().buffer.asUint8List();
+
+    final InputImageData inputImageData = InputImageData(
+      size: Size(image.width.toDouble(), image.height.toDouble()),
+      imageRotation: InputImageRotation.rotation0deg,
+      inputImageFormat: InputImageFormatValue.fromRawValue(image.format.raw) ??
+          InputImageFormat.nv21,
+      planeData: image.planes.map(
+        (Plane plane) {
+          return InputImagePlaneMetadata(
+            bytesPerRow: plane.bytesPerRow,
+            height: plane.height,
+            width: plane.width,
+          );
+        },
+      ).toList(),
     );
 
-    _initializeControllerFuture = _controller.initialize();
+    final inputImage =
+        InputImage.fromBytes(bytes: bytes, inputImageData: inputImageData);
+
+    final List<Face> faces = await _faceDetector!.processImage(inputImage);
+
+    if (faces.isNotEmpty) {
+      setState(() {
+        _faceDetected = true;
+        _status = 'Face Detected';
+      });
+      await _capturePhoto();
+    } else {
+      setState(() {
+        _faceDetected = false;
+        _status = 'No Face Detected';
+      });
+    }
+
+    _isProcessingImage = false;
+    _isDetectingFaces = false;
+  }
+
+  Future<void> _capturePhoto() async {
+    if (_cameraController!.value.isTakingPicture) {
+      return;
+    }
+    try {
+      await _cameraController!.stopImageStream();
+      final image = await _cameraController!.takePicture();
+      final directory = await getApplicationDocumentsDirectory();
+      final filePath = path.join(directory.path, 'photo.jpg');
+      await image.saveTo(filePath);
+      setState(() {
+        _status = 'Photo captured and saved to $filePath';
+        imagePath = filePath;
+      });
+    } catch (e) {
+      setState(() {
+        _status = 'Error capturing photo: $e';
+      });
+    } finally {
+      await _cameraController!.startImageStream((CameraImage image) {
+        if (!_isDetectingFaces) {
+          _isDetectingFaces = true;
+          _detectFaces(image);
+        }
+      });
+    }
   }
 
   @override
   void dispose() {
-    _controller.dispose();
+    _cameraController?.dispose();
+    _faceDetector?.close();
     super.dispose();
-  }
-
-  Widget _overlay() {
-    return Stack(
-      children: [
-        // FutureBuilder<void>(
-        //   future: _initializeControllerFuture,
-        //   builder: (context, snapshot) {
-        //     if (snapshot.connectionState == ConnectionState.done) {
-        //       return ClipOval(
-        //         child: CameraPreview(_controller),
-        //       );
-        //     } else {
-        //       return const Center(child: CircularProgressIndicator());
-        //     }
-        //   },
-        // ),
-        // Align(
-        //   alignment: Alignment.center,
-        //   child: ClipOval(
-        //     child: CameraPreview(_controller),
-        //   ),
-        // ),
-        // Align(
-        //   alignment: Alignment.topCenter,
-        //   child: SafeArea(
-        //     child: Container(
-        //       width: MediaQuery.of(context).size.width * 0.80,
-        //       margin: const EdgeInsets.only(top: 20),
-        //       padding: const EdgeInsets.symmetric(vertical: 15),
-        //       decoration: BoxDecoration(
-        //         borderRadius: BorderRadius.circular(12),
-        //         color: _faceFound ? Colors.green.shade700 : Colors.red.shade700,
-        //       ),
-        //       child: Text(
-        //         _faceFound ? 'Deteksi Wajah Berhasil' : 'Deteksi Wajah Gagal',
-        //         textAlign: TextAlign.center,
-        //         style: const TextStyle(color: Colors.white),
-        //       ),
-        //     ),
-        //   ),
-        // )
-      ],
-    );
   }
 
   @override
@@ -246,74 +351,118 @@ class _scanfaceScreenState extends State<CameraScreen> {
                                 height: 229 * fem,
                                 child: Stack(
                                   children: [
-                                    Positioned(
-                                      // ellipse75YRV (2025:4208)
-                                      left: 82 * fem,
-                                      top: 0 * fem,
-                                      child: Align(
-                                        child: SizedBox(
-                                          width: 200 * fem,
-                                          height: 200 * fem,
-                                          child: FutureBuilder<void>(
-                                            future: _initializeControllerFuture,
-                                            builder: (context, snapshot) {
-                                              if (snapshot.connectionState ==
-                                                  ConnectionState.done) {
-                                                return ClipOval(
-                                                  child: FaceDetectionOverlay(
-                                                    cameras: cameras,
-                                                    faceDetectorOptions:
-                                                        FaceDetectorOptions(
-                                                      enableClassification:
-                                                          false,
-                                                      enableContours: false,
+                                    _faceDetected == false
+                                        ? Positioned(
+                                            // ellipse75YRV (2025:4208)
+                                            left: 60 * fem,
+                                            top: 0 * fem,
+                                            child: Align(
+                                              child: SizedBox(
+                                                width: 250 * fem,
+                                                height: 250 * fem,
+                                                child: _cameraController ==
+                                                            null ||
+                                                        !_cameraController!
+                                                            .value.isInitialized
+                                                    ? const Center(
+                                                        child:
+                                                            CircularProgressIndicator())
+                                                    : Stack(
+                                                        children: [
+                                                          ClipOval(
+                                                            child: AspectRatio(
+                                                              aspectRatio:
+                                                                  _cameraController!
+                                                                      .value
+                                                                      .aspectRatio,
+                                                              child: CameraPreview(
+                                                                  _cameraController!),
+                                                            ),
+                                                          ),
+                                                          // if (_faceDetected)
+                                                          //   Positioned(
+                                                          //     top: 10,
+                                                          //     right: 10,
+                                                          //     child: Icon(Icons.face,
+                                                          //         color: Colors.green,
+                                                          //         size: 50),
+                                                          //   ),
+                                                        ],
+                                                      ),
+                                              ),
+                                            ),
+                                          )
+                                        : Positioned(
+                                            // ellipse75YRV (2025:4208)
+                                            left: 60 * fem,
+                                            top: 0 * fem,
+                                            child: Align(
+                                              child: SizedBox(
+                                                width: 250 * fem,
+                                                height: 250 * fem,
+                                                child: Stack(
+                                                  children: [
+                                                    ClipOval(
+                                                      child: AspectRatio(
+                                                        aspectRatio:
+                                                            _cameraController!
+                                                                .value
+                                                                .aspectRatio,
+                                                        child: File(imagePath)
+                                                                .existsSync()
+                                                            ? Image.file(
+                                                                File(imagePath),
+                                                                width:
+                                                                    250 * fem,
+                                                                height:
+                                                                    250 * fem,
+                                                                fit: BoxFit
+                                                                    .cover,
+                                                              )
+                                                            : const Text(
+                                                                'No image selected.'),
+                                                      ),
                                                     ),
-                                                    resultCallback:
-                                                        _resultCallback,
-                                                  ),
-                                                );
-                                              } else {
-                                                return const Center(
-                                                    child:
-                                                        CircularProgressIndicator());
-                                              }
-                                            },
+                                                  ],
+                                                ),
+                                              ),
+                                            ),
                                           ),
-                                        ),
-                                      ),
-                                    ),
-
-                                    //  return ClipOval(
-                                    //                 child: CameraPreview(
-                                    //                     _controller));
-                                    // Positioned(
-                                    //   // ellipse76Qib (2025:4209)
-                                    //   left: 88 * fem,
-                                    //   top: 6 * fem,
-                                    //   child: Align(
-                                    //     child: SizedBox(
-                                    //       width: 180 * fem,
-                                    //       height: 180 * fem,
-                                    //       child: Container(
-                                    //         decoration: BoxDecoration(
-                                    //           borderRadius:
-                                    //               BorderRadius.circular(
-                                    //                   90 * fem),
-                                    //           color: Color(0xffffffff),
-                                    //           image: DecorationImage(
-                                    //             fit: BoxFit.cover,
-                                    //             image: AssetImage(
-                                    //               'assets/images/ellipse-76-bg.png',
-                                    //             ),
-                                    //           ),
-                                    //         ),
-                                    //       ),
-                                    //     ),
-                                    //   ),
-                                    // ),
                                   ],
                                 ),
                               ),
+                              // File(imagePath).existsSync()
+                              //     ? GestureDetector(
+                              //         onTap: () {
+                              //           // context.pushReplacementNamed(
+                              //           //     CameraVerifiedScreen);
+                              //           setState(() {
+                              //             _faceDetected = false;
+                              //             imagePath = "";
+                              //             deleteImage("photo.jpg");
+                              //           });
+                              //         },
+                              //         child: Container(
+                              //           // yourfacialinformationwascollec (2025:4210)
+                              //           margin: EdgeInsets.fromLTRB(7 * fem,
+                              //               0 * fem, 0 * fem, 82 * fem),
+                              //           constraints: BoxConstraints(
+                              //             maxWidth: 301 * fem,
+                              //           ),
+                              //           child: Text(
+                              //             'Try Again',
+                              //             textAlign: TextAlign.center,
+                              //             style: SafeGoogleFont(
+                              //               'Montserrat',
+                              //               fontSize: 12 * ffem,
+                              //               fontWeight: FontWeight.w400,
+                              //               height: 1.3318751199 * ffem / fem,
+                              //               color: const Color(0xff828282),
+                              //             ),
+                              //           ),
+                              //         ),
+                              //       )
+                              //     : SizedBox(),
                               Container(
                                 // yourfacialinformationwascollec (2025:4210)
                                 margin: EdgeInsets.fromLTRB(
@@ -354,7 +503,10 @@ class _scanfaceScreenState extends State<CameraScreen> {
                                         15 * fem, 23.67 * fem, 10 * fem),
                                     width: double.infinity,
                                     decoration: BoxDecoration(
-                                      color: const Color(0xff259ded),
+                                      color: _faceDetected
+                                          ? const Color.fromARGB(
+                                              255, 37, 237, 70)
+                                          : const Color(0xff259ded),
                                       borderRadius:
                                           BorderRadius.circular(100 * fem),
                                       boxShadow: [
@@ -415,36 +567,5 @@ class _scanfaceScreenState extends State<CameraScreen> {
         ),
       ),
     );
-  }
-
-  void _resultCallback(List result) {
-    if (result.isNotEmpty) {
-      for (final Face face in result) {
-        final width = MediaQuery.of(context).size.width;
-        final height = MediaQuery.of(context).size.height;
-
-        final xPositionStart = width * 0.15;
-        final xPositionEnd = width - (width * 0.15);
-        final yPositionStart = height * 0.30;
-        final yPositionEnd = height - (height * 0.30);
-
-        if ((face.boundingBox.left > xPositionStart &&
-                face.boundingBox.left < xPositionEnd) &&
-            (face.boundingBox.top > yPositionStart &&
-                face.boundingBox.top < yPositionEnd)) {
-          setState(() {
-            _faceFound = true;
-          });
-        } else {
-          setState(() {
-            _faceFound = false;
-          });
-        }
-      }
-    } else {
-      setState(() {
-        _faceFound = false;
-      });
-    }
   }
 }

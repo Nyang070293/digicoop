@@ -325,9 +325,8 @@ class _loginScreenState extends ConsumerState<loginScreen> {
                                     0 * fem, 0 * fem, 77 * fem, 0 * fem),
                                 child: InkWell(
                                   onTap: () {
-                                    // context.pushReplacementNamed(loginMPIN);
-                                    context.pushReplacementNamed(
-                                        CameraVerifiedScreen);
+                                    context.pushReplacementNamed(loginMPIN);
+                                    // context.pushReplacementNamed(CameraVerifiedScreen);
                                   },
                                   child: Text(
                                     'Login via MPIN',

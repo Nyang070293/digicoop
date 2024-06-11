@@ -28,7 +28,7 @@ class _dashboardScreenState extends State<dashboardScreen> {
   String Mobile_Num = "";
   double Balance = 0.00;
   int isVerify = 0;
-  bool visibility = false;
+  bool visibility = true;
 
   void _changed(bool stat) {
     setState(() {
