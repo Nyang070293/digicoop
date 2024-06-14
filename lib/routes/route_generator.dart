@@ -18,13 +18,15 @@ import 'package:digicoop/page/bank/bank_send.dart';
 import 'package:digicoop/page/bank/bank_success.dart';
 import 'package:digicoop/page/bank/bank_transfer.dart';
 import 'package:digicoop/page/bank/bank_viewall.dart';
+import 'package:digicoop/page/bill/bill.dart';
 import 'package:digicoop/page/cashin_bank/cashinBankSelect.dart';
 import 'package:digicoop/page/cashin_bank/cashin_bank.dart';
 import 'package:digicoop/page/cashin_bank/cashin_main.dart';
 import 'package:digicoop/page/cashin_bank/cashresult.dart';
 import 'package:digicoop/page/cashin_ctm/cashinctm.dart';
 import 'package:digicoop/page/cashin_otc/cashinotc.dart';
-import 'package:digicoop/page/cashin_otc/cashinotc_select.dart';
+import 'package:digicoop/page/cashin_otc/cashinotc_711.dart';
+import 'package:digicoop/page/cashin_otc/cashinotc_sm.dart';
 import 'package:digicoop/page/change_password/changePW.dart';
 import 'package:digicoop/page/change_password/loadingPW.dart';
 import 'package:digicoop/page/change_password/successPW.dart';
@@ -128,7 +130,9 @@ const String splashscreen = "SplashScreen",
     emailScren = "emailScren",
     AddressVerifiedScreen = "AddressVerifiedScreen",
     SOI = "SOI",
-    CameraVerifiedScreen = "CameraVerifiedScreen";
+    CameraVerifiedScreen = "CameraVerifiedScreen",
+    cashinotcSM = "cashinotcSM",
+    bill = "bill";
 
 // Route
 
@@ -516,10 +520,24 @@ final goRouter = Provider<GoRouter>((ref) {
         name: cashinotcselect,
         path: "/$cashinotcselect",
         builder: (context, state) {
-          return const cashinotcselectScreen();
+          return const cashinotc711Screen();
         },
       ),
-      //cashinotcselectScreen
+      GoRoute(
+        name: cashinotcSM,
+        path: "/$cashinotcSM",
+        builder: (context, state) {
+          return const cashinotcSMScreen();
+        },
+      ),
+      GoRoute(
+        name: bill,
+        path: "/$bill",
+        builder: (context, state) {
+          return const billScreen();
+        },
+      ),
+      //cashinotcselectScreen cashinotcSMScreen
       GoRoute(
         name: cashinbankSelect,
         path:

@@ -197,130 +197,133 @@ class _cashinotcScreenState extends State<cashinotcScreen> {
                                       crossAxisAlignment:
                                           CrossAxisAlignment.center,
                                       children: [
-                                        Container(
-                                          // group2494h5 (82:3055)
-                                          margin: EdgeInsets.fromLTRB(0 * fem,
-                                              0 * fem, 0 * fem, 12.46 * fem),
-                                          padding: EdgeInsets.fromLTRB(
-                                              18.67 * fem,
-                                              0 * fem,
-                                              0 * fem,
-                                              0 * fem),
-                                          width: 900 * fem,
-                                          height: 74.16 * fem,
-                                          decoration: BoxDecoration(
-                                            border: Border(
-                                              bottom: BorderSide(
-                                                color: Colors.grey
-                                                    .shade200, // You can set your desired border color here.
-                                                width:
-                                                    1, // You can set the width of the border.
+                                        GestureDetector(
+                                          onTap: () {
+                                            context.pushReplacementNamed(
+                                                cashinotcselect);
+                                          },
+                                          child: Container(
+                                            // group2494h5 (82:3055)
+                                            margin: EdgeInsets.fromLTRB(0 * fem,
+                                                0 * fem, 0 * fem, 12.46 * fem),
+                                            padding: EdgeInsets.fromLTRB(
+                                                18.67 * fem,
+                                                0 * fem,
+                                                0 * fem,
+                                                0 * fem),
+                                            width: 900 * fem,
+                                            height: 74.16 * fem,
+                                            decoration: BoxDecoration(
+                                              border: Border(
+                                                bottom: BorderSide(
+                                                  color: Colors.grey
+                                                      .shade200, // You can set your desired border color here.
+                                                  width:
+                                                      1, // You can set the width of the border.
+                                                ),
                                               ),
                                             ),
-                                          ),
-                                          child: Container(
-                                            // autogroupgz7qmLb (LJbbgPwnYr5AkPZckegz7q)
+                                            child: Container(
+                                              // autogroupgz7qmLb (LJbbgPwnYr5AkPZckegz7q)
 
-                                            padding: EdgeInsets.fromLTRB(
-                                                0 * fem,
-                                                0 * fem,
-                                                0 * fem,
-                                                20 * fem),
-                                            width: double.infinity,
-                                            height: 58.03 * fem,
-                                            child: Row(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.center,
-                                              children: [
-                                                Container(
-                                                  // group259hk3 (82:3060)
-                                                  margin: EdgeInsets.fromLTRB(
-                                                      0 * fem,
-                                                      0 * fem,
-                                                      52.73 * fem,
-                                                      0 * fem),
-                                                  padding: EdgeInsets.fromLTRB(
-                                                      0 * fem,
-                                                      0 * fem,
-                                                      36.07 * fem,
-                                                      0 * fem),
-                                                  height: double.infinity,
-                                                  decoration: BoxDecoration(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            5 * fem),
-                                                  ),
-                                                  child: Row(
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .center,
-                                                    children: [
-                                                      Container(
-                                                        // rectangle8yxT (82:3062)
-                                                        margin:
-                                                            EdgeInsets.fromLTRB(
-                                                                0 * fem,
-                                                                0 * fem,
-                                                                10 * fem,
-                                                                0 * fem),
-                                                        width: 60.19 * fem,
-                                                        height: 58.03 * fem,
-                                                        decoration:
-                                                            BoxDecoration(
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(
-                                                                      5 * fem),
-                                                          border: Border.all(
-                                                              color: const Color(
-                                                                  0xffe7e7e7)),
-                                                          color: const Color(
-                                                              0xffffffff),
-                                                        ),
-                                                        child: const Center(
-                                                          child: Image(
-                                                            image: AssetImage(
-                                                                'assets/images/7eleven.png'),
-                                                            width:
-                                                                64, // Optional: Set image width
-                                                            height:
-                                                                64, // Optional: Set image height
-                                                          ),
-                                                        ),
-                                                      ),
-                                                      Container(
-                                                        // bdounibankincf4b (82:3061)
-                                                        margin:
-                                                            EdgeInsets.fromLTRB(
-                                                                0 * fem,
-                                                                0 * fem,
-                                                                100 * fem,
-                                                                0 * fem),
-                                                        child: Text(
-                                                          '7-Eleven',
-                                                          style: SafeGoogleFont(
-                                                            'Montserrat',
-                                                            fontSize: 14 * ffem,
-                                                            fontWeight:
-                                                                FontWeight.w600,
-                                                            height: 1.2175 *
-                                                                ffem /
-                                                                fem,
+                                              padding: EdgeInsets.fromLTRB(
+                                                  0 * fem,
+                                                  0 * fem,
+                                                  0 * fem,
+                                                  20 * fem),
+                                              width: double.infinity,
+                                              height: 58.03 * fem,
+                                              child: Row(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.center,
+                                                children: [
+                                                  Container(
+                                                    // group259hk3 (82:3060)
+                                                    margin: EdgeInsets.fromLTRB(
+                                                        0 * fem,
+                                                        0 * fem,
+                                                        52.73 * fem,
+                                                        0 * fem),
+                                                    padding:
+                                                        EdgeInsets.fromLTRB(
+                                                            0 * fem,
+                                                            0 * fem,
+                                                            36.07 * fem,
+                                                            0 * fem),
+                                                    height: double.infinity,
+                                                    decoration: BoxDecoration(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              5 * fem),
+                                                    ),
+                                                    child: Row(
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .center,
+                                                      children: [
+                                                        Container(
+                                                          // rectangle8yxT (82:3062)
+                                                          margin: EdgeInsets
+                                                              .fromLTRB(
+                                                                  0 * fem,
+                                                                  0 * fem,
+                                                                  10 * fem,
+                                                                  0 * fem),
+                                                          width: 60.19 * fem,
+                                                          height: 58.03 * fem,
+                                                          decoration:
+                                                              BoxDecoration(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        5 * fem),
+                                                            border: Border.all(
+                                                                color: const Color(
+                                                                    0xffe7e7e7)),
                                                             color: const Color(
-                                                                0xff3f3f3f),
+                                                                0xffffffff),
+                                                          ),
+                                                          child: const Center(
+                                                            child: Image(
+                                                              image: AssetImage(
+                                                                  'assets/images/7eleven.png'),
+                                                              width:
+                                                                  64, // Optional: Set image width
+                                                              height:
+                                                                  64, // Optional: Set image height
+                                                            ),
                                                           ),
                                                         ),
-                                                      ),
-                                                    ],
+                                                        Container(
+                                                          // bdounibankincf4b (82:3061)
+                                                          margin: EdgeInsets
+                                                              .fromLTRB(
+                                                                  0 * fem,
+                                                                  0 * fem,
+                                                                  100 * fem,
+                                                                  0 * fem),
+                                                          child: Text(
+                                                            '7-Eleven',
+                                                            style:
+                                                                SafeGoogleFont(
+                                                              'Montserrat',
+                                                              fontSize:
+                                                                  14 * ffem,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w600,
+                                                              height: 1.2175 *
+                                                                  ffem /
+                                                                  fem,
+                                                              color: const Color(
+                                                                  0xff3f3f3f),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
                                                   ),
-                                                ),
-                                                GestureDetector(
-                                                  onTap: () {
-                                                    context
-                                                        .pushReplacementNamed(
-                                                            cashinotcselect);
-                                                  },
-                                                  child: Container(
+                                                  Container(
                                                     // group2489Ef (82:3057)
                                                     margin: EdgeInsets.fromLTRB(
                                                         0 * fem,
@@ -335,8 +338,8 @@ class _cashinotcScreenState extends State<cashinotcScreen> {
                                                       height: 16.82 * fem,
                                                     ),
                                                   ),
-                                                ),
-                                              ],
+                                                ],
+                                              ),
                                             ),
                                           ),
                                         ),
@@ -660,24 +663,31 @@ class _cashinotcScreenState extends State<cashinotcScreen> {
                                                     ),
                                                   ),
                                                 ),
-                                                Container(
-                                                  // bpiZNF (82:3075)
-                                                  margin: EdgeInsets.fromLTRB(
-                                                      0 * fem,
-                                                      0 * fem,
-                                                      110 * fem,
-                                                      0 * fem),
-                                                  child: Text(
-                                                    'All Day Supermarket',
-                                                    style: SafeGoogleFont(
-                                                      'Montserrat',
-                                                      fontSize: 14 * ffem,
-                                                      fontWeight:
-                                                          FontWeight.w600,
-                                                      height:
-                                                          1.2175 * ffem / fem,
-                                                      color: const Color(
-                                                          0xff000000),
+                                                GestureDetector(
+                                                  onTap: () {
+                                                    context
+                                                        .pushReplacementNamed(
+                                                            cashinotcSM);
+                                                  },
+                                                  child: Container(
+                                                    // bpiZNF (82:3075)
+                                                    margin: EdgeInsets.fromLTRB(
+                                                        0 * fem,
+                                                        0 * fem,
+                                                        110 * fem,
+                                                        0 * fem),
+                                                    child: Text(
+                                                      'All Day Supermarket',
+                                                      style: SafeGoogleFont(
+                                                        'Montserrat',
+                                                        fontSize: 14 * ffem,
+                                                        fontWeight:
+                                                            FontWeight.w600,
+                                                        height:
+                                                            1.2175 * ffem / fem,
+                                                        color: const Color(
+                                                            0xff000000),
+                                                      ),
                                                     ),
                                                   ),
                                                 ),

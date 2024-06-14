@@ -88,6 +88,19 @@ class ServiceHost {
     return response;
   }
 
+  static Future<Response> getBill(Id) async {
+    // final body = {
+    //   "id": regionId,
+    // };{id}/provinces
+    final newURl = "${DigiCoopAPI.bill + Id}/billers?page=1&limit=10";
+    final response = await MethodHandler.helperhandler(
+      url: newURl,
+      type: RequestType.get,
+      haveToken: true,
+    );
+    return response;
+  }
+
   static Future<Response> getPaymentMethod(categoryId) async {
     // final body = {
     //   "id": regionId,

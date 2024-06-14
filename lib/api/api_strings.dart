@@ -34,5 +34,6 @@ class DigiCoopAPI {
       onboardingCode = "$baseUrl/persons/onboarding-code/verify",
       SOI = "$baseUrl/helpers/sources-of-income",
       NatureWork = "$baseUrl/helpers/natures-of-work",
-      Identifications = "$baseUrl/helpers/identifications";
+      Identifications = "$baseUrl/helpers/identifications",
+      bill = "$baseUrl/transactions/categories/";
 }
