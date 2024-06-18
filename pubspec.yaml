@@ -180,3 +180,18 @@ flutter:
     - assets/images/loading_digi.gif
     - assets/images/line.png
     - assets/images/checklist.png
+    - assets/images/electric.png
+    - assets/images/water.png
+    - assets/images/internet.png
+    - assets/images/telecom.png
+    - assets/images/creditcard.png
+    - assets/images/loan.png
+    - assets/images/coop.png
+    - assets/images/insuran.png
+    - assets/images/transport.png
+    - assets/images/gov.png
+    - assets/images/realestate.png
+    - assets/images/healthcare.png
+    - assets/images/school.png
+    - assets/images/payment.png
+    - assets/images/other.png
