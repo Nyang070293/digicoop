@@ -92,7 +92,21 @@ class ServiceHost {
     // final body = {
     //   "id": regionId,
     // };{id}/provinces
-    final newURl = "${DigiCoopAPI.bill + Id}/billers?page=1&limit=10";
+    final newURl = "${DigiCoopAPI.bill + Id}/billers?page=1&limit=500";
+    final response = await MethodHandler.helperhandler(
+      url: newURl,
+      type: RequestType.get,
+      haveToken: true,
+    );
+    return response;
+  }
+
+  static Future<Response> getBillSearch() async {
+    // final body = {
+    //   "id": regionId,
+    // };{id}/provinces
+    final newURl =
+        "${DigiCoopAPI.billsearch}/search?searchInput=" "&page=1&limit=500";
     final response = await MethodHandler.helperhandler(
       url: newURl,
       type: RequestType.get,

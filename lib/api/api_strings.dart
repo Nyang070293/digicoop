@@ -35,5 +35,6 @@ class DigiCoopAPI {
       SOI = "$baseUrl/helpers/sources-of-income",
       NatureWork = "$baseUrl/helpers/natures-of-work",
       Identifications = "$baseUrl/helpers/identifications",
-      bill = "$baseUrl/transactions/categories/";
+      bill = "$baseUrl/transactions/categories/",
+      billsearch = "$baseUrl/billers/";
 }

@@ -1413,9 +1413,9 @@ class _dashboardScreenState extends State<dashboardScreen> {
                                                       isVerify == 3
                                                           ? GestureDetector(
                                                               onTap: () {
-                                                                // context
-                                                                //     .pushReplacementNamed(
-                                                                //         bankTransfer);
+                                                                context
+                                                                    .pushReplacementNamed(
+                                                                        eload);
                                                               },
                                                               child: SizedBox(
                                                                 // frame162980BWP (2008:212)

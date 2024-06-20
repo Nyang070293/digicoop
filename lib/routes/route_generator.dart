@@ -19,6 +19,8 @@ import 'package:digicoop/page/bank/bank_success.dart';
 import 'package:digicoop/page/bank/bank_transfer.dart';
 import 'package:digicoop/page/bank/bank_viewall.dart';
 import 'package:digicoop/page/bill/bill.dart';
+import 'package:digicoop/page/bill/billSearch.dart';
+import 'package:digicoop/page/bill/biller.dart';
 import 'package:digicoop/page/cashin_bank/cashinBankSelect.dart';
 import 'package:digicoop/page/cashin_bank/cashin_bank.dart';
 import 'package:digicoop/page/cashin_bank/cashin_main.dart';
@@ -39,6 +41,7 @@ import 'package:digicoop/page/cooperatives/cooperativesDisclaimer.dart';
 import 'package:digicoop/page/cooperatives/myCooperatives.dart';
 import 'package:digicoop/page/dashboard/dashboard.dart';
 import 'package:digicoop/page/drawer/drawer.dart';
+import 'package:digicoop/page/eload/eload.dart';
 import 'package:digicoop/page/ewallet/ewalletconfirm.dart';
 import 'package:digicoop/page/ewallet/ewalletmain.dart';
 import 'package:digicoop/page/ewallet/ewalletresult.dart';
@@ -132,7 +135,10 @@ const String splashscreen = "SplashScreen",
     SOI = "SOI",
     CameraVerifiedScreen = "CameraVerifiedScreen",
     cashinotcSM = "cashinotcSM",
-    bill = "bill";
+    bill = "bill",
+    billSearch = "billSearch",
+    biller = "biller",
+    eload = "eload";
 
 // Route
 
@@ -153,11 +159,19 @@ final goRouter = Provider<GoRouter>((ref) {
           return const SplashScreen();
         },
       ),
+
       GoRoute(
         name: AddressVerifiedScreen,
         path: "/$AddressVerifiedScreen",
         builder: (context, state) {
           return const homeAddressVerifiedScreen();
+        },
+      ),
+      GoRoute(
+        name: eload,
+        path: "/$eload",
+        builder: (context, state) {
+          return const eloadScreen();
         },
       ),
       GoRoute(
@@ -209,6 +223,14 @@ final goRouter = Provider<GoRouter>((ref) {
       ),
 
       GoRoute(
+        name: billSearch,
+        path: "/$billSearch",
+        builder: (context, state) {
+          return billerSearchScreen();
+        },
+      ),
+
+      GoRoute(
         name: mobile,
         path: "/$mobile",
         builder: (context, state) {
@@ -225,6 +247,20 @@ final goRouter = Provider<GoRouter>((ref) {
           );
         },
       ),
+
+      GoRoute(
+        name: biller,
+        path: "/$biller/:id",
+        builder: (context, state) {
+          return billerScreen(
+            key: state.pageKey,
+            id: state.pathParameters["id"] ?? "0",
+            image: state.pathParameters['image'] ?? "",
+            name: state.pathParameters['name'] ?? "",
+          );
+        },
+      ),
+
       GoRoute(
         name: successFPW,
         path: "/$successFPW",
